@@ -7,12 +7,20 @@ Lab set ups for C3D extract
 
 
 '''
+---------------------------------
+------------ CLASSES ------------
+---------------------------------
+'''
+
+
+'''
 LabKey:
     Storage class for lab set up info
 '''
 class LabKey():
-    def __init__(self, nfp, fpused, fpprefixes, fpsuffixes, lab_to_opensim, fp_to_lab, marker_list):
+    def __init__(self, nfp, nfpchannels, fpused, fpprefixes, fpsuffixes, lab_to_opensim, fp_to_lab, marker_list):
         self.nfp = nfp
+        self.nfpchannels = nfpchannels
         self.fpused = fpused
         self.fpprefixes = fpprefixes
         self.fpsuffixes = fpsuffixes
@@ -21,6 +29,12 @@ class LabKey():
         self.marker_list = marker_list
 
 
+
+'''
+-----------------------------------
+------------ FUNCTIONS ------------
+-----------------------------------
+'''
 
 
 '''
@@ -31,9 +45,10 @@ def lab_lasem_trail():
 
     # force plates
     nfp = 4;
-    used_force_plates = [3,4]
-    force_prefixes = ["Force.Fx","Force.Fy","Force.Fz","Moment.Mx","Moment.My","Moment.Mz"],
-    force_suffixes = ["","","","","",""]
+    nfpchannels = 6
+    used_force_plates = [3, 4]
+    force_prefixes = ["Force.Fx", "Force.Fy", "Force.Fz", "Moment.Mx", "Moment.My", "Moment.Mz"]
+    force_suffixes = ["", "", "", "", "", ""]
     
     # coordinate systems
     lab_to_opensim = [1, 3, -2]
@@ -43,5 +58,5 @@ def lab_lasem_trail():
     marker_list = []
     
     # create a lab
-    return LabKey(nfp, used_force_plates, force_prefixes, force_suffixes, lab_to_opensim, fp_to_lab, marker_list)
+    return LabKey(nfp, nfpchannels, used_force_plates, force_prefixes, force_suffixes, lab_to_opensim, fp_to_lab, marker_list)
     
