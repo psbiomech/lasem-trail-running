@@ -36,12 +36,16 @@ TrialKey:
 '''
 class TrialKey():
     def __init__(self, lab, c3dkey, xdir):
+        
         self.trial_name = str(c3dkey.name)
         self.lab_name = lab.lab_name
-        self.set_markers(c3dkey)
-        self.set_forces(lab,c3dkey)
         
-    def set_markers(self, c3dkey):
+        self.__set_force_plates(lab, c3dkey, xdir) 
+        self.__set_forces(lab,c3dkey)
+        self.__set_markers(c3dkey)
+
+        
+    def __set_markers(self, c3dkey):
         
         # initialise dict
         markers = {}
@@ -70,12 +74,12 @@ class TrialKey():
         
         return None
            
-    def set_forces(self, lab, c3dkey):
+    def __set_forces(self, lab, c3dkey):
         
         # initialise dict
         forces = {}        
  
-        # get forces for only used force plate
+        # get forces for only used force plates
         for f in lab.fp_used:
             
             # dict field
@@ -124,9 +128,33 @@ class TrialKey():
         
         return None
     
-    def set_transforms(self, lab, xdir):
+    def __set_force_plates(self, lab, c3dkey, xdir):
+        
+        # initialise dict
+        force_plates = {}
+        
+        # get force plate info for only used force plates
+        for f in lab.fp_used:
+            
+            # dict field
+            dict_name = lab.fp_dict_name_prefix + str(f)
+            force_plates[dict_name] = {}
+            
+            # coordinate transforms
+            force_plates[dict_name]["transforms"] = {}
+            force_plates[dict_name]["transforms"]["lab_to_opensim"] = lab.transform_mat_lab_to_opensim[[1, -1, 2, -2, 3, -3].index(xdir)]
+            force_plates[dict_name]["transforms"]["fp_to_lab"] = lab.transform_mat_fp_to_lab
+        
+            # offsets
+            force_plates[dict_name]["offsets"] = {}
+            force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"] = -1*c3dkey.meta["FORCE_PLATFORM"]["ORIGIN"][f-1]
+            force_plates[dict_name]["offsets"]["lab_to_fp_centre_vicon"] = find_fp_centre_from_lab_origin(c3dkey.meta["FORCE_PLATFORM"]["CORNERS"][f-1])
+            force_plates[dict_name]["offsets"]["lab_to_fp_origin_vicon"] = change_coordinates(force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"], force_plates[dict_name]["transforms"]["fp_to_lab"], force_plates[dict_name]["offsets"]["lab_to_fp_centre_vicon"])
+        
+        self.force_plates = force_plates
+        
         return None
-    
+
 
 
 '''
@@ -137,8 +165,8 @@ class TrialKey():
 
 
 '''
-c3d_extract(f_path):
-    Extracts the motion data from the C3D file to arrays, and returns a dict
+c3d_extract(f_path, lab, xdir):
+    Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
 def c3d_extract(f_path,lab,xdir):
@@ -166,8 +194,35 @@ def c3d_extract(f_path,lab,xdir):
     return c3dkey, trialkey
     
 
+
+
 '''
-calc_cop(meta,forces):
-    calculate centre-of-pressure (CoP)
+find_fp_centre_from_lab_origin(corners):
+    Find force plate centre in Vicon coordinates
 '''
-#def calc_cop(meta,forces):
+def find_fp_centre_from_lab_origin(corners):
+    
+    # lab origin ---> corner 1
+    lo_c1 = corners[0]
+    
+    # lab origin ---> corner 3
+    lo_c3 = corners[2]
+    
+    # corner 1 ---> corner 3
+    c1_c3 = lo_c3 - lo_c1
+    
+    # corner 1 ---> centre
+    c1_ct = c1_c3 / 2
+    
+    # lab origin ---> centre
+    return lo_c1 + c1_ct
+
+
+
+
+'''
+change_coordinates(oldvec, rotmat, originvec):
+    Perform coordinate transformation
+'''
+def change_coordinates(oldvec, rotmat, originvec):
+    return originvec + np.dot(rotmat, oldvec)
