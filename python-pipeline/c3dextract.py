@@ -39,10 +39,10 @@ class TrialKey():
         
         self.trial_name = str(c3dkey.name)
         self.lab_name = lab.lab_name
-        
+
+        self.__set_markers(c3dkey)        
         self.__set_force_plates(lab, c3dkey, xdir) 
         self.__set_forces(lab,c3dkey)
-        self.__set_markers(c3dkey)
 
         
     def __set_markers(self, c3dkey):
@@ -73,7 +73,35 @@ class TrialKey():
         self.markers = markers
         
         return None
-           
+     
+    def __set_force_plates(self, lab, c3dkey, xdir):
+        
+        # initialise dict
+        force_plates = {}
+        
+        # get force plate info for only used force plates
+        for f in lab.fp_used:
+            
+            # dict field
+            dict_name = lab.fp_dict_name_prefix + str(f)
+            force_plates[dict_name] = {}
+            
+            # coordinate transforms
+            force_plates[dict_name]["transforms"] = {}
+            force_plates[dict_name]["transforms"]["lab_to_opensim"] = lab.transform_mat_lab_to_opensim[[1, -1, 2, -2, 3, -3].index(xdir)]
+            force_plates[dict_name]["transforms"]["fp_to_lab"] = lab.transform_mat_fp_to_lab
+        
+            # offsets
+            offset_scale = self.markers["scale"]
+            force_plates[dict_name]["offsets"] = {}
+            force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"] = -1*c3dkey.meta["FORCE_PLATFORM"]["ORIGIN"][f-1] * offset_scale
+            force_plates[dict_name]["offsets"]["lab_to_fp_centre_vicon"] = find_fp_centre_from_lab_origin(c3dkey.meta["FORCE_PLATFORM"]["CORNERS"][f-1]) * offset_scale
+            force_plates[dict_name]["offsets"]["lab_to_fp_origin_vicon"] = change_coordinates(force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"], force_plates[dict_name]["transforms"]["fp_to_lab"], force_plates[dict_name]["offsets"]["lab_to_fp_centre_vicon"])
+        
+        self.force_plates = force_plates
+        
+        return None
+          
     def __set_forces(self, lab, c3dkey):
         
         # initialise dict
@@ -118,42 +146,30 @@ class TrialKey():
             forces[dict_name]["frames"] = c3dkey.forces["FRAME"]
             forces[dict_name]["frames0"] = c3dkey.forces["FRAME"] - c3dkey.forces["FRAME"][0] 
         
-            # force plate data
+            # force plate data, convert to N and Nm
             forces[dict_name]["data"] = {}
-            for ch in channels:
-                forces[dict_name]["data"][ch] = c3dkey.forces["DATA"][ch]
+            ns = len(forces[dict_name]["time"])
+            F = np.zeros([ns,3])
+            M = np.zeros([ns,3])
+            for c in range(3):
+                F[:,c] = c3dkey.forces["DATA"][channels[c]] * forces[dict_name]["scale"][c]
+                M[:,c] = c3dkey.forces["DATA"][channels[c+3]] * forces[dict_name]["scale"][c+3]                
+            forces[dict_name]["data"]["F"] = F
+            forces[dict_name]["data"]["M"] = M
+                
+            # calculate centre-of-pressure
+            vc2o = self.force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"]                        
+            cop = calculate_centre_of_pressure_fp(ns, vc2o, F, M)
+            forces[dict_name]["data"]["cop"] = cop
         
+        
+            # calculate free moments
+            forces[dict_name]["data"]["T"] = calculate_vertical_free_moment(ns, vc2o, F, M, cop)
        
         self.forces = forces
         
         return None
-    
-    def __set_force_plates(self, lab, c3dkey, xdir):
-        
-        # initialise dict
-        force_plates = {}
-        
-        # get force plate info for only used force plates
-        for f in lab.fp_used:
-            
-            # dict field
-            dict_name = lab.fp_dict_name_prefix + str(f)
-            force_plates[dict_name] = {}
-            
-            # coordinate transforms
-            force_plates[dict_name]["transforms"] = {}
-            force_plates[dict_name]["transforms"]["lab_to_opensim"] = lab.transform_mat_lab_to_opensim[[1, -1, 2, -2, 3, -3].index(xdir)]
-            force_plates[dict_name]["transforms"]["fp_to_lab"] = lab.transform_mat_fp_to_lab
-        
-            # offsets
-            force_plates[dict_name]["offsets"] = {}
-            force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"] = -1*c3dkey.meta["FORCE_PLATFORM"]["ORIGIN"][f-1]
-            force_plates[dict_name]["offsets"]["lab_to_fp_centre_vicon"] = find_fp_centre_from_lab_origin(c3dkey.meta["FORCE_PLATFORM"]["CORNERS"][f-1])
-            force_plates[dict_name]["offsets"]["lab_to_fp_origin_vicon"] = change_coordinates(force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"], force_plates[dict_name]["transforms"]["fp_to_lab"], force_plates[dict_name]["offsets"]["lab_to_fp_centre_vicon"])
-        
-        self.force_plates = force_plates
-        
-        return None
+
 
 
 
@@ -197,6 +213,15 @@ def c3d_extract(f_path,lab,xdir):
 
 
 '''
+change_coordinates(oldvec, rotmat, originvec):
+    Perform coordinate transformation
+'''
+def change_coordinates(oldvec, rotmat, originvec):
+    return originvec + np.dot(rotmat, oldvec)
+
+
+
+'''
 find_fp_centre_from_lab_origin(corners):
     Find force plate centre in Vicon coordinates
 '''
@@ -219,10 +244,59 @@ def find_fp_centre_from_lab_origin(corners):
 
 
 
+'''
+calculate_centre_of_pressure_fp(n, vc2o, F, M):
+    Calculate centre of pressure in force plate coordinates using equations
+    from Tim Dorn's GaitExtract toolbox. Note: the GaitExtract documentation
+    contains an error in the equations on page 14. The correct equations are
+    given in getKinetics.m
+        
+        Given:
+        
+            (cop_x, cop_y, cop_z): vector from origin to centre of pressure
+            (a, b, c): vector from geometric centre to origin
+            (F_x, F_y, F_z): force plate force
+            (M_x, M_y, M_z): force plate moment
+                
+        Equations:
+            
+            cop_x = -1 * ( (M_y + c * F_x) / F_z ) + a
+            cop_y = ( (M_x - c * F_y) / F_z ) + b
+            cop_z = 0 (default)        
+'''
+def calculate_centre_of_pressure_fp(ns, vc2o, F, M):
+    cop = np.zeros([ns,3])
+    for n in range(ns):
+        cop[n,0] = -1 * ((M[n,1] + vc2o[2] * F[n,0]) / F[n,2]) + vc2o[0]
+        cop[n,1] = ((M[n,0] - vc2o[2] * F[n,1]) / F[n,2]) + vc2o[1]
+        if np.isnan(cop[n,0]) or np.isnan(cop[n,1]):
+            cop[n,0] = 0
+            cop[n,1] = 0
+    return cop
+
+
 
 '''
-change_coordinates(oldvec, rotmat, originvec):
-    Perform coordinate transformation
+calculate_vertical_free_moment(ns, vc2o, F, M, cop):
+    Calculate vertical free moment in force plate coordinates using equations
+    from Tim Dorn's GaitExtract toolbox.
+        
+        Given:
+        
+            (T_x, T_y, T_z): vector of free moment
+            (cop_x, cop_y, cop_z): vector from origin to centre of pressure
+            (a, b, c): vector from geometric centre to origin
+            (F_x, F_y, F_z): force plate force
+            (M_x, M_y, M_z): force plate moment
+                
+        Equations:
+            
+            T_x = 0 (default)
+            T_y = 0 (default)
+            T_z = M_z - ((cop_x - a) * F_y) + ((cop_y - b) * F_x)       
 '''
-def change_coordinates(oldvec, rotmat, originvec):
-    return originvec + np.dot(rotmat, oldvec)
+def calculate_vertical_free_moment(ns, vc2o, F, M, cop):
+    T = np.zeros([ns,3])
+    for n in range(ns):
+        T[n,2] = M[n,2] - ((cop[n,0] - vc2o[0]) * F[n,1]) + ((cop[n,1] - vc2o[1]) * F[n,0])
+    return T
