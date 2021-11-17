@@ -52,16 +52,17 @@ class TrialKey():
         
         # marker rate and units
         markers["rate"] = c3dkey.markers["RATE"]    
-        markers["units"] = c3dkey.markers["UNITS"]
+        orig_units = c3dkey.markers["UNITS"]
         
-        # marker scale factor
-        if markers["units"] == "mm":
+        # marker scale factor, convert to m
+        if orig_units == "mm":
             markers["scale"] = 0.001
-        elif markers["units"] == "m":
+        elif orig_units == "m":
             markers["scale"] = 1
         else:
             markers["scale"] = 1
-
+        markers["units"] = "m"
+        
         # marker data
         markers["labels"] = c3dkey.markers["LABELS"]
         markers["data"] = c3dkey.markers["DATA"]["POS"]
@@ -126,19 +127,24 @@ class TrialKey():
      
             # force rate and units
             forces[dict_name]["rate"] = c3dkey.forces["RATE"]    
-            forces[dict_name]["units"] = np.ndarray.tolist(np.array(c3dkey.forces["UNITS"])[indx])
+            old_units = np.ndarray.tolist(np.array(c3dkey.forces["UNITS"])[indx])
             
-            # force scale factor
+            # force scale factor, convert to N and Nm
             forces[dict_name]["scale"] = []
+            forces[dict_name]["units"] = []
             for x in range(lab.n_fp_channels):
-                if forces[dict_name]["units"][x] == "Nmm":
+                if old_units[x] == "Nmm":
                     forces[dict_name]["scale"].append(0.001)
-                elif forces[dict_name]["units"][x] == "Nm":
+                    forces[dict_name]["units"].append("Nm")
+                elif old_units[x] == "Nm":
                     forces[dict_name]["scale"].append(1)
-                elif forces[dict_name]["units"][x] == "N":
+                    forces[dict_name]["units"].append("Nm")
+                elif old_units[x] == "N":
                     forces[dict_name]["scale"].append(1)
+                    forces[dict_name]["units"].append("N")
                 else:
                     forces[dict_name]["scale"].append(1)
+                    forces[dict_name]["units"].append("N")
             
             # force plate time and frames
             forces[dict_name]["time"] = c3dkey.forces["TIME"]
@@ -161,11 +167,29 @@ class TrialKey():
             vc2o = self.force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"]                        
             cop = calculate_centre_of_pressure_fp(ns, vc2o, F, M)
             forces[dict_name]["data"]["cop"] = cop
-        
-        
+                
             # calculate free moments
-            forces[dict_name]["data"]["T"] = calculate_vertical_free_moment(ns, vc2o, F, M, cop)
-       
+            T = calculate_vertical_free_moment(ns, vc2o, F, M, cop)
+            forces[dict_name]["data"]["T"] = T
+            
+            # convert to vicon coordinates
+            originvec = [0, 0, 0]
+            rotmat = self.force_plates[dict_name]["transforms"]["fp_to_lab"] 
+            originvec = self.force_plates[dict_name]["offsets"]["lab_to_fp_origin_vicon"]                    
+            F_lab = np.zeros([ns,3])
+            M_lab = np.zeros([ns,3])
+            cop_lab = np.zeros([ns,3])
+            T_lab = np.zeros([ns,3])
+            for n in range(ns):
+                F_lab[n,:] = change_coordinates(F[n,:], rotmat, [0, 0, 0])
+                M_lab[n,:] = change_coordinates(M[n,:], rotmat, [0, 0, 0])
+                cop_lab[n,:] = change_coordinates(cop[n,:], rotmat, originvec)
+                T_lab[n,:] = change_coordinates(T[n,:], rotmat, [0, 0, 0])
+            forces[dict_name]["data"]["F_lab"] = F_lab
+            forces[dict_name]["data"]["M_lab"] = M_lab
+            forces[dict_name]["data"]["cop_lab"] = cop_lab
+            forces[dict_name]["data"]["T_lab"] = T_lab
+            
         self.forces = forces
         
         return None
@@ -214,7 +238,7 @@ def c3d_extract(f_path,lab,xdir):
 
 '''
 change_coordinates(oldvec, rotmat, originvec):
-    Perform coordinate transformation
+    Perform coordinate transformation and change of origin
 '''
 def change_coordinates(oldvec, rotmat, originvec):
     return originvec + np.dot(rotmat, oldvec)
