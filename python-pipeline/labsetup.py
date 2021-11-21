@@ -48,6 +48,8 @@ class LabKey():
         # markers
         self.marker_list = []
         self.offset_marker = []
+        
+        return None
 
 
 
@@ -78,9 +80,10 @@ class LabKeyLasemTrail(LabKey):
         self.transform_mat_fp_to_lab = create_transform_matrix(self.transform_fp_to_lab)
                 
         # markers
-        self.marker_list = []
-        self.offset_marker = []
+        self.marker_list = ["RSH", "LSH", "C7", "LELB", "LWR", "RELB", "RWR", "RASI", "LASI", "SACR", "P1", "P2", "LTHLP", "LTHLD", "LTHAP", "LTHAD", "LLEPI", "LPAT", "LTIAP", "LTIAD", "LTILAT", "LLMAL", "LHEEL", "LMFS", "LMFL", "LP5MT", "LP1MT", "LTOE", "RTHLP", "RTHLD", "RTHAP", "RTHAD", "RLEPI", "RPAT", "RTIAP", "RTIAD", "RTILAT", "RLMAL", "RHEEL", "RMFS", "RMFL", "RP5MT", "RP1MT", "RTOE"]
+        self.offset_marker = "SACR"
 
+        return None
 
 
 

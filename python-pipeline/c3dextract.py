@@ -18,7 +18,7 @@ import pyc3dserver as c3d
 
 '''
 C3DKey:
-    C3D data storage class containing all C3D file data
+    C3D data storage class containing all C3D file data.
 '''
 class C3DKey():
     def __init__(self, fname, fmeta, fforces, fmarkers):
@@ -26,26 +26,33 @@ class C3DKey():
         self.meta = fmeta
         self.forces = fforces
         self.markers = fmarkers
+        return None
 
 
 
 '''
 TrialKey:
     Trial data storage class containing all C3D data relevant to trial in the
-    laboratory and force plate frames
+    laboratory and force plate frames.
 '''
 class TrialKey():
-    def __init__(self, lab, c3dkey, xdir):
-        
+    def __init__(self, lab, c3dkey, xdir):       
         self.trial_name = str(c3dkey.name)
         self.lab_name = lab.lab_name
-
-        self.__set_markers(c3dkey)        
+        self.__set_events(c3dkey)
+        self.__set_markers(lab, c3dkey)        
         self.__set_force_plates(lab, c3dkey, xdir) 
-        self.__set_forces(lab,c3dkey)
+        self.__set_forces(lab, c3dkey)
+        return None
 
+    def __set_events(self, c3dkey):
+
+        events = {}
+        self.events = events
         
-    def __set_markers(self, c3dkey):
+        return None
+        
+    def __set_markers(self, lab, c3dkey):
         
         # initialise dict
         markers = {}
@@ -62,6 +69,9 @@ class TrialKey():
         else:
             markers["scale"] = 1
         markers["units"] = "m"
+
+        # offset.offset_marker marker
+        markers["offset_marker"] = lab.offset_marker
         
         # marker data
         markers["labels"] = c3dkey.markers["LABELS"]
@@ -81,23 +91,25 @@ class TrialKey():
         force_plates = {}
         
         # get force plate info for only used force plates
+        force_plates["fp_used"] = [] 
         for f in lab.fp_used:
             
             # dict field
             dict_name = lab.fp_dict_name_prefix + str(f)
-            force_plates[dict_name] = {}
+            force_plates["fp_used"].append(dict_name)
+            force_plates[dict_name] = {}            
             
             # coordinate transforms
             force_plates[dict_name]["transforms"] = {}
             force_plates[dict_name]["transforms"]["lab_to_opensim"] = lab.transform_mat_lab_to_opensim[[1, -1, 2, -2, 3, -3].index(xdir)]
-            force_plates[dict_name]["transforms"]["fp_to_lab"] = lab.transform_mat_fp_to_lab
+            force_plates[dict_name]["transforms"]["fp_to_lab"] = lab.transform_mat_fp_to_lab 
         
             # offsets
             offset_scale = self.markers["scale"]
             force_plates[dict_name]["offsets"] = {}
             force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"] = -1*c3dkey.meta["FORCE_PLATFORM"]["ORIGIN"][f-1] * offset_scale
-            force_plates[dict_name]["offsets"]["lab_to_fp_centre_vicon"] = find_fp_centre_from_lab_origin(c3dkey.meta["FORCE_PLATFORM"]["CORNERS"][f-1]) * offset_scale
-            force_plates[dict_name]["offsets"]["lab_to_fp_origin_vicon"] = change_coordinates(force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"], force_plates[dict_name]["transforms"]["fp_to_lab"], force_plates[dict_name]["offsets"]["lab_to_fp_centre_vicon"])
+            force_plates[dict_name]["offsets"]["lab_to_fp_centre_lab"] = find_fp_centre_from_lab_origin(c3dkey.meta["FORCE_PLATFORM"]["CORNERS"][f-1]) * offset_scale
+            force_plates[dict_name]["offsets"]["lab_to_fp_origin_lab"] = change_coordinates(force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"], force_plates[dict_name]["transforms"]["fp_to_lab"], force_plates[dict_name]["offsets"]["lab_to_fp_centre_lab"])
         
         self.force_plates = force_plates
         
@@ -172,19 +184,19 @@ class TrialKey():
             T = calculate_vertical_free_moment(ns, vc2o, F, M, cop)
             forces[dict_name]["data"]["T"] = T
             
-            # convert to vicon coordinates
-            originvec = [0, 0, 0]
+            # convert to lab (Vicon) coordinates
+            originvec0 = [0, 0, 0]
             rotmat = self.force_plates[dict_name]["transforms"]["fp_to_lab"] 
-            originvec = self.force_plates[dict_name]["offsets"]["lab_to_fp_origin_vicon"]                    
+            originvec = self.force_plates[dict_name]["offsets"]["lab_to_fp_origin_lab"]                    
             F_lab = np.zeros([ns,3])
             M_lab = np.zeros([ns,3])
             cop_lab = np.zeros([ns,3])
             T_lab = np.zeros([ns,3])
             for n in range(ns):
-                F_lab[n,:] = change_coordinates(F[n,:], rotmat, [0, 0, 0])
-                M_lab[n,:] = change_coordinates(M[n,:], rotmat, [0, 0, 0])
+                F_lab[n,:] = change_coordinates(F[n,:], rotmat, originvec0)
+                M_lab[n,:] = change_coordinates(M[n,:], rotmat, originvec0)
                 cop_lab[n,:] = change_coordinates(cop[n,:], rotmat, originvec)
-                T_lab[n,:] = change_coordinates(T[n,:], rotmat, [0, 0, 0])
+                T_lab[n,:] = change_coordinates(T[n,:], rotmat, originvec0)
             forces[dict_name]["data"]["F_lab"] = F_lab
             forces[dict_name]["data"]["M_lab"] = M_lab
             forces[dict_name]["data"]["cop_lab"] = cop_lab
@@ -193,6 +205,98 @@ class TrialKey():
         self.forces = forces
         
         return None
+
+
+
+
+'''
+OpenSimKey:
+    OpenSim data storage class for all data, model names, and other data for 
+    processing through OpenSim.
+'''
+class OpenSimKey():
+    def __init__(self, trialkey):
+        self.name = trialkey.trial_name
+        self.lab = trialkey.lab_name
+        self.__set_forces(trialkey)
+        self.__set_markers(trialkey)       
+        return None
+
+    def __set_markers(self,trialkey):
+        
+        # initialise dict
+        markers = {}
+        
+        # time and frame vectors
+        markers["data"] = {}
+        markers["data"]["time"] = trialkey.markers["time0"]
+        markers["data"]["frames"] = trialkey.markers["frames0"]                
+        
+        # get markers
+        for mkr in trialkey.markers["data"].keys():
+            
+            # current marker data
+            data_lab = trialkey.markers["data"][mkr]
+            
+            # convert data from lab coordinates to OpenSim coordinates
+            ns = len(trialkey.markers["time0"])
+            originvec0 = [0, 0, 0]
+            rotmat = trialkey.force_plates["FP3"]["transforms"]["lab_to_opensim"]
+            data = np.zeros([ns,3])
+            for n in range(ns): data = change_coordinates(data_lab[n,:], rotmat, originvec0)
+            markers["data"][mkr] = data 
+          
+        self.markers = markers
+        
+        return None
+                   
+    def __set_forces(self,trialkey):
+        
+        # initialise dict
+        forces = {}        
+ 
+        # get forces for only used force plates
+        for f in trialkey.force_plates["fp_used"]:
+            
+            # dict field
+            dict_name = f
+            forces[dict_name] = {}
+        
+            # time and frame vectors
+            forces[dict_name]["data"] = {}
+            forces[dict_name]["data"]["time"] = trialkey.forces[dict_name]["time0"]
+            forces[dict_name]["data"]["frames"] = np.arange(1,len(trialkey.forces[dict_name]["time0"]) + 1)
+
+            # force data in lab (Vicon) coordinates
+            F_lab = trialkey.forces[dict_name]["data"]["F_lab"]
+            cop_lab = trialkey.forces[dict_name]["data"]["cop_lab"]
+            T_lab = trialkey.forces[dict_name]["data"]["T_lab"]
+
+            # convert data from lab coordinates to OpenSim coordinates
+            ns = len(trialkey.forces[dict_name]["time0"])
+            originvec0 = [0, 0, 0]
+            rotmat = trialkey.force_plates["FP3"]["transforms"]["lab_to_opensim"]
+            F = np.zeros([ns,3])
+            cop = np.zeros([ns,3])
+            T = np.zeros([ns,3])
+            for n in range(ns):
+                F[n,:] = change_coordinates(F_lab[n,:], rotmat, originvec0)
+                cop[n,:] = change_coordinates(cop_lab[n,:], rotmat, originvec0)
+                T[n,:] = change_coordinates(T_lab[n,:], rotmat, originvec0)            
+            forces[dict_name]["data"]["F"] = F_lab
+            forces[dict_name]["data"]["cop"] = cop_lab
+            forces[dict_name]["data"]["T"] = T_lab
+            
+        self.forces = forces
+        
+        return None
+    
+    def __set_events(self):
+
+        
+
+        return None
+
 
 
 
@@ -222,8 +326,7 @@ def c3d_extract(f_path,lab,xdir):
     
     # subject name
     fname= fmeta["SUBJECTS"]["NAMES"][0]
-    if not fname:
-        fname = "NoName"
+    if not fname: fname = "NoName"
     
     # C3D key with all data from C3D file
     c3dkey = C3DKey(fname, fmeta, fforces, fmarkers)
@@ -231,7 +334,10 @@ def c3d_extract(f_path,lab,xdir):
     # trial data only from C3D key
     trialkey = TrialKey(lab, c3dkey, xdir)
     
-    return c3dkey, trialkey
+    # opensim data
+    osimkey = OpenSimKey(trialkey)
+    
+    return c3dkey, trialkey, osimkey
     
 
 
@@ -241,13 +347,13 @@ change_coordinates(oldvec, rotmat, originvec):
     Perform coordinate transformation and change of origin
 '''
 def change_coordinates(oldvec, rotmat, originvec):
-    return originvec + np.dot(rotmat, oldvec)
+    return originvec + np.matmul(rotmat, oldvec)
 
 
 
 '''
 find_fp_centre_from_lab_origin(corners):
-    Find force plate centre in Vicon coordinates
+    Find force plate centre in lab (Vicon) coordinates
 '''
 def find_fp_centre_from_lab_origin(corners):
     
@@ -273,7 +379,7 @@ calculate_centre_of_pressure_fp(n, vc2o, F, M):
     Calculate centre of pressure in force plate coordinates using equations
     from Tim Dorn's GaitExtract toolbox. Note: the GaitExtract documentation
     contains an error in the equations on page 14. The correct equations are
-    given in getKinetics.m
+    given in the Matlab function getKinetics.m
         
         Given:
         
@@ -324,3 +430,15 @@ def calculate_vertical_free_moment(ns, vc2o, F, M, cop):
     for n in range(ns):
         T[n,2] = M[n,2] - ((cop[n,0] - vc2o[0]) * F[n,1]) + ((cop[n,1] - vc2o[1]) * F[n,0])
     return T
+
+
+
+'''
+floor_force_plate_during_foot_off(data, threshold):
+    Set force plate data to zero during foot off if vertical component falls
+    below the threshold value
+'''
+def floor_force_plate_during_foot_off(data, vidx, threshold):
+    idxs = [i for i, j in enumerate(data[:,vidx]) if j < threshold]
+    for i in idxs: data[i,:] = 0
+    return data
