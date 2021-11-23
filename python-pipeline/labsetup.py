@@ -20,7 +20,7 @@ import numpy as np
 
 '''
 LabKey():
-    Base class for lab set up info
+    Base class for lab set up info.
 '''
 class LabKey():
     def __init__(self):
@@ -55,7 +55,7 @@ class LabKey():
 
 '''
 labKeyLasemTrail(LabKey):
-    LabKey for LASEM TRAIL project
+    LabKey for LASEM TRAIL project.
 '''
 class LabKeyLasemTrail(LabKey):
     def __init__(self):
@@ -96,13 +96,13 @@ class LabKeyLasemTrail(LabKey):
 
 '''
 create_transform_set_lab_to_opensim(tvec_x):
-    Create lab to opensim rotation matrices from transform vectors
+    Create lab to opensim rotation matrices from transform vectors. Note: Z 
+    transforms are assumed and may need to be respecified depending on the lab 
+    set-up as there are 2 possible Z-direction configurations.
 '''
 def create_transform_set_lab_to_opensim(tvec_x):
     
     # initiliase set of transform matrices for directions: X -X Y -Y Z -Z
-    # note: Z transforms are assumed and may need to be respecified depending
-    #   on the lab set-up as there are 2 possible configurations
     transform_set = [None]*6
     
     # Vicon X ---> OpenSim X

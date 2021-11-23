@@ -47,7 +47,49 @@ class TrialKey():
 
     def __set_events(self, c3dkey):
 
+        # initialise dict        
         events = {}
+        
+        # return empty dict if no events
+        if c3dkey.meta["EVENT"]["USED"] == 0:
+            self.events = events
+            return None
+        
+        # all event labels
+        foot = [f[0].upper() for f in c3dkey.meta["EVENT"]["CONTEXTS"]]
+        events["labels"] = [foot[i] + "F" + f.split()[1][0] for i, f in enumerate(c3dkey.meta["EVENT"]["LABELS"])]
+        
+        # all event times
+        events["time"] = c3dkey.meta["EVENT"]["TIMES"][:,1]
+        events["time0"] = c3dkey.meta["EVENT"]["TIMES"][:,1] - c3dkey.markers["TIME"][0]
+        
+        # temporarily assume running task only, so only process first full
+        # stride cycle (IFS ---> CFO), will need to change this later to accept
+        # any sequence to allow for processing different types of tasks
+        
+        # *********************
+        # RUNNING ONLY (HARD-CODED TEMPORARILY)
+        
+        # calculate the time window of interest (assume first FS is start of
+        # the trial time window
+        fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
+        foidx1 = np.where(np.char.find(events["labels"],"FO")>=0)[0][1]
+        events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
+        events["window_label"] = events["labels"][fsidx0:foidx1 + 1]
+        
+        # find force plate sequence (assume FP4 is always first)
+        # note: sequences defined as per GaitExtract using a 2D array:
+        #   rows: event intervals
+        #   col1: right foot
+        #   col2: left foot
+        if events["window_label"][0][0] == "R":
+            events["fp_sequence"] = np.array([[4, 0], [0, 0], [3, 0]])
+        else:
+            events["fp_sequence"] = np.array([[3, 0], [0, 0], [0, 4]],)
+        
+        # *********************
+        
+        
         self.events = events
         
         return None
@@ -56,30 +98,34 @@ class TrialKey():
         
         # initialise dict
         markers = {}
+        markers["labels"] = c3dkey.markers["LABELS"]
         
-        # marker rate and units
+        # marker rate
         markers["rate"] = c3dkey.markers["RATE"]    
         orig_units = c3dkey.markers["UNITS"]
         
         # marker scale factor, convert to m
+        markers["units"] = "m"
         if orig_units == "mm":
             markers["scale"] = 0.001
         elif orig_units == "m":
             markers["scale"] = 1
         else:
             markers["scale"] = 1
-        markers["units"] = "m"
 
         # offset.offset_marker marker
         markers["offset_marker"] = lab.offset_marker
         
-        # marker data
-        markers["labels"] = c3dkey.markers["LABELS"]
-        markers["data"] = c3dkey.markers["DATA"]["POS"]
+        # marker time and frames
         markers["time"] = c3dkey.markers["TIME"]
         markers["time0"] = c3dkey.markers["TIME"] - c3dkey.markers["TIME"][0]    
         markers["frames"] = c3dkey.markers["FRAME"]
         markers["frames0"] = c3dkey.markers["FRAME"] - c3dkey.markers["FRAME"][0]    
+
+        # marker data, convert to m
+        markers["data"] = {}
+        for mkr in c3dkey.markers["DATA"]["POS"].keys():
+            markers["data"][mkr] = c3dkey.markers["DATA"]["POS"][mkr] * markers["scale"]
         
         self.markers = markers
         
@@ -215,14 +261,14 @@ OpenSimKey:
     processing through OpenSim.
 '''
 class OpenSimKey():
-    def __init__(self, trialkey):
+    def __init__(self, trialkey, threshold):
         self.name = trialkey.trial_name
         self.lab = trialkey.lab_name
-        self.__set_forces(trialkey)
-        self.__set_markers(trialkey)       
+        self.__set_markers(trialkey) 
+        self.__set_forces(trialkey, threshold)      
         return None
 
-    def __set_markers(self,trialkey):
+    def __set_markers(self, trialkey):
         
         # initialise dict
         markers = {}
@@ -230,9 +276,10 @@ class OpenSimKey():
         # time and frame vectors
         markers["data"] = {}
         markers["data"]["time"] = trialkey.markers["time0"]
-        markers["data"]["frames"] = trialkey.markers["frames0"]                
+        markers["data"]["frames"] = np.arange(1,len(trialkey.markers["time0"]) + 1)             
         
         # get markers
+        data = {}
         for mkr in trialkey.markers["data"].keys():
             
             # current marker data
@@ -242,15 +289,24 @@ class OpenSimKey():
             ns = len(trialkey.markers["time0"])
             originvec0 = [0, 0, 0]
             rotmat = trialkey.force_plates["FP3"]["transforms"]["lab_to_opensim"]
-            data = np.zeros([ns,3])
-            for n in range(ns): data = change_coordinates(data_lab[n,:], rotmat, originvec0)
-            markers["data"][mkr] = data 
-          
+            data[mkr] = np.zeros([ns,3])
+            for n in range(ns): data[mkr][n,:] = change_coordinates(data_lab[n,:], rotmat, originvec0)
+                  
+        # marker offset
+        markers["offset"] = [0., 0., 0.]
+        if trialkey.markers["offset_marker"]: markers["offset"] = [data[trialkey.markers["offset_marker"]][0, 0], 0., data[trialkey.markers["offset_marker"]][0, 2]]
+                       
+        # offset X and Z trajectories (OpenSim coordinates system) of markers
+        data_offset = data
+        for mkr in data.keys():
+            for n in range(ns): data_offset[mkr][n,:] = data[mkr][n,:] - markers["offset"]
+            markers["data"][mkr] = data_offset[mkr]
+            
         self.markers = markers
         
         return None
                    
-    def __set_forces(self,trialkey):
+    def __set_forces(self, trialkey, threshold):
         
         # initialise dict
         forces = {}        
@@ -283,9 +339,24 @@ class OpenSimKey():
                 F[n,:] = change_coordinates(F_lab[n,:], rotmat, originvec0)
                 cop[n,:] = change_coordinates(cop_lab[n,:], rotmat, originvec0)
                 T[n,:] = change_coordinates(T_lab[n,:], rotmat, originvec0)            
-            forces[dict_name]["data"]["F"] = F_lab
-            forces[dict_name]["data"]["cop"] = cop_lab
-            forces[dict_name]["data"]["T"] = T_lab
+            
+            # when vertical force falls below threshold, assume no contact and 
+            # set all force plate data to zero
+            #idxs = [i for i, j in enumerate(F[:,1]) if j < threshold]
+            #for i in idxs:
+            #    F[i,:] = 0
+            #    cop[i,:] = 0
+            #    T[i,:] = 0
+            
+            # offset the CoP using offset marker
+            offset = [0., 0., 0.]
+            if trialkey.markers["offset_marker"]: offset = self.markers["offset"]
+            for n in range(ns): cop[n,:] = cop[n,:] - offset
+            
+            # storage
+            forces[dict_name]["data"]["F"] = F
+            forces[dict_name]["data"]["cop"] = cop
+            forces[dict_name]["data"]["T"] = T
             
         self.forces = forces
         
@@ -313,7 +384,7 @@ c3d_extract(f_path, lab, xdir):
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(f_path,lab,xdir):
+def c3d_extract(f_path, lab, xdir, threshold):
     
     # load C3D file
     itf = c3d.c3dserver()
@@ -335,7 +406,7 @@ def c3d_extract(f_path,lab,xdir):
     trialkey = TrialKey(lab, c3dkey, xdir)
     
     # opensim data
-    osimkey = OpenSimKey(trialkey)
+    osimkey = OpenSimKey(trialkey, threshold)
     
     return c3dkey, trialkey, osimkey
     
@@ -439,6 +510,5 @@ floor_force_plate_during_foot_off(data, threshold):
     below the threshold value
 '''
 def floor_force_plate_during_foot_off(data, vidx, threshold):
-    idxs = [i for i, j in enumerate(data[:,vidx]) if j < threshold]
-    for i in idxs: data[i,:] = 0
+
     return data

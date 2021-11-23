@@ -14,4 +14,6 @@ import labsetup as labs
 lasem = labs.LabKeyLasemTrail()
 
 # return C3DKey and TrialKey
-c3dkey, trialkey, osimkey = c3dex.c3d_extract(r"C:\Users\Owner\Documents\data\TRAIL Test Data\Events\TRAIL_071\Baseline\TRAIL_071_EP_01.c3d",lasem,2)
+c3dfile = r"C:\Users\Owner\Documents\data\TRAIL Test Data\Events\TRAIL_071\Baseline\TRAIL_071_EP_01.c3d"
+c3dkey, trialkey, osimkey = c3dex.c3d_extract(c3dfile, lasem, 2, 15)
+
