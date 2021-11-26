@@ -20,7 +20,7 @@ import numpy as np
 
 '''
 LabKey():
-    Base class for lab set up info.
+    Template class for lab set up info.
 '''
 class LabKey():
     def __init__(self):

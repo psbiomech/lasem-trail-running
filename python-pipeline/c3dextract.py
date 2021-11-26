@@ -7,6 +7,8 @@ LASEM C3D file data extract
 
 import numpy as np
 import pyc3dserver as c3d
+import pickle as pk
+import os
 
 
 
@@ -398,11 +400,26 @@ class OpenSimKey():
 
 
 '''
-c3d_extract(c3dpath, c3dpath, lab, xdir):
+c3d_batch_extract(meta, lab, xdir, threshold, ref_model):
+    Batch processing for c3d_extract().
+'''
+def c3d_batch_extract(meta, lab, xdir, threshold, ref_model):
+    for subj in meta:
+        for group in meta[subj]["trials"]:
+            for trial in  meta[subj]["trials"][group]:
+                c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
+                c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, xdir, threshold, ref_model)
+    return None
+
+
+
+'''
+c3d_extract(trial, c3dpath, c3dpath, lab, xdir, threshold, ref_model):
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(c3dfile, c3dpath, lab, xdir, threshold, ref_model):
+def c3d_extract(trial, c3dfile, c3dpath, lab, xdir, threshold, ref_model):
     
     # load C3D file
     itf = c3d.c3dserver()
@@ -426,7 +443,12 @@ def c3d_extract(c3dfile, c3dpath, lab, xdir, threshold, ref_model):
     # opensim data
     osimkey = OpenSimKey(trialkey, ref_model, c3dpath, threshold)
     
-    return c3dkey, trialkey, osimkey
+    # save key files
+    with open(os.path.join(c3dpath, trial + "_c3dkey.pkl"),"wb") as f: pk.dump(c3dkey, f)
+    with open(os.path.join(c3dpath, trial + "_trialkey.pkl"),"wb") as g: pk.dump(trialkey, g)
+    with open(os.path.join(c3dpath, trial + "_osimkey.pkl"),"wb") as h: pk.dump(osimkey, h)
+    
+    return osimkey
     
 
 

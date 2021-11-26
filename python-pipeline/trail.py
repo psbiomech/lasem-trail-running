@@ -6,19 +6,25 @@ Main: extract TRAIL test data
 """
 
 #import numpy as np
+import usersettings as uset
 import c3dextract as c3dex
 import labsetup as labs
 import opensimsetup as osimsetup
+import builddatabase as bd
+
 
 
 # set the lab
 lasem = labs.LabKeyLasemTrail()
 
-# return C3D data
-c3dpath = r"C:\Users\Owner\Documents\data\TRAIL Test Data\Events\TRAIL_071\Baseline"
-c3dfile = "TRAIL_071_EP_01.c3d"
-ref_model = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\reference_model\Rajagopal2015.osim"
-c3dkey, trialkey, osimkey = c3dex.c3d_extract(c3dfile, c3dpath, lasem, 2, 15, ref_model)
+# user settings
+user = uset.TRAILSettings()
+
+# build output database
+traildb = bd.build_database(user)
+
+# extract C3D data and create OpenSim input files
+c3dex.c3d_batch_extract(traildb, lasem, 2, 15, user.refmodelfile)
 
 # write OpenSim setup files
-data = osimsetup.write_ground_forces_mot_file(osimkey)
+#data = osimsetup.write_ground_forces_mot_file(osimkey)

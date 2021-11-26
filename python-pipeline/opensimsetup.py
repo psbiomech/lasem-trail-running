@@ -31,7 +31,7 @@ import numpy as np
 
 '''
 write_ground_forces_mot_file(osimkey):
-    Write .mot file for ground forces (external loads)
+    Write .mot file for ground forces (external loads).
 '''
 def write_ground_forces_mot_file(osimkey):
 
@@ -43,17 +43,16 @@ def write_ground_forces_mot_file(osimkey):
 
     # write headers
     fname = osimkey.name + "_grf.mot"
-    f = open(fname,"w")
-    f.write("%s\n" % fname)
-    f.write("nRows=%d\n" % ns)
-    f.write("nColumns=%s\n" % nc)
-    f.write("\n")
-    f.write("name %s\n" % fname)
-    f.write("datacolumns %d\n" % nc)
-    f.write("datarows %d\n" % ns)
-    f.write("range %f %f\n" % (t0, tf))
-    f.write("endheader\n")
-    f.close()
+    with open(fname,"w") as f:
+        f.write("%s\n" % fname)
+        f.write("nRows=%d\n" % ns)
+        f.write("nColumns=%s\n" % nc)
+        f.write("\n")
+        f.write("name %s\n" % fname)
+        f.write("datacolumns %d\n" % nc)
+        f.write("datarows %d\n" % ns)
+        f.write("range %f %f\n" % (t0, tf))
+        f.write("endheader\n")
 
     # build data array
     datamat = np.zeros([ns, nc])
