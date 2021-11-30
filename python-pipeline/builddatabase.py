@@ -7,24 +7,43 @@ Build output database for OpenSim projects
 
 import glob
 import os
+import re
 import shutil
-import opensimsetup as osimsetup
+
 
 
 '''
-build_database(usersettings):
-    Build OpenSim output database from UserSettings, return metadata dict.
+-----------------------------------
+------------- CLASSES -------------
+-----------------------------------
 '''
-def build_database(usersettings):
+
+# NO CLASSES
+
+
+
+'''
+-----------------------------------
+------------ FUNCTIONS ------------
+-----------------------------------
+'''
+
+
+'''
+build_database(user, task):
+    Build OpenSim output database from user, return metadata dict.
+'''
+def build_database(user, task):
     
     # parse database, get subject list
-    inpath = os.path.join(usersettings.rootpath, usersettings.infolder, usersettings.subjprefix + "*")
+    inpath = os.path.join(user.rootpath, user.infolder, user.subjprefix + "*")
     folderlist = glob.glob(inpath)
     subjlist = [os.path.split(f)[1] for f in folderlist]
     
     # build metadata dict
     meta = {}
-    outpath = os.path.join(usersettings.rootpath, usersettings.outfolder)
+    outpath = os.path.join(user.rootpath, user.outfolder)
+    fnpatobj = re.compile(user.fnpat)   
     for n, subj in enumerate(subjlist):
         
         # basic info
@@ -34,7 +53,7 @@ def build_database(usersettings):
         
         # trial subfolders
         meta[subj]["trials"] = {}
-        for group in usersettings.trialgroupfolders:
+        for group in user.trialgroupfolders:
             
             # parse subfolders
             meta[subj]["trials"][group] = {}
@@ -42,16 +61,17 @@ def build_database(usersettings):
             groupfolderlist = glob.glob(groupinpath)
             triallist = [os.path.splitext(os.path.split(f)[1])[0] for f in groupfolderlist]
             
-            # trials
+            # trials (for selected task only)
             for m, trial in enumerate(triallist):
-                meta[subj]["trials"][group][trial] = {}
-                meta[subj]["trials"][group][trial]["trial"] = trial
-                meta[subj]["trials"][group][trial]["c3dfile"] = trial + ".c3d"
-                meta[subj]["trials"][group][trial]["osim"] = subj + ".osim"
-                meta[subj]["trials"][group][trial]["inpath"] = os.path.split(groupfolderlist[m])[0]
-                meta[subj]["trials"][group][trial]["outpath"] = os.path.join(outpath, subj, group, trial)
-
-    
+                trialprefix = fnpatobj.fullmatch(trial).group(1)
+                if trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()]]:                
+                    meta[subj]["trials"][group][trial] = {}
+                    meta[subj]["trials"][group][trial]["trial"] = trial
+                    meta[subj]["trials"][group][trial]["c3dfile"] = trial + ".c3d"
+                    meta[subj]["trials"][group][trial]["osim"] = subj + ".osim"
+                    meta[subj]["trials"][group][trial]["inpath"] = os.path.split(groupfolderlist[m])[0]
+                    meta[subj]["trials"][group][trial]["outpath"] = os.path.join(outpath, subj, group, trial)
+   
     # create subdfolders if required and copy C3D files into output database
     if not os.path.exists(outpath): os.makedirs(outpath)
     for subj in meta:

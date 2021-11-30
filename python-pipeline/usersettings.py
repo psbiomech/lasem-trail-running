@@ -7,7 +7,6 @@ User settings parameters
 
 
 
-
 '''
 -----------------------------------
 ------------- CLASSES -------------
@@ -31,13 +30,19 @@ class UserSettings():
         # model folders
         self.refmodelfile = []
         self.refmodelpath = []
+
         
         # file prefixes
         self.subjprefix = []
-        self.trialprefix = []
         
+        # file suffixes based on task
+        self.trialprefixes = {}
         
+        # file name format regex pattern
+        self.fnpat = []        
         
+    
+    
         
 '''
 TRAILSettings:
@@ -58,5 +63,11 @@ class TRAILSettings(UserSettings):
         
         # file prefixes
         self.subjprefix = "TRAIL_"
-        self.trialprefix = ""
         
+        # file suffixes based on task
+        self.trialprefixes = {}
+        self.trialprefixes["run"] = ["EP", "FAST"]
+                        
+        # file name format regex pattern:
+        #   (subjprefix)_(num code)_(trialprefix)_(alphanum code)
+        self.fnpat = "TRAIL_\d+_(\w+)_\w+"

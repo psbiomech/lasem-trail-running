@@ -8,6 +8,7 @@ LASEM C3D file data extract
 import numpy as np
 import pyc3dserver as c3d
 import pickle as pk
+import opensimsetup as osimset
 import os
 
 
@@ -38,9 +39,10 @@ TrialKey:
     laboratory and force plate frames.
 '''
 class TrialKey():
-    def __init__(self, lab, c3dkey, xdir):       
+    def __init__(self, lab, task, c3dkey, xdir):       
         self.trial_name = str(c3dkey.name)
         self.lab_name = lab.lab_name
+        self.task = task
         self.__set_events(c3dkey)
         self.__set_markers(lab, c3dkey, xdir)        
         self.__set_force_plates(lab, c3dkey, xdir) 
@@ -91,6 +93,7 @@ class TrialKey():
         #   rows: event intervals
         #   col1: right foot
         #   col2: left foot
+        events["fp_sequence"] = [[0, 0]]
         if events["window_labels"][0][0] == "R":
             events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3]])
         else:
@@ -281,6 +284,7 @@ class OpenSimKey():
         self.name = trialkey.trial_name
         self.lab = trialkey.lab_name
         self.model = trialkey.trial_name + ".osim"
+        self.task = trialkey.task
         self.outpath = c3dpath
         self.ref_model = ref_model
         self.__set_markers(trialkey) 
@@ -400,17 +404,19 @@ class OpenSimKey():
 
 
 '''
-c3d_batch_extract(meta, lab, xdir, threshold, ref_model):
-    Batch processing for c3d_extract().
+c3d_batch_process(user, meta, lab, task, xdir, threshold):
+    Batch processing for C3D data extract, and input file export
 '''
-def c3d_batch_extract(meta, lab, xdir, threshold, ref_model):
+def c3d_batch_process(user, meta, lab, task, xdir, threshold):
+    osimkey = {}
     for subj in meta:
         for group in meta[subj]["trials"]:
             for trial in  meta[subj]["trials"][group]:
                 c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
-                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, xdir, threshold, ref_model)
-    return None
+                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, user.refmodelfile)
+                #write_ground_forces_mot_file(osimkey)
+    return osimkey
 
 
 
@@ -419,7 +425,7 @@ c3d_extract(trial, c3dpath, c3dpath, lab, xdir, threshold, ref_model):
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(trial, c3dfile, c3dpath, lab, xdir, threshold, ref_model):
+def c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, ref_model):
     
     # load C3D file
     itf = c3d.c3dserver()
@@ -438,7 +444,7 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, xdir, threshold, ref_model):
     c3dkey = C3DKey(fname, fmeta, fforces, fmarkers)
 
     # trial data only from C3D key
-    trialkey = TrialKey(lab, c3dkey, xdir)
+    trialkey = TrialKey(lab, task, c3dkey, xdir)
     
     # opensim data
     osimkey = OpenSimKey(trialkey, ref_model, c3dpath, threshold)
