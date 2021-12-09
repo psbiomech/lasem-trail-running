@@ -8,7 +8,7 @@ LASEM C3D file data extract
 import numpy as np
 import pyc3dserver as c3d
 import pickle as pk
-import writeopensiminput as wosi
+#import writeopensiminput as wosi
 import os
 
 
@@ -24,8 +24,9 @@ C3DKey:
     C3D data storage class containing all C3D file data.
 '''
 class C3DKey():
-    def __init__(self, fname, fmeta, fforces, fmarkers):
-        self.name = fname
+    def __init__(self, sname, tname, fmeta, fforces, fmarkers):
+        self.name = sname
+        self.trial_name = tname
         self.meta = fmeta
         self.forces = fforces
         self.markers = fmarkers
@@ -40,7 +41,7 @@ TrialKey:
 '''
 class TrialKey():
     def __init__(self, lab, task, c3dkey, xdir):       
-        self.trial_name = str(c3dkey.name)
+        self.trial_name = str(c3dkey.trial_name)
         self.lab_name = lab.lab_name
         self.task = task
         self.__set_events(c3dkey)
@@ -299,6 +300,8 @@ class OpenSimKey():
         # time and frame vectors
         markers["time"] = trialkey.markers["time0"]
         markers["frames"] = np.arange(1,len(trialkey.markers["time0"]) + 1)             
+        markers["rate"] = trialkey.markers["rate"]
+        markers["units"] = trialkey.markers["units"]
         
         # get markers
         data = {}
@@ -436,12 +439,13 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, ref_model):
     fforces = c3d.get_dict_forces(itf, frame=True, time=True)
     fmarkers = c3d.get_dict_markers(itf, frame=True, time=True)
     
-    # subject name
-    fname= fmeta["SUBJECTS"]["NAMES"][0]
-    if not fname: fname = "NoName"
+    # subject and trial name
+    sname= fmeta["SUBJECTS"]["NAMES"][0]
+    if not sname: sname = "NoName"
+    tname = trial
     
     # C3D key with all data from C3D file
-    c3dkey = C3DKey(fname, fmeta, fforces, fmarkers)
+    c3dkey = C3DKey(sname, tname, fmeta, fforces, fmarkers)
 
     # trial data only from C3D key
     trialkey = TrialKey(lab, task, c3dkey, xdir)

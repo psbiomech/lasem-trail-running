@@ -7,6 +7,7 @@ Write OpenSim data files and setup files
 
 import pandas as pd
 import numpy as np
+import os
 
 
 '''
@@ -41,7 +42,8 @@ def write_ground_forces_mot_file(osimkey):
 
     # write headers
     fname = osimkey.name + "_grf.mot"
-    with open(fname,"w") as f:
+    fpath = osimkey.outpath
+    with open(os.path.join(fpath,fname),"w") as f:
         f.write("%s\n" % fname)
         f.write("nRows=%d\n" % ns)
         f.write("nColumns=%s\n" % nc)
@@ -79,6 +81,37 @@ write_marker_trajctory_trc_file(osimkey):
 '''
 def write_marker_trajctory_trc_file(osimkey):
     
-    
+    # output dataframe info
+    ns = len(osimkey.markers["time"])
+    nm = len(osimkey.markers) - 3
+    rate = osimkey.markers["rate"]
+    units = osimkey.markers["units"]
+
+    # remove non-marker dict keys
+    markernames0 = list(osimkey.markers.keys())
+    markernames0.remove("rate")
+    markernames0.remove("units")
+    markernames0.remove("offset")
+    markernames0.remove("frames")
+    markernames0.remove("time")
+
+    # build marker headers
+    markernames = ""
+    markernames = markernames.join(["Frame#\t","Time\t"] + list(map(lambda x: x + "\t\t\t", markernames0)))
+    dirnums = list(range(1,len(markernames0) + 1))
+    dirnames = ""
+    dirnames = dirnames.join(["\t"] + list(map(lambda n: "\tX%d\tY%d\tZ%d" % (n, n, n), dirnums)))
+
+    # write headers
+    fname = osimkey.name + "_markers.trc"
+    fpath = osimkey.outpath
+    with open(os.path.join(fpath,fname),"w") as f:
+        f.write("PathFileType\t4\t(X/Y/Z)\t%s\n" % fname)
+        f.write("DataRate\tCameraRate\tNumFrames\tNumMarkers\tUnits\tOrigDataRate\tOrigDataStartFrame\tOrigNumFrames\n")
+        f.write("%d\t%d\t%d\t%d\t%s\t%d\t%d\t%d\n" % (rate, rate, ns, nm, units, rate, 1, ns))
+        f.write("%s\n" % markernames)
+        f.write("%s\n" % dirnames)
+        
+
 
     
