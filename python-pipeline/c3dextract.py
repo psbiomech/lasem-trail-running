@@ -8,7 +8,7 @@ LASEM C3D file data extract
 import numpy as np
 import pyc3dserver as c3d
 import pickle as pk
-import opensimsetup as osimset
+import writeopensimsetup as wos
 import os
 
 

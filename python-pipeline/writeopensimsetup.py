@@ -5,8 +5,6 @@ Write OpenSim data files and setup files
 @author: Prasanna Sritharan
 """
 
-
-import c3dextract as c3dex
 import pandas as pd
 import numpy as np
 
