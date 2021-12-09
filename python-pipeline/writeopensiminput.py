@@ -70,4 +70,15 @@ def write_ground_forces_mot_file(osimkey):
     data.to_csv(fname, mode="a", sep="\t", header=True, index=False)
     
     return data
+
+
+
+'''
+write_marker_trajctory_trc_file(osimkey):
+    Write .trc file for marker trajectories.
+'''
+def write_marker_trajctory_trc_file(osimkey):
+    
+    
+
     
