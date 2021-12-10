@@ -44,7 +44,7 @@ def build_database(user, task):
     meta = {}
     outpath = os.path.join(user.rootpath, user.outfolder)
     fnpatobj = re.compile(user.fnpat)   
-    for n, subj in enumerate(subjlist):
+    for n, subj in enumerate(subjlist):        
         
         # basic info
         meta[subj] = {}
@@ -64,7 +64,7 @@ def build_database(user, task):
             # trials (for selected task only)
             for m, trial in enumerate(triallist):
                 trialprefix = fnpatobj.fullmatch(trial).group(1)
-                if trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()]]:                
+                if trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()]]:                                   
                     meta[subj]["trials"][group][trial] = {}
                     meta[subj]["trials"][group][trial]["trial"] = trial
                     meta[subj]["trials"][group][trial]["c3dfile"] = trial + ".c3d"

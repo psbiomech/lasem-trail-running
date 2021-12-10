@@ -8,7 +8,7 @@ LASEM C3D file data extract
 import numpy as np
 import pyc3dserver as c3d
 import pickle as pk
-#import writeopensiminput as wosi
+import writeopensiminput as wosi
 import os
 
 
@@ -408,17 +408,36 @@ class OpenSimKey():
 
 '''
 c3d_batch_process(user, meta, lab, task, xdir, threshold):
-    Batch processing for C3D data extract, and input file export
+    Batch processing for C3D data extract, and OpenSim input file write
 '''
 def c3d_batch_process(user, meta, lab, task, xdir, threshold):
     osimkey = {}
     for subj in meta:
+        
+        print("%s" % "*" * 30)
+        print("SUBJECT: %s" % subj)
+        print("%s" % "*" * 30)
+        print("\n")
+        
         for group in meta[subj]["trials"]:
+            
+            print("Group: %s" % group)
+            print("%s" % "=" * 30)
+            
             for trial in  meta[subj]["trials"][group]:
+                
+                print("\nTrial: %s" % trial)
+                print("%s" % "-" * 30)
+                
+                # extract C3D data for trial
                 c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                 osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, user.refmodelfile)
-                #write_ground_forces_mot_file(osimkey)
+                
+                # write TRC and MOT files for OpenSim
+                wosi.write_ground_forces_mot_file(osimkey)
+                wosi.write_marker_trajctory_trc_file(osimkey)
+                
     return osimkey
 
 

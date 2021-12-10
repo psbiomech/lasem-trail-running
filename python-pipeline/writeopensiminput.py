@@ -69,7 +69,7 @@ def write_ground_forces_mot_file(osimkey):
     data = pd.DataFrame(datamat, columns=headers)
         
     # write table
-    data.to_csv(fname, mode="a", sep="\t", header=True, index=False)
+    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=True, index=False)
     
     return data
 
@@ -83,7 +83,8 @@ def write_marker_trajctory_trc_file(osimkey):
     
     # output dataframe info
     ns = len(osimkey.markers["time"])
-    nm = len(osimkey.markers) - 3
+    nm = len(osimkey.markers) - 5
+    nc = 2 + (nm * 3)
     rate = osimkey.markers["rate"]
     units = osimkey.markers["units"]
 
@@ -108,10 +109,26 @@ def write_marker_trajctory_trc_file(osimkey):
     with open(os.path.join(fpath,fname),"w") as f:
         f.write("PathFileType\t4\t(X/Y/Z)\t%s\n" % fname)
         f.write("DataRate\tCameraRate\tNumFrames\tNumMarkers\tUnits\tOrigDataRate\tOrigDataStartFrame\tOrigNumFrames\n")
-        f.write("%d\t%d\t%d\t%d\t%s\t%d\t%d\t%d\n" % (rate, rate, ns, nm, units, rate, 1, ns))
+        f.write("%d\t%d\t%d\t%d\t%s\t%d\t%d\t%d\n" % (rate, rate, ns, nm, "mm", rate, 1, ns))
         f.write("%s\n" % markernames)
         f.write("%s\n" % dirnames)
         
-
-
+    # build data array
+    datamat = np.zeros([ns, nc])
+    datamat[:,0] = osimkey.markers["frames"]
+    datamat[:,1] = osimkey.markers["time"]
+    n = 2
+    for mkr in markernames0:
+        mkrdata = osimkey.markers[mkr]
+        if units.casefold() == "m": mkrdata = mkrdata * 1000
+        datamat[:,n:n+3] = mkrdata
+        n = n + 3
     
+    # convert to dataframe
+    data = pd.DataFrame(datamat)
+    data[0] = data[0].astype(int)
+    
+    # write table, no headers
+    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=False, index=False)
+    
+    return data
