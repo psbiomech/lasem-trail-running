@@ -38,8 +38,10 @@ class UserSettings():
         # file prefixes
         self.subjprefix = []
 
-        # static file
-        self.staticfile = []        
+        # static trial info
+        self.staticprefix = []
+        self.staticused = []
+        self.staticfpchannel = []        
         
         # file suffixes based on task
         self.trialprefixes = {}
@@ -74,8 +76,10 @@ class TRAILSettings(UserSettings):
         # file prefixes
         self.subjprefix = "TRAIL_"
         
-        # static file
-        self.staticfile = "Static_01"        
+        # static trial info
+        self.staticprefix = "STATIC"
+        self.staticused = "Static_01"
+        self.staticfpchannel = "Force.Fz3"
         
         # file suffixes based on task
         self.trialprefixes = {}

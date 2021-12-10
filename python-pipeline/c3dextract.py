@@ -282,6 +282,8 @@ class OpenSimKey():
     def __init__(self, trialkey, ref_model, c3dpath, threshold):
         self.subject = trialkey.subject_name
         self.trial = trialkey.trial_name
+        self.mass = 0.0
+        self.age = 0.0
         self.lab = trialkey.lab_name
         self.model = trialkey.trial_name + ".osim"
         self.task = trialkey.task
@@ -570,3 +572,21 @@ def calculate_vertical_free_moment(ns, vc2o, F, M, cop):
         T[n,2] = M[n,2] - ((cop[n,0] - vc2o[0]) * F[n,1]) + ((cop[n,1] - vc2o[1]) * F[n,0])
     return T
 
+
+
+'''
+calculate_subject_mass(c3dkey):
+    Calculate subject mass from a static trial.
+'''
+def calculate_subject_mass(c3dkey, user):
+    
+    # raw force plate data
+    data = c3dkey.forces["DATA"][user.staticfpchannel]
+    frames = list(range(0,len(data)))
+    
+    # trim data to a window from 25% to 75% of the datastream length
+    idx0 = numpy.percentile(frames,25)
+    idx1 = numpy.percentile(frames,75)
+    
+    
+    

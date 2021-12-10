@@ -63,15 +63,21 @@ def build_database(user, task):
             
             # trials (for selected task only)
             for m, trial in enumerate(triallist):
-                trialprefix = fnpatobj.fullmatch(trial).group(1)
-                if trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()]]:                                   
+                trialprefix = fnpatobj.fullmatch(trial).group(1)              
+                if (trialprefix.casefold() == user.staticprefix.casefold()) or (trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()]]):                                   
                     meta[subj]["trials"][group][trial] = {}
                     meta[subj]["trials"][group][trial]["trial"] = trial
                     meta[subj]["trials"][group][trial]["c3dfile"] = trial + ".c3d"
                     meta[subj]["trials"][group][trial]["osim"] = subj + ".osim"
                     meta[subj]["trials"][group][trial]["inpath"] = os.path.split(groupfolderlist[m])[0]
                     meta[subj]["trials"][group][trial]["outpath"] = os.path.join(outpath, subj, group, trial)
-   
+                    meta[subj]["trials"][group][trial]["isstatic"] = False
+                    meta[subj]["trials"][group][trial]["usedstatic"] = False
+                    if trialprefix.casefold() == user.staticprefix.casefold():
+                        meta[subj]["trials"][group][trial]["isstatic"] = True
+                        if trial.casefold().endswith(user.staticused.casefold()):
+                            meta[subj]["trials"][group][trial]["usedstatic"] = True
+                            
     # create subdfolders if required and copy C3D files into output database
     if not os.path.exists(outpath): os.makedirs(outpath)
     for subj in meta:
