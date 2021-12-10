@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Write OpenSim data files and setup files
+Run OpenSim pipeline, write input data files
 
 @author: Prasanna Sritharan
 """
 
+import opensim
 import pandas as pd
 import numpy as np
+import pickle as pk
 import os
 
 
@@ -29,6 +31,35 @@ import os
 
 
 '''
+run_opensim_scale(osimkey,user):
+    Set up and run the Tool using the API. A generic XML setup file is
+    initially loaded, and then modified using the API. The Tool is then run 
+    via the API. Results are printed to text files in the remote folder.
+'''
+def run_opensim_scale(osimkey, user):
+    
+    # reference setup file
+    refsetuppath = user.refsetuppath
+    refsetupfile = user.refsetupscale
+    
+    # trial folder, model and trial
+    fpath = osimkey.outpath
+    model = osimkey.subject
+    trial = osimkey.trial
+
+    print('Creating scaled model: %s\n' % model);
+    
+    # create an ScaleTool from a generic setup file
+    tool = opensim.ScaleTool(os.path.join(refsetuppath, refsetupfile))
+    tool.setPathToSubject("")
+    
+    # set subject mass
+    tool.setSubjectMass(0)
+
+
+
+
+'''
 write_ground_forces_mot_file(osimkey):
     Write .mot file for ground forces (external loads).
 '''
@@ -41,7 +72,7 @@ def write_ground_forces_mot_file(osimkey):
     tf = osimkey.forces["time"][-1]
 
     # write headers
-    fname = osimkey.name + "_grf.mot"
+    fname = osimkey.trial + "_grf.mot"
     fpath = osimkey.outpath
     with open(os.path.join(fpath,fname),"w") as f:
         f.write("%s\n" % fname)
@@ -104,7 +135,7 @@ def write_marker_trajctory_trc_file(osimkey):
     dirnames = dirnames.join(["\t"] + list(map(lambda n: "\tX%d\tY%d\tZ%d" % (n, n, n), dirnums)))
 
     # write headers
-    fname = osimkey.name + "_markers.trc"
+    fname = osimkey.trial + "_markers.trc"
     fpath = osimkey.outpath
     with open(os.path.join(fpath,fname),"w") as f:
         f.write("PathFileType\t4\t(X/Y/Z)\t%s\n" % fname)

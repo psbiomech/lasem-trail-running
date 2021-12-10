@@ -8,7 +8,7 @@ LASEM C3D file data extract
 import numpy as np
 import pyc3dserver as c3d
 import pickle as pk
-import writeopensiminput as wosi
+import opensimpipeline as osp
 import os
 
 
@@ -25,7 +25,7 @@ C3DKey:
 '''
 class C3DKey():
     def __init__(self, sname, tname, fmeta, fforces, fmarkers):
-        self.name = sname
+        self.subject_name = sname
         self.trial_name = tname
         self.meta = fmeta
         self.forces = fforces
@@ -41,6 +41,7 @@ TrialKey:
 '''
 class TrialKey():
     def __init__(self, lab, task, c3dkey, xdir):       
+        self.subject_name = str(c3dkey.subject_name)
         self.trial_name = str(c3dkey.trial_name)
         self.lab_name = lab.lab_name
         self.task = task
@@ -68,9 +69,7 @@ class TrialKey():
         events["time"] = c3dkey.meta["EVENT"]["TIMES"][:,1]
         events["time0"] = c3dkey.meta["EVENT"]["TIMES"][:,1] - (c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
         
-        
-    
-        
+                
         # *********************
         # RUNNING ONLY (HARD-CODED TEMPORARILY)
         
@@ -102,8 +101,7 @@ class TrialKey():
         
         # *********************
         
-        
-        
+                
         self.events = events
         
         return None
@@ -282,7 +280,8 @@ OpenSimKey:
 '''
 class OpenSimKey():
     def __init__(self, trialkey, ref_model, c3dpath, threshold):
-        self.name = trialkey.trial_name
+        self.subject = trialkey.subject_name
+        self.trial = trialkey.trial_name
         self.lab = trialkey.lab_name
         self.model = trialkey.trial_name + ".osim"
         self.task = trialkey.task
@@ -406,6 +405,7 @@ class OpenSimKey():
 '''
 
 
+
 '''
 c3d_batch_process(user, meta, lab, task, xdir, threshold):
     Batch processing for C3D data extract, and OpenSim input file write
@@ -435,8 +435,8 @@ def c3d_batch_process(user, meta, lab, task, xdir, threshold):
                 osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, user.refmodelfile)
                 
                 # write TRC and MOT files for OpenSim
-                wosi.write_ground_forces_mot_file(osimkey)
-                wosi.write_marker_trajctory_trc_file(osimkey)
+                osp.write_ground_forces_mot_file(osimkey)
+                osp.write_marker_trajctory_trc_file(osimkey)
                 
     return osimkey
 
@@ -479,7 +479,6 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, ref_model):
     
     return osimkey
     
-
 
 
 '''
