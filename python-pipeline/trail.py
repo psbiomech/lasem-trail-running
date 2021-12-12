@@ -29,10 +29,10 @@ print("Done.\n")
 
 # build output database
 print("Building output database... ", end="")
-traildb = bd.build_database(user, "run")
+traildb = bd.build_database("TRAIL", user, "run")
 print("Done.\n")
 
 # extract C3D data and create OpenSim input files
 print("Extracting C3D data, creating OpenSim files...\n")
-osimkey = c3dex.c3d_batch_process(user, traildb, lasem, "run", 2, 15)
+osimkey = c3dex.c3d_batch_process(user, traildb, lasem, 2, 15, -1)
 print("\nC3D data extract done.\n")

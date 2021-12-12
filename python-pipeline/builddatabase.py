@@ -9,6 +9,7 @@ import glob
 import os
 import re
 import shutil
+import pickle as pk
 
 
 
@@ -30,10 +31,10 @@ import shutil
 
 
 '''
-build_database(user, task):
+build_database(project, user, task):
     Build OpenSim output database from user, return metadata dict.
 '''
-def build_database(user, task):
+def build_database(project, user, task):
     
     # parse database, get subject list
     inpath = os.path.join(user.rootpath, user.infolder, user.subjprefix + "*")
@@ -49,6 +50,7 @@ def build_database(user, task):
         # basic info
         meta[subj] = {}
         meta[subj]["subj"] = subj
+        meta[subj]["project"] = project
         meta[subj]["outpath"] = os.path.join(outpath, subj)
         
         # trial subfolders
@@ -65,15 +67,17 @@ def build_database(user, task):
             for m, trial in enumerate(triallist):
                 trialprefix = fnpatobj.fullmatch(trial).group(1)              
                 if (trialprefix.casefold() == user.staticprefix.casefold()) or (trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()]]):                                   
-                    meta[subj]["trials"][group][trial] = {}
+                    meta[subj]["trials"][group][trial] = {}                    
                     meta[subj]["trials"][group][trial]["trial"] = trial
                     meta[subj]["trials"][group][trial]["c3dfile"] = trial + ".c3d"
                     meta[subj]["trials"][group][trial]["osim"] = subj + ".osim"
                     meta[subj]["trials"][group][trial]["inpath"] = os.path.split(groupfolderlist[m])[0]
                     meta[subj]["trials"][group][trial]["outpath"] = os.path.join(outpath, subj, group, trial)
+                    meta[subj]["trials"][group][trial]["task"] = task
                     meta[subj]["trials"][group][trial]["isstatic"] = False
                     meta[subj]["trials"][group][trial]["usedstatic"] = False
                     if trialprefix.casefold() == user.staticprefix.casefold():
+                        meta[subj]["trials"][group][trial]["task"] = "static"
                         meta[subj]["trials"][group][trial]["isstatic"] = True
                         if trial.casefold().endswith(user.staticused.casefold()):
                             meta[subj]["trials"][group][trial]["usedstatic"] = True
@@ -81,6 +85,7 @@ def build_database(user, task):
     # create subdfolders if required and copy C3D files into output database
     if not os.path.exists(outpath): os.makedirs(outpath)
     for subj in meta:
+        if subj == "project": continue
         if not os.path.exists(meta[subj]["outpath"]): os.makedirs(meta[subj]["outpath"])
         for group in meta[subj]["trials"]:
             if not os.path.exists(os.path.join(meta[subj]["outpath"], group)): os.makedirs(os.path.join(meta[subj]["outpath"], group))
@@ -89,4 +94,7 @@ def build_database(user, task):
                 if not os.path.exists(trialoutpath): os.makedirs(trialoutpath)
                 shutil.copy(os.path.join(meta[subj]["trials"][group][trial]["inpath"], meta[subj]["trials"][group][trial]["c3dfile"]), trialoutpath)
                 
+    # save the metadata dict
+    with open(os.path.join(outpath, project + ".pkl"),"wb") as fid: pk.dump(meta, fid)
+    
     return meta

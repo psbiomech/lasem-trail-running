@@ -5,6 +5,7 @@ LASEM C3D file data extract
 @author: Prasanna Sritharan
 """
 
+import statistics as stats
 import numpy as np
 import pyc3dserver as c3d
 import pickle as pk
@@ -40,68 +41,87 @@ TrialKey:
     laboratory and force plate frames.
 '''
 class TrialKey():
-    def __init__(self, lab, task, c3dkey, xdir):       
+    def __init__(self, lab, task, c3dkey, xdir, static_fp_channel, mass):       
         self.subject_name = str(c3dkey.subject_name)
         self.trial_name = str(c3dkey.trial_name)
         self.lab_name = lab.lab_name
         self.task = task
-        self.__set_events(c3dkey)
+        self.mass = mass
+        self.__set_events(c3dkey, task, static_fp_channel)
         self.__set_markers(lab, c3dkey, xdir)        
         self.__set_force_plates(lab, c3dkey, xdir) 
         self.__set_forces(lab, c3dkey)
         return None
 
-    def __set_events(self, c3dkey):
+    def __set_events(self, c3dkey, task, static_fp_channel):
 
         # initialise dict        
         events = {}
         
-        # return empty dict if no events
-        if c3dkey.meta["EVENT"]["USED"] == 0:
-            self.events = events
-            return None
-        
-        # all event labels
-        foot = [f[0].upper() for f in c3dkey.meta["EVENT"]["CONTEXTS"]]
-        events["labels"] = [foot[i] + "F" + f.split()[1][0] for i, f in enumerate(c3dkey.meta["EVENT"]["LABELS"])]
-        
-        # all event times
-        events["time"] = c3dkey.meta["EVENT"]["TIMES"][:,1]
-        events["time0"] = c3dkey.meta["EVENT"]["TIMES"][:,1] - (c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
-        
-                
-        # *********************
-        # RUNNING ONLY (HARD-CODED TEMPORARILY)
-        
-        # temporarily assume running task only, so only process first full
-        # stride cycle (IFS ---> CFO), will need to change this later to accept
-        # any sequence to allow for processing different types of tasks
-        
-        # calculate the time window of interest (assume first FS is start of
-        # the trial time window
-        fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
-        foidx1 = np.where(np.char.find(events["labels"],"FO")>=0)[0][1]
-        events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
-        events["window_labels"] = events["labels"][fsidx0:foidx1 + 1]
-        
-        # list the individual intervals
-        events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
-        
-        # find force plate sequence for each interval (row) defined in the
-        # array window_intervals0
-        # note: sequences defined as per GaitExtract using a 2D array:
-        #   rows: event intervals
-        #   col1: right foot
-        #   col2: left foot
-        events["fp_sequence"] = [[0, 0]]
-        if events["window_labels"][0][0] == "R":
-            events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3]])
+        # process events, or if no events, add general events
+        if c3dkey.meta["EVENT"]["USED"] == 0:            
+            events["labels"] = ["GEN", "GEN"]
+            events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]            
         else:
-            events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0]],)
+            foot = [f[0].upper() for f in c3dkey.meta["EVENT"]["CONTEXTS"]]
+            events["labels"] = [foot[i] + "F" + f.split()[1][0] for i, f in enumerate(c3dkey.meta["EVENT"]["LABELS"])]
+            events["time"] = c3dkey.meta["EVENT"]["TIMES"][:,1]
         
-        # *********************
+        # relative time, normalise to first frame
+        events["time0"] = events["time"] - (c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
+            
         
-                
+        # ###################################
+        # PROCESS EVENTS BASED ON TASK
+        
+        # match task and perform required computations
+        # (unfortunately we cannot use match-case before Python 3.10)
+        if task.casefold() == "static":
+            
+            # calculate subject mass, return end frames for 25%-75% window
+            mass, fidx0, fidx1 = calculate_subject_mass(c3dkey, static_fp_channel)
+            self.mass = mass
+            
+            # time window
+            events["window_time0"] = events["time0"][fidx0:fidx1 + 1]
+            events["window_labels"] = events["labels"][fidx0:fidx1 + 1]
+            
+            # no force plate sequence
+            events["fp_sequence"] = [[0, 0]]
+            
+            
+        elif task.casefold() == "run":
+                    
+            # temporarily assume first full stride cycle is the required stride
+            # cycle (IFS ---> CFO), will need to change this later to accept
+            # any stride cycle in a C3D file with multiple stride cycles.
+            
+            # calculate the time window of interest (assume first FS is start of
+            # the trial time window
+            fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
+            foidx1 = np.where(np.char.find(events["labels"],"FO")>=0)[0][1]
+            events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
+            events["window_labels"] = events["labels"][fsidx0:foidx1 + 1]
+            
+            # list the individual intervals
+            events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
+            
+            # find force plate sequence for each interval (row) defined in the
+            # array window_intervals0
+            # note: sequences defined as per GaitExtract using a 2D array:
+            #   rows: event intervals
+            #   col1: right foot
+            #   col2: left foot
+            events["fp_sequence"] = [[0, 0]]
+            if events["window_labels"][0][0] == "R":
+                events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3]])
+            else:
+                events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0]],)
+            
+        #
+        # ###################################
+        
+                        
         self.events = events
         
         return None
@@ -282,7 +302,7 @@ class OpenSimKey():
     def __init__(self, trialkey, ref_model, c3dpath, threshold):
         self.subject = trialkey.subject_name
         self.trial = trialkey.trial_name
-        self.mass = 0.0
+        self.mass = trialkey.mass
         self.age = 0.0
         self.lab = trialkey.lab_name
         self.model = trialkey.trial_name + ".osim"
@@ -351,44 +371,45 @@ class OpenSimKey():
         forces["time"] = trialkey.forces["time0"]
         forces["frames"] = np.arange(1,len(trialkey.forces["time0"]) + 1)
 
-        # get forces for only used force plates
-        forces["data"] = {}
-        for i, fp in enumerate(trialkey.force_plates["fp_used"]):
-            
-            # dict field
-            dict_name = trialkey.force_plates["fp_used_str"][i]
-
-            # force data in lab (Vicon) coordinates
-            F_lab = trialkey.forces[dict_name]["data"]["F_lab"]
-            cop_lab = trialkey.forces[dict_name]["data"]["cop_lab"]
-            T_lab = trialkey.forces[dict_name]["data"]["T_lab"]
-
-            # convert data from lab coordinates to OpenSim coordinates
-            originvec0 = [0, 0, 0]
-            rotmat = trialkey.force_plates[dict_name]["transforms"]["lab_to_opensim"]
-            F = np.zeros([ns,3])
-            cop = np.zeros([ns,3])
-            T = np.zeros([ns,3])
-            for n in range(ns):
-                F[n,:] = change_coordinates(F_lab[n,:], rotmat, originvec0)
-                cop[n,:] = change_coordinates(cop_lab[n,:], rotmat, originvec0)
-                T[n,:] = change_coordinates(T_lab[n,:], rotmat, originvec0)            
-            
-            # offset the CoP using offset marker
-            offset = [0., 0., 0.]
-            if trialkey.markers["offset_marker"]: offset = self.markers["offset"]
-            for n in range(ns): cop[n,:] = cop[n,:] - offset
-
-            # for each force plate, add force plate data for any active
-            # intervals to the output array for the relevant foot
-            for h, g in enumerate(leg):
-                for n, m in enumerate(trialkey.events["fp_sequence"][:,h]):
-                    if m == fp:                        
-                        idx0 = np.where(forces["time"] >= trialkey.events["window_intervals0"][n,0])[0][0]
-                        idx1 = np.where(forces["time"] <= trialkey.events["window_intervals0"][n,1])[0][-1]
-                        data[g]["F"][idx0:idx1+1,:] = F[idx0:idx1+1,:]
-                        data[g]["cop"][idx0:idx1+1,:] = cop[idx0:idx1+1,:]
-                        data[g]["T"][idx0:idx1+1,:] = T[idx0:idx1+1,:]
+        # get forces for only used force plates (dynamic trials only)
+        if trialkey.task != "static":
+            forces["data"] = {}
+            for i, fp in enumerate(trialkey.force_plates["fp_used"]):
+                
+                # dict field
+                dict_name = trialkey.force_plates["fp_used_str"][i]
+    
+                # force data in lab (Vicon) coordinates
+                F_lab = trialkey.forces[dict_name]["data"]["F_lab"]
+                cop_lab = trialkey.forces[dict_name]["data"]["cop_lab"]
+                T_lab = trialkey.forces[dict_name]["data"]["T_lab"]
+    
+                # convert data from lab coordinates to OpenSim coordinates
+                originvec0 = [0, 0, 0]
+                rotmat = trialkey.force_plates[dict_name]["transforms"]["lab_to_opensim"]
+                F = np.zeros([ns,3])
+                cop = np.zeros([ns,3])
+                T = np.zeros([ns,3])
+                for n in range(ns):
+                    F[n,:] = change_coordinates(F_lab[n,:], rotmat, originvec0)
+                    cop[n,:] = change_coordinates(cop_lab[n,:], rotmat, originvec0)
+                    T[n,:] = change_coordinates(T_lab[n,:], rotmat, originvec0)            
+                
+                # offset the CoP using offset marker
+                offset = [0., 0., 0.]
+                if trialkey.markers["offset_marker"]: offset = self.markers["offset"]
+                for n in range(ns): cop[n,:] = cop[n,:] - offset
+    
+                # for each force plate, add force plate data for any active
+                # intervals to the output array for the relevant foot
+                for h, g in enumerate(leg):
+                    for n, m in enumerate(trialkey.events["fp_sequence"][:,h]):
+                        if m == fp:                        
+                            idx0 = np.where(forces["time"] >= trialkey.events["window_intervals0"][n,0])[0][0]
+                            idx1 = np.where(forces["time"] <= trialkey.events["window_intervals0"][n,1])[0][-1]
+                            data[g]["F"][idx0:idx1+1,:] = F[idx0:idx1+1,:]
+                            data[g]["cop"][idx0:idx1+1,:] = cop[idx0:idx1+1,:]
+                            data[g]["T"][idx0:idx1+1,:] = T[idx0:idx1+1,:]
             
         # store force data
         forces["data"] = data
@@ -409,10 +430,13 @@ class OpenSimKey():
 
 
 '''
-c3d_batch_process(user, meta, lab, task, xdir, threshold):
-    Batch processing for C3D data extract, and OpenSim input file write
+c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
+    Batch processing for C3D data extract, and OpenSim input file write,
+    obtains mass from used static trial in each group if mass = -1.
 '''
-def c3d_batch_process(user, meta, lab, task, xdir, threshold):
+def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
+
+    # extract C3D data for OpenSim
     osimkey = {}
     for subj in meta:
         
@@ -426,30 +450,82 @@ def c3d_batch_process(user, meta, lab, task, xdir, threshold):
             print("Group: %s" % group)
             print("%s" % "=" * 30)
             
-            for trial in  meta[subj]["trials"][group]:
+            
+            # ###################################
+            # PROCESS STATIC TRIAL
+            
+            mass = 0.0
+            for trial in  meta[subj]["trials"][group]:                
                 
-                print("\nTrial: %s" % trial)
+                # ignore dynamic trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                usedstatic = meta[subj]["trials"][group][trial]["usedstatic"]
+                if not(isstatic): continue
+            
+                print("\nStatic trial: %s" % trial)
                 print("%s" % "-" * 30)
-                
-                # extract C3D data for trial
+            
+                # process C3D file and generate OsimKey for trial
                 c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
-                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, user.refmodelfile)
+                task = meta[subj]["trials"][group][trial]["task"]
+                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, user.refmodelfile, user.staticfpchannel, mass)
                 
-                # write TRC and MOT files for OpenSim
+                # write OpenSim input data files
                 osp.write_ground_forces_mot_file(osimkey)
-                osp.write_marker_trajctory_trc_file(osimkey)
+                osp.write_marker_trajctory_trc_file(osimkey)            
                 
+                # get the mass from the used static trial
+                if usedstatic: mass = osimkey.mass
+            
+            #
+            # ###################################            
+            
+            
+            # override the mass from used static trial if user supplied
+            if usermass != -1: mass = usermass
+            
+            
+            # ###################################
+            # PROCESS DYNAMIC TRIAL
+            
+            # process dynamic C3D files
+            for trial in  meta[subj]["trials"][group]:                
+                
+                # ignore static trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                if isstatic: continue
+            
+                print("\nDynamic trial: %s" % trial)
+                print("%s" % "-" * 30)
+            
+                # process C3D file and generate OsimKey for trial
+                c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
+                c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                task = meta[subj]["trials"][group][trial]["task"]
+                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, user.refmodelfile, user.staticfpchannel, mass)
+                
+                # write OpenSim input data files
+                osp.write_ground_forces_mot_file(osimkey)
+                osp.write_marker_trajctory_trc_file(osimkey)            
+                     
+            #
+            # ###################################                    
+
+                
+
+                                
     return osimkey
 
 
 
 '''
-c3d_extract(trial, c3dpath, c3dpath, lab, xdir, threshold, ref_model):
+c3d_extract(trial, c3dpath, c3dpath, lab, xdir, threshold, ref_model, 
+            static_fp_channel, mass):
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, ref_model):
+def c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, ref_model, static_fp_channel, mass):
     
     # load C3D file
     itf = c3d.c3dserver()
@@ -469,7 +545,7 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, ref_model):
     c3dkey = C3DKey(sname, tname, fmeta, fforces, fmarkers)
 
     # trial data only from C3D key
-    trialkey = TrialKey(lab, task, c3dkey, xdir)
+    trialkey = TrialKey(lab, task, c3dkey, xdir, static_fp_channel, mass)
     
     # opensim data
     osimkey = OpenSimKey(trialkey, ref_model, c3dpath, threshold)
@@ -575,18 +651,27 @@ def calculate_vertical_free_moment(ns, vc2o, F, M, cop):
 
 
 '''
-calculate_subject_mass(c3dkey):
-    Calculate subject mass from a static trial.
+calculate_subject_mass(c3dkey, static_fp_channel):
+    Calculate subject mass from a static trial using vertical force plate data 
+    from the middle part of the trial.
 '''
-def calculate_subject_mass(c3dkey, user):
+def calculate_subject_mass(c3dkey, static_fp_channel):
     
     # raw force plate data
-    data = c3dkey.forces["DATA"][user.staticfpchannel]
+    data = c3dkey.forces["DATA"][static_fp_channel]
     frames = list(range(0,len(data)))
     
     # trim data to a window from 25% to 75% of the datastream length
-    idx0 = numpy.percentile(frames,25)
-    idx1 = numpy.percentile(frames,75)
+    # (arbitrary window in middle to avoid movement at start and end of trial)
+    idx0 = round(np.percentile(frames,25))
+    idx1 = round(np.percentile(frames,75))
+    data = data[idx0:idx1 + 1]
+    
+    # calculate average mass
+    mass = abs(stats.mean(data)) / 9.81
+    
+    return mass, idx0, idx1
+    
     
     
     
