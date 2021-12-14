@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 import pickle as pk
 import os
+import shutil
 
 
 '''
@@ -25,13 +26,84 @@ import os
 
 '''
 -----------------------------------
------------- FUNCTIONS ------------
+---- FUNCTIONS: OPENSIM TOOLS -----
 -----------------------------------
 '''
 
 
 '''
-run_opensim_scale(osimkey,user):
+opensim_pipeline(meta, user):
+    Run OpenSim pipeline: Scale, IK, ID, SO, RRA, CMC.
+'''
+def opensim_pipeline(meta, user, analyses):
+    
+    # lower case analyses list
+    analyses = [a.casefold() for a in analyses]
+    
+    # run OpenSim for all valid trials
+    for subj in meta:
+        for group in meta[subj]["trials"]:
+            
+            # find the static trial for model scaling
+            modelfullpath = ""
+            modelfile = ""
+            for trial in meta[subj]["trials"][group]:
+                if meta[subj]["trials"][group][trial]["usedstatic"]:
+                    
+                    # load the OsimKey
+                    pkpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
+                    with open(os.path.join(pkpath, pkfile),"rb") as fid: 
+                        osimkey = pk.load(fid)
+                    
+                    # run the scale tool if requested
+                    if "scale" in analyses:
+                        run_opensim_scale(osimkey, user)
+                        analyses.remove("scale")
+                    
+                    # get the full model path
+                    modelfile = meta[subj]["trials"][group][trial]["osim"]
+                    modelfullpath = os.path.join(pkpath, modelfile)
+            
+            # find dynamic trials and run requested analyses
+            for trial in meta[subj]["trials"][group]:
+                if not meta[subj]["trials"][group][trial]["isstatic"]:
+
+                    # load the OsimKey
+                    pkpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
+                    with open(os.path.join(pkpath, pkfile),"rb") as fid: 
+                        osimkey = pk.load(fid)
+                    
+                    # copy the model into the trial folder
+                    shutil.copy(modelfullpath, pkpath)
+                    
+                    # run the required analyses
+                    for ans in analyses:
+                        if not os.path.exists(os.path.join(pkpath, ans)): os.makedirs(os.path.join(pkpath, ans))
+                        if ans == "ik":
+                            #run_opensim_ik(osimkey, user)
+                            print("%s: IK" % meta[subj]["trials"][group][trial]["trial"])
+                        elif ans == "id":
+                            #run_opensim_id(osimkey, user)
+                            pass
+                        elif ans == "so":
+                            #run_opensim_so(osimkey, user)
+                            pass
+                        elif ans == "rra":
+                            #run_opensim_rra(osimkey, user)
+                            pass
+                        elif ans == "cmc":
+                            #run_opensim_cmc(osimkey, user)
+                            pass
+   
+                            
+    return None
+
+
+
+'''
+run_opensim_scale(osimkey, user):
     Set up and run the Tool using the API. A generic XML setup file is
     initially loaded, and then modified using the API. The Tool is then run 
     via the API. Results are printed to text files in the remote folder.
@@ -51,7 +123,8 @@ def run_opensim_scale(osimkey, user):
     model = osimkey.subject
     trial = osimkey.trial
 
-    print('Creating scaled model: %s\n' % model);
+    print("\nCreating scaled model: %s" % model);
+    print("------------------------------------------------")
     
     # create an ScaleTool from a generic setup file
     tool = opensim.ScaleTool(os.path.join(refsetuppath, refsetupfile))
@@ -67,28 +140,92 @@ def run_opensim_scale(osimkey, user):
     # ******************************
     # GENERIC MODEL MAKER
     
+    print("Initialising GenericModelMaker...")
+    
     # set the model file name
     modelmaker = tool.getGenericModelMaker()
-    modelmaker.setModelFilename(os.path.join(refmodelpath, refmodelfile))
+    modelmaker.setModelFileName(os.path.join(refmodelpath, refmodelfile))
     
 
     # ******************************
     # MODEL SCALER
+    
+    print("Setting up ModelScaler...")
     
     # set the static TRC file to be used for scaling
     modelscaler = tool.getModelScaler()
     modelscaler.setMarkerFileName(os.path.join(fpath, trial + "_markers.trc"))
     
     # set time window
-    twindow = osimkey.ArrayDouble(0, 2)
+    twindow = opensim.ArrayDouble(0, 2)
     twindow.set(0, 0.50)
     twindow.set(1, 0.55)
+    modelscaler.setTimeRange(twindow)
     
     # set output model file name
-    modelscaler.setOutputModelFileName()
+    modelscaler.setOutputModelFileName(os.path.join(fpath, model + ".osim"))
     
+    
+    # ******************************
+    # MARKER PLACER   
+
+    print("Setting up MarkerPlacer...")
+
+    # set the static TRC file to be used for scaling
+    markerplacer = tool.getMarkerPlacer()
+    markerplacer.setMarkerFileName(os.path.join(fpath, trial + "_markers.trc"))
+    
+    # set time window
+    markerplacer.setTimeRange(twindow)
+    
+    # set static trial output motion file
+    markerplacer.setOutputMotionFileName(os.path.join(fpath, trial + "_static_ik.mot"))
+    
+    # set output model file
+    markerplacer.setOutputModelFileName(os.path.join(fpath, model + ".osim"))    
+     
+    # set output marker file
+    markerplacer.setOutputMarkerFileName(os.path.join(fpath, trial + "_markers.xml"))   
 
 
+    # ******************************
+    # RUN TOOL
+    
+    print("Running the ScaleTool...")
+    
+    # save the settings in a setup file
+    tool.printToXML(os.path.join(fpath, trial + "_Setup_Scale.xml"))
+
+    # run the tool
+    try:
+        tool.run()
+        print("Done.")
+    except:
+        print("---> ERROR: Scale failed. Skipping Scale for %s." % trial)
+    finally:
+        print("------------------------------------------------\n")
+        
+    return None
+
+
+
+'''
+run_opensim_ik(osimkey, user):
+    Set up and run the Tool using the API. A generic XML setup file is
+    initially loaded, and then modified using the API. The Tool is then run
+    via the API. Results are printed to text files in the remote folder.
+'''
+def run_opensim_ik(osimkey, user):
+    pass
+
+
+
+
+'''
+-----------------------------------
+----- FUNCTIONS: OPENSIM DATA -----
+-----------------------------------
+'''
 
 
 '''

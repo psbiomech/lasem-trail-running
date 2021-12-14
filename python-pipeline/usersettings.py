@@ -27,9 +27,9 @@ class UserSettings():
         self.outfolder = []
         self.trialgroupfolders = []
         
-        # model folders
-        self.refmodelfile = []
+        # reference model
         self.refmodelpath = []
+        self.refmodelfile = []
 
         # setup file folders
         self.refsetuppath = []
@@ -47,8 +47,7 @@ class UserSettings():
         self.trialprefixes = {}
         
         # file name format regex pattern
-        self.fnpat = []        
-        
+        self.fnpat = []              
     
     
         
@@ -65,13 +64,13 @@ class TRAILSettings(UserSettings):
         self.outfolder = "outputDatabase"
         self.trialgroupfolders = ["Baseline"]
         
-        # model folders
-        self.refmodelfile = "Rajagopal2015.osim"
-        self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensom-reference-model"
+        # reference model
+        self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model"
+        self.refmodelfile = "LASEM_TRAIL_ReferenceModel.osim"
 
         # setup file folders
-        self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensom-reference-setup"
-        self.refsetupscale = "ACLR_Reference_Setup_Scale.xml"
+        self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
+        self.refsetupscale = "LASEM_TRAIL_Scale_Setup.xml"
         
         # file prefixes
         self.subjprefix = "TRAIL_"

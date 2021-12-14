@@ -305,14 +305,27 @@ class OpenSimKey():
         self.mass = trialkey.mass
         self.age = 0.0
         self.lab = trialkey.lab_name
-        self.model = trialkey.trial_name + ".osim"
+        self.model = trialkey.subject_name + ".osim"
         self.task = trialkey.task
         self.outpath = c3dpath
-        self.ref_model = ref_model
+        self.__set_events(trialkey)
         self.__set_markers(trialkey) 
         self.__set_forces(trialkey, threshold)      
         return None
-
+    
+    def __set_events(self, trialkey):
+        
+        # initialise dict
+        events = {}
+        
+        # add events for trial
+        events["time"] = trialkey.events["window_time0"]
+        events["labels"] = trialkey.events["window_labels"]
+    
+        self.events = events
+    
+        return None
+    
     def __set_markers(self, trialkey):
         
         # initialise dict
@@ -423,7 +436,7 @@ class OpenSimKey():
 
 '''
 -----------------------------------
------------- FUNCTIONS ------------
+----- FUNCTIONS: C3D EXTRACT ------
 -----------------------------------
 '''
 
@@ -437,9 +450,11 @@ c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
 def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
 
     # extract C3D data for OpenSim
+    print("\n")
     osimkey = {}
     for subj in meta:
         
+        print("\n")
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
@@ -455,7 +470,7 @@ def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
             # PROCESS STATIC TRIAL
             
             mass = 0.0
-            for trial in  meta[subj]["trials"][group]:                
+            for trial in meta[subj]["trials"][group]:                
                 
                 # ignore dynamic trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
@@ -557,6 +572,15 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, ref_model, 
     
     return osimkey
     
+
+
+
+
+'''
+-----------------------------------
+--------- FUNCTIONS: MISC ---------
+-----------------------------------
+'''
 
 
 '''

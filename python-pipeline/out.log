@@ -1,0 +1,704 @@
+Processing subject TRAIL_071
+
+Step 1: Loading generic model
+Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model\LASEM_TRAIL_ReferenceModel.osim
+
+Step 2: Scaling generic model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Measurement 'PelvisXY'
+	pair 0 (RASI, P2): model = 0.197602, experimental = 0.197369
+	pair 1 (LASI, P1): model = 0.20899, experimental = 0.209822
+	overall scale factor = 1.0014
+Measurement 'PelvisZ'
+	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.268103
+	pair 1 (P2, P1): model = 0.084741, experimental = 0.0849186
+	overall scale factor = 1.00133
+Measurement 'ThighXY'
+	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.492079
+	pair 1 (LASI, LLEPI): model = 0.509271, experimental = 0.503164
+	overall scale factor = 0.981443
+Measurement 'ThighZ'
+	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.120091
+	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.114203
+	overall scale factor = 1.00329
+Measurement 'ShankXY'
+	pair 0 (RLEPI, RLMAL): model = 0.4144, experimental = 0.414454
+	pair 1 (LLEPI, LLMAL): model = 0.413166, experimental = 0.412551
+	overall scale factor = 0.99932
+Measurement 'ShankZ'
+	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0834773
+	pair 1 (LMMAL, LLMAL): model = 0.083507, experimental = 0.083354
+	overall scale factor = 0.998432
+Measurement 'FootXY'
+	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.230092
+	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.234656
+	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.218475
+	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.238189
+	overall scale factor = 1.00108
+Measurement 'FootZ'
+	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.105358
+	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.105039
+	overall scale factor = 1.00057
+Measurement 'TorsoX'
+	pair 0 (RASI, C7): model = 0.557483, experimental = 0.561899
+	pair 1 (LASI, C7): model = 0.552121, experimental = 0.549899
+	overall scale factor = 1.00195
+Measurement 'TorsoY'
+	pair 0 (C7, RASI): model = 0.557483, experimental = 0.561899
+	pair 1 (C7, LASI): model = 0.552121, experimental = 0.549899
+	pair 2 (C7, P2): model = 0.50115, experimental = 0.498591
+	pair 3 (C7, P2): model = 0.50115, experimental = 0.498591
+	overall scale factor = 0.998421
+Measurement 'TorsoZ'
+	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.26953
+	overall scale factor = 0.997195
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071 from model TRAIL_071
+
+Step 3: Placing markers on model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Averaged frames from time 0.5 to 0.55 in C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (frames 101 to 111)
+Deleted 0 unused markers from model TRAIL_071
+Frame at (t=0.5):	total squared error = 0.000435319, marker error: RMS=0.00417286, max=0.0106109 (RASI)
+Moved markers in model TRAIL_071 to match locations in marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071 from model TRAIL_071
+Wrote marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.xml from model TRAIL_071
+Processing subject TRAIL_071
+
+Step 1: Loading generic model
+Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model\LASEM_TRAIL_ReferenceModel.osim
+
+Step 2: Scaling generic model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Measurement 'PelvisXY'
+	pair 0 (RASI, P2): model = 0.197602, experimental = 0.197585
+	pair 1 (LASI, P1): model = 0.20899, experimental = 0.209088
+	overall scale factor = 1.00019
+Measurement 'PelvisZ'
+	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.268046
+	pair 1 (P2, P1): model = 0.084741, experimental = 0.0847047
+	overall scale factor = 0.999958
+Measurement 'ThighXY'
+	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.490849
+	pair 1 (LASI, LLEPI): model = 0.509271, experimental = 0.502972
+	overall scale factor = 0.980036
+Measurement 'ThighZ'
+	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.119879
+	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.113706
+	overall scale factor = 1.00022
+Measurement 'ShankXY'
+	pair 0 (RLEPI, RLMAL): model = 0.4144, experimental = 0.414458
+	pair 1 (LLEPI, LLMAL): model = 0.413166, experimental = 0.413195
+	overall scale factor = 1.00011
+Measurement 'ShankZ'
+	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0835863
+	pair 1 (LMMAL, LLMAL): model = 0.083507, experimental = 0.0834577
+	overall scale factor = 0.999705
+Measurement 'FootXY'
+	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.229869
+	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.234346
+	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.218298
+	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.238095
+	overall scale factor = 1.00021
+Measurement 'FootZ'
+	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.105277
+	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.104945
+	overall scale factor = 0.99973
+Measurement 'TorsoX'
+	pair 0 (RASI, C7): model = 0.557483, experimental = 0.558814
+	pair 1 (LASI, C7): model = 0.552121, experimental = 0.546979
+	overall scale factor = 0.996538
+Measurement 'TorsoY'
+	pair 0 (C7, RASI): model = 0.557483, experimental = 0.558814
+	pair 1 (C7, LASI): model = 0.552121, experimental = 0.546979
+	pair 2 (C7, P2): model = 0.50115, experimental = 0.503824
+	pair 3 (C7, P2): model = 0.50115, experimental = 0.503824
+	overall scale factor = 1.00094
+Measurement 'TorsoZ'
+	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.270174
+	overall scale factor = 0.999576
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+
+Step 3: Placing markers on model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Averaged frames from time 0.5 to 0.55 in C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (frames 101 to 111)
+Deleted 0 unused markers from model TRAIL_071
+Frame at (t=0.5):	total squared error = 0.00043672, marker error: RMS=0.00417957, max=0.00995717 (LASI)
+Moved markers in model TRAIL_071 to match locations in marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+Wrote marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.xml from model TRAIL_071
+Processing subject TRAIL_071
+
+Step 1: Loading generic model
+Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model\LASEM_TRAIL_ReferenceModel.osim
+
+Step 2: Scaling generic model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Measurement 'PelvisXY'
+	pair 0 (RASI, P2): model = 0.197602, experimental = 0.197585
+	pair 1 (LASI, P1): model = 0.20899, experimental = 0.209088
+	overall scale factor = 1.00019
+Measurement 'PelvisZ'
+	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.268046
+	pair 1 (P2, P1): model = 0.084741, experimental = 0.0847047
+	overall scale factor = 0.999958
+Measurement 'ThighXY'
+	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.490849
+	pair 1 (LASI, LLEPI): model = 0.509271, experimental = 0.502972
+	overall scale factor = 0.980036
+Measurement 'ThighZ'
+	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.119879
+	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.113706
+	overall scale factor = 1.00022
+Measurement 'ShankXY'
+	pair 0 (RLEPI, RLMAL): model = 0.4144, experimental = 0.414458
+	pair 1 (LLEPI, LLMAL): model = 0.413166, experimental = 0.413195
+	overall scale factor = 1.00011
+Measurement 'ShankZ'
+	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0835863
+	pair 1 (LMMAL, LLMAL): model = 0.083507, experimental = 0.0834577
+	overall scale factor = 0.999705
+Measurement 'FootXY'
+	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.229869
+	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.234346
+	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.218298
+	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.238095
+	overall scale factor = 1.00021
+Measurement 'FootZ'
+	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.105277
+	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.104945
+	overall scale factor = 0.99973
+Measurement 'TorsoX'
+	pair 0 (RASI, C7): model = 0.557483, experimental = 0.558814
+	pair 1 (LASI, C7): model = 0.552121, experimental = 0.546979
+	overall scale factor = 0.996538
+Measurement 'TorsoY'
+	pair 0 (C7, RASI): model = 0.557483, experimental = 0.558814
+	pair 1 (C7, LASI): model = 0.552121, experimental = 0.546979
+	pair 2 (C7, P2): model = 0.50115, experimental = 0.503824
+	pair 3 (C7, P2): model = 0.50115, experimental = 0.503824
+	overall scale factor = 1.00094
+Measurement 'TorsoZ'
+	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.270174
+	overall scale factor = 0.999576
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+
+Step 3: Placing markers on model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Averaged frames from time 0.5 to 0.55 in C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (frames 101 to 111)
+Deleted 0 unused markers from model TRAIL_071
+Frame at (t=0.5):	total squared error = 0.00043672, marker error: RMS=0.00417957, max=0.00995717 (LASI)
+Moved markers in model TRAIL_071 to match locations in marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+Wrote marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.xml from model TRAIL_071
+Processing subject TRAIL_071
+
+Step 1: Loading generic model
+Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model\LASEM_TRAIL_ReferenceModel.osim
+
+Step 2: Scaling generic model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Measurement 'PelvisXY'
+	pair 0 (RASI, P2): model = 0.197602, experimental = 0.197585
+	pair 1 (LASI, P1): model = 0.20899, experimental = 0.209088
+	overall scale factor = 1.00019
+Measurement 'PelvisZ'
+	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.268046
+	pair 1 (P2, P1): model = 0.084741, experimental = 0.0847047
+	overall scale factor = 0.999958
+Measurement 'ThighXY'
+	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.490849
+	pair 1 (LASI, LLEPI): model = 0.509271, experimental = 0.502972
+	overall scale factor = 0.980036
+Measurement 'ThighZ'
+	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.119879
+	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.113706
+	overall scale factor = 1.00022
+Measurement 'ShankXY'
+	pair 0 (RLEPI, RLMAL): model = 0.4144, experimental = 0.414458
+	pair 1 (LLEPI, LLMAL): model = 0.413166, experimental = 0.413195
+	overall scale factor = 1.00011
+Measurement 'ShankZ'
+	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0835863
+	pair 1 (LMMAL, LLMAL): model = 0.083507, experimental = 0.0834577
+	overall scale factor = 0.999705
+Measurement 'FootXY'
+	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.229869
+	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.234346
+	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.218298
+	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.238095
+	overall scale factor = 1.00021
+Measurement 'FootZ'
+	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.105277
+	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.104945
+	overall scale factor = 0.99973
+Measurement 'TorsoX'
+	pair 0 (RASI, C7): model = 0.557483, experimental = 0.558814
+	pair 1 (LASI, C7): model = 0.552121, experimental = 0.546979
+	overall scale factor = 0.996538
+Measurement 'TorsoY'
+	pair 0 (C7, RASI): model = 0.557483, experimental = 0.558814
+	pair 1 (C7, LASI): model = 0.552121, experimental = 0.546979
+	pair 2 (C7, P2): model = 0.50115, experimental = 0.503824
+	pair 3 (C7, P2): model = 0.50115, experimental = 0.503824
+	overall scale factor = 1.00094
+Measurement 'TorsoZ'
+	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.270174
+	overall scale factor = 0.999576
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+
+Step 3: Placing markers on model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Averaged frames from time 0.5 to 0.55 in C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (frames 101 to 111)
+Deleted 0 unused markers from model TRAIL_071
+Frame at (t=0.5):	total squared error = 0.00043672, marker error: RMS=0.00417957, max=0.00995717 (LASI)
+Moved markers in model TRAIL_071 to match locations in marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+Wrote marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.xml from model TRAIL_071
+Processing subject TRAIL_071
+
+Step 1: Loading generic model
+Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model\LASEM_TRAIL_ReferenceModel.osim
+
+Step 2: Scaling generic model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Measurement 'PelvisXY'
+	pair 0 (RASI, P2): model = 0.197602, experimental = 0.197585
+	pair 1 (LASI, P1): model = 0.20899, experimental = 0.209088
+	overall scale factor = 1.00019
+Measurement 'PelvisZ'
+	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.268046
+	pair 1 (P2, P1): model = 0.084741, experimental = 0.0847047
+	overall scale factor = 0.999958
+Measurement 'ThighXY'
+	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.490849
+	pair 1 (LASI, LLEPI): model = 0.509271, experimental = 0.502972
+	overall scale factor = 0.980036
+Measurement 'ThighZ'
+	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.119879
+	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.113706
+	overall scale factor = 1.00022
+Measurement 'ShankXY'
+	pair 0 (RLEPI, RLMAL): model = 0.4144, experimental = 0.414458
+	pair 1 (LLEPI, LLMAL): model = 0.413166, experimental = 0.413195
+	overall scale factor = 1.00011
+Measurement 'ShankZ'
+	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0835863
+	pair 1 (LMMAL, LLMAL): model = 0.083507, experimental = 0.0834577
+	overall scale factor = 0.999705
+Measurement 'FootXY'
+	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.229869
+	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.234346
+	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.218298
+	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.238095
+	overall scale factor = 1.00021
+Measurement 'FootZ'
+	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.105277
+	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.104945
+	overall scale factor = 0.99973
+Measurement 'TorsoX'
+	pair 0 (RASI, C7): model = 0.557483, experimental = 0.558814
+	pair 1 (LASI, C7): model = 0.552121, experimental = 0.546979
+	overall scale factor = 0.996538
+Measurement 'TorsoY'
+	pair 0 (C7, RASI): model = 0.557483, experimental = 0.558814
+	pair 1 (C7, LASI): model = 0.552121, experimental = 0.546979
+	pair 2 (C7, P2): model = 0.50115, experimental = 0.503824
+	pair 3 (C7, P2): model = 0.50115, experimental = 0.503824
+	overall scale factor = 1.00094
+Measurement 'TorsoZ'
+	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.270174
+	overall scale factor = 0.999576
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+
+Step 3: Placing markers on model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Averaged frames from time 0.5 to 0.55 in C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (frames 101 to 111)
+Deleted 0 unused markers from model TRAIL_071
+Frame at (t=0.5):	total squared error = 0.00043672, marker error: RMS=0.00417957, max=0.00995717 (LASI)
+Moved markers in model TRAIL_071 to match locations in marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+Wrote marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.xml from model TRAIL_071
+Processing subject TRAIL_071
+
+Step 1: Loading generic model
+Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model\LASEM_TRAIL_ReferenceModel.osim
+
+Step 2: Scaling generic model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Measurement 'PelvisXY'
+	pair 0 (RASI, P2): model = 0.197602, experimental = 0.197585
+	pair 1 (LASI, P1): model = 0.20899, experimental = 0.209088
+	overall scale factor = 1.00019
+Measurement 'PelvisZ'
+	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.268046
+	pair 1 (P2, P1): model = 0.084741, experimental = 0.0847047
+	overall scale factor = 0.999958
+Measurement 'ThighXY'
+	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.490849
+	pair 1 (LASI, LLEPI): model = 0.509271, experimental = 0.502972
+	overall scale factor = 0.980036
+Measurement 'ThighZ'
+	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.119879
+	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.113706
+	overall scale factor = 1.00022
+Measurement 'ShankXY'
+	pair 0 (RLEPI, RLMAL): model = 0.4144, experimental = 0.414458
+	pair 1 (LLEPI, LLMAL): model = 0.413166, experimental = 0.413195
+	overall scale factor = 1.00011
+Measurement 'ShankZ'
+	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0835863
+	pair 1 (LMMAL, LLMAL): model = 0.083507, experimental = 0.0834577
+	overall scale factor = 0.999705
+Measurement 'FootXY'
+	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.229869
+	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.234346
+	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.218298
+	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.238095
+	overall scale factor = 1.00021
+Measurement 'FootZ'
+	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.105277
+	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.104945
+	overall scale factor = 0.99973
+Measurement 'TorsoX'
+	pair 0 (RASI, C7): model = 0.557483, experimental = 0.558814
+	pair 1 (LASI, C7): model = 0.552121, experimental = 0.546979
+	overall scale factor = 0.996538
+Measurement 'TorsoY'
+	pair 0 (C7, RASI): model = 0.557483, experimental = 0.558814
+	pair 1 (C7, LASI): model = 0.552121, experimental = 0.546979
+	pair 2 (C7, P2): model = 0.50115, experimental = 0.503824
+	pair 3 (C7, P2): model = 0.50115, experimental = 0.503824
+	overall scale factor = 1.00094
+Measurement 'TorsoZ'
+	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.270174
+	overall scale factor = 0.999576
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+
+Step 3: Placing markers on model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Averaged frames from time 0.5 to 0.55 in C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (frames 101 to 111)
+Deleted 0 unused markers from model TRAIL_071
+Frame at (t=0.5):	total squared error = 0.00043672, marker error: RMS=0.00417957, max=0.00995717 (LASI)
+Moved markers in model TRAIL_071 to match locations in marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+Wrote marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.xml from model TRAIL_071
+Processing subject TRAIL_071
+
+Step 1: Loading generic model
+Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model\LASEM_TRAIL_ReferenceModel.osim
+
+Step 2: Scaling generic model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Measurement 'PelvisXY'
+	pair 0 (RASI, P2): model = 0.197602, experimental = 0.197585
+	pair 1 (LASI, P1): model = 0.20899, experimental = 0.209088
+	overall scale factor = 1.00019
+Measurement 'PelvisZ'
+	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.268046
+	pair 1 (P2, P1): model = 0.084741, experimental = 0.0847047
+	overall scale factor = 0.999958
+Measurement 'ThighXY'
+	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.490849
+	pair 1 (LASI, LLEPI): model = 0.509271, experimental = 0.502972
+	overall scale factor = 0.980036
+Measurement 'ThighZ'
+	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.119879
+	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.113706
+	overall scale factor = 1.00022
+Measurement 'ShankXY'
+	pair 0 (RLEPI, RLMAL): model = 0.4144, experimental = 0.414458
+	pair 1 (LLEPI, LLMAL): model = 0.413166, experimental = 0.413195
+	overall scale factor = 1.00011
+Measurement 'ShankZ'
+	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0835863
+	pair 1 (LMMAL, LLMAL): model = 0.083507, experimental = 0.0834577
+	overall scale factor = 0.999705
+Measurement 'FootXY'
+	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.229869
+	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.234346
+	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.218298
+	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.238095
+	overall scale factor = 1.00021
+Measurement 'FootZ'
+	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.105277
+	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.104945
+	overall scale factor = 0.99973
+Measurement 'TorsoX'
+	pair 0 (RASI, C7): model = 0.557483, experimental = 0.558814
+	pair 1 (LASI, C7): model = 0.552121, experimental = 0.546979
+	overall scale factor = 0.996538
+Measurement 'TorsoY'
+	pair 0 (C7, RASI): model = 0.557483, experimental = 0.558814
+	pair 1 (C7, LASI): model = 0.552121, experimental = 0.546979
+	pair 2 (C7, P2): model = 0.50115, experimental = 0.503824
+	pair 3 (C7, P2): model = 0.50115, experimental = 0.503824
+	overall scale factor = 1.00094
+Measurement 'TorsoZ'
+	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.270174
+	overall scale factor = 0.999576
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+
+Step 3: Placing markers on model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Averaged frames from time 0.5 to 0.55 in C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (frames 101 to 111)
+Deleted 0 unused markers from model TRAIL_071
+Frame at (t=0.5):	total squared error = 0.00043672, marker error: RMS=0.00417957, max=0.00995717 (LASI)
+Moved markers in model TRAIL_071 to match locations in marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+Wrote marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.xml from model TRAIL_071
+Processing subject TRAIL_071
+
+Step 1: Loading generic model
+Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model\LASEM_TRAIL_ReferenceModel.osim
+
+Step 2: Scaling generic model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Measurement 'PelvisXY'
+	pair 0 (RASI, P2): model = 0.197602, experimental = 0.197585
+	pair 1 (LASI, P1): model = 0.20899, experimental = 0.209088
+	overall scale factor = 1.00019
+Measurement 'PelvisZ'
+	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.268046
+	pair 1 (P2, P1): model = 0.084741, experimental = 0.0847047
+	overall scale factor = 0.999958
+Measurement 'ThighXY'
+	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.490849
+	pair 1 (LASI, LLEPI): model = 0.509271, experimental = 0.502972
+	overall scale factor = 0.980036
+Measurement 'ThighZ'
+	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.119879
+	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.113706
+	overall scale factor = 1.00022
+Measurement 'ShankXY'
+	pair 0 (RLEPI, RLMAL): model = 0.4144, experimental = 0.414458
+	pair 1 (LLEPI, LLMAL): model = 0.413166, experimental = 0.413195
+	overall scale factor = 1.00011
+Measurement 'ShankZ'
+	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0835863
+	pair 1 (LMMAL, LLMAL): model = 0.083507, experimental = 0.0834577
+	overall scale factor = 0.999705
+Measurement 'FootXY'
+	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.229869
+	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.234346
+	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.218298
+	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.238095
+	overall scale factor = 1.00021
+Measurement 'FootZ'
+	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.105277
+	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.104945
+	overall scale factor = 0.99973
+Measurement 'TorsoX'
+	pair 0 (RASI, C7): model = 0.557483, experimental = 0.558814
+	pair 1 (LASI, C7): model = 0.552121, experimental = 0.546979
+	overall scale factor = 0.996538
+Measurement 'TorsoY'
+	pair 0 (C7, RASI): model = 0.557483, experimental = 0.558814
+	pair 1 (C7, LASI): model = 0.552121, experimental = 0.546979
+	pair 2 (C7, P2): model = 0.50115, experimental = 0.503824
+	pair 3 (C7, P2): model = 0.50115, experimental = 0.503824
+	overall scale factor = 1.00094
+Measurement 'TorsoZ'
+	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.270174
+	overall scale factor = 0.999576
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+
+Step 3: Placing markers on model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Averaged frames from time 0.5 to 0.55 in C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (frames 101 to 111)
+Deleted 0 unused markers from model TRAIL_071
+Frame at (t=0.5):	total squared error = 0.00043672, marker error: RMS=0.00417957, max=0.00995717 (LASI)
+Moved markers in model TRAIL_071 to match locations in marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+Wrote marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.xml from model TRAIL_071
+Processing subject TRAIL_071
+
+Step 1: Loading generic model
+Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model\LASEM_TRAIL_ReferenceModel.osim
+
+Step 2: Scaling generic model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Measurement 'PelvisXY'
+	pair 0 (RASI, P2): model = 0.197602, experimental = 0.197585
+	pair 1 (LASI, P1): model = 0.20899, experimental = 0.209088
+	overall scale factor = 1.00019
+Measurement 'PelvisZ'
+	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.268046
+	pair 1 (P2, P1): model = 0.084741, experimental = 0.0847047
+	overall scale factor = 0.999958
+Measurement 'ThighXY'
+	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.490849
+	pair 1 (LASI, LLEPI): model = 0.509271, experimental = 0.502972
+	overall scale factor = 0.980036
+Measurement 'ThighZ'
+	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.119879
+	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.113706
+	overall scale factor = 1.00022
+Measurement 'ShankXY'
+	pair 0 (RLEPI, RLMAL): model = 0.4144, experimental = 0.414458
+	pair 1 (LLEPI, LLMAL): model = 0.413166, experimental = 0.413195
+	overall scale factor = 1.00011
+Measurement 'ShankZ'
+	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0835863
+	pair 1 (LMMAL, LLMAL): model = 0.083507, experimental = 0.0834577
+	overall scale factor = 0.999705
+Measurement 'FootXY'
+	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.229869
+	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.234346
+	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.218298
+	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.238095
+	overall scale factor = 1.00021
+Measurement 'FootZ'
+	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.105277
+	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.104945
+	overall scale factor = 0.99973
+Measurement 'TorsoX'
+	pair 0 (RASI, C7): model = 0.557483, experimental = 0.558814
+	pair 1 (LASI, C7): model = 0.552121, experimental = 0.546979
+	overall scale factor = 0.996538
+Measurement 'TorsoY'
+	pair 0 (C7, RASI): model = 0.557483, experimental = 0.558814
+	pair 1 (C7, LASI): model = 0.552121, experimental = 0.546979
+	pair 2 (C7, P2): model = 0.50115, experimental = 0.503824
+	pair 3 (C7, P2): model = 0.50115, experimental = 0.503824
+	overall scale factor = 1.00094
+Measurement 'TorsoZ'
+	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.270174
+	overall scale factor = 0.999576
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+
+Step 3: Placing markers on model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Averaged frames from time 0.5 to 0.55 in C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (frames 101 to 111)
+Deleted 0 unused markers from model TRAIL_071
+Frame at (t=0.5):	total squared error = 0.00043672, marker error: RMS=0.00417957, max=0.00995717 (LASI)
+Moved markers in model TRAIL_071 to match locations in marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+Wrote marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.xml from model TRAIL_071
+Processing subject TRAIL_071
+
+Step 1: Loading generic model
+Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model\LASEM_TRAIL_ReferenceModel.osim
+
+Step 2: Scaling generic model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Measurement 'PelvisXY'
+	pair 0 (RASI, P2): model = 0.197602, experimental = 0.197585
+	pair 1 (LASI, P1): model = 0.20899, experimental = 0.209088
+	overall scale factor = 1.00019
+Measurement 'PelvisZ'
+	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.268046
+	pair 1 (P2, P1): model = 0.084741, experimental = 0.0847047
+	overall scale factor = 0.999958
+Measurement 'ThighXY'
+	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.490849
+	pair 1 (LASI, LLEPI): model = 0.509271, experimental = 0.502972
+	overall scale factor = 0.980036
+Measurement 'ThighZ'
+	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.119879
+	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.113706
+	overall scale factor = 1.00022
+Measurement 'ShankXY'
+	pair 0 (RLEPI, RLMAL): model = 0.4144, experimental = 0.414458
+	pair 1 (LLEPI, LLMAL): model = 0.413166, experimental = 0.413195
+	overall scale factor = 1.00011
+Measurement 'ShankZ'
+	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0835863
+	pair 1 (LMMAL, LLMAL): model = 0.083507, experimental = 0.0834577
+	overall scale factor = 0.999705
+Measurement 'FootXY'
+	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.229869
+	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.234346
+	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.218298
+	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.238095
+	overall scale factor = 1.00021
+Measurement 'FootZ'
+	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.105277
+	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.104945
+	overall scale factor = 0.99973
+Measurement 'TorsoX'
+	pair 0 (RASI, C7): model = 0.557483, experimental = 0.558814
+	pair 1 (LASI, C7): model = 0.552121, experimental = 0.546979
+	overall scale factor = 0.996538
+Measurement 'TorsoY'
+	pair 0 (C7, RASI): model = 0.557483, experimental = 0.558814
+	pair 1 (C7, LASI): model = 0.552121, experimental = 0.546979
+	pair 2 (C7, P2): model = 0.50115, experimental = 0.503824
+	pair 3 (C7, P2): model = 0.50115, experimental = 0.503824
+	overall scale factor = 1.00094
+Measurement 'TorsoZ'
+	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.270174
+	overall scale factor = 0.999576
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+
+Step 3: Placing markers on model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Averaged frames from time 0.5 to 0.55 in C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (frames 101 to 111)
+Deleted 0 unused markers from model TRAIL_071
+Frame at (t=0.5):	total squared error = 0.00043672, marker error: RMS=0.00417957, max=0.00995717 (LASI)
+Moved markers in model TRAIL_071 to match locations in marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+Wrote marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.xml from model TRAIL_071
+Processing subject TRAIL_071
+
+Step 1: Loading generic model
+Loaded model LASEM_TRAIL_ReferenceModel from file C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model\LASEM_TRAIL_ReferenceModel.osim
+
+Step 2: Scaling generic model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Measurement 'PelvisXY'
+	pair 0 (RASI, P2): model = 0.197602, experimental = 0.197585
+	pair 1 (LASI, P1): model = 0.20899, experimental = 0.209088
+	overall scale factor = 1.00019
+Measurement 'PelvisZ'
+	pair 0 (RASI, LASI): model = 0.267954, experimental = 0.268046
+	pair 1 (P2, P1): model = 0.084741, experimental = 0.0847047
+	overall scale factor = 0.999958
+Measurement 'ThighXY'
+	pair 0 (RASI, RLEPI): model = 0.504759, experimental = 0.490849
+	pair 1 (LASI, LLEPI): model = 0.509271, experimental = 0.502972
+	overall scale factor = 0.980036
+Measurement 'ThighZ'
+	pair 0 (RMEPI, RLEPI): model = 0.119872, experimental = 0.119879
+	pair 1 (LMEPI, LLEPI): model = 0.113663, experimental = 0.113706
+	overall scale factor = 1.00022
+Measurement 'ShankXY'
+	pair 0 (RLEPI, RLMAL): model = 0.4144, experimental = 0.414458
+	pair 1 (LLEPI, LLMAL): model = 0.413166, experimental = 0.413195
+	overall scale factor = 1.00011
+Measurement 'ShankZ'
+	pair 0 (RMMAL, RLMAL): model = 0.0835864, experimental = 0.0835863
+	pair 1 (LMMAL, LLMAL): model = 0.083507, experimental = 0.0834577
+	overall scale factor = 0.999705
+Measurement 'FootXY'
+	pair 0 (RHEEL, RP1MT): model = 0.229799, experimental = 0.229869
+	pair 1 (RHEEL, RP5MT): model = 0.234286, experimental = 0.234346
+	pair 2 (LHEEL, LP1MT): model = 0.218279, experimental = 0.218298
+	pair 3 (LHEEL, LP5MT): model = 0.238051, experimental = 0.238095
+	overall scale factor = 1.00021
+Measurement 'FootZ'
+	pair 0 (RP1MT, RP5MT): model = 0.105343, experimental = 0.105277
+	pair 1 (LP1MT, LP5MT): model = 0.104935, experimental = 0.104945
+	overall scale factor = 0.99973
+Measurement 'TorsoX'
+	pair 0 (RASI, C7): model = 0.557483, experimental = 0.558814
+	pair 1 (LASI, C7): model = 0.552121, experimental = 0.546979
+	overall scale factor = 0.996538
+Measurement 'TorsoY'
+	pair 0 (C7, RASI): model = 0.557483, experimental = 0.558814
+	pair 1 (C7, LASI): model = 0.552121, experimental = 0.546979
+	pair 2 (C7, P2): model = 0.50115, experimental = 0.503824
+	pair 3 (C7, P2): model = 0.50115, experimental = 0.503824
+	overall scale factor = 1.00094
+Measurement 'TorsoZ'
+	pair 0 (RSH, LSH): model = 0.270288, experimental = 0.270174
+	overall scale factor = 0.999576
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+
+Step 3: Placing markers on model
+Loaded marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (48 markers, 391 frames)
+Averaged frames from time 0.5 to 0.55 in C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc (frames 101 to 111)
+Deleted 0 unused markers from model TRAIL_071
+Frame at (t=0.5):	total squared error = 0.00043672, marker error: RMS=0.00417957, max=0.00995717 (LASI)
+Moved markers in model TRAIL_071 to match locations in marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.trc
+Wrote model file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071.osim from model TRAIL_071
+Wrote marker file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_Static_01\TRAIL_071_Static_01_markers.xml from model TRAIL_071

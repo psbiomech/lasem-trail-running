@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Main: extract TRAIL test data
+Process and run LASEM TRAIL project data through OpenSim
 
 @author: Prasanna Sritharan
 """
