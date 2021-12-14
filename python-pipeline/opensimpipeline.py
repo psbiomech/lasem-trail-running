@@ -42,6 +42,10 @@ def run_opensim_scale(osimkey, user):
     refsetuppath = user.refsetuppath
     refsetupfile = user.refsetupscale
     
+    # reference model file
+    refmodelpath = user.refmodelpath
+    refmodelfile = user.refmodelfile
+    
     # trial folder, model and trial
     fpath = osimkey.outpath
     model = osimkey.subject
@@ -54,7 +58,35 @@ def run_opensim_scale(osimkey, user):
     tool.setPathToSubject("")
     
     # set subject mass
-    tool.setSubjectMass(0)
+    tool.setSubjectMass(osimkey.mass)
+    
+    # set subject name
+    tool.setName(osimkey.subject)
+    
+    
+    # ******************************
+    # GENERIC MODEL MAKER
+    
+    # set the model file name
+    modelmaker = tool.getGenericModelMaker()
+    modelmaker.setModelFilename(os.path.join(refmodelpath, refmodelfile))
+    
+
+    # ******************************
+    # MODEL SCALER
+    
+    # set the static TRC file to be used for scaling
+    modelscaler = tool.getModelScaler()
+    modelscaler.setMarkerFileName(os.path.join(fpath, trial + "_markers.trc"))
+    
+    # set time window
+    twindow = osimkey.ArrayDouble(0, 2)
+    twindow.set(0, 0.50)
+    twindow.set(1, 0.55)
+    
+    # set output model file name
+    modelscaler.setOutputModelFileName()
+    
 
 
 

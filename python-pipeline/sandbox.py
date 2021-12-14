@@ -7,6 +7,15 @@ OpenSim pipeline sandbox
 
 
 
+# %% LOAD USER SETTINGS
+
+import usersettings as uset
+
+# load user settings
+user = uset.TRAILSettings()
+
+
+
 
 
 # %% LOAD METADATA DICT
