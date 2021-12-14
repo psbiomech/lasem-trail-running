@@ -12,7 +12,7 @@
 		<!--Specifies the name of the unscaled model (.osim) and the marker set.-->
 		<GenericModelMaker>
 			<!--Model file (.osim) for the unscaled model.-->
-			<model_file>Unassigned</model_file>
+			<model_file>Rajagopal2015_MinimalMarkerSet.osim</model_file>
 			<!--Set of model markers used to scale the model. Scaling is done based on distances between model markers compared to the same distances between the corresponding experimental markers.-->
 			<marker_set_file>Unassigned</marker_set_file>
 		</GenericModelMaker>
@@ -663,11 +663,11 @@
 			<!--Time range over which the marker positions are averaged.-->
 			<time_range> 0.5 0.75</time_range>
 			<!--Name of the motion file (.mot) written after marker relocation (optional).-->
-			<output_motion_file>Unassigned</output_motion_file>
+			<output_motion_file>TRAIL_071_Static_01.mot</output_motion_file>
 			<!--Output OpenSim model file (.osim) after scaling and maker placement.-->
-			<output_model_file>Unassigned</output_model_file>
+			<output_model_file>LASEM_TRAIL_ReferenceModel_MinimalMarkerSet.osim</output_model_file>
 			<!--Output marker set containing the new marker locations after markers have been placed.-->
-			<output_marker_file>Unassigned</output_marker_file>
+			<output_marker_file>LASEM_TRAIL_ReferenceModel_MinimalMarkerSet_markers.xml</output_marker_file>
 			<!--Maximum amount of movement allowed in marker data when averaging frames of the static trial. A negative value means there is not limit.-->
 			<max_marker_movement>-1</max_marker_movement>
 		</MarkerPlacer>
