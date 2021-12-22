@@ -110,23 +110,17 @@ run_opensim_scale(osimkey, user):
 '''
 def run_opensim_scale(osimkey, user):
     
-    # reference setup file
-    refsetuppath = user.refsetuppath
-    refsetupfile = user.refsetupscale
-    
-    # reference model file
-    refmodelpath = user.refmodelpath
-    refmodelfile = user.refmodelfile
-    
     # trial folder, model and trial
     fpath = osimkey.outpath
     model = osimkey.subject
     trial = osimkey.trial
 
-    print("\nCreating scaled model: %s" % model);
+    print("\nCreating scaled model: %s" % model)
     print("------------------------------------------------")
     
     # create an ScaleTool from a generic setup file
+    refsetuppath = user.refsetuppath
+    refsetupfile = user.refsetupscale
     tool = opensim.ScaleTool(os.path.join(refsetuppath, refsetupfile))
     tool.setPathToSubject("")
     
@@ -143,6 +137,8 @@ def run_opensim_scale(osimkey, user):
     print("Initialising GenericModelMaker...")
     
     # set the model file name
+    refmodelpath = user.refmodelpath
+    refmodelfile = user.refmodelfile
     modelmaker = tool.getGenericModelMaker()
     modelmaker.setModelFileName(os.path.join(refmodelpath, refmodelfile))
     
@@ -216,7 +212,58 @@ run_opensim_ik(osimkey, user):
     via the API. Results are printed to text files in the remote folder.
 '''
 def run_opensim_ik(osimkey, user):
-    pass
+    
+    # trial folder, model and trial
+    fpath = osimkey.outpath
+    modelfile = osimkey.model
+    trial = osimkey.trial
+
+    print("Performing IK on trial: %s\n" % trial)
+    print("------------------------------------------------")
+    
+    # create an IK Tool from a generic setup file
+    refsetuppath = user.refsetuppath
+    refsetupfile = user.refsetupik
+    tool = opensim.InverseKinematicsTool(os.path.join(refsetuppath, refsetupfile))
+    
+    # load the model
+    model = opensim.Model(os.path.join(fpath, modelfile))
+    model.initSystem()
+    
+    # set the model in the tool
+    tool.setModel(model)
+
+    # set the initial and final times (limit to between first and last event)
+    tool.setStartTime(osimkey.events["time"][0])
+    tool.setEndTime(osimkey.events["time"][-1])
+
+    # set input TRC file
+    tool.setMarkerDataFileName(os.path.join(fpath, trial + "_markers.trc"))
+    
+    # output MOT file location
+    motfilepath = os.path.join(fpath, user.ikcode)
+    if not os.path.isdir(motfilepath): os.makedirs(motfilepath)
+    tool.setOutputMotionFileName(os.path.join(motfilepath, trial + "_ik.mot"))  
+
+
+    # ******************************
+    # RUN TOOL
+
+    print("Running the IKTool...")
+
+    # save the settings in a setup file
+    tool.printToXML(os.path.join(fpath, trial + '_Setup_IK.xml'))
+        
+    # run the tool
+    try:
+        tool.run()
+        print("Done.")
+    except:
+        print("---> ERROR: IK failed. Skipping IK for %s." % trial)
+    finally:
+        print("------------------------------------------------\n")
+        
+    return None
 
 
 
