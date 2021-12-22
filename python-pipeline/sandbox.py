@@ -127,3 +127,51 @@ with open(pkfile,"rb") as fid:
 osp.run_opensim_scale(osimkey0, user)
 
 
+
+# %% RUN IK TOOL
+
+
+import pickle as pk
+import opensimpipeline as osp
+import usersettings as uset
+
+# load user settings
+user = uset.TRAILSettings()
+
+# file path and name prefix
+fprefix = "TRAIL_071_EP_01"
+fpath = "C:\\Users\\Owner\\Documents\\data\\TRAIL Test Data\\outputDatabase\\TRAIL_071\\Baseline\\" + fprefix + "\\"
+prefix = fpath + fprefix
+
+# OsimKey
+pkfile = prefix + "_osimkey.pkl"
+with open(pkfile,"rb") as fid: 
+    osimkey1 = pk.load(fid)
+
+# run scale tool
+osp.run_opensim_ik(osimkey1, user)
+
+
+
+# %% RUN ID TOOL
+
+
+import pickle as pk
+import opensimpipeline as osp
+import usersettings as uset
+
+# load user settings
+user = uset.TRAILSettings()
+
+# file path and name prefix
+fprefix = "TRAIL_071_EP_01"
+fpath = "C:\\Users\\Owner\\Documents\\data\\TRAIL Test Data\\outputDatabase\\TRAIL_071\\Baseline\\" + fprefix + "\\"
+prefix = fpath + fprefix
+
+# OsimKey
+pkfile = prefix + "_osimkey.pkl"
+with open(pkfile,"rb") as fid: 
+    osimkey1 = pk.load(fid)
+
+# run scale tool
+osp.run_opensim_id(osimkey1, user)

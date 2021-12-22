@@ -9,6 +9,8 @@ import usersettings as uset
 import c3dextract as c3dex
 import labsetup as labs
 import builddatabase as bd
+import pickle as pk
+import os
 
 
 print("\n\n\n")
@@ -17,22 +19,40 @@ print("TRAIL: DATA PROCESSING & OPENSIM")
 print("----------------------------------------")
 print("\n")
 
-# set the lab
+
+# %% SET THE LAB
+
 print("Loading lab info...", end="")
 lasem = labs.LabKeyLasemTrail()
 print("Done.\n")
 
-# user settings
+
+# %% USER SETTINGS
 print("Loading user settings... ", end="")
 user = uset.TRAILSettings()
 print("Done.\n")
 
-# build output database
-print("Building output database... ", end="")
-traildb = bd.build_database("TRAIL", user, "run")
+
+# %% META DATABASE (BUILD NEW OR LOAD EXISTING)
+
+#print("Building new output database... ", end="")
+#traildb = bd.build_database("TRAIL", user, "run")
+#print("Done.\n")
+
+print("Loading existing output database... ", end="")
+dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
+with open(dbfilepath,"rb") as fid:
+    traildb = pk.load(fid)
 print("Done.\n")
 
-# extract C3D data and create OpenSim input files
+
+# %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
+
 print("Extracting C3D data, creating OpenSim files...\n")
 osimkey = c3dex.c3d_batch_process(user, traildb, lasem, 2, 15, -1)
 print("\nC3D data extract done.\n")
+
+
+# %% RUN OPENSIM PIPELINE
+
+# TBD
