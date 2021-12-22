@@ -70,8 +70,8 @@ class TRAILSettings(UserSettings):
 
         # setup file and folders
         self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
-        self.refsetupscale = "LASEM_TRAIL_Scale_Setup.xml"
-        self.refsetupik = "LASEM_TRAIL_IK_Setup.xml"
+        self.refsetupscale = "LASEM_TRAIL_Setup_Scale.xml"
+        self.refsetupik = "LASEM_TRAIL_Setup_IK.xml"
         
         # OpenSim analysis codes
         self.scalecode = "scale"
