@@ -403,9 +403,9 @@ def write_ground_forces_mot_file(osimkey):
     datamat[:,0] = osimkey.forces["time"]
     datamat[:,1:4] = osimkey.forces["data"]["right"]["F"]
     datamat[:,4:7] = osimkey.forces["data"]["right"]["cop"]
-    datamat[:,7:10] = osimkey.forces["data"]["right"]["T"]
-    datamat[:,10:13] = osimkey.forces["data"]["left"]["F"]
-    datamat[:,13:16] = osimkey.forces["data"]["left"]["cop"]
+    datamat[:,7:10] = osimkey.forces["data"]["left"]["F"]
+    datamat[:,10:13] = osimkey.forces["data"]["left"]["cop"]
+    datamat[:,13:16] = osimkey.forces["data"]["right"]["T"]
     datamat[:,16:19] = osimkey.forces["data"]["left"]["T"]    
         
     # convert to dataframe
