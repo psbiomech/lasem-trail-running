@@ -58,7 +58,10 @@ class UserSettings():
         self.trialprefixes = {}
         
         # file name format regex pattern
-        self.fnpat = []              
+        self.fnpat = []      
+
+        # output samples
+        self.samples = []        
     
     
         
@@ -109,3 +112,6 @@ class TRAILSettings(UserSettings):
         # file name format regex pattern:
         #   (subjprefix)_(num code)_(trialprefix)_(alphanum code)
         self.fnpat = "TRAIL_\d+_(\w+)_\w+"
+        
+        # output samples
+        self.samples = 101

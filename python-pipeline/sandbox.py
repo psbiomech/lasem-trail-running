@@ -197,3 +197,13 @@ with open(pkfile,"rb") as fid:
 analyses = ["scale","ik","id"]
 osimresult1 = osr.OsimResultsKey(osimkey1, analyses)
 
+
+# %% RESAMPLE TEST
+
+
+import opensimresults as osr
+
+test0  = [1, 2, 3, 4, 5]
+test1 = osr.resample1d(test0, 11)
+
+

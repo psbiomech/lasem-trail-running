@@ -9,6 +9,7 @@ import os
 import pandas as pd
 import numpy as np
 import pickle as pk
+from scipy.interpolate import interp1d
 
 
 '''
@@ -147,3 +148,46 @@ collate_opensim_results(meta):
 '''
 def collate_opensim_results(meta, analyses):
     pass
+
+
+
+'''
+resample1d(data, nsamp):
+    Simple resampling by 1-D interpolation (rows = samples, cols = variable).
+    Data can be a 1-D or multiple variables in a 2D array-like object.
+'''
+def resample1d(data, nsamp):
+
+    # convert list to array
+    if isinstance(data, list):
+        data = np.array([data]).transpose()
+        ny = 1        
+
+    # data dimensions
+    nx = data.shape[0]
+    ny = data.shape[1]
+
+    # old sample points
+    x = np.linspace(0, nx - 1, nx)
+        
+    # new sample points
+    xnew = np.linspace(0, nx - 1, nsamp)
+    
+    # parse columns
+    datanew = np.zeros([nsamp, ny])
+    for col in range(0, ny):
+        
+        # old data points
+        y = data[:, col]
+        
+        # convert to cubic spline function
+        fy = interp1d(x, y, kind = "cubic", fill_value = "extrapolate")
+    
+        # new data points
+        ynew = fy(xnew)
+    
+        # store column
+        datanew[:, ] = ynew.reshape(nsamp, 1)
+        
+    
+    return datanew
