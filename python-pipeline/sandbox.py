@@ -195,15 +195,15 @@ with open(pkfile,"rb") as fid:
 
 # get results of dynamic trial using OsimKey
 analyses = ["scale","ik","id"]
-osimresult1 = osr.OsimResultsKey(osimkey1, analyses)
+osimresult1 = osr.OsimResultsKey(osimkey1, analyses, 101)
 
 
 # %% RESAMPLE TEST
 
-
+import numpy as np
 import opensimresults as osr
 
-test0  = [1, 2, 3, 4, 5]
+test0  = np.array([[1, 2, 3, 4, 5],[2, 4, 6, 8, 10]]).transpose()
 test1 = osr.resample1d(test0, 11)
 
 

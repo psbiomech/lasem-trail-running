@@ -22,10 +22,10 @@ from scipy.interpolate import interp1d
 '''
 OsimResultsKey:
     Data storage class containing all OpenSim output data, raw and normalised
-    to both BW and %BW*HT.
+    to both BW and %BW*HT. Data is resample to the desired number of samples.
 '''
 class OsimResultsKey():
-    def __init__(self, osimkey, analyses):
+    def __init__(self, osimkey, analyses, nsamp):
         self.subject = osimkey.subject
         self.trial = osimkey.trial
         self.age = osimkey.age
@@ -34,10 +34,10 @@ class OsimResultsKey():
         self.lab = osimkey.lab
         self.task = osimkey.task
         self.outpath = osimkey.outpath
-        self.__get_results(osimkey, analyses)
+        self.__get_results(osimkey, analyses, nsamp)
         return None
         
-    def __get_results(self, osimkey, analyses):
+    def __get_results(self, osimkey, analyses, nsamp):
         
         # initialise dict
         results = {}
@@ -74,9 +74,12 @@ class OsimResultsKey():
             headers = datadf.columns.tolist()
             data = datadf.to_numpy()
             
+            # resample data
+            datanew = resample1d(data, nsamp)
+            
             # store in dict
             results[ans] = {}
-            results[ans]["data"] = data
+            results[ans]["data"] = datanew
             results[ans]["headers"] = headers
         
         self.results = results
@@ -187,7 +190,7 @@ def resample1d(data, nsamp):
         ynew = fy(xnew)
     
         # store column
-        datanew[:, ] = ynew.reshape(nsamp, 1)
+        datanew[:, col] = ynew
         
     
     return datanew
