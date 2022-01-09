@@ -84,8 +84,7 @@ def opensim_pipeline(meta, user, analyses):
                         if ans == "ik":
                             run_opensim_ik(osimkey, user)
                         elif ans == "id":
-                            #run_opensim_id(osimkey, user)
-                            pass
+                            run_opensim_id(osimkey, user)
                         elif ans == "so":
                             #run_opensim_so(osimkey, user)
                             pass

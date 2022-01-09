@@ -97,7 +97,7 @@ with open(os.path.join(fpath, fname),"rb") as fid:
     traildb = pk.load(fid)
 
 # run OpenSim pipeline
-analyses = ["scale","ik"]
+analyses = ["scale","ik","id"]
 osp.opensim_pipeline(traildb, user, analyses)
 
 
@@ -175,3 +175,25 @@ with open(pkfile,"rb") as fid:
 
 # run scale tool
 osp.run_opensim_id(osimkey1, user)
+
+
+# %% GET RESULTS
+
+
+import opensimresults as osr
+import pickle as pk
+
+# file path and name prefix
+fprefix = "TRAIL_071_EP_01"
+fpath = "C:\\Users\\Owner\\Documents\\data\\TRAIL Test Data\\outputDatabase\\TRAIL_071\\Baseline\\" + fprefix + "\\"
+prefix = fpath + fprefix
+
+# OsimKey
+pkfile = prefix + "_osimkey.pkl"
+with open(pkfile,"rb") as fid: 
+    osimkey1 = pk.load(fid)
+
+# get results of dynamic trial using OsimKey
+analyses = ["scale","ik","id"]
+osimresult1 = osr.OsimResultsKey(osimkey1, analyses)
+

@@ -451,7 +451,6 @@ def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
 
     # extract C3D data for OpenSim
     print("\n")
-    osimkey = {}
     for subj in meta:
         
         print("\n")
@@ -470,6 +469,7 @@ def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
             # PROCESS STATIC TRIAL
             
             mass = 0.0
+            osimkey = {}
             for trial in meta[subj]["trials"][group]:                
                 
                 # ignore dynamic trials
@@ -527,9 +527,6 @@ def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
             #
             # ###################################                    
 
-                
-
-                                
     return osimkey
 
 
@@ -570,7 +567,7 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, ref_model, 
     with open(os.path.join(c3dpath, trial + "_trialkey.pkl"),"wb") as g: pk.dump(trialkey, g)
     with open(os.path.join(c3dpath, trial + "_osimkey.pkl"),"wb") as h: pk.dump(osimkey, h)
     
-    return osimkey
+    return None
     
 
 
