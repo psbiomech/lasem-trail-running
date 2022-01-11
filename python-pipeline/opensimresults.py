@@ -114,6 +114,15 @@ class OsimResultsKey():
         columns["cmc"] = []
         columns["jr"] = []   
         
+        # headers
+        headers = {}
+        headers["ik"] = ["time", "pelvis_tilt", "pelvis_list", "pelvis_rotation", "pelvis_tx", "pelvis_ty", "pelvis_tz", "hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", "knee_angle_beta", "ankle_angle", "subtalar_angle", "mtp_angle", "lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex", "arm_add", "arm_rot", "elbow_flex", "pro_sup", "wrist_flex", "wrist_dev"]
+        headers["id"] = ["time", "pelvis_tilt_moment", "pelvis_list_moment", "pelvis_rotation_moment", "pelvis_tx_force", "pelvis_ty_force", "pelvis_tz_force", "hip_flexion_moment", "hip_adduction_moment", "hip_rotation_moment", "lumbar_extension_moment", "lumbar_bending_moment", "lumbar_rotation_moment", "knee_angle_moment", "knee_angle_beta_force", "arm_flex_moment", "arm_add_moment", "arm_rot_moment", "ankle_angle_moment", "elbow_flex_moment", "subtalar_angle_moment", "pro_sup_moment", "mtp_angle_moment", "wrist_flex_moment", "wrist_dev_moment"]
+        headers["so"] = []
+        headers["rra"] = []
+        headers["cmc"] = []
+        headers["jr"] = []       
+        
         # get OpenSim data
         for ans in analyses:
             
@@ -128,7 +137,6 @@ class OsimResultsKey():
                                 
                 # copy raw data
                 data0 = self.results["raw"][ans]["data"]
-                headers = self.results["raw"][ans]["headers"]
                 
                 # flip columns for left leg
                 if f == 2:
@@ -168,7 +176,7 @@ class OsimResultsKey():
                 # store in dict
                 results[ans][foot] = {}
                 results[ans][foot]["data"] = data
-                results[ans][foot]["headers"] = [headers[h] for h in columns[ans][f]]
+                results[ans][foot]["headers"] = headers[ans]
         
         self.results["split"] = results        
             
@@ -190,55 +198,135 @@ opensim_results_batch_process(meta, analyses, nsamp):
 '''
 def opensim_results_batch_process(meta, analyses, nsamp):
     
-   # extract OpenSim data
-   osimkey = {}
-   for subj in meta:
-
-       print("%s" % "*" * 30)
-       print("SUBJECT: %s" % subj)
-       print("%s" % "*" * 30)
-       print("\n")
-       
-       for group in meta[subj]["trials"]:
-           
-           print("Group: %s" % group)
-           print("%s" % "=" * 30)                      
-           
-           # process dynamic trials only
-           for trial in  meta[subj]["trials"][group]:                
-               
-               # ignore static trials
-               isstatic = meta[subj]["trials"][group][trial]["isstatic"]
-               if isstatic: continue
-           
-               print("Dynamic trial: %s" % trial)
-           
-               # load the trial OsimKey
-               c3dpath = meta[subj]["trials"][group][trial]["outpath"]
-               pkfile = os.path.join(c3dpath,trial + "_osimkey.pkl")
-               with open(pkfile,"rb") as fid:
-                   osimkey = pk.load(fid)
-                   
-               # get the OpenSim results
-               osimresultskey = OsimResultsKey(osimkey, analyses, nsamp)
-               
-               # save OsimResultsKey to file
-               with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"),"wb") as f:
-                   pk.dump(osimresultskey, f)
-                   
-   
-   print("\n")                
-   
-   return None
+    # extract OpenSim data
+    osimkey = {}
+    for subj in meta:
+    
+        print("%s" % "*" * 30)
+        print("SUBJECT: %s" % subj)
+        print("%s" % "*" * 30)
+        print("\n")
+        
+        for group in meta[subj]["trials"]:
+            
+            print("Group: %s" % group)
+            print("%s" % "=" * 30)                      
+            
+            # process dynamic trials only
+            for trial in  meta[subj]["trials"][group]:                
+                
+                # ignore static trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                if isstatic: continue
+            
+                print("Dynamic trial: %s" % trial)
+            
+                # load the trial OsimKey
+                c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                pkfile = os.path.join(c3dpath,trial + "_osimkey.pkl")
+                with open(pkfile,"rb") as fid:
+                    osimkey = pk.load(fid)
+                    
+                # get the OpenSim results
+                osimresultskey = OsimResultsKey(osimkey, analyses, nsamp)
+                
+                # save OsimResultsKey to file
+                with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"),"wb") as f:
+                    pk.dump(osimresultskey, f)
+                    
+    
+    print("\n")                
+    
+    return None
     
     
 
 '''
-collate_opensim_results(meta, analyses):
+export_opensim_results(meta, user, analyses):
     Collate OpenSim results into dataframes and export to text for Rstats.
 '''
-def collate_opensim_results(meta, analyses):
-    pass
+def export_opensim_results(meta, user, analyses):
+    
+    # empty output list of lists
+    # (create the output table as a list of lists, then convert to dataframe
+    # as iteratively appending new dataframe rows is computationally expensive)
+    csvdata = []
+        
+    # extract OpenSim data
+    print("Collating data into lists...\n")
+    osimkey = {}
+    for subj in meta:
+    
+        print("%s" % "*" * 30)
+        print("SUBJECT: %s" % subj)
+        print("%s" % "*" * 30)
+        print("\n")
+                
+        for group in meta[subj]["trials"]:
+            
+            print("Group: %s" % group)
+            print("%s" % "=" * 30)                      
+            
+            # process dynamic trials only
+            for trial in  meta[subj]["trials"][group]:                
+                
+                # ignore static trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                if isstatic: continue
+            
+                print("Dynamic trial: %s" % trial)
+            
+                # load the trial OsimResultsKey
+                c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
+                with open(pkfile,"rb") as fid:
+                    osimresultskey = pk.load(fid)
+                    
+                # trial task
+                task = osimresultskey.task
+                
+                # foot
+                for foot in ["r","l"]:
+                    
+                    # analysis
+                    for ans in analyses:
+                        
+                        # ignore scaling
+                        if ans.casefold() == "scale": continue
+                    
+                        # data array
+                        data = osimresultskey.results["split"][ans][foot]["data"]
+                        varheader = osimresultskey.results["split"][ans][foot]["headers"]
+                    
+                        # variable
+                        for v, variable in enumerate(varheader):
+                            
+                            # ignore time
+                            if v == 0: continue
+
+                            # data for the variable
+                            drow = data[:, v]
+
+                            # create new line of data
+                            csvrow = [subj, group, trial, task, foot, ans, variable] + drow.tolist()
+                            csvdata.append(csvrow)
+
+
+    # create empty dataframe
+    print("\nCreating dataframe...")
+    headers = ["subj", "group", "trial", "task", "foot", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    csvdf = pd.DataFrame(csvdata, columns = headers)
+
+    # write data to file with headers
+    print("\nWriting to CSV text file...")
+    fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
+    if not os.path.exists(fpath): os.makedirs(fpath)
+    csvdf.to_csv(os.path.join(fpath,user.csvfile), index = False)
+    
+    
+    print("\n")
+   
+    return csvdf
 
 
 

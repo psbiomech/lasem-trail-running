@@ -209,3 +209,23 @@ test0  = np.array([[1, 2, 3, 4, 5],[2, 4, 6, 8, 10]]).transpose()
 test1 = osr.resample1d(test0, 11)
 
 
+# %% COLLATE AND EXPORT TEST
+
+
+import pickle as pk
+import opensimresults as osr
+import usersettings as uset
+
+# load user settings
+user = uset.TRAILSettings()
+
+# metadata
+fpath = "C:\\Users\\Owner\\Documents\\data\\TRAIL Test Data\\outputDatabase\\"
+fname = "TRAIL.pkl"
+pkfile = fpath + fname
+with open(pkfile,"rb") as fid: 
+    traildb = pk.load(fid)
+
+# collate and export
+analyses = ["ik","id"]
+csvdata = osr.export_opensim_results(traildb, user, analyses)

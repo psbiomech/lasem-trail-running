@@ -26,6 +26,7 @@ class UserSettings():
         self.infolder = []
         self.outfolder = []
         self.trialgroupfolders = []
+        self.csvfolder = []
         
         # meta data file
         self.metadatafile = []
@@ -77,6 +78,10 @@ class TRAILSettings(UserSettings):
         self.infolder = r"inputDatabase\Events"
         self.outfolder = "outputDatabase"
         self.trialgroupfolders = ["Baseline"]
+
+        # export data
+        self.csvfolder = "csvfolder"
+        self.csvfile = "trail_opensim_results_all.csv"
         
         # meta data file
         self.metadatafile = "TRAIL.pkl"
