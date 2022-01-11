@@ -33,11 +33,13 @@ class OsimResultsKey():
         self.model = osimkey.model
         self.lab = osimkey.lab
         self.task = osimkey.task
+        self.events = osimkey.events
         self.outpath = osimkey.outpath
-        self.__get_results(osimkey, analyses, nsamp)
+        self.__get_results_raw(osimkey, analyses, nsamp)
+        self.__get_results_split(analyses, nsamp)
         return None
         
-    def __get_results(self, osimkey, analyses, nsamp):
+    def __get_results_raw(self, osimkey, analyses, nsamp):
         
         # initialise dict
         results = {}
@@ -82,10 +84,96 @@ class OsimResultsKey():
             results[ans]["data"] = datanew
             results[ans]["headers"] = headers
         
-        self.results = results
-        
+        self.results = {}
+        self.results["raw"] = results        
             
         return None
+    
+    def __get_results_split(self, analyses, nsamp):
+        
+        # initialise dict
+        results = {}
+        
+        # left leg flip columns (incl. time): R, L
+        flip = {}
+        flip["ik"] = [3, 4, 7, 25, 26]
+        flip["id"] = [3, 4, 7, 15, 16]
+        flip["so"] = []
+        flip["rra"] = []
+        flip["cmc"] = []
+        flip["jr"] = []  
+        
+        # foot columns (incl. time): R, L
+        columns = {}
+        columns["ik"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32], 
+                         [0, 1, 2, 3, 4, 5, 6, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 33, 34, 35, 36, 37, 38, 39]]
+        columns["id"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 14, 15, 16, 17, 20, 21, 22, 26, 28, 30, 32, 34, 36, 37], 
+                         [0, 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14, 15, 18, 19, 23, 24, 25, 27, 29, 31, 33, 35, 38, 39]]
+        columns["so"] = []
+        columns["rra"] = []
+        columns["cmc"] = []
+        columns["jr"] = []   
+        
+        # get OpenSim data
+        for ans in analyses:
+            
+            # skip scale
+            if ans.casefold() == "scale": continue
+        
+            # initialise dict
+            results[ans] = {}        
+            
+            # split by feet
+            for f, foot in enumerate(["r","l"]):
+                                
+                # copy raw data
+                data0 = self.results["raw"][ans]["data"]
+                headers = self.results["raw"][ans]["headers"]
+                
+                # flip columns for left leg
+                if f == 2:
+                    data0[:, flip["ik"]] = -1 * data0[:, flip["ik"]]
+                    
+                # trim columns
+                data0 = data0[:, columns[ans][f]]
+                
+                # ###################################
+                # PROCESS EVENTS BASED ON TASK
+                
+                # match task and find time window for foot
+                if self.task.casefold() == "static":
+                    print("Static trial. Nothing to be done.")
+                
+                elif self.task.casefold() == "run":
+                    e0 = self.events["labels"].index(foot.upper() + "FS")
+                    e1 = self.events["labels"].index(foot.upper() + "FO")
+                    t0 = self.events["time"][e0]
+                    t1 = self.events["time"][e1]
+
+                #
+                # ###################################
+                
+                # trim rows (time window)
+                r00 = np.where(data0[:, 0] <= t0)[0]
+                if r00.size == 0:
+                    r0 = 0
+                else:
+                    r0 = r00[-1]
+                r1 = np.where(data0[:, 0] <= t1)[0][-1]
+                data1 = data0[r0:r1 + 1, :]
+                
+                # resample data
+                data = resample1d(data1, nsamp)
+                            
+                # store in dict
+                results[ans][foot] = {}
+                results[ans][foot]["data"] = data
+                results[ans][foot]["headers"] = [headers[h] for h in columns[ans][f]]
+        
+        self.results["split"] = results        
+            
+        return None        
+        
 
 
 
@@ -97,10 +185,10 @@ class OsimResultsKey():
 
 
 '''
-opensim_results_batch_process(meta):
+opensim_results_batch_process(meta, analyses, nsamp):
     Batch process OpenSim results text files to OsimResultsKeys.
 '''
-def opensim_results_batch_process(meta, analyses):
+def opensim_results_batch_process(meta, analyses, nsamp):
     
    # extract OpenSim data
    osimkey = {}
@@ -132,7 +220,7 @@ def opensim_results_batch_process(meta, analyses):
                    osimkey = pk.load(fid)
                    
                # get the OpenSim results
-               osimresultskey = OsimResultsKey(osimkey, analyses)
+               osimresultskey = OsimResultsKey(osimkey, analyses, nsamp)
                
                # save OsimResultsKey to file
                with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"),"wb") as f:
@@ -146,7 +234,7 @@ def opensim_results_batch_process(meta, analyses):
     
 
 '''
-collate_opensim_results(meta):
+collate_opensim_results(meta, analyses):
     Collate OpenSim results into dataframes and export to text for Rstats.
 '''
 def collate_opensim_results(meta, analyses):
