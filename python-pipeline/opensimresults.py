@@ -33,6 +33,7 @@ class OsimResultsKey():
         self.model = osimkey.model
         self.lab = osimkey.lab
         self.task = osimkey.task
+        self.condition = osimkey.condition
         self.events = osimkey.events
         self.outpath = osimkey.outpath
         self.__get_results_raw(osimkey, analyses, nsamp)
@@ -254,7 +255,6 @@ def export_opensim_results(meta, user, analyses):
         
     # extract OpenSim data
     print("Collating data into lists...\n")
-    osimkey = {}
     for subj in meta:
     
         print("%s" % "*" * 30)
@@ -282,8 +282,9 @@ def export_opensim_results(meta, user, analyses):
                 with open(pkfile,"rb") as fid:
                     osimresultskey = pk.load(fid)
                     
-                # trial task
+                # trial task and condition
                 task = osimresultskey.task
+                condition = osimresultskey.condition
                 
                 # foot
                 for foot in ["r","l"]:
@@ -308,13 +309,13 @@ def export_opensim_results(meta, user, analyses):
                             drow = data[:, v]
 
                             # create new line of data
-                            csvrow = [subj, group, trial, task, foot, ans, variable] + drow.tolist()
+                            csvrow = [subj, group, trial, task, condition, foot, ans, variable] + drow.tolist()
                             csvdata.append(csvrow)
 
 
     # create empty dataframe
     print("\nCreating dataframe...")
-    headers = ["subj", "group", "trial", "task", "foot", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subj", "group", "trial", "task", "condition", "foot", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers

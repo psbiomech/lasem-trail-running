@@ -41,11 +41,12 @@ TrialKey:
     laboratory and force plate frames.
 '''
 class TrialKey():
-    def __init__(self, lab, task, c3dkey, xdir, static_fp_channel, mass):       
+    def __init__(self, lab, task, condition, c3dkey, xdir, static_fp_channel, mass):       
         self.subject_name = str(c3dkey.subject_name)
         self.trial_name = str(c3dkey.trial_name)
         self.lab_name = lab.lab_name
         self.task = task
+        self.condition = condition
         self.mass = mass
         self.__set_events(c3dkey, task, static_fp_channel)
         self.__set_markers(lab, c3dkey, xdir)        
@@ -307,6 +308,7 @@ class OpenSimKey():
         self.lab = trialkey.lab_name
         self.model = trialkey.subject_name + ".osim"
         self.task = trialkey.task
+        self.condition = trialkey.condition
         self.outpath = c3dpath
         self.__set_events(trialkey)
         self.__set_markers(trialkey) 
@@ -484,11 +486,8 @@ def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
                 c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                 task = meta[subj]["trials"][group][trial]["task"]
-                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, user.refmodelfile, user.staticfpchannel, mass)
-                
-                # write OpenSim input data files
-                osp.write_ground_forces_mot_file(osimkey)
-                osp.write_marker_trajctory_trc_file(osimkey)            
+                condition = meta[subj]["trials"][group][trial]["condition"]
+                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, threshold, user.refmodelfile, user.staticfpchannel, mass)                           
                 
                 # get the mass from the used static trial
                 if usedstatic: mass = osimkey.mass
@@ -518,26 +517,23 @@ def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
                 c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                 task = meta[subj]["trials"][group][trial]["task"]
-                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, user.refmodelfile, user.staticfpchannel, mass)
-                
-                # write OpenSim input data files
-                osp.write_ground_forces_mot_file(osimkey)
-                osp.write_marker_trajctory_trc_file(osimkey)            
+                condition = meta[subj]["trials"][group][trial]["condition"]
+                c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, threshold, user.refmodelfile, user.staticfpchannel, mass)                           
                      
             #
             # ###################################                    
 
-    return osimkey
+    return None
 
 
 
 '''
-c3d_extract(trial, c3dpath, c3dpath, lab, xdir, threshold, ref_model, 
-            static_fp_channel, mass):
+c3d_extract(trial, c3dpath, c3dpath, lab, condition, xdir, threshold, 
+            ref_model, static_fp_channel, mass):
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, ref_model, static_fp_channel, mass):
+def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, threshold, ref_model, static_fp_channel, mass):
     
     # load C3D file
     itf = c3d.c3dserver()
@@ -557,17 +553,21 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, task, xdir, threshold, ref_model, 
     c3dkey = C3DKey(sname, tname, fmeta, fforces, fmarkers)
 
     # trial data only from C3D key
-    trialkey = TrialKey(lab, task, c3dkey, xdir, static_fp_channel, mass)
+    trialkey = TrialKey(lab, task, condition, c3dkey, xdir, static_fp_channel, mass)
     
-    # opensim data
+    # opensim input data
     osimkey = OpenSimKey(trialkey, ref_model, c3dpath, threshold)
     
     # save key files
     with open(os.path.join(c3dpath, trial + "_c3dkey.pkl"),"wb") as f: pk.dump(c3dkey, f)
     with open(os.path.join(c3dpath, trial + "_trialkey.pkl"),"wb") as g: pk.dump(trialkey, g)
     with open(os.path.join(c3dpath, trial + "_osimkey.pkl"),"wb") as h: pk.dump(osimkey, h)
+
+    # write OpenSim input data files
+    osp.write_ground_forces_mot_file(osimkey)
+    osp.write_marker_trajctory_trc_file(osimkey) 
     
-    return None
+    return osimkey
     
 
 

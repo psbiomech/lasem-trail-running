@@ -34,18 +34,18 @@ print("Done.\n")
 
 # %% META DATABASE (BUILD NEW OR LOAD EXISTING)
 
-# print("Building new output database... ", end="")
-# import builddatabase as bd
-# traildb = bd.build_database("TRAIL", user, "run")
-# print("Done.\n")
-
-print("Loading existing output database... ", end="")
-import pickle as pk
-import os
-dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
-with open(dbfilepath,"rb") as fid:
-    traildb = pk.load(fid)
+print("Building new output database... ", end="")
+import builddatabase as bd
+traildb = bd.build_database("TRAIL", user, "run")
 print("Done.\n")
+
+# print("Loading existing output database... ", end="")
+# import pickle as pk
+# import os
+# dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
+# with open(dbfilepath,"rb") as fid:
+#     traildb = pk.load(fid)
+# print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
@@ -66,13 +66,14 @@ print("\nOpenSim pipeline completed.\n")
 
 print("Converting OpenSim results to Pickle...\n")
 osr.opensim_results_batch_process(traildb, ["scale","ik","id"], 101)
-print("OpenSim results converted to Pickle.\n")
+print("\nOpenSim results converted to Pickle.\n")
 
 
 # %% COLLATE RESULTS FOR RSTATS ANALYSIS
 
-
-
+print("Exporting OpenSim results to CSV...\n")
+osr.export_opensim_results(traildb, user, ["scale","ik","id"])
+print("CSV export complete.\n")
 
 
 

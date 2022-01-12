@@ -74,10 +74,12 @@ def build_database(project, user, task):
                     meta[subj]["trials"][group][trial]["inpath"] = os.path.split(groupfolderlist[m])[0]
                     meta[subj]["trials"][group][trial]["outpath"] = os.path.join(outpath, subj, group, trial)
                     meta[subj]["trials"][group][trial]["task"] = task
+                    meta[subj]["trials"][group][trial]["condition"] = trialprefix.casefold()
                     meta[subj]["trials"][group][trial]["isstatic"] = False
                     meta[subj]["trials"][group][trial]["usedstatic"] = False
                     if trialprefix.casefold() == user.staticprefix.casefold():
                         meta[subj]["trials"][group][trial]["task"] = "static"
+                        meta[subj]["trials"][group][trial]["condition"] = "static"
                         meta[subj]["trials"][group][trial]["isstatic"] = True
                         if trial.casefold().endswith(user.staticused.casefold()):
                             meta[subj]["trials"][group][trial]["usedstatic"] = True
