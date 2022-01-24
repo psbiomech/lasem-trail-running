@@ -58,25 +58,38 @@ class TrialKey():
 
         # initialise dict        
         events = {}
-        
+              
         # process events, or if no events, add general events
         if c3dkey.meta["EVENT"]["USED"] == 0:            
             events["labels"] = ["GEN", "GEN"]
             events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]            
-        else:
-            foot = [f[0].upper() for f in c3dkey.meta["EVENT"]["CONTEXTS"]]
-            events["labels"] = [foot[i] + "F" + f.split()[1][0] for i, f in enumerate(c3dkey.meta["EVENT"]["LABELS"])]
-            events["time"] = c3dkey.meta["EVENT"]["TIMES"][:,1]
         
+        else:
+            
+            # build events list and time
+            foot = [f[0].upper() for f in c3dkey.meta["EVENT"]["CONTEXTS"]]
+            elabels = [foot[i] + "F" + f.split()[1][0] for i, f in enumerate(c3dkey.meta["EVENT"]["LABELS"])]
+            etime = c3dkey.meta["EVENT"]["TIMES"][:,1]
+            
+            # sort the events list and time as sometimes the C3D stores events
+            # and times out of order in its meta data
+            sortidxs = np.argsort(etime)
+            events["labels"] = [elabels[e] for e in sortidxs]
+            events["time"] = [etime[e] for e in sortidxs]
+                    
         # relative time, normalise to first frame
         events["time0"] = events["time"] - (c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
             
+      
         
         # ###################################
         # PROCESS EVENTS BASED ON TASK
         
         # match task and perform required computations
         # (unfortunately we cannot use match-case before Python 3.10)
+ 
+        
+        # static trials
         if task.casefold() == "static":
             
             # calculate subject mass, return end frames for 25%-75% window
@@ -90,15 +103,54 @@ class TrialKey():
             # no force plate sequence
             events["fp_sequence"] = [[0, 0]]
             
+            # leg task is static (R, L)
+            events["leg_task"] = ["static", "static"]
+
             
-        elif task.casefold() == "run":
-                    
-            # temporarily assume first full stride cycle is the required stride
-            # cycle (IFS ---> CFO), will need to change this later to accept
-            # any stride cycle in a C3D file with multiple stride cycles.
+        # run full stride cycle on one leg, stance on other leg  
+        elif task.casefold().startswith("run_stridecycle"):
             
-            # calculate the time window of interest (assume first FS is start of
-            # the trial time window
+            # assume stride cycle is from first foot strike on force plate to
+            # the next foot strike on the same leg (IFS ---> IFS), thus one leg
+            # will have full stride cycle, other leg will have stance only.
+            
+            # calculate the time window of interest (assume first FS is start
+            # of the trial time window, third FS is end of window)
+            fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
+            fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][2]
+            events["window_time0"] = events["time0"][fsidx0:fsidx1 + 1]
+            events["window_labels"] = events["labels"][fsidx0:fsidx1 + 1]
+            
+            # list the individual intervals
+            events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
+            
+            # find force plate sequence for each interval (row) defined in the
+            # array window_intervals0
+            # note: sequences defined as per GaitExtract using a 2D array:
+            #   rows: event intervals
+            #   col1: right foot
+            #   col2: left foot
+            events["fp_sequence"] = [[0, 0]]
+            if events["window_labels"][0][0] == "R":
+                events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3], [0, 0]])
+            else:
+                events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0], [0, 0]])
+
+            # leg task is stride cycle on ipsilateral, stance on contralateral
+            if events["window_labels"][0][0] == "R":
+                events["leg_task"] = ["run_stridecycle", "run_stance"]
+            else:
+                events["leg_task"] = ["run_stance", "run_stridecycle"]
+            
+
+        # run stance phase only both legs
+        elif task.casefold().startswith("run_stance"):
+                                        
+            # assume first pair of stance phases (IFS ---> CFO) is the required 
+            # window, thus will have one stance phase per leg.
+            
+            # calculate the time window of interest (assume first FS is start
+            # of the trial time window, second FO is end of window)
             fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
             foidx1 = np.where(np.char.find(events["labels"],"FO")>=0)[0][1]
             events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
@@ -117,11 +169,15 @@ class TrialKey():
             if events["window_labels"][0][0] == "R":
                 events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3]])
             else:
-                events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0]],)
+                events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0]])
+                
+            # leg task is same for both legs  (R, L)
+            events["leg_task"] = ["run_stance", "run_stance"]
             
         #
         # ###################################
         
+
                         
         self.events = events
         
@@ -323,6 +379,7 @@ class OpenSimKey():
         # add events for trial
         events["time"] = trialkey.events["window_time0"]
         events["labels"] = trialkey.events["window_labels"]
+        events["leg_task"] = trialkey.events["leg_task"]
     
         self.events = events
     

@@ -281,7 +281,35 @@ Frame 142 (t=0.71):	total squared error = 0.0144576, marker error: RMS=0.0181269
 Frame 143 (t=0.715):	total squared error = 0.0140245, marker error: RMS=0.0178532, max=0.0389836 (RELB)
 Frame 144 (t=0.72):	total squared error = 0.0136513, marker error: RMS=0.0176141, max=0.0386935 (RELB)
 Frame 145 (t=0.725):	total squared error = 0.0132978, marker error: RMS=0.0173846, max=0.0384377 (RELB)
-InverseKinematicsTool completed 121 frames in 7 second(s)
+Frame 146 (t=0.73):	total squared error = 0.0130669, marker error: RMS=0.0172329, max=0.0382051 (RELB)
+Frame 147 (t=0.735):	total squared error = 0.0128789, marker error: RMS=0.0171085, max=0.0378124 (RELB)
+Frame 148 (t=0.74):	total squared error = 0.0127889, marker error: RMS=0.0170486, max=0.0373933 (RELB)
+Frame 149 (t=0.745):	total squared error = 0.0126174, marker error: RMS=0.016934, max=0.0370046 (RELB)
+Frame 150 (t=0.75):	total squared error = 0.0124834, marker error: RMS=0.0168438, max=0.0365736 (RELB)
+Frame 151 (t=0.755):	total squared error = 0.0123489, marker error: RMS=0.0167528, max=0.0363272 (RELB)
+Frame 152 (t=0.76):	total squared error = 0.0122212, marker error: RMS=0.016666, max=0.0360857 (RELB)
+Frame 153 (t=0.765):	total squared error = 0.0120733, marker error: RMS=0.0165648, max=0.0357791 (RELB)
+Frame 154 (t=0.77):	total squared error = 0.0119795, marker error: RMS=0.0165004, max=0.0354498 (RELB)
+Frame 155 (t=0.775):	total squared error = 0.0120239, marker error: RMS=0.0165309, max=0.0352729 (RELB)
+Frame 156 (t=0.78):	total squared error = 0.0121426, marker error: RMS=0.0166123, max=0.0351327 (RELB)
+Frame 157 (t=0.785):	total squared error = 0.0123841, marker error: RMS=0.0167767, max=0.0352326 (RELB)
+Frame 158 (t=0.79):	total squared error = 0.0127355, marker error: RMS=0.017013, max=0.0350085 (RELB)
+Frame 159 (t=0.795):	total squared error = 0.0131126, marker error: RMS=0.0172631, max=0.0347746 (RELB)
+Frame 160 (t=0.8):	total squared error = 0.013629, marker error: RMS=0.0175997, max=0.034618 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0141533, marker error: RMS=0.017935, max=0.0344368 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0147628, marker error: RMS=0.0183171, max=0.0344 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.0153147, marker error: RMS=0.0186564, max=0.0342149 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0158843, marker error: RMS=0.0190002, max=0.0341421 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.0163977, marker error: RMS=0.0193048, max=0.0342549 (RP5MT)
+Frame 166 (t=0.83):	total squared error = 0.0170274, marker error: RMS=0.019672, max=0.0356052 (RP5MT)
+Frame 167 (t=0.835):	total squared error = 0.0176105, marker error: RMS=0.020006, max=0.0369646 (RP5MT)
+Frame 168 (t=0.84):	total squared error = 0.0180449, marker error: RMS=0.0202512, max=0.0391799 (RTOE)
+Frame 169 (t=0.845):	total squared error = 0.0185898, marker error: RMS=0.0205547, max=0.0412445 (RTOE)
+Frame 170 (t=0.85):	total squared error = 0.019074, marker error: RMS=0.0208207, max=0.0431306 (RTOE)
+Frame 171 (t=0.855):	total squared error = 0.0192482, marker error: RMS=0.0209155, max=0.0445138 (RTOE)
+Frame 172 (t=0.86):	total squared error = 0.0191143, marker error: RMS=0.0208426, max=0.0453006 (RTOE)
+Frame 173 (t=0.865):	total squared error = 0.0190057, marker error: RMS=0.0207833, max=0.0455843 (RTOE)
+InverseKinematicsTool completed 149 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -390,12 +418,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_01_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_01_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\ik\TRAIL_071_EP_01_ik.mot (nr=121 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\ik\TRAIL_071_EP_01_ik.mot (nr=149 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 121 time frames in 312 millisecond(s)
+InverseDynamicsTool: 149 time frames in 252 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_02\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -615,7 +643,36 @@ Frame 138 (t=0.69):	total squared error = 0.0164304, marker error: RMS=0.019324,
 Frame 139 (t=0.695):	total squared error = 0.0160561, marker error: RMS=0.0191027, max=0.0428603 (RELB)
 Frame 140 (t=0.7):	total squared error = 0.0156733, marker error: RMS=0.0188736, max=0.0426101 (RELB)
 Frame 141 (t=0.705):	total squared error = 0.0153912, marker error: RMS=0.018703, max=0.0424312 (RELB)
-InverseKinematicsTool completed 120 frames in 7 second(s)
+Frame 142 (t=0.71):	total squared error = 0.01494, marker error: RMS=0.0184268, max=0.0420553 (RELB)
+Frame 143 (t=0.715):	total squared error = 0.0146984, marker error: RMS=0.0182772, max=0.0417397 (RELB)
+Frame 144 (t=0.72):	total squared error = 0.0144579, marker error: RMS=0.018127, max=0.0413732 (RELB)
+Frame 145 (t=0.725):	total squared error = 0.0141931, marker error: RMS=0.0179603, max=0.0411401 (RELB)
+Frame 146 (t=0.73):	total squared error = 0.013992, marker error: RMS=0.0178325, max=0.040924 (RELB)
+Frame 147 (t=0.735):	total squared error = 0.0138099, marker error: RMS=0.0177161, max=0.0407169 (RELB)
+Frame 148 (t=0.74):	total squared error = 0.0136506, marker error: RMS=0.0176137, max=0.0404579 (RELB)
+Frame 149 (t=0.745):	total squared error = 0.0135144, marker error: RMS=0.0175256, max=0.0405861 (RELB)
+Frame 150 (t=0.75):	total squared error = 0.0133792, marker error: RMS=0.0174377, max=0.0405741 (RELB)
+Frame 151 (t=0.755):	total squared error = 0.0132879, marker error: RMS=0.0173781, max=0.0404636 (RELB)
+Frame 152 (t=0.76):	total squared error = 0.0132362, marker error: RMS=0.0173443, max=0.0404558 (RELB)
+Frame 153 (t=0.765):	total squared error = 0.0133331, marker error: RMS=0.0174076, max=0.0403906 (RELB)
+Frame 154 (t=0.77):	total squared error = 0.0134519, marker error: RMS=0.017485, max=0.0402854 (RELB)
+Frame 155 (t=0.775):	total squared error = 0.0136881, marker error: RMS=0.0176378, max=0.0401088 (RELB)
+Frame 156 (t=0.78):	total squared error = 0.0140817, marker error: RMS=0.0178896, max=0.040198 (RELB)
+Frame 157 (t=0.785):	total squared error = 0.0145474, marker error: RMS=0.018183, max=0.0401141 (RELB)
+Frame 158 (t=0.79):	total squared error = 0.0150954, marker error: RMS=0.0185223, max=0.0399908 (RELB)
+Frame 159 (t=0.795):	total squared error = 0.0157066, marker error: RMS=0.0188936, max=0.0395988 (RELB)
+Frame 160 (t=0.8):	total squared error = 0.0164113, marker error: RMS=0.0193128, max=0.0395909 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0170797, marker error: RMS=0.0197021, max=0.0394858 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0177612, marker error: RMS=0.0200914, max=0.0390891 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.0184348, marker error: RMS=0.0204688, max=0.0390924 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0190276, marker error: RMS=0.0207953, max=0.0389745 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.0196409, marker error: RMS=0.0211278, max=0.0404475 (RTOE)
+Frame 166 (t=0.83):	total squared error = 0.0201739, marker error: RMS=0.0214126, max=0.0431232 (RTOE)
+Frame 167 (t=0.835):	total squared error = 0.0204935, marker error: RMS=0.0215815, max=0.0451704 (RTOE)
+Frame 168 (t=0.84):	total squared error = 0.0205421, marker error: RMS=0.0216071, max=0.046633 (RTOE)
+Frame 169 (t=0.845):	total squared error = 0.0203968, marker error: RMS=0.0215305, max=0.047207 (RTOE)
+Frame 170 (t=0.85):	total squared error = 0.0201881, marker error: RMS=0.0214201, max=0.047417 (RTOE)
+InverseKinematicsTool completed 149 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_02\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -724,12 +781,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_02_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_02_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_02\ik\TRAIL_071_EP_02_ik.mot (nr=120 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_02\ik\TRAIL_071_EP_02_ik.mot (nr=149 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 120 time frames in 306 millisecond(s)
+InverseDynamicsTool: 149 time frames in 242 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_03\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -959,7 +1016,31 @@ Frame 136 (t=0.68):	total squared error = 0.0144787, marker error: RMS=0.01814, 
 Frame 137 (t=0.685):	total squared error = 0.014168, marker error: RMS=0.0179443, max=0.0393838 (RELB)
 Frame 138 (t=0.69):	total squared error = 0.0138225, marker error: RMS=0.0177242, max=0.0390915 (RELB)
 Frame 139 (t=0.695):	total squared error = 0.0135305, marker error: RMS=0.017536, max=0.0384611 (RELB)
-InverseKinematicsTool completed 130 frames in 8 second(s)
+Frame 140 (t=0.7):	total squared error = 0.0131651, marker error: RMS=0.0172976, max=0.0381674 (RELB)
+Frame 141 (t=0.705):	total squared error = 0.0129941, marker error: RMS=0.0171849, max=0.0377715 (RELB)
+Frame 142 (t=0.71):	total squared error = 0.012768, marker error: RMS=0.0170347, max=0.0369587 (RELB)
+Frame 143 (t=0.715):	total squared error = 0.0124847, marker error: RMS=0.0168447, max=0.0366579 (RELB)
+Frame 144 (t=0.72):	total squared error = 0.0122936, marker error: RMS=0.0167152, max=0.0361867 (RELB)
+Frame 145 (t=0.725):	total squared error = 0.012181, marker error: RMS=0.0166385, max=0.0356247 (RELB)
+Frame 146 (t=0.73):	total squared error = 0.0119341, marker error: RMS=0.0164691, max=0.0354686 (C7)
+Frame 147 (t=0.735):	total squared error = 0.011791, marker error: RMS=0.01637, max=0.0356279 (C7)
+Frame 148 (t=0.74):	total squared error = 0.0117117, marker error: RMS=0.0163149, max=0.0356887 (C7)
+Frame 149 (t=0.745):	total squared error = 0.0117116, marker error: RMS=0.0163148, max=0.0359704 (C7)
+Frame 150 (t=0.75):	total squared error = 0.0118938, marker error: RMS=0.0164412, max=0.0357461 (C7)
+Frame 151 (t=0.755):	total squared error = 0.0121267, marker error: RMS=0.0166014, max=0.0357296 (C7)
+Frame 152 (t=0.76):	total squared error = 0.0124438, marker error: RMS=0.0168171, max=0.0356857 (C7)
+Frame 153 (t=0.765):	total squared error = 0.012912, marker error: RMS=0.0171305, max=0.0356991 (C7)
+Frame 154 (t=0.77):	total squared error = 0.0134256, marker error: RMS=0.0174679, max=0.035655 (C7)
+Frame 155 (t=0.775):	total squared error = 0.0140361, marker error: RMS=0.0178606, max=0.0356636 (C7)
+Frame 156 (t=0.78):	total squared error = 0.0146503, marker error: RMS=0.0182473, max=0.0356067 (C7)
+Frame 157 (t=0.785):	total squared error = 0.0152675, marker error: RMS=0.0186276, max=0.0356817 (C7)
+Frame 158 (t=0.79):	total squared error = 0.0158398, marker error: RMS=0.0189736, max=0.0356391 (C7)
+Frame 159 (t=0.795):	total squared error = 0.0164297, marker error: RMS=0.0193236, max=0.0358256 (C7)
+Frame 160 (t=0.8):	total squared error = 0.0169862, marker error: RMS=0.0196482, max=0.0361753 (RP5MT)
+Frame 161 (t=0.805):	total squared error = 0.0175066, marker error: RMS=0.0199469, max=0.0378087 (RP5MT)
+Frame 162 (t=0.81):	total squared error = 0.0177601, marker error: RMS=0.0200908, max=0.0395045 (RP5MT)
+Frame 163 (t=0.815):	total squared error = 0.0179676, marker error: RMS=0.0202078, max=0.0408127 (RP5MT)
+InverseKinematicsTool completed 154 frames in 7 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_03\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -1068,12 +1149,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_03_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_03_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_03\ik\TRAIL_071_EP_03_ik.mot (nr=130 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_03\ik\TRAIL_071_EP_03_ik.mot (nr=154 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 130 time frames in 292 millisecond(s)
+InverseDynamicsTool: 154 time frames in 253 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_04\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -1296,7 +1377,38 @@ Frame 169 (t=0.845):	total squared error = 0.0208121, marker error: RMS=0.021748
 Frame 170 (t=0.85):	total squared error = 0.0204294, marker error: RMS=0.0215477, max=0.0428738 (RTOE)
 Frame 171 (t=0.855):	total squared error = 0.0199941, marker error: RMS=0.0213169, max=0.0416583 (RP5MT)
 Frame 172 (t=0.86):	total squared error = 0.0194498, marker error: RMS=0.0210248, max=0.040826 (RP5MT)
-InverseKinematicsTool completed 123 frames in 7 second(s)
+Frame 173 (t=0.865):	total squared error = 0.018804, marker error: RMS=0.0206728, max=0.0405472 (RELB)
+Frame 174 (t=0.87):	total squared error = 0.0180482, marker error: RMS=0.0202531, max=0.0402177 (RELB)
+Frame 175 (t=0.875):	total squared error = 0.0172268, marker error: RMS=0.0197868, max=0.0401437 (RELB)
+Frame 176 (t=0.88):	total squared error = 0.0165167, marker error: RMS=0.0193747, max=0.039981 (RELB)
+Frame 177 (t=0.885):	total squared error = 0.0158536, marker error: RMS=0.0189818, max=0.0398186 (RELB)
+Frame 178 (t=0.89):	total squared error = 0.0153442, marker error: RMS=0.0186743, max=0.0393063 (RELB)
+Frame 179 (t=0.895):	total squared error = 0.0149048, marker error: RMS=0.018405, max=0.0391935 (RELB)
+Frame 180 (t=0.9):	total squared error = 0.014604, marker error: RMS=0.0182184, max=0.0390426 (RELB)
+Frame 181 (t=0.905):	total squared error = 0.0142816, marker error: RMS=0.0180162, max=0.0386976 (RELB)
+Frame 182 (t=0.91):	total squared error = 0.0140484, marker error: RMS=0.0178684, max=0.0384299 (RELB)
+Frame 183 (t=0.915):	total squared error = 0.0138183, marker error: RMS=0.0177215, max=0.0382572 (RELB)
+Frame 184 (t=0.92):	total squared error = 0.0136376, marker error: RMS=0.0176052, max=0.0380865 (RELB)
+Frame 185 (t=0.925):	total squared error = 0.0135958, marker error: RMS=0.0175782, max=0.0379709 (RELB)
+Frame 186 (t=0.93):	total squared error = 0.0136062, marker error: RMS=0.017585, max=0.0379104 (RELB)
+Frame 187 (t=0.935):	total squared error = 0.013631, marker error: RMS=0.017601, max=0.0377398 (RELB)
+Frame 188 (t=0.94):	total squared error = 0.013782, marker error: RMS=0.0176982, max=0.0376991 (RELB)
+Frame 189 (t=0.945):	total squared error = 0.0139596, marker error: RMS=0.0178119, max=0.0375497 (RELB)
+Frame 190 (t=0.95):	total squared error = 0.0142629, marker error: RMS=0.0180043, max=0.0374005 (RELB)
+Frame 191 (t=0.955):	total squared error = 0.0146101, marker error: RMS=0.0182222, max=0.0371929 (RELB)
+Frame 192 (t=0.96):	total squared error = 0.0150699, marker error: RMS=0.0185067, max=0.0370972 (RELB)
+Frame 193 (t=0.965):	total squared error = 0.0155784, marker error: RMS=0.0188163, max=0.0369548 (RELB)
+Frame 194 (t=0.97):	total squared error = 0.0160138, marker error: RMS=0.0190775, max=0.0368511 (RELB)
+Frame 195 (t=0.975):	total squared error = 0.0164485, marker error: RMS=0.0193346, max=0.0367148 (RELB)
+Frame 196 (t=0.98):	total squared error = 0.0168214, marker error: RMS=0.0195526, max=0.0378071 (LPAT)
+Frame 197 (t=0.985):	total squared error = 0.0172195, marker error: RMS=0.0197826, max=0.0385671 (LPAT)
+Frame 198 (t=0.99):	total squared error = 0.0175285, marker error: RMS=0.0199593, max=0.0395671 (LPAT)
+Frame 199 (t=0.995):	total squared error = 0.0179193, marker error: RMS=0.0201806, max=0.040639 (LP5MT)
+Frame 200 (t=1):	total squared error = 0.0181475, marker error: RMS=0.0203087, max=0.0414774 (LPAT)
+Frame 201 (t=1.005):	total squared error = 0.0182873, marker error: RMS=0.0203868, max=0.0423966 (LPAT)
+Frame 202 (t=1.01):	total squared error = 0.0185072, marker error: RMS=0.020509, max=0.0431261 (LPAT)
+Frame 203 (t=1.015):	total squared error = 0.0186751, marker error: RMS=0.0206018, max=0.0439033 (LPAT)
+InverseKinematicsTool completed 154 frames in 7 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_04\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -1405,12 +1517,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_04_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_04_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_04\ik\TRAIL_071_EP_04_ik.mot (nr=123 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_04\ik\TRAIL_071_EP_04_ik.mot (nr=154 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 123 time frames in 283 millisecond(s)
+InverseDynamicsTool: 154 time frames in 303 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_05\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -1635,7 +1747,35 @@ Frame 153 (t=0.765):	total squared error = 0.0162527, marker error: RMS=0.019219
 Frame 154 (t=0.77):	total squared error = 0.0160593, marker error: RMS=0.0191045, max=0.043703 (RELB)
 Frame 155 (t=0.775):	total squared error = 0.0158276, marker error: RMS=0.0189662, max=0.0434853 (RELB)
 Frame 156 (t=0.78):	total squared error = 0.015564, marker error: RMS=0.0188076, max=0.0431508 (RELB)
-InverseKinematicsTool completed 125 frames in 7 second(s)
+Frame 157 (t=0.785):	total squared error = 0.0153228, marker error: RMS=0.0186613, max=0.0430313 (RELB)
+Frame 158 (t=0.79):	total squared error = 0.0151396, marker error: RMS=0.0185495, max=0.0425413 (RELB)
+Frame 159 (t=0.795):	total squared error = 0.0149557, marker error: RMS=0.0184364, max=0.0422021 (RELB)
+Frame 160 (t=0.8):	total squared error = 0.0147596, marker error: RMS=0.0183152, max=0.0418269 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0145079, marker error: RMS=0.0181583, max=0.0413276 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0143006, marker error: RMS=0.0180281, max=0.0409307 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.0140987, marker error: RMS=0.0179004, max=0.0407031 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0139334, marker error: RMS=0.0177952, max=0.040407 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.0137256, marker error: RMS=0.017662, max=0.0401063 (RELB)
+Frame 166 (t=0.83):	total squared error = 0.0136808, marker error: RMS=0.0176332, max=0.039706 (RELB)
+Frame 167 (t=0.835):	total squared error = 0.0135787, marker error: RMS=0.0175672, max=0.0395484 (RELB)
+Frame 168 (t=0.84):	total squared error = 0.0136266, marker error: RMS=0.0175981, max=0.039372 (RELB)
+Frame 169 (t=0.845):	total squared error = 0.013795, marker error: RMS=0.0177066, max=0.0391433 (RELB)
+Frame 170 (t=0.85):	total squared error = 0.0140719, marker error: RMS=0.0178834, max=0.0388773 (RELB)
+Frame 171 (t=0.855):	total squared error = 0.0143683, marker error: RMS=0.0180708, max=0.0386288 (RELB)
+Frame 172 (t=0.86):	total squared error = 0.0147289, marker error: RMS=0.0182961, max=0.0383903 (RELB)
+Frame 173 (t=0.865):	total squared error = 0.0150869, marker error: RMS=0.0185171, max=0.0381866 (RELB)
+Frame 174 (t=0.87):	total squared error = 0.0154277, marker error: RMS=0.0187251, max=0.0379896 (RELB)
+Frame 175 (t=0.875):	total squared error = 0.015736, marker error: RMS=0.0189113, max=0.0378701 (RELB)
+Frame 176 (t=0.88):	total squared error = 0.0160567, marker error: RMS=0.019103, max=0.0376339 (RELB)
+Frame 177 (t=0.885):	total squared error = 0.0163544, marker error: RMS=0.0192793, max=0.0375977 (RELB)
+Frame 178 (t=0.89):	total squared error = 0.0167059, marker error: RMS=0.0194854, max=0.0374703 (RELB)
+Frame 179 (t=0.895):	total squared error = 0.0170654, marker error: RMS=0.0196939, max=0.0373283 (RELB)
+Frame 180 (t=0.9):	total squared error = 0.0174054, marker error: RMS=0.0198891, max=0.0372457 (RELB)
+Frame 181 (t=0.905):	total squared error = 0.0178038, marker error: RMS=0.0201155, max=0.0373194 (RELB)
+Frame 182 (t=0.91):	total squared error = 0.0180362, marker error: RMS=0.0202463, max=0.0370561 (RELB)
+Frame 183 (t=0.915):	total squared error = 0.0180614, marker error: RMS=0.0202605, max=0.0382147 (RP5MT)
+Frame 184 (t=0.92):	total squared error = 0.0182935, marker error: RMS=0.0203902, max=0.0389155 (RP5MT)
+InverseKinematicsTool completed 153 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_05\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -1744,12 +1884,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_05_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_05_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_05\ik\TRAIL_071_EP_05_ik.mot (nr=125 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_05\ik\TRAIL_071_EP_05_ik.mot (nr=153 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 125 time frames in 271 millisecond(s)
+InverseDynamicsTool: 153 time frames in 260 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_06\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -1974,7 +2114,35 @@ Frame 146 (t=0.73):	total squared error = 0.0159656, marker error: RMS=0.0190487
 Frame 147 (t=0.735):	total squared error = 0.01563, marker error: RMS=0.0188475, max=0.0413551 (RELB)
 Frame 148 (t=0.74):	total squared error = 0.0152924, marker error: RMS=0.0186428, max=0.0407595 (RELB)
 Frame 149 (t=0.745):	total squared error = 0.0150135, marker error: RMS=0.018472, max=0.0405931 (RELB)
-InverseKinematicsTool completed 125 frames in 7 second(s)
+Frame 150 (t=0.75):	total squared error = 0.0147273, marker error: RMS=0.0182951, max=0.0403979 (RELB)
+Frame 151 (t=0.755):	total squared error = 0.0144493, marker error: RMS=0.0181216, max=0.040123 (RELB)
+Frame 152 (t=0.76):	total squared error = 0.0142792, marker error: RMS=0.0180146, max=0.0399259 (RELB)
+Frame 153 (t=0.765):	total squared error = 0.0140655, marker error: RMS=0.0178793, max=0.0396216 (RELB)
+Frame 154 (t=0.77):	total squared error = 0.0138178, marker error: RMS=0.0177212, max=0.0393518 (RELB)
+Frame 155 (t=0.775):	total squared error = 0.013618, marker error: RMS=0.0175926, max=0.0391825 (RELB)
+Frame 156 (t=0.78):	total squared error = 0.0134415, marker error: RMS=0.0174782, max=0.0388904 (RELB)
+Frame 157 (t=0.785):	total squared error = 0.0133137, marker error: RMS=0.0173949, max=0.038805 (RELB)
+Frame 158 (t=0.79):	total squared error = 0.01322, marker error: RMS=0.0173336, max=0.038626 (RELB)
+Frame 159 (t=0.795):	total squared error = 0.0131793, marker error: RMS=0.0173069, max=0.0385032 (RELB)
+Frame 160 (t=0.8):	total squared error = 0.0132361, marker error: RMS=0.0173442, max=0.0385298 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0132913, marker error: RMS=0.0173803, max=0.0383436 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0134697, marker error: RMS=0.0174966, max=0.0380675 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.013678, marker error: RMS=0.0176313, max=0.0380389 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0139573, marker error: RMS=0.0178104, max=0.0380302 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.014278, marker error: RMS=0.0180139, max=0.0379197 (RELB)
+Frame 166 (t=0.83):	total squared error = 0.0146098, marker error: RMS=0.018222, max=0.0378566 (RELB)
+Frame 167 (t=0.835):	total squared error = 0.0149282, marker error: RMS=0.0184195, max=0.0379177 (RELB)
+Frame 168 (t=0.84):	total squared error = 0.0153075, marker error: RMS=0.018652, max=0.0377104 (RELB)
+Frame 169 (t=0.845):	total squared error = 0.0156953, marker error: RMS=0.0188868, max=0.0376886 (RELB)
+Frame 170 (t=0.85):	total squared error = 0.0159157, marker error: RMS=0.019019, max=0.0376732 (RELB)
+Frame 171 (t=0.855):	total squared error = 0.0160255, marker error: RMS=0.0190844, max=0.0377167 (RELB)
+Frame 172 (t=0.86):	total squared error = 0.0161648, marker error: RMS=0.0191672, max=0.037733 (RELB)
+Frame 173 (t=0.865):	total squared error = 0.0161746, marker error: RMS=0.019173, max=0.0377802 (RELB)
+Frame 174 (t=0.87):	total squared error = 0.0161011, marker error: RMS=0.0191294, max=0.0378436 (RELB)
+Frame 175 (t=0.875):	total squared error = 0.0158983, marker error: RMS=0.0190086, max=0.0380627 (RELB)
+Frame 176 (t=0.88):	total squared error = 0.0157304, marker error: RMS=0.0189079, max=0.0382163 (RELB)
+Frame 177 (t=0.885):	total squared error = 0.0156233, marker error: RMS=0.0188434, max=0.0384079 (RELB)
+InverseKinematicsTool completed 153 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_06\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -2083,12 +2251,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_06_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_06_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_06\ik\TRAIL_071_EP_06_ik.mot (nr=125 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_06\ik\TRAIL_071_EP_06_ik.mot (nr=153 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 125 time frames in 309 millisecond(s)
+InverseDynamicsTool: 153 time frames in 258 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_07\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -2312,7 +2480,36 @@ Frame 144 (t=0.72):	total squared error = 0.017654, marker error: RMS=0.0200306,
 Frame 145 (t=0.725):	total squared error = 0.0175793, marker error: RMS=0.0199882, max=0.0423744 (RELB)
 Frame 146 (t=0.73):	total squared error = 0.0174412, marker error: RMS=0.0199096, max=0.0421516 (RELB)
 Frame 147 (t=0.735):	total squared error = 0.0171435, marker error: RMS=0.0197389, max=0.0419579 (RELB)
-InverseKinematicsTool completed 124 frames in 7 second(s)
+Frame 148 (t=0.74):	total squared error = 0.0166393, marker error: RMS=0.0194465, max=0.0417957 (RELB)
+Frame 149 (t=0.745):	total squared error = 0.0162445, marker error: RMS=0.0192144, max=0.0417439 (RELB)
+Frame 150 (t=0.75):	total squared error = 0.0157044, marker error: RMS=0.0188923, max=0.0413621 (RELB)
+Frame 151 (t=0.755):	total squared error = 0.0152598, marker error: RMS=0.0186229, max=0.0411905 (RELB)
+Frame 152 (t=0.76):	total squared error = 0.0147863, marker error: RMS=0.0183317, max=0.0409104 (RELB)
+Frame 153 (t=0.765):	total squared error = 0.0144241, marker error: RMS=0.0181058, max=0.0409163 (RELB)
+Frame 154 (t=0.77):	total squared error = 0.0141165, marker error: RMS=0.0179117, max=0.0406111 (RELB)
+Frame 155 (t=0.775):	total squared error = 0.0138838, marker error: RMS=0.0177635, max=0.0403777 (RELB)
+Frame 156 (t=0.78):	total squared error = 0.0136662, marker error: RMS=0.0176237, max=0.0402058 (RELB)
+Frame 157 (t=0.785):	total squared error = 0.0135378, marker error: RMS=0.0175407, max=0.0401137 (RELB)
+Frame 158 (t=0.79):	total squared error = 0.013373, marker error: RMS=0.0174336, max=0.0398566 (RELB)
+Frame 159 (t=0.795):	total squared error = 0.0132875, marker error: RMS=0.0173778, max=0.0396973 (RELB)
+Frame 160 (t=0.8):	total squared error = 0.0132531, marker error: RMS=0.0173553, max=0.0395898 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0133799, marker error: RMS=0.0174381, max=0.039459 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0136445, marker error: RMS=0.0176097, max=0.039202 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.0139283, marker error: RMS=0.0177919, max=0.0392113 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0144225, marker error: RMS=0.0181048, max=0.0390584 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.0149056, marker error: RMS=0.0184055, max=0.0388962 (RELB)
+Frame 166 (t=0.83):	total squared error = 0.0155199, marker error: RMS=0.018781, max=0.0388701 (RELB)
+Frame 167 (t=0.835):	total squared error = 0.0162124, marker error: RMS=0.0191954, max=0.0388414 (RELB)
+Frame 168 (t=0.84):	total squared error = 0.0168932, marker error: RMS=0.0195943, max=0.0389168 (RELB)
+Frame 169 (t=0.845):	total squared error = 0.0175727, marker error: RMS=0.0199845, max=0.0390226 (LP5MT)
+Frame 170 (t=0.85):	total squared error = 0.018223, marker error: RMS=0.0203509, max=0.0403989 (LP5MT)
+Frame 171 (t=0.855):	total squared error = 0.0188422, marker error: RMS=0.0206938, max=0.0422776 (LP5MT)
+Frame 172 (t=0.86):	total squared error = 0.0194052, marker error: RMS=0.0210007, max=0.043498 (LP5MT)
+Frame 173 (t=0.865):	total squared error = 0.0199775, marker error: RMS=0.0213081, max=0.0451498 (LP5MT)
+Frame 174 (t=0.87):	total squared error = 0.0203447, marker error: RMS=0.021503, max=0.0461489 (LP5MT)
+Frame 175 (t=0.875):	total squared error = 0.0205142, marker error: RMS=0.0215924, max=0.0468888 (LP5MT)
+Frame 176 (t=0.88):	total squared error = 0.0206141, marker error: RMS=0.0216449, max=0.0477746 (LP5MT)
+InverseKinematicsTool completed 153 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_07\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -2421,12 +2618,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_07_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_07_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_07\ik\TRAIL_071_EP_07_ik.mot (nr=124 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_07\ik\TRAIL_071_EP_07_ik.mot (nr=153 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 124 time frames in 390 millisecond(s)
+InverseDynamicsTool: 153 time frames in 254 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_08\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -2652,7 +2849,31 @@ Frame 156 (t=0.78):	total squared error = 0.0160091, marker error: RMS=0.0190747
 Frame 157 (t=0.785):	total squared error = 0.015714, marker error: RMS=0.0188981, max=0.0404323 (RELB)
 Frame 158 (t=0.79):	total squared error = 0.0153458, marker error: RMS=0.0186753, max=0.0401035 (RELB)
 Frame 159 (t=0.795):	total squared error = 0.0149967, marker error: RMS=0.0184617, max=0.0399699 (RELB)
-InverseKinematicsTool completed 126 frames in 8 second(s)
+Frame 160 (t=0.8):	total squared error = 0.0146255, marker error: RMS=0.0182318, max=0.0397868 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0143701, marker error: RMS=0.0180719, max=0.0396296 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0141888, marker error: RMS=0.0179575, max=0.0394528 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.0140167, marker error: RMS=0.0178483, max=0.0393299 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0138128, marker error: RMS=0.017718, max=0.0392738 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.0136297, marker error: RMS=0.0176002, max=0.0390129 (RELB)
+Frame 166 (t=0.83):	total squared error = 0.0135184, marker error: RMS=0.0175281, max=0.0388291 (RELB)
+Frame 167 (t=0.835):	total squared error = 0.0134674, marker error: RMS=0.0174951, max=0.0387264 (RELB)
+Frame 168 (t=0.84):	total squared error = 0.0134061, marker error: RMS=0.0174552, max=0.0386161 (RELB)
+Frame 169 (t=0.845):	total squared error = 0.0134647, marker error: RMS=0.0174933, max=0.0385539 (RELB)
+Frame 170 (t=0.85):	total squared error = 0.0135969, marker error: RMS=0.017579, max=0.03847 (RELB)
+Frame 171 (t=0.855):	total squared error = 0.0137895, marker error: RMS=0.0177031, max=0.0383172 (RELB)
+Frame 172 (t=0.86):	total squared error = 0.0140755, marker error: RMS=0.0178857, max=0.0383392 (RELB)
+Frame 173 (t=0.865):	total squared error = 0.0144443, marker error: RMS=0.0181185, max=0.0382839 (RELB)
+Frame 174 (t=0.87):	total squared error = 0.0148791, marker error: RMS=0.0183892, max=0.0381876 (RELB)
+Frame 175 (t=0.875):	total squared error = 0.0152483, marker error: RMS=0.0186159, max=0.0383621 (RELB)
+Frame 176 (t=0.88):	total squared error = 0.0156338, marker error: RMS=0.0188497, max=0.0384504 (RELB)
+Frame 177 (t=0.885):	total squared error = 0.016102, marker error: RMS=0.0191299, max=0.0384294 (RELB)
+Frame 178 (t=0.89):	total squared error = 0.0164815, marker error: RMS=0.019354, max=0.0386504 (RELB)
+Frame 179 (t=0.895):	total squared error = 0.0167934, marker error: RMS=0.0195363, max=0.0385872 (RELB)
+Frame 180 (t=0.9):	total squared error = 0.0170253, marker error: RMS=0.0196707, max=0.0388772 (RELB)
+Frame 181 (t=0.905):	total squared error = 0.0170259, marker error: RMS=0.0196711, max=0.0389622 (RELB)
+Frame 182 (t=0.91):	total squared error = 0.0168995, marker error: RMS=0.0195979, max=0.0392673 (RELB)
+Frame 183 (t=0.915):	total squared error = 0.0167137, marker error: RMS=0.0194899, max=0.039497 (RELB)
+InverseKinematicsTool completed 150 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_08\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -2761,12 +2982,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_08_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_08_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_08\ik\TRAIL_071_EP_08_ik.mot (nr=126 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_08\ik\TRAIL_071_EP_08_ik.mot (nr=150 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 126 time frames in 472 millisecond(s)
+InverseDynamicsTool: 150 time frames in 269 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_01\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -2966,7 +3187,37 @@ Frame 108 (t=0.54):	total squared error = 0.0221758, marker error: RMS=0.0224498
 Frame 109 (t=0.545):	total squared error = 0.0224311, marker error: RMS=0.0225787, max=0.0437681 (RTOE)
 Frame 110 (t=0.55):	total squared error = 0.0224916, marker error: RMS=0.0226091, max=0.044015 (RTOE)
 Frame 111 (t=0.555):	total squared error = 0.022649, marker error: RMS=0.0226881, max=0.044938 (RP5MT)
-InverseKinematicsTool completed 100 frames in 7 second(s)
+Frame 112 (t=0.56):	total squared error = 0.0222208, marker error: RMS=0.0224726, max=0.0455701 (RP5MT)
+Frame 113 (t=0.565):	total squared error = 0.0217831, marker error: RMS=0.0222502, max=0.0463019 (RP5MT)
+Frame 114 (t=0.57):	total squared error = 0.0212844, marker error: RMS=0.021994, max=0.0465026 (RP5MT)
+Frame 115 (t=0.575):	total squared error = 0.0207315, marker error: RMS=0.0217064, max=0.0464735 (RP5MT)
+Frame 116 (t=0.58):	total squared error = 0.020221, marker error: RMS=0.0214376, max=0.0455037 (RP5MT)
+Frame 117 (t=0.585):	total squared error = 0.0196598, marker error: RMS=0.021138, max=0.0445202 (RP5MT)
+Frame 118 (t=0.59):	total squared error = 0.0191237, marker error: RMS=0.0208478, max=0.0424831 (RP5MT)
+Frame 119 (t=0.595):	total squared error = 0.0186142, marker error: RMS=0.0205682, max=0.0405942 (RMFL)
+Frame 120 (t=0.6):	total squared error = 0.0181223, marker error: RMS=0.0202946, max=0.0393166 (RMFL)
+Frame 121 (t=0.605):	total squared error = 0.0177633, marker error: RMS=0.0200926, max=0.0374922 (RMFL)
+Frame 122 (t=0.61):	total squared error = 0.0175064, marker error: RMS=0.0199468, max=0.0369983 (RELB)
+Frame 123 (t=0.615):	total squared error = 0.0173891, marker error: RMS=0.0198798, max=0.0367631 (RELB)
+Frame 124 (t=0.62):	total squared error = 0.0173277, marker error: RMS=0.0198447, max=0.036387 (RELB)
+Frame 125 (t=0.625):	total squared error = 0.0172735, marker error: RMS=0.0198136, max=0.036099 (RELB)
+Frame 126 (t=0.63):	total squared error = 0.01742, marker error: RMS=0.0198975, max=0.0358824 (RELB)
+Frame 127 (t=0.635):	total squared error = 0.0176594, marker error: RMS=0.0200337, max=0.03567 (RELB)
+Frame 128 (t=0.64):	total squared error = 0.0181014, marker error: RMS=0.0202829, max=0.035499 (RELB)
+Frame 129 (t=0.645):	total squared error = 0.0184978, marker error: RMS=0.0205038, max=0.0362994 (LPAT)
+Frame 130 (t=0.65):	total squared error = 0.0190913, marker error: RMS=0.0208301, max=0.0373703 (LPAT)
+Frame 131 (t=0.655):	total squared error = 0.0197423, marker error: RMS=0.0211823, max=0.0401618 (LP5MT)
+Frame 132 (t=0.66):	total squared error = 0.0205598, marker error: RMS=0.0216164, max=0.0426827 (LP5MT)
+Frame 133 (t=0.665):	total squared error = 0.021439, marker error: RMS=0.0220738, max=0.0458996 (LP5MT)
+Frame 134 (t=0.67):	total squared error = 0.0225464, marker error: RMS=0.0226367, max=0.0482296 (LP5MT)
+Frame 135 (t=0.675):	total squared error = 0.0233697, marker error: RMS=0.0230463, max=0.0509657 (LP5MT)
+Frame 136 (t=0.68):	total squared error = 0.0240098, marker error: RMS=0.0233597, max=0.0521214 (LP5MT)
+Frame 137 (t=0.685):	total squared error = 0.0244096, marker error: RMS=0.0235534, max=0.0528878 (LP5MT)
+Frame 138 (t=0.69):	total squared error = 0.0243697, marker error: RMS=0.0235342, max=0.0534689 (LP5MT)
+Frame 139 (t=0.695):	total squared error = 0.0235747, marker error: RMS=0.0231471, max=0.0528792 (LP5MT)
+Frame 140 (t=0.7):	total squared error = 0.0226214, marker error: RMS=0.0226743, max=0.0511772 (LP5MT)
+Frame 141 (t=0.705):	total squared error = 0.0219925, marker error: RMS=0.0223569, max=0.0495134 (LP5MT)
+InverseKinematicsTool completed 130 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_01\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -3075,12 +3326,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_01_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_01_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_01\ik\TRAIL_071_FAST_01_ik.mot (nr=100 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_01\ik\TRAIL_071_FAST_01_ik.mot (nr=130 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 100 time frames in 188 millisecond(s)
+InverseDynamicsTool: 130 time frames in 192 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_02\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -3276,7 +3527,41 @@ Frame 101 (t=0.505):	total squared error = 0.023983, marker error: RMS=0.0233467
 Frame 102 (t=0.51):	total squared error = 0.0237476, marker error: RMS=0.0232318, max=0.0477742 (RTOE)
 Frame 103 (t=0.515):	total squared error = 0.0235406, marker error: RMS=0.0231304, max=0.0467096 (RTOE)
 Frame 104 (t=0.52):	total squared error = 0.0232171, marker error: RMS=0.0229709, max=0.045372 (RTOE)
-InverseKinematicsTool completed 96 frames in 6 second(s)
+Frame 105 (t=0.525):	total squared error = 0.0227074, marker error: RMS=0.0227174, max=0.0443819 (RTOE)
+Frame 106 (t=0.53):	total squared error = 0.0222248, marker error: RMS=0.0224746, max=0.0443521 (RP5MT)
+Frame 107 (t=0.535):	total squared error = 0.0218052, marker error: RMS=0.0222615, max=0.0444132 (RP5MT)
+Frame 108 (t=0.54):	total squared error = 0.0214709, marker error: RMS=0.0220901, max=0.0447969 (RP5MT)
+Frame 109 (t=0.545):	total squared error = 0.0210227, marker error: RMS=0.0218584, max=0.043769 (RP5MT)
+Frame 110 (t=0.55):	total squared error = 0.020525, marker error: RMS=0.0215981, max=0.0429163 (RP5MT)
+Frame 111 (t=0.555):	total squared error = 0.0200994, marker error: RMS=0.021373, max=0.0410312 (RP5MT)
+Frame 112 (t=0.56):	total squared error = 0.0196026, marker error: RMS=0.0211072, max=0.0394026 (RMFL)
+Frame 113 (t=0.565):	total squared error = 0.0192118, marker error: RMS=0.0208957, max=0.0393328 (RELB)
+Frame 114 (t=0.57):	total squared error = 0.0188348, marker error: RMS=0.0206897, max=0.039007 (RELB)
+Frame 115 (t=0.575):	total squared error = 0.0186173, marker error: RMS=0.0205699, max=0.0387149 (RELB)
+Frame 116 (t=0.58):	total squared error = 0.0185433, marker error: RMS=0.020529, max=0.0383737 (RELB)
+Frame 117 (t=0.585):	total squared error = 0.0186555, marker error: RMS=0.020591, max=0.0380153 (RELB)
+Frame 118 (t=0.59):	total squared error = 0.0188982, marker error: RMS=0.0207245, max=0.0375854 (RELB)
+Frame 119 (t=0.595):	total squared error = 0.0193066, marker error: RMS=0.0209472, max=0.0370782 (RELB)
+Frame 120 (t=0.6):	total squared error = 0.0198304, marker error: RMS=0.0212295, max=0.0401292 (LP5MT)
+Frame 121 (t=0.605):	total squared error = 0.0204589, marker error: RMS=0.0215633, max=0.0434433 (LP5MT)
+Frame 122 (t=0.61):	total squared error = 0.0213708, marker error: RMS=0.0220386, max=0.0457507 (LP5MT)
+Frame 123 (t=0.615):	total squared error = 0.0219121, marker error: RMS=0.022316, max=0.0492224 (LP5MT)
+Frame 124 (t=0.62):	total squared error = 0.0227469, marker error: RMS=0.0227371, max=0.0509318 (LP5MT)
+Frame 125 (t=0.625):	total squared error = 0.0232911, marker error: RMS=0.0230075, max=0.0532192 (LP5MT)
+Frame 126 (t=0.63):	total squared error = 0.0240269, marker error: RMS=0.023368, max=0.0544451 (LP5MT)
+Frame 127 (t=0.635):	total squared error = 0.0244062, marker error: RMS=0.0235518, max=0.0555465 (LP5MT)
+Frame 128 (t=0.64):	total squared error = 0.0247944, marker error: RMS=0.0237383, max=0.0560545 (LP5MT)
+Frame 129 (t=0.645):	total squared error = 0.024906, marker error: RMS=0.0237917, max=0.0562233 (LP5MT)
+Frame 130 (t=0.65):	total squared error = 0.0246428, marker error: RMS=0.0236657, max=0.0555994 (LP5MT)
+Frame 131 (t=0.655):	total squared error = 0.0240766, marker error: RMS=0.0233922, max=0.0544963 (LP5MT)
+Frame 132 (t=0.66):	total squared error = 0.0234647, marker error: RMS=0.023093, max=0.0530344 (LP5MT)
+Frame 133 (t=0.665):	total squared error = 0.0226933, marker error: RMS=0.0227103, max=0.0512145 (LP5MT)
+Frame 134 (t=0.67):	total squared error = 0.0218469, marker error: RMS=0.0222827, max=0.0490637 (LP5MT)
+Frame 135 (t=0.675):	total squared error = 0.021061, marker error: RMS=0.0218783, max=0.0478743 (LPAT)
+Frame 136 (t=0.68):	total squared error = 0.0202701, marker error: RMS=0.0214636, max=0.0483343 (LPAT)
+Frame 137 (t=0.685):	total squared error = 0.0191575, marker error: RMS=0.0208662, max=0.048656 (LPAT)
+Frame 138 (t=0.69):	total squared error = 0.0185039, marker error: RMS=0.0205072, max=0.048899 (LPAT)
+InverseKinematicsTool completed 130 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_02\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -3385,12 +3670,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_02_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_02_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_02\ik\TRAIL_071_FAST_02_ik.mot (nr=96 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_02\ik\TRAIL_071_FAST_02_ik.mot (nr=130 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 96 time frames in 202 millisecond(s)
+InverseDynamicsTool: 130 time frames in 185 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_03\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -3587,7 +3872,38 @@ Frame 100 (t=0.5):	total squared error = 0.0238914, marker error: RMS=0.023302, 
 Frame 101 (t=0.505):	total squared error = 0.023673, marker error: RMS=0.0231953, max=0.0450601 (RPAT)
 Frame 102 (t=0.51):	total squared error = 0.0233823, marker error: RMS=0.0230525, max=0.0446181 (RPAT)
 Frame 103 (t=0.515):	total squared error = 0.0229248, marker error: RMS=0.0228258, max=0.0439154 (RPAT)
-InverseKinematicsTool completed 97 frames in 8 second(s)
+Frame 104 (t=0.52):	total squared error = 0.0225208, marker error: RMS=0.0226238, max=0.0436312 (RP5MT)
+Frame 105 (t=0.525):	total squared error = 0.0222166, marker error: RMS=0.0224705, max=0.0442851 (RP5MT)
+Frame 106 (t=0.53):	total squared error = 0.0221158, marker error: RMS=0.0224194, max=0.0444065 (RP5MT)
+Frame 107 (t=0.535):	total squared error = 0.0219281, marker error: RMS=0.0223241, max=0.0442636 (RP5MT)
+Frame 108 (t=0.54):	total squared error = 0.0217277, marker error: RMS=0.0222219, max=0.043725 (RP5MT)
+Frame 109 (t=0.545):	total squared error = 0.0213277, marker error: RMS=0.0220164, max=0.042626 (RP5MT)
+Frame 110 (t=0.55):	total squared error = 0.0209379, marker error: RMS=0.0218142, max=0.0416551 (RELB)
+Frame 111 (t=0.555):	total squared error = 0.0205098, marker error: RMS=0.0215901, max=0.0419751 (RELB)
+Frame 112 (t=0.56):	total squared error = 0.0201539, marker error: RMS=0.0214019, max=0.0419762 (RELB)
+Frame 113 (t=0.565):	total squared error = 0.019879, marker error: RMS=0.0212555, max=0.0418268 (RELB)
+Frame 114 (t=0.57):	total squared error = 0.0196645, marker error: RMS=0.0211405, max=0.0415848 (RELB)
+Frame 115 (t=0.575):	total squared error = 0.0196362, marker error: RMS=0.0211253, max=0.041139 (RELB)
+Frame 116 (t=0.58):	total squared error = 0.0196895, marker error: RMS=0.0211539, max=0.0409151 (RELB)
+Frame 117 (t=0.585):	total squared error = 0.0197975, marker error: RMS=0.0212118, max=0.0404174 (RELB)
+Frame 118 (t=0.59):	total squared error = 0.0200288, marker error: RMS=0.0213354, max=0.0400207 (RELB)
+Frame 119 (t=0.595):	total squared error = 0.0203385, marker error: RMS=0.0214997, max=0.0397286 (RELB)
+Frame 120 (t=0.6):	total squared error = 0.0208692, marker error: RMS=0.0217785, max=0.0393992 (RELB)
+Frame 121 (t=0.605):	total squared error = 0.0217206, marker error: RMS=0.0222182, max=0.041009 (LP5MT)
+Frame 122 (t=0.61):	total squared error = 0.0225318, marker error: RMS=0.0226293, max=0.0447008 (LP5MT)
+Frame 123 (t=0.615):	total squared error = 0.0236715, marker error: RMS=0.0231946, max=0.0468202 (LP5MT)
+Frame 124 (t=0.62):	total squared error = 0.0247602, marker error: RMS=0.023722, max=0.0498096 (LP5MT)
+Frame 125 (t=0.625):	total squared error = 0.0260391, marker error: RMS=0.0243269, max=0.0526757 (LP5MT)
+Frame 126 (t=0.63):	total squared error = 0.0271962, marker error: RMS=0.0248615, max=0.0546665 (LP5MT)
+Frame 127 (t=0.635):	total squared error = 0.028264, marker error: RMS=0.0253449, max=0.0569941 (LP5MT)
+Frame 128 (t=0.64):	total squared error = 0.0290587, marker error: RMS=0.0256987, max=0.0584394 (LP5MT)
+Frame 129 (t=0.645):	total squared error = 0.0294763, marker error: RMS=0.0258827, max=0.058998 (LP5MT)
+Frame 130 (t=0.65):	total squared error = 0.0294536, marker error: RMS=0.0258728, max=0.0587956 (LP5MT)
+Frame 131 (t=0.655):	total squared error = 0.0291627, marker error: RMS=0.0257447, max=0.0580947 (LP5MT)
+Frame 132 (t=0.66):	total squared error = 0.0283611, marker error: RMS=0.0253884, max=0.0567051 (LP5MT)
+Frame 133 (t=0.665):	total squared error = 0.0267831, marker error: RMS=0.024672, max=0.0546083 (LP5MT)
+Frame 134 (t=0.67):	total squared error = 0.0251957, marker error: RMS=0.0239297, max=0.0520886 (LP5MT)
+InverseKinematicsTool completed 128 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_03\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -3696,12 +4012,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_03_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_03_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_03\ik\TRAIL_071_FAST_03_ik.mot (nr=97 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_03\ik\TRAIL_071_FAST_03_ik.mot (nr=128 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 97 time frames in 306 millisecond(s)
+InverseDynamicsTool: 128 time frames in 181 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_04\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -3902,7 +4218,36 @@ Frame 102 (t=0.51):	total squared error = 0.0211185, marker error: RMS=0.0219081
 Frame 103 (t=0.515):	total squared error = 0.0210445, marker error: RMS=0.0218697, max=0.0438456 (RPAT)
 Frame 104 (t=0.52):	total squared error = 0.0208594, marker error: RMS=0.0217733, max=0.0432757 (RPAT)
 Frame 105 (t=0.525):	total squared error = 0.0206061, marker error: RMS=0.0216407, max=0.0425146 (RPAT)
-InverseKinematicsTool completed 101 frames in 7 second(s)
+Frame 106 (t=0.53):	total squared error = 0.0203442, marker error: RMS=0.0215027, max=0.0418525 (RPAT)
+Frame 107 (t=0.535):	total squared error = 0.0201763, marker error: RMS=0.0214138, max=0.0418949 (RP5MT)
+Frame 108 (t=0.54):	total squared error = 0.0200281, marker error: RMS=0.021335, max=0.0424034 (RP5MT)
+Frame 109 (t=0.545):	total squared error = 0.019977, marker error: RMS=0.0213078, max=0.0423872 (RP5MT)
+Frame 110 (t=0.55):	total squared error = 0.0197816, marker error: RMS=0.0212033, max=0.0422266 (RMFL)
+Frame 111 (t=0.555):	total squared error = 0.0195849, marker error: RMS=0.0210976, max=0.0411864 (RMFL)
+Frame 112 (t=0.56):	total squared error = 0.0192537, marker error: RMS=0.0209185, max=0.0400799 (RMFL)
+Frame 113 (t=0.565):	total squared error = 0.0189636, marker error: RMS=0.0207603, max=0.0387613 (RELB)
+Frame 114 (t=0.57):	total squared error = 0.0187293, marker error: RMS=0.0206317, max=0.0386402 (RELB)
+Frame 115 (t=0.575):	total squared error = 0.0187919, marker error: RMS=0.0206661, max=0.0381578 (RELB)
+Frame 116 (t=0.58):	total squared error = 0.01863, marker error: RMS=0.0205769, max=0.0382853 (RELB)
+Frame 117 (t=0.585):	total squared error = 0.01868, marker error: RMS=0.0206045, max=0.0380668 (RELB)
+Frame 118 (t=0.59):	total squared error = 0.0188546, marker error: RMS=0.0207006, max=0.0377835 (RELB)
+Frame 119 (t=0.595):	total squared error = 0.019108, marker error: RMS=0.0208392, max=0.037686 (RELB)
+Frame 120 (t=0.6):	total squared error = 0.0195143, marker error: RMS=0.0210596, max=0.0376273 (RELB)
+Frame 121 (t=0.605):	total squared error = 0.020122, marker error: RMS=0.021385, max=0.0398177 (LP5MT)
+Frame 122 (t=0.61):	total squared error = 0.0207677, marker error: RMS=0.0217254, max=0.0421715 (LP5MT)
+Frame 123 (t=0.615):	total squared error = 0.0218134, marker error: RMS=0.0222656, max=0.0444562 (LP5MT)
+Frame 124 (t=0.62):	total squared error = 0.0227421, marker error: RMS=0.0227347, max=0.0475636 (LP5MT)
+Frame 125 (t=0.625):	total squared error = 0.023867, marker error: RMS=0.0232902, max=0.0500188 (LP5MT)
+Frame 126 (t=0.63):	total squared error = 0.0249617, marker error: RMS=0.0238183, max=0.052202 (LP5MT)
+Frame 127 (t=0.635):	total squared error = 0.02598, marker error: RMS=0.0242993, max=0.0542856 (LP5MT)
+Frame 128 (t=0.64):	total squared error = 0.0266778, marker error: RMS=0.0246234, max=0.0556874 (LP5MT)
+Frame 129 (t=0.645):	total squared error = 0.0270657, marker error: RMS=0.0248018, max=0.0565495 (LP5MT)
+Frame 130 (t=0.65):	total squared error = 0.0270785, marker error: RMS=0.0248077, max=0.0563472 (LP5MT)
+Frame 131 (t=0.655):	total squared error = 0.0268626, marker error: RMS=0.0247086, max=0.0558568 (LP5MT)
+Frame 132 (t=0.66):	total squared error = 0.0258052, marker error: RMS=0.0242174, max=0.0537292 (LP5MT)
+Frame 133 (t=0.665):	total squared error = 0.0246647, marker error: RMS=0.0236762, max=0.0520578 (LP5MT)
+Frame 134 (t=0.67):	total squared error = 0.0236589, marker error: RMS=0.0231884, max=0.0493919 (LP5MT)
+InverseKinematicsTool completed 130 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_04\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -4011,12 +4356,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_04_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_04_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_04\ik\TRAIL_071_FAST_04_ik.mot (nr=101 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_04\ik\TRAIL_071_FAST_04_ik.mot (nr=130 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 101 time frames in 247 millisecond(s)
+InverseDynamicsTool: 130 time frames in 186 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_05\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -4217,7 +4562,37 @@ Frame 123 (t=0.615):	total squared error = 0.122303, marker error: RMS=0.052722,
 Frame 124 (t=0.62):	total squared error = 0.121701, marker error: RMS=0.0525922, max=0.226436 (RWR)
 Frame 125 (t=0.625):	total squared error = 0.121061, marker error: RMS=0.0524536, max=0.226947 (RWR)
 Frame 126 (t=0.63):	total squared error = 0.120679, marker error: RMS=0.0523708, max=0.227496 (RWR)
-InverseKinematicsTool completed 101 frames in 8 second(s)
+Frame 127 (t=0.635):	total squared error = 0.120074, marker error: RMS=0.0522393, max=0.227895 (RWR)
+Frame 128 (t=0.64):	total squared error = 0.119494, marker error: RMS=0.052113, max=0.228281 (RWR)
+Frame 129 (t=0.645):	total squared error = 0.119051, marker error: RMS=0.0520163, max=0.228681 (RWR)
+Frame 130 (t=0.65):	total squared error = 0.118902, marker error: RMS=0.0519838, max=0.228892 (RWR)
+Frame 131 (t=0.655):	total squared error = 0.118504, marker error: RMS=0.0518968, max=0.2288 (RWR)
+Frame 132 (t=0.66):	total squared error = 0.118232, marker error: RMS=0.0518371, max=0.228806 (RWR)
+Frame 133 (t=0.665):	total squared error = 0.118245, marker error: RMS=0.0518399, max=0.229083 (RWR)
+Frame 134 (t=0.67):	total squared error = 0.118123, marker error: RMS=0.0518132, max=0.229439 (RWR)
+Frame 135 (t=0.675):	total squared error = 0.118076, marker error: RMS=0.0518029, max=0.229669 (RWR)
+Frame 136 (t=0.68):	total squared error = 0.118733, marker error: RMS=0.0519468, max=0.230593 (RWR)
+Frame 137 (t=0.685):	total squared error = 0.119028, marker error: RMS=0.0520113, max=0.231364 (RWR)
+Frame 138 (t=0.69):	total squared error = 0.119623, marker error: RMS=0.0521412, max=0.232082 (RWR)
+Frame 139 (t=0.695):	total squared error = 0.120495, marker error: RMS=0.0523308, max=0.233161 (RWR)
+Frame 140 (t=0.7):	total squared error = 0.121548, marker error: RMS=0.0525591, max=0.234097 (RWR)
+Frame 141 (t=0.705):	total squared error = 0.122674, marker error: RMS=0.0528019, max=0.235033 (RWR)
+Frame 142 (t=0.71):	total squared error = 0.123883, marker error: RMS=0.0530615, max=0.235932 (RWR)
+Frame 143 (t=0.715):	total squared error = 0.125245, marker error: RMS=0.0533525, max=0.236525 (RWR)
+Frame 144 (t=0.72):	total squared error = 0.126921, marker error: RMS=0.0537081, max=0.237309 (RWR)
+Frame 145 (t=0.725):	total squared error = 0.128731, marker error: RMS=0.0540898, max=0.237549 (RWR)
+Frame 146 (t=0.73):	total squared error = 0.130787, marker error: RMS=0.0545199, max=0.23825 (RWR)
+Frame 147 (t=0.735):	total squared error = 0.132499, marker error: RMS=0.0548757, max=0.237945 (RWR)
+Frame 148 (t=0.74):	total squared error = 0.134279, marker error: RMS=0.055243, max=0.237842 (RWR)
+Frame 149 (t=0.745):	total squared error = 0.135899, marker error: RMS=0.0555753, max=0.23784 (RWR)
+Frame 150 (t=0.75):	total squared error = 0.137007, marker error: RMS=0.0558015, max=0.237156 (RWR)
+Frame 151 (t=0.755):	total squared error = 0.137935, marker error: RMS=0.0559901, max=0.236498 (RWR)
+Frame 152 (t=0.76):	total squared error = 0.138839, marker error: RMS=0.0561732, max=0.236188 (RWR)
+Frame 153 (t=0.765):	total squared error = 0.139465, marker error: RMS=0.0562998, max=0.235632 (RWR)
+Frame 154 (t=0.77):	total squared error = 0.139902, marker error: RMS=0.0563879, max=0.235827 (RWR)
+Frame 155 (t=0.775):	total squared error = 0.139755, marker error: RMS=0.0563582, max=0.234897 (RWR)
+Frame 156 (t=0.78):	total squared error = 0.13906, marker error: RMS=0.0562179, max=0.234763 (RWR)
+InverseKinematicsTool completed 131 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_05\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -4326,12 +4701,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_05_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_05_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_05\ik\TRAIL_071_FAST_05_ik.mot (nr=101 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_05\ik\TRAIL_071_FAST_05_ik.mot (nr=131 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 101 time frames in 195 millisecond(s)
+InverseDynamicsTool: 131 time frames in 199 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_06\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -4499,44 +4874,7 @@ Frame 98 (t=0.49):	total squared error = 0.0256408, marker error: RMS=0.0241401,
 Frame 99 (t=0.495):	total squared error = 0.0250386, marker error: RMS=0.0238549, max=0.0524032 (LP5MT)
 Frame 100 (t=0.5):	total squared error = 0.0241084, marker error: RMS=0.0234076, max=0.0503714 (LP5MT)
 Frame 101 (t=0.505):	total squared error = 0.0226103, marker error: RMS=0.0226687, max=0.0490133 (LPAT)
-Frame 102 (t=0.51):	total squared error = 0.0216825, marker error: RMS=0.0221988, max=0.0493239 (LPAT)
-Frame 103 (t=0.515):	total squared error = 0.0210499, marker error: RMS=0.0218725, max=0.0495193 (LPAT)
-Frame 104 (t=0.52):	total squared error = 0.0205951, marker error: RMS=0.021635, max=0.0493539 (LPAT)
-Frame 105 (t=0.525):	total squared error = 0.0196377, marker error: RMS=0.0211261, max=0.0491821 (LPAT)
-Frame 106 (t=0.53):	total squared error = 0.0187477, marker error: RMS=0.0206418, max=0.0484422 (LPAT)
-Frame 107 (t=0.535):	total squared error = 0.0186421, marker error: RMS=0.0205836, max=0.0481411 (LPAT)
-Frame 108 (t=0.54):	total squared error = 0.0189646, marker error: RMS=0.0207609, max=0.0479033 (LPAT)
-Frame 109 (t=0.545):	total squared error = 0.0192962, marker error: RMS=0.0209416, max=0.0475597 (LPAT)
-Frame 110 (t=0.55):	total squared error = 0.0196416, marker error: RMS=0.0211282, max=0.0487808 (RELB)
-Frame 111 (t=0.555):	total squared error = 0.0200272, marker error: RMS=0.0213346, max=0.0500395 (RELB)
-Frame 112 (t=0.56):	total squared error = 0.0208752, marker error: RMS=0.0217816, max=0.0513667 (RELB)
-Frame 113 (t=0.565):	total squared error = 0.0220356, marker error: RMS=0.0223787, max=0.0520594 (RELB)
-Frame 114 (t=0.57):	total squared error = 0.0229593, marker error: RMS=0.022843, max=0.0520763 (RELB)
-Frame 115 (t=0.575):	total squared error = 0.023457, marker error: RMS=0.0230892, max=0.0519195 (RELB)
-Frame 116 (t=0.58):	total squared error = 0.0234661, marker error: RMS=0.0230937, max=0.0516486 (RELB)
-Frame 117 (t=0.585):	total squared error = 0.023011, marker error: RMS=0.0228687, max=0.0510624 (RELB)
-Frame 118 (t=0.59):	total squared error = 0.022169, marker error: RMS=0.0224464, max=0.0504759 (RELB)
-Frame 119 (t=0.595):	total squared error = 0.0211615, marker error: RMS=0.0219304, max=0.0495673 (RELB)
-Frame 120 (t=0.6):	total squared error = 0.0200861, marker error: RMS=0.0213659, max=0.0484105 (RELB)
-Frame 121 (t=0.605):	total squared error = 0.0193563, marker error: RMS=0.0209742, max=0.0472876 (RELB)
-Frame 122 (t=0.61):	total squared error = 0.0191321, marker error: RMS=0.0208524, max=0.0464994 (LPAT)
-Frame 123 (t=0.615):	total squared error = 0.0192965, marker error: RMS=0.0209417, max=0.0467739 (LPAT)
-Frame 124 (t=0.62):	total squared error = 0.0196015, marker error: RMS=0.0211066, max=0.0469088 (LPAT)
-Frame 125 (t=0.625):	total squared error = 0.0199512, marker error: RMS=0.021294, max=0.0471727 (LPAT)
-Frame 126 (t=0.63):	total squared error = 0.0204385, marker error: RMS=0.0215525, max=0.0473379 (LPAT)
-Frame 127 (t=0.635):	total squared error = 0.0209036, marker error: RMS=0.0217964, max=0.0474222 (LPAT)
-Frame 128 (t=0.64):	total squared error = 0.0214404, marker error: RMS=0.0220745, max=0.0475137 (LPAT)
-Frame 129 (t=0.645):	total squared error = 0.0220683, marker error: RMS=0.0223954, max=0.047393 (LPAT)
-Frame 130 (t=0.65):	total squared error = 0.0226245, marker error: RMS=0.0226758, max=0.0470709 (LPAT)
-Frame 131 (t=0.655):	total squared error = 0.0231346, marker error: RMS=0.02293, max=0.0466886 (LPAT)
-Frame 132 (t=0.66):	total squared error = 0.0234018, marker error: RMS=0.0230621, max=0.0462343 (LPAT)
-Frame 133 (t=0.665):	total squared error = 0.0234248, marker error: RMS=0.0230734, max=0.0456608 (LPAT)
-Frame 134 (t=0.67):	total squared error = 0.0232263, marker error: RMS=0.0229754, max=0.0450853 (LPAT)
-Frame 135 (t=0.675):	total squared error = 0.0227501, marker error: RMS=0.0227387, max=0.0449596 (LP5MT)
-Frame 136 (t=0.68):	total squared error = 0.0221122, marker error: RMS=0.0224176, max=0.0449971 (LP5MT)
-Frame 137 (t=0.685):	total squared error = 0.0213979, marker error: RMS=0.0220526, max=0.0444769 (LP5MT)
-Frame 138 (t=0.69):	total squared error = 0.0208105, marker error: RMS=0.0217478, max=0.043971 (LP5MT)
-InverseKinematicsTool completed 105 frames in 7 second(s)
+InverseKinematicsTool completed 68 frames in 3 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_06\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -4645,12 +4983,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_06_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_06_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_06\ik\TRAIL_071_FAST_06_ik.mot (nr=105 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_06\ik\TRAIL_071_FAST_06_ik.mot (nr=68 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 105 time frames in 205 millisecond(s)
+InverseDynamicsTool: 68 time frames in 135 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_07\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -4819,42 +5157,7 @@ Frame 87 (t=0.435):	total squared error = 0.023571, marker error: RMS=0.0231453,
 Frame 88 (t=0.44):	total squared error = 0.0228982, marker error: RMS=0.0228126, max=0.0491937 (LPAT)
 Frame 89 (t=0.445):	total squared error = 0.0219558, marker error: RMS=0.0223382, max=0.0495046 (LPAT)
 Frame 90 (t=0.45):	total squared error = 0.0212575, marker error: RMS=0.0219801, max=0.0497358 (LPAT)
-Frame 91 (t=0.455):	total squared error = 0.0210044, marker error: RMS=0.0218489, max=0.0496726 (LPAT)
-Frame 92 (t=0.46):	total squared error = 0.0204153, marker error: RMS=0.0215403, max=0.0493308 (LPAT)
-Frame 93 (t=0.465):	total squared error = 0.0194424, marker error: RMS=0.0210208, max=0.0489801 (LPAT)
-Frame 94 (t=0.47):	total squared error = 0.0190134, marker error: RMS=0.0207876, max=0.0484676 (LPAT)
-Frame 95 (t=0.475):	total squared error = 0.0191085, marker error: RMS=0.0208395, max=0.0482002 (LPAT)
-Frame 96 (t=0.48):	total squared error = 0.0192435, marker error: RMS=0.020913, max=0.0478663 (LPAT)
-Frame 97 (t=0.485):	total squared error = 0.0192567, marker error: RMS=0.0209201, max=0.0476286 (LPAT)
-Frame 98 (t=0.49):	total squared error = 0.0199799, marker error: RMS=0.0213094, max=0.0494307 (RELB)
-Frame 99 (t=0.495):	total squared error = 0.021567, marker error: RMS=0.0221396, max=0.0516416 (RELB)
-Frame 100 (t=0.5):	total squared error = 0.0231908, marker error: RMS=0.0229578, max=0.0532148 (RELB)
-Frame 101 (t=0.505):	total squared error = 0.0245117, marker error: RMS=0.0236026, max=0.0538202 (RELB)
-Frame 102 (t=0.51):	total squared error = 0.0252919, marker error: RMS=0.0239753, max=0.0536249 (RELB)
-Frame 103 (t=0.515):	total squared error = 0.0253043, marker error: RMS=0.0239812, max=0.0533904 (RELB)
-Frame 104 (t=0.52):	total squared error = 0.0248318, marker error: RMS=0.0237562, max=0.0526301 (RELB)
-Frame 105 (t=0.525):	total squared error = 0.0238395, marker error: RMS=0.0232767, max=0.0519927 (RELB)
-Frame 106 (t=0.53):	total squared error = 0.022374, marker error: RMS=0.0225499, max=0.0503627 (RELB)
-Frame 107 (t=0.535):	total squared error = 0.0207968, marker error: RMS=0.0217406, max=0.0491182 (LPAT)
-Frame 108 (t=0.54):	total squared error = 0.0195284, marker error: RMS=0.0210672, max=0.0482963 (LPAT)
-Frame 109 (t=0.545):	total squared error = 0.018693, marker error: RMS=0.0206116, max=0.047336 (LPAT)
-Frame 110 (t=0.55):	total squared error = 0.0186296, marker error: RMS=0.0205767, max=0.0471886 (LPAT)
-Frame 111 (t=0.555):	total squared error = 0.0188493, marker error: RMS=0.0206976, max=0.0472692 (LPAT)
-Frame 112 (t=0.56):	total squared error = 0.01902, marker error: RMS=0.0207912, max=0.0474392 (LPAT)
-Frame 113 (t=0.565):	total squared error = 0.0192478, marker error: RMS=0.0209153, max=0.0476456 (LPAT)
-Frame 114 (t=0.57):	total squared error = 0.0195884, marker error: RMS=0.0210996, max=0.047729 (LPAT)
-Frame 115 (t=0.575):	total squared error = 0.0201199, marker error: RMS=0.0213839, max=0.0477152 (LPAT)
-Frame 116 (t=0.58):	total squared error = 0.0207866, marker error: RMS=0.0217353, max=0.0474639 (LPAT)
-Frame 117 (t=0.585):	total squared error = 0.0214258, marker error: RMS=0.022067, max=0.0472351 (LPAT)
-Frame 118 (t=0.59):	total squared error = 0.0221885, marker error: RMS=0.0224563, max=0.046892 (LPAT)
-Frame 119 (t=0.595):	total squared error = 0.0227395, marker error: RMS=0.0227334, max=0.0464997 (LPAT)
-Frame 120 (t=0.6):	total squared error = 0.0231469, marker error: RMS=0.0229361, max=0.0460053 (LPAT)
-Frame 121 (t=0.605):	total squared error = 0.0234454, marker error: RMS=0.0230836, max=0.0473835 (LP5MT)
-Frame 122 (t=0.61):	total squared error = 0.0234985, marker error: RMS=0.0231097, max=0.0489352 (LP5MT)
-Frame 123 (t=0.615):	total squared error = 0.0232213, marker error: RMS=0.0229729, max=0.0496169 (LP5MT)
-Frame 124 (t=0.62):	total squared error = 0.0228158, marker error: RMS=0.0227715, max=0.0495492 (LP5MT)
-Frame 125 (t=0.625):	total squared error = 0.0223528, marker error: RMS=0.0225393, max=0.0485863 (LP5MT)
-InverseKinematicsTool completed 104 frames in 8 second(s)
+InverseKinematicsTool completed 69 frames in 3 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_07\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -4963,12 +5266,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_07_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_07_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_07\ik\TRAIL_071_FAST_07_ik.mot (nr=104 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_07\ik\TRAIL_071_FAST_07_ik.mot (nr=69 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 104 time frames in 262 millisecond(s)
+InverseDynamicsTool: 69 time frames in 136 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_08\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -5171,7 +5474,36 @@ Frame 114 (t=0.57):	total squared error = 0.02144, marker error: RMS=0.0220743, 
 Frame 115 (t=0.575):	total squared error = 0.020567, marker error: RMS=0.0216202, max=0.0433667 (RELB)
 Frame 116 (t=0.58):	total squared error = 0.019787, marker error: RMS=0.0212062, max=0.042897 (RELB)
 Frame 117 (t=0.585):	total squared error = 0.0190714, marker error: RMS=0.0208192, max=0.0426174 (RELB)
-InverseKinematicsTool completed 103 frames in 9 second(s)
+Frame 118 (t=0.59):	total squared error = 0.0185165, marker error: RMS=0.0205141, max=0.0421128 (RELB)
+Frame 119 (t=0.595):	total squared error = 0.0180196, marker error: RMS=0.020237, max=0.0418423 (RELB)
+Frame 120 (t=0.6):	total squared error = 0.0176846, marker error: RMS=0.020048, max=0.0416184 (RELB)
+Frame 121 (t=0.605):	total squared error = 0.0174105, marker error: RMS=0.0198921, max=0.0413437 (RELB)
+Frame 122 (t=0.61):	total squared error = 0.0172371, marker error: RMS=0.0197927, max=0.0413998 (RELB)
+Frame 123 (t=0.615):	total squared error = 0.0170205, marker error: RMS=0.019668, max=0.0412368 (RELB)
+Frame 124 (t=0.62):	total squared error = 0.0168226, marker error: RMS=0.0195533, max=0.0406886 (RELB)
+Frame 125 (t=0.625):	total squared error = 0.0166707, marker error: RMS=0.0194648, max=0.0402368 (RELB)
+Frame 126 (t=0.63):	total squared error = 0.0167824, marker error: RMS=0.0195299, max=0.0396123 (RELB)
+Frame 127 (t=0.635):	total squared error = 0.0166001, marker error: RMS=0.0194235, max=0.0391782 (RELB)
+Frame 128 (t=0.64):	total squared error = 0.0166815, marker error: RMS=0.0194711, max=0.0390737 (RELB)
+Frame 129 (t=0.645):	total squared error = 0.0169175, marker error: RMS=0.0196084, max=0.0385428 (RELB)
+Frame 130 (t=0.65):	total squared error = 0.0173526, marker error: RMS=0.0198589, max=0.0380237 (RELB)
+Frame 131 (t=0.655):	total squared error = 0.0179528, marker error: RMS=0.0201995, max=0.0376745 (RELB)
+Frame 132 (t=0.66):	total squared error = 0.0188574, marker error: RMS=0.0207021, max=0.0371284 (RELB)
+Frame 133 (t=0.665):	total squared error = 0.0197293, marker error: RMS=0.0211753, max=0.0391253 (RP5MT)
+Frame 134 (t=0.67):	total squared error = 0.0208738, marker error: RMS=0.0217808, max=0.0417508 (RP5MT)
+Frame 135 (t=0.675):	total squared error = 0.0222481, marker error: RMS=0.0224864, max=0.044359 (RP5MT)
+Frame 136 (t=0.68):	total squared error = 0.0238056, marker error: RMS=0.0232602, max=0.0465431 (RP5MT)
+Frame 137 (t=0.685):	total squared error = 0.0251749, marker error: RMS=0.0239198, max=0.0495072 (RP5MT)
+Frame 138 (t=0.69):	total squared error = 0.0263688, marker error: RMS=0.0244804, max=0.0519734 (RP5MT)
+Frame 139 (t=0.695):	total squared error = 0.0272643, marker error: RMS=0.0248926, max=0.0550589 (RTOE)
+Frame 140 (t=0.7):	total squared error = 0.027942, marker error: RMS=0.0252001, max=0.0580886 (RTOE)
+Frame 141 (t=0.705):	total squared error = 0.0282634, marker error: RMS=0.0253446, max=0.0598543 (RTOE)
+Frame 142 (t=0.71):	total squared error = 0.0283487, marker error: RMS=0.0253829, max=0.0609717 (RTOE)
+Frame 143 (t=0.715):	total squared error = 0.0277866, marker error: RMS=0.0251299, max=0.0605295 (RTOE)
+Frame 144 (t=0.72):	total squared error = 0.0267867, marker error: RMS=0.0246736, max=0.0591046 (RTOE)
+Frame 145 (t=0.725):	total squared error = 0.0255596, marker error: RMS=0.0241019, max=0.0563957 (RTOE)
+Frame 146 (t=0.73):	total squared error = 0.0246798, marker error: RMS=0.0236834, max=0.0531293 (RTOE)
+InverseKinematicsTool completed 132 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_08\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -5280,12 +5612,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_08_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_08_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_08\ik\TRAIL_071_FAST_08_ik.mot (nr=103 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_08\ik\TRAIL_071_FAST_08_ik.mot (nr=132 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 103 time frames in 186 millisecond(s)
+InverseDynamicsTool: 132 time frames in 199 millisecond(s)
 
 Processing subject TRAIL_071
 
@@ -5570,7 +5902,35 @@ Frame 142 (t=0.71):	total squared error = 0.0144576, marker error: RMS=0.0181269
 Frame 143 (t=0.715):	total squared error = 0.0140245, marker error: RMS=0.0178532, max=0.0389836 (RELB)
 Frame 144 (t=0.72):	total squared error = 0.0136513, marker error: RMS=0.0176141, max=0.0386935 (RELB)
 Frame 145 (t=0.725):	total squared error = 0.0132978, marker error: RMS=0.0173846, max=0.0384377 (RELB)
-InverseKinematicsTool completed 121 frames in 8 second(s)
+Frame 146 (t=0.73):	total squared error = 0.0130669, marker error: RMS=0.0172329, max=0.0382051 (RELB)
+Frame 147 (t=0.735):	total squared error = 0.0128789, marker error: RMS=0.0171085, max=0.0378124 (RELB)
+Frame 148 (t=0.74):	total squared error = 0.0127889, marker error: RMS=0.0170486, max=0.0373933 (RELB)
+Frame 149 (t=0.745):	total squared error = 0.0126174, marker error: RMS=0.016934, max=0.0370046 (RELB)
+Frame 150 (t=0.75):	total squared error = 0.0124834, marker error: RMS=0.0168438, max=0.0365736 (RELB)
+Frame 151 (t=0.755):	total squared error = 0.0123489, marker error: RMS=0.0167528, max=0.0363272 (RELB)
+Frame 152 (t=0.76):	total squared error = 0.0122212, marker error: RMS=0.016666, max=0.0360857 (RELB)
+Frame 153 (t=0.765):	total squared error = 0.0120733, marker error: RMS=0.0165648, max=0.0357791 (RELB)
+Frame 154 (t=0.77):	total squared error = 0.0119795, marker error: RMS=0.0165004, max=0.0354498 (RELB)
+Frame 155 (t=0.775):	total squared error = 0.0120239, marker error: RMS=0.0165309, max=0.0352729 (RELB)
+Frame 156 (t=0.78):	total squared error = 0.0121426, marker error: RMS=0.0166123, max=0.0351327 (RELB)
+Frame 157 (t=0.785):	total squared error = 0.0123841, marker error: RMS=0.0167767, max=0.0352326 (RELB)
+Frame 158 (t=0.79):	total squared error = 0.0127355, marker error: RMS=0.017013, max=0.0350085 (RELB)
+Frame 159 (t=0.795):	total squared error = 0.0131126, marker error: RMS=0.0172631, max=0.0347746 (RELB)
+Frame 160 (t=0.8):	total squared error = 0.013629, marker error: RMS=0.0175997, max=0.034618 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0141533, marker error: RMS=0.017935, max=0.0344368 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0147628, marker error: RMS=0.0183171, max=0.0344 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.0153147, marker error: RMS=0.0186564, max=0.0342149 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0158843, marker error: RMS=0.0190002, max=0.0341421 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.0163977, marker error: RMS=0.0193048, max=0.0342549 (RP5MT)
+Frame 166 (t=0.83):	total squared error = 0.0170274, marker error: RMS=0.019672, max=0.0356052 (RP5MT)
+Frame 167 (t=0.835):	total squared error = 0.0176105, marker error: RMS=0.020006, max=0.0369646 (RP5MT)
+Frame 168 (t=0.84):	total squared error = 0.0180449, marker error: RMS=0.0202512, max=0.0391799 (RTOE)
+Frame 169 (t=0.845):	total squared error = 0.0185898, marker error: RMS=0.0205547, max=0.0412445 (RTOE)
+Frame 170 (t=0.85):	total squared error = 0.019074, marker error: RMS=0.0208207, max=0.0431306 (RTOE)
+Frame 171 (t=0.855):	total squared error = 0.0192482, marker error: RMS=0.0209155, max=0.0445138 (RTOE)
+Frame 172 (t=0.86):	total squared error = 0.0191143, marker error: RMS=0.0208426, max=0.0453006 (RTOE)
+Frame 173 (t=0.865):	total squared error = 0.0190057, marker error: RMS=0.0207833, max=0.0455843 (RTOE)
+InverseKinematicsTool completed 149 frames in 7 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -5679,12 +6039,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_01_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_01_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\ik\TRAIL_071_EP_01_ik.mot (nr=121 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\ik\TRAIL_071_EP_01_ik.mot (nr=149 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 121 time frames in 286 millisecond(s)
+InverseDynamicsTool: 149 time frames in 258 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_02\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -5904,7 +6264,36 @@ Frame 138 (t=0.69):	total squared error = 0.0164304, marker error: RMS=0.019324,
 Frame 139 (t=0.695):	total squared error = 0.0160561, marker error: RMS=0.0191027, max=0.0428603 (RELB)
 Frame 140 (t=0.7):	total squared error = 0.0156733, marker error: RMS=0.0188736, max=0.0426101 (RELB)
 Frame 141 (t=0.705):	total squared error = 0.0153912, marker error: RMS=0.018703, max=0.0424312 (RELB)
-InverseKinematicsTool completed 120 frames in 6 second(s)
+Frame 142 (t=0.71):	total squared error = 0.01494, marker error: RMS=0.0184268, max=0.0420553 (RELB)
+Frame 143 (t=0.715):	total squared error = 0.0146984, marker error: RMS=0.0182772, max=0.0417397 (RELB)
+Frame 144 (t=0.72):	total squared error = 0.0144579, marker error: RMS=0.018127, max=0.0413732 (RELB)
+Frame 145 (t=0.725):	total squared error = 0.0141931, marker error: RMS=0.0179603, max=0.0411401 (RELB)
+Frame 146 (t=0.73):	total squared error = 0.013992, marker error: RMS=0.0178325, max=0.040924 (RELB)
+Frame 147 (t=0.735):	total squared error = 0.0138099, marker error: RMS=0.0177161, max=0.0407169 (RELB)
+Frame 148 (t=0.74):	total squared error = 0.0136506, marker error: RMS=0.0176137, max=0.0404579 (RELB)
+Frame 149 (t=0.745):	total squared error = 0.0135144, marker error: RMS=0.0175256, max=0.0405861 (RELB)
+Frame 150 (t=0.75):	total squared error = 0.0133792, marker error: RMS=0.0174377, max=0.0405741 (RELB)
+Frame 151 (t=0.755):	total squared error = 0.0132879, marker error: RMS=0.0173781, max=0.0404636 (RELB)
+Frame 152 (t=0.76):	total squared error = 0.0132362, marker error: RMS=0.0173443, max=0.0404558 (RELB)
+Frame 153 (t=0.765):	total squared error = 0.0133331, marker error: RMS=0.0174076, max=0.0403906 (RELB)
+Frame 154 (t=0.77):	total squared error = 0.0134519, marker error: RMS=0.017485, max=0.0402854 (RELB)
+Frame 155 (t=0.775):	total squared error = 0.0136881, marker error: RMS=0.0176378, max=0.0401088 (RELB)
+Frame 156 (t=0.78):	total squared error = 0.0140817, marker error: RMS=0.0178896, max=0.040198 (RELB)
+Frame 157 (t=0.785):	total squared error = 0.0145474, marker error: RMS=0.018183, max=0.0401141 (RELB)
+Frame 158 (t=0.79):	total squared error = 0.0150954, marker error: RMS=0.0185223, max=0.0399908 (RELB)
+Frame 159 (t=0.795):	total squared error = 0.0157066, marker error: RMS=0.0188936, max=0.0395988 (RELB)
+Frame 160 (t=0.8):	total squared error = 0.0164113, marker error: RMS=0.0193128, max=0.0395909 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0170797, marker error: RMS=0.0197021, max=0.0394858 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0177612, marker error: RMS=0.0200914, max=0.0390891 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.0184348, marker error: RMS=0.0204688, max=0.0390924 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0190276, marker error: RMS=0.0207953, max=0.0389745 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.0196409, marker error: RMS=0.0211278, max=0.0404475 (RTOE)
+Frame 166 (t=0.83):	total squared error = 0.0201739, marker error: RMS=0.0214126, max=0.0431232 (RTOE)
+Frame 167 (t=0.835):	total squared error = 0.0204935, marker error: RMS=0.0215815, max=0.0451704 (RTOE)
+Frame 168 (t=0.84):	total squared error = 0.0205421, marker error: RMS=0.0216071, max=0.046633 (RTOE)
+Frame 169 (t=0.845):	total squared error = 0.0203968, marker error: RMS=0.0215305, max=0.047207 (RTOE)
+Frame 170 (t=0.85):	total squared error = 0.0201881, marker error: RMS=0.0214201, max=0.047417 (RTOE)
+InverseKinematicsTool completed 149 frames in 7 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_02\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -6013,12 +6402,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_02_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_02_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_02\ik\TRAIL_071_EP_02_ik.mot (nr=120 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_02\ik\TRAIL_071_EP_02_ik.mot (nr=149 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 120 time frames in 250 millisecond(s)
+InverseDynamicsTool: 149 time frames in 248 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_03\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -6248,7 +6637,31 @@ Frame 136 (t=0.68):	total squared error = 0.0144787, marker error: RMS=0.01814, 
 Frame 137 (t=0.685):	total squared error = 0.014168, marker error: RMS=0.0179443, max=0.0393838 (RELB)
 Frame 138 (t=0.69):	total squared error = 0.0138225, marker error: RMS=0.0177242, max=0.0390915 (RELB)
 Frame 139 (t=0.695):	total squared error = 0.0135305, marker error: RMS=0.017536, max=0.0384611 (RELB)
-InverseKinematicsTool completed 130 frames in 7 second(s)
+Frame 140 (t=0.7):	total squared error = 0.0131651, marker error: RMS=0.0172976, max=0.0381674 (RELB)
+Frame 141 (t=0.705):	total squared error = 0.0129941, marker error: RMS=0.0171849, max=0.0377715 (RELB)
+Frame 142 (t=0.71):	total squared error = 0.012768, marker error: RMS=0.0170347, max=0.0369587 (RELB)
+Frame 143 (t=0.715):	total squared error = 0.0124847, marker error: RMS=0.0168447, max=0.0366579 (RELB)
+Frame 144 (t=0.72):	total squared error = 0.0122936, marker error: RMS=0.0167152, max=0.0361867 (RELB)
+Frame 145 (t=0.725):	total squared error = 0.012181, marker error: RMS=0.0166385, max=0.0356247 (RELB)
+Frame 146 (t=0.73):	total squared error = 0.0119341, marker error: RMS=0.0164691, max=0.0354686 (C7)
+Frame 147 (t=0.735):	total squared error = 0.011791, marker error: RMS=0.01637, max=0.0356279 (C7)
+Frame 148 (t=0.74):	total squared error = 0.0117117, marker error: RMS=0.0163149, max=0.0356887 (C7)
+Frame 149 (t=0.745):	total squared error = 0.0117116, marker error: RMS=0.0163148, max=0.0359704 (C7)
+Frame 150 (t=0.75):	total squared error = 0.0118938, marker error: RMS=0.0164412, max=0.0357461 (C7)
+Frame 151 (t=0.755):	total squared error = 0.0121267, marker error: RMS=0.0166014, max=0.0357296 (C7)
+Frame 152 (t=0.76):	total squared error = 0.0124438, marker error: RMS=0.0168171, max=0.0356857 (C7)
+Frame 153 (t=0.765):	total squared error = 0.012912, marker error: RMS=0.0171305, max=0.0356991 (C7)
+Frame 154 (t=0.77):	total squared error = 0.0134256, marker error: RMS=0.0174679, max=0.035655 (C7)
+Frame 155 (t=0.775):	total squared error = 0.0140361, marker error: RMS=0.0178606, max=0.0356636 (C7)
+Frame 156 (t=0.78):	total squared error = 0.0146503, marker error: RMS=0.0182473, max=0.0356067 (C7)
+Frame 157 (t=0.785):	total squared error = 0.0152675, marker error: RMS=0.0186276, max=0.0356817 (C7)
+Frame 158 (t=0.79):	total squared error = 0.0158398, marker error: RMS=0.0189736, max=0.0356391 (C7)
+Frame 159 (t=0.795):	total squared error = 0.0164297, marker error: RMS=0.0193236, max=0.0358256 (C7)
+Frame 160 (t=0.8):	total squared error = 0.0169862, marker error: RMS=0.0196482, max=0.0361753 (RP5MT)
+Frame 161 (t=0.805):	total squared error = 0.0175066, marker error: RMS=0.0199469, max=0.0378087 (RP5MT)
+Frame 162 (t=0.81):	total squared error = 0.0177601, marker error: RMS=0.0200908, max=0.0395045 (RP5MT)
+Frame 163 (t=0.815):	total squared error = 0.0179676, marker error: RMS=0.0202078, max=0.0408127 (RP5MT)
+InverseKinematicsTool completed 154 frames in 7 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_03\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -6357,12 +6770,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_03_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_03_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_03\ik\TRAIL_071_EP_03_ik.mot (nr=130 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_03\ik\TRAIL_071_EP_03_ik.mot (nr=154 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 130 time frames in 268 millisecond(s)
+InverseDynamicsTool: 154 time frames in 259 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_04\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -6585,7 +6998,38 @@ Frame 169 (t=0.845):	total squared error = 0.0208121, marker error: RMS=0.021748
 Frame 170 (t=0.85):	total squared error = 0.0204294, marker error: RMS=0.0215477, max=0.0428738 (RTOE)
 Frame 171 (t=0.855):	total squared error = 0.0199941, marker error: RMS=0.0213169, max=0.0416583 (RP5MT)
 Frame 172 (t=0.86):	total squared error = 0.0194498, marker error: RMS=0.0210248, max=0.040826 (RP5MT)
-InverseKinematicsTool completed 123 frames in 6 second(s)
+Frame 173 (t=0.865):	total squared error = 0.018804, marker error: RMS=0.0206728, max=0.0405472 (RELB)
+Frame 174 (t=0.87):	total squared error = 0.0180482, marker error: RMS=0.0202531, max=0.0402177 (RELB)
+Frame 175 (t=0.875):	total squared error = 0.0172268, marker error: RMS=0.0197868, max=0.0401437 (RELB)
+Frame 176 (t=0.88):	total squared error = 0.0165167, marker error: RMS=0.0193747, max=0.039981 (RELB)
+Frame 177 (t=0.885):	total squared error = 0.0158536, marker error: RMS=0.0189818, max=0.0398186 (RELB)
+Frame 178 (t=0.89):	total squared error = 0.0153442, marker error: RMS=0.0186743, max=0.0393063 (RELB)
+Frame 179 (t=0.895):	total squared error = 0.0149048, marker error: RMS=0.018405, max=0.0391935 (RELB)
+Frame 180 (t=0.9):	total squared error = 0.014604, marker error: RMS=0.0182184, max=0.0390426 (RELB)
+Frame 181 (t=0.905):	total squared error = 0.0142816, marker error: RMS=0.0180162, max=0.0386976 (RELB)
+Frame 182 (t=0.91):	total squared error = 0.0140484, marker error: RMS=0.0178684, max=0.0384299 (RELB)
+Frame 183 (t=0.915):	total squared error = 0.0138183, marker error: RMS=0.0177215, max=0.0382572 (RELB)
+Frame 184 (t=0.92):	total squared error = 0.0136376, marker error: RMS=0.0176052, max=0.0380865 (RELB)
+Frame 185 (t=0.925):	total squared error = 0.0135958, marker error: RMS=0.0175782, max=0.0379709 (RELB)
+Frame 186 (t=0.93):	total squared error = 0.0136062, marker error: RMS=0.017585, max=0.0379104 (RELB)
+Frame 187 (t=0.935):	total squared error = 0.013631, marker error: RMS=0.017601, max=0.0377398 (RELB)
+Frame 188 (t=0.94):	total squared error = 0.013782, marker error: RMS=0.0176982, max=0.0376991 (RELB)
+Frame 189 (t=0.945):	total squared error = 0.0139596, marker error: RMS=0.0178119, max=0.0375497 (RELB)
+Frame 190 (t=0.95):	total squared error = 0.0142629, marker error: RMS=0.0180043, max=0.0374005 (RELB)
+Frame 191 (t=0.955):	total squared error = 0.0146101, marker error: RMS=0.0182222, max=0.0371929 (RELB)
+Frame 192 (t=0.96):	total squared error = 0.0150699, marker error: RMS=0.0185067, max=0.0370972 (RELB)
+Frame 193 (t=0.965):	total squared error = 0.0155784, marker error: RMS=0.0188163, max=0.0369548 (RELB)
+Frame 194 (t=0.97):	total squared error = 0.0160138, marker error: RMS=0.0190775, max=0.0368511 (RELB)
+Frame 195 (t=0.975):	total squared error = 0.0164485, marker error: RMS=0.0193346, max=0.0367148 (RELB)
+Frame 196 (t=0.98):	total squared error = 0.0168214, marker error: RMS=0.0195526, max=0.0378071 (LPAT)
+Frame 197 (t=0.985):	total squared error = 0.0172195, marker error: RMS=0.0197826, max=0.0385671 (LPAT)
+Frame 198 (t=0.99):	total squared error = 0.0175285, marker error: RMS=0.0199593, max=0.0395671 (LPAT)
+Frame 199 (t=0.995):	total squared error = 0.0179193, marker error: RMS=0.0201806, max=0.040639 (LP5MT)
+Frame 200 (t=1):	total squared error = 0.0181475, marker error: RMS=0.0203087, max=0.0414774 (LPAT)
+Frame 201 (t=1.005):	total squared error = 0.0182873, marker error: RMS=0.0203868, max=0.0423966 (LPAT)
+Frame 202 (t=1.01):	total squared error = 0.0185072, marker error: RMS=0.020509, max=0.0431261 (LPAT)
+Frame 203 (t=1.015):	total squared error = 0.0186751, marker error: RMS=0.0206018, max=0.0439033 (LPAT)
+InverseKinematicsTool completed 154 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_04\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -6694,12 +7138,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_04_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_04_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_04\ik\TRAIL_071_EP_04_ik.mot (nr=123 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_04\ik\TRAIL_071_EP_04_ik.mot (nr=154 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 123 time frames in 277 millisecond(s)
+InverseDynamicsTool: 154 time frames in 293 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_05\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -6924,7 +7368,35 @@ Frame 153 (t=0.765):	total squared error = 0.0162527, marker error: RMS=0.019219
 Frame 154 (t=0.77):	total squared error = 0.0160593, marker error: RMS=0.0191045, max=0.043703 (RELB)
 Frame 155 (t=0.775):	total squared error = 0.0158276, marker error: RMS=0.0189662, max=0.0434853 (RELB)
 Frame 156 (t=0.78):	total squared error = 0.015564, marker error: RMS=0.0188076, max=0.0431508 (RELB)
-InverseKinematicsTool completed 125 frames in 7 second(s)
+Frame 157 (t=0.785):	total squared error = 0.0153228, marker error: RMS=0.0186613, max=0.0430313 (RELB)
+Frame 158 (t=0.79):	total squared error = 0.0151396, marker error: RMS=0.0185495, max=0.0425413 (RELB)
+Frame 159 (t=0.795):	total squared error = 0.0149557, marker error: RMS=0.0184364, max=0.0422021 (RELB)
+Frame 160 (t=0.8):	total squared error = 0.0147596, marker error: RMS=0.0183152, max=0.0418269 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0145079, marker error: RMS=0.0181583, max=0.0413276 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0143006, marker error: RMS=0.0180281, max=0.0409307 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.0140987, marker error: RMS=0.0179004, max=0.0407031 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0139334, marker error: RMS=0.0177952, max=0.040407 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.0137256, marker error: RMS=0.017662, max=0.0401063 (RELB)
+Frame 166 (t=0.83):	total squared error = 0.0136808, marker error: RMS=0.0176332, max=0.039706 (RELB)
+Frame 167 (t=0.835):	total squared error = 0.0135787, marker error: RMS=0.0175672, max=0.0395484 (RELB)
+Frame 168 (t=0.84):	total squared error = 0.0136266, marker error: RMS=0.0175981, max=0.039372 (RELB)
+Frame 169 (t=0.845):	total squared error = 0.013795, marker error: RMS=0.0177066, max=0.0391433 (RELB)
+Frame 170 (t=0.85):	total squared error = 0.0140719, marker error: RMS=0.0178834, max=0.0388773 (RELB)
+Frame 171 (t=0.855):	total squared error = 0.0143683, marker error: RMS=0.0180708, max=0.0386288 (RELB)
+Frame 172 (t=0.86):	total squared error = 0.0147289, marker error: RMS=0.0182961, max=0.0383903 (RELB)
+Frame 173 (t=0.865):	total squared error = 0.0150869, marker error: RMS=0.0185171, max=0.0381866 (RELB)
+Frame 174 (t=0.87):	total squared error = 0.0154277, marker error: RMS=0.0187251, max=0.0379896 (RELB)
+Frame 175 (t=0.875):	total squared error = 0.015736, marker error: RMS=0.0189113, max=0.0378701 (RELB)
+Frame 176 (t=0.88):	total squared error = 0.0160567, marker error: RMS=0.019103, max=0.0376339 (RELB)
+Frame 177 (t=0.885):	total squared error = 0.0163544, marker error: RMS=0.0192793, max=0.0375977 (RELB)
+Frame 178 (t=0.89):	total squared error = 0.0167059, marker error: RMS=0.0194854, max=0.0374703 (RELB)
+Frame 179 (t=0.895):	total squared error = 0.0170654, marker error: RMS=0.0196939, max=0.0373283 (RELB)
+Frame 180 (t=0.9):	total squared error = 0.0174054, marker error: RMS=0.0198891, max=0.0372457 (RELB)
+Frame 181 (t=0.905):	total squared error = 0.0178038, marker error: RMS=0.0201155, max=0.0373194 (RELB)
+Frame 182 (t=0.91):	total squared error = 0.0180362, marker error: RMS=0.0202463, max=0.0370561 (RELB)
+Frame 183 (t=0.915):	total squared error = 0.0180614, marker error: RMS=0.0202605, max=0.0382147 (RP5MT)
+Frame 184 (t=0.92):	total squared error = 0.0182935, marker error: RMS=0.0203902, max=0.0389155 (RP5MT)
+InverseKinematicsTool completed 153 frames in 7 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_05\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -7033,12 +7505,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_05_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_05_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_05\ik\TRAIL_071_EP_05_ik.mot (nr=125 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_05\ik\TRAIL_071_EP_05_ik.mot (nr=153 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 125 time frames in 312 millisecond(s)
+InverseDynamicsTool: 153 time frames in 347 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_06\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -7263,7 +7735,35 @@ Frame 146 (t=0.73):	total squared error = 0.0159656, marker error: RMS=0.0190487
 Frame 147 (t=0.735):	total squared error = 0.01563, marker error: RMS=0.0188475, max=0.0413551 (RELB)
 Frame 148 (t=0.74):	total squared error = 0.0152924, marker error: RMS=0.0186428, max=0.0407595 (RELB)
 Frame 149 (t=0.745):	total squared error = 0.0150135, marker error: RMS=0.018472, max=0.0405931 (RELB)
-InverseKinematicsTool completed 125 frames in 7 second(s)
+Frame 150 (t=0.75):	total squared error = 0.0147273, marker error: RMS=0.0182951, max=0.0403979 (RELB)
+Frame 151 (t=0.755):	total squared error = 0.0144493, marker error: RMS=0.0181216, max=0.040123 (RELB)
+Frame 152 (t=0.76):	total squared error = 0.0142792, marker error: RMS=0.0180146, max=0.0399259 (RELB)
+Frame 153 (t=0.765):	total squared error = 0.0140655, marker error: RMS=0.0178793, max=0.0396216 (RELB)
+Frame 154 (t=0.77):	total squared error = 0.0138178, marker error: RMS=0.0177212, max=0.0393518 (RELB)
+Frame 155 (t=0.775):	total squared error = 0.013618, marker error: RMS=0.0175926, max=0.0391825 (RELB)
+Frame 156 (t=0.78):	total squared error = 0.0134415, marker error: RMS=0.0174782, max=0.0388904 (RELB)
+Frame 157 (t=0.785):	total squared error = 0.0133137, marker error: RMS=0.0173949, max=0.038805 (RELB)
+Frame 158 (t=0.79):	total squared error = 0.01322, marker error: RMS=0.0173336, max=0.038626 (RELB)
+Frame 159 (t=0.795):	total squared error = 0.0131793, marker error: RMS=0.0173069, max=0.0385032 (RELB)
+Frame 160 (t=0.8):	total squared error = 0.0132361, marker error: RMS=0.0173442, max=0.0385298 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0132913, marker error: RMS=0.0173803, max=0.0383436 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0134697, marker error: RMS=0.0174966, max=0.0380675 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.013678, marker error: RMS=0.0176313, max=0.0380389 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0139573, marker error: RMS=0.0178104, max=0.0380302 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.014278, marker error: RMS=0.0180139, max=0.0379197 (RELB)
+Frame 166 (t=0.83):	total squared error = 0.0146098, marker error: RMS=0.018222, max=0.0378566 (RELB)
+Frame 167 (t=0.835):	total squared error = 0.0149282, marker error: RMS=0.0184195, max=0.0379177 (RELB)
+Frame 168 (t=0.84):	total squared error = 0.0153075, marker error: RMS=0.018652, max=0.0377104 (RELB)
+Frame 169 (t=0.845):	total squared error = 0.0156953, marker error: RMS=0.0188868, max=0.0376886 (RELB)
+Frame 170 (t=0.85):	total squared error = 0.0159157, marker error: RMS=0.019019, max=0.0376732 (RELB)
+Frame 171 (t=0.855):	total squared error = 0.0160255, marker error: RMS=0.0190844, max=0.0377167 (RELB)
+Frame 172 (t=0.86):	total squared error = 0.0161648, marker error: RMS=0.0191672, max=0.037733 (RELB)
+Frame 173 (t=0.865):	total squared error = 0.0161746, marker error: RMS=0.019173, max=0.0377802 (RELB)
+Frame 174 (t=0.87):	total squared error = 0.0161011, marker error: RMS=0.0191294, max=0.0378436 (RELB)
+Frame 175 (t=0.875):	total squared error = 0.0158983, marker error: RMS=0.0190086, max=0.0380627 (RELB)
+Frame 176 (t=0.88):	total squared error = 0.0157304, marker error: RMS=0.0189079, max=0.0382163 (RELB)
+Frame 177 (t=0.885):	total squared error = 0.0156233, marker error: RMS=0.0188434, max=0.0384079 (RELB)
+InverseKinematicsTool completed 153 frames in 7 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_06\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -7372,12 +7872,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_06_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_06_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_06\ik\TRAIL_071_EP_06_ik.mot (nr=125 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_06\ik\TRAIL_071_EP_06_ik.mot (nr=153 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 125 time frames in 335 millisecond(s)
+InverseDynamicsTool: 153 time frames in 390 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_07\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -7601,7 +8101,36 @@ Frame 144 (t=0.72):	total squared error = 0.017654, marker error: RMS=0.0200306,
 Frame 145 (t=0.725):	total squared error = 0.0175793, marker error: RMS=0.0199882, max=0.0423744 (RELB)
 Frame 146 (t=0.73):	total squared error = 0.0174412, marker error: RMS=0.0199096, max=0.0421516 (RELB)
 Frame 147 (t=0.735):	total squared error = 0.0171435, marker error: RMS=0.0197389, max=0.0419579 (RELB)
-InverseKinematicsTool completed 124 frames in 7 second(s)
+Frame 148 (t=0.74):	total squared error = 0.0166393, marker error: RMS=0.0194465, max=0.0417957 (RELB)
+Frame 149 (t=0.745):	total squared error = 0.0162445, marker error: RMS=0.0192144, max=0.0417439 (RELB)
+Frame 150 (t=0.75):	total squared error = 0.0157044, marker error: RMS=0.0188923, max=0.0413621 (RELB)
+Frame 151 (t=0.755):	total squared error = 0.0152598, marker error: RMS=0.0186229, max=0.0411905 (RELB)
+Frame 152 (t=0.76):	total squared error = 0.0147863, marker error: RMS=0.0183317, max=0.0409104 (RELB)
+Frame 153 (t=0.765):	total squared error = 0.0144241, marker error: RMS=0.0181058, max=0.0409163 (RELB)
+Frame 154 (t=0.77):	total squared error = 0.0141165, marker error: RMS=0.0179117, max=0.0406111 (RELB)
+Frame 155 (t=0.775):	total squared error = 0.0138838, marker error: RMS=0.0177635, max=0.0403777 (RELB)
+Frame 156 (t=0.78):	total squared error = 0.0136662, marker error: RMS=0.0176237, max=0.0402058 (RELB)
+Frame 157 (t=0.785):	total squared error = 0.0135378, marker error: RMS=0.0175407, max=0.0401137 (RELB)
+Frame 158 (t=0.79):	total squared error = 0.013373, marker error: RMS=0.0174336, max=0.0398566 (RELB)
+Frame 159 (t=0.795):	total squared error = 0.0132875, marker error: RMS=0.0173778, max=0.0396973 (RELB)
+Frame 160 (t=0.8):	total squared error = 0.0132531, marker error: RMS=0.0173553, max=0.0395898 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0133799, marker error: RMS=0.0174381, max=0.039459 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0136445, marker error: RMS=0.0176097, max=0.039202 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.0139283, marker error: RMS=0.0177919, max=0.0392113 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0144225, marker error: RMS=0.0181048, max=0.0390584 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.0149056, marker error: RMS=0.0184055, max=0.0388962 (RELB)
+Frame 166 (t=0.83):	total squared error = 0.0155199, marker error: RMS=0.018781, max=0.0388701 (RELB)
+Frame 167 (t=0.835):	total squared error = 0.0162124, marker error: RMS=0.0191954, max=0.0388414 (RELB)
+Frame 168 (t=0.84):	total squared error = 0.0168932, marker error: RMS=0.0195943, max=0.0389168 (RELB)
+Frame 169 (t=0.845):	total squared error = 0.0175727, marker error: RMS=0.0199845, max=0.0390226 (LP5MT)
+Frame 170 (t=0.85):	total squared error = 0.018223, marker error: RMS=0.0203509, max=0.0403989 (LP5MT)
+Frame 171 (t=0.855):	total squared error = 0.0188422, marker error: RMS=0.0206938, max=0.0422776 (LP5MT)
+Frame 172 (t=0.86):	total squared error = 0.0194052, marker error: RMS=0.0210007, max=0.043498 (LP5MT)
+Frame 173 (t=0.865):	total squared error = 0.0199775, marker error: RMS=0.0213081, max=0.0451498 (LP5MT)
+Frame 174 (t=0.87):	total squared error = 0.0203447, marker error: RMS=0.021503, max=0.0461489 (LP5MT)
+Frame 175 (t=0.875):	total squared error = 0.0205142, marker error: RMS=0.0215924, max=0.0468888 (LP5MT)
+Frame 176 (t=0.88):	total squared error = 0.0206141, marker error: RMS=0.0216449, max=0.0477746 (LP5MT)
+InverseKinematicsTool completed 153 frames in 7 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_07\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -7710,12 +8239,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_07_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_07_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_07\ik\TRAIL_071_EP_07_ik.mot (nr=124 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_07\ik\TRAIL_071_EP_07_ik.mot (nr=153 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 124 time frames in 320 millisecond(s)
+InverseDynamicsTool: 153 time frames in 265 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_08\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -7941,7 +8470,31 @@ Frame 156 (t=0.78):	total squared error = 0.0160091, marker error: RMS=0.0190747
 Frame 157 (t=0.785):	total squared error = 0.015714, marker error: RMS=0.0188981, max=0.0404323 (RELB)
 Frame 158 (t=0.79):	total squared error = 0.0153458, marker error: RMS=0.0186753, max=0.0401035 (RELB)
 Frame 159 (t=0.795):	total squared error = 0.0149967, marker error: RMS=0.0184617, max=0.0399699 (RELB)
-InverseKinematicsTool completed 126 frames in 7 second(s)
+Frame 160 (t=0.8):	total squared error = 0.0146255, marker error: RMS=0.0182318, max=0.0397868 (RELB)
+Frame 161 (t=0.805):	total squared error = 0.0143701, marker error: RMS=0.0180719, max=0.0396296 (RELB)
+Frame 162 (t=0.81):	total squared error = 0.0141888, marker error: RMS=0.0179575, max=0.0394528 (RELB)
+Frame 163 (t=0.815):	total squared error = 0.0140167, marker error: RMS=0.0178483, max=0.0393299 (RELB)
+Frame 164 (t=0.82):	total squared error = 0.0138128, marker error: RMS=0.017718, max=0.0392738 (RELB)
+Frame 165 (t=0.825):	total squared error = 0.0136297, marker error: RMS=0.0176002, max=0.0390129 (RELB)
+Frame 166 (t=0.83):	total squared error = 0.0135184, marker error: RMS=0.0175281, max=0.0388291 (RELB)
+Frame 167 (t=0.835):	total squared error = 0.0134674, marker error: RMS=0.0174951, max=0.0387264 (RELB)
+Frame 168 (t=0.84):	total squared error = 0.0134061, marker error: RMS=0.0174552, max=0.0386161 (RELB)
+Frame 169 (t=0.845):	total squared error = 0.0134647, marker error: RMS=0.0174933, max=0.0385539 (RELB)
+Frame 170 (t=0.85):	total squared error = 0.0135969, marker error: RMS=0.017579, max=0.03847 (RELB)
+Frame 171 (t=0.855):	total squared error = 0.0137895, marker error: RMS=0.0177031, max=0.0383172 (RELB)
+Frame 172 (t=0.86):	total squared error = 0.0140755, marker error: RMS=0.0178857, max=0.0383392 (RELB)
+Frame 173 (t=0.865):	total squared error = 0.0144443, marker error: RMS=0.0181185, max=0.0382839 (RELB)
+Frame 174 (t=0.87):	total squared error = 0.0148791, marker error: RMS=0.0183892, max=0.0381876 (RELB)
+Frame 175 (t=0.875):	total squared error = 0.0152483, marker error: RMS=0.0186159, max=0.0383621 (RELB)
+Frame 176 (t=0.88):	total squared error = 0.0156338, marker error: RMS=0.0188497, max=0.0384504 (RELB)
+Frame 177 (t=0.885):	total squared error = 0.016102, marker error: RMS=0.0191299, max=0.0384294 (RELB)
+Frame 178 (t=0.89):	total squared error = 0.0164815, marker error: RMS=0.019354, max=0.0386504 (RELB)
+Frame 179 (t=0.895):	total squared error = 0.0167934, marker error: RMS=0.0195363, max=0.0385872 (RELB)
+Frame 180 (t=0.9):	total squared error = 0.0170253, marker error: RMS=0.0196707, max=0.0388772 (RELB)
+Frame 181 (t=0.905):	total squared error = 0.0170259, marker error: RMS=0.0196711, max=0.0389622 (RELB)
+Frame 182 (t=0.91):	total squared error = 0.0168995, marker error: RMS=0.0195979, max=0.0392673 (RELB)
+Frame 183 (t=0.915):	total squared error = 0.0167137, marker error: RMS=0.0194899, max=0.039497 (RELB)
+InverseKinematicsTool completed 150 frames in 7 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_08\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -8050,12 +8603,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_EP_08_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_EP_08_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_08\ik\TRAIL_071_EP_08_ik.mot (nr=126 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_08\ik\TRAIL_071_EP_08_ik.mot (nr=150 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 126 time frames in 277 millisecond(s)
+InverseDynamicsTool: 150 time frames in 269 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_01\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -8255,7 +8808,37 @@ Frame 108 (t=0.54):	total squared error = 0.0221758, marker error: RMS=0.0224498
 Frame 109 (t=0.545):	total squared error = 0.0224311, marker error: RMS=0.0225787, max=0.0437681 (RTOE)
 Frame 110 (t=0.55):	total squared error = 0.0224916, marker error: RMS=0.0226091, max=0.044015 (RTOE)
 Frame 111 (t=0.555):	total squared error = 0.022649, marker error: RMS=0.0226881, max=0.044938 (RP5MT)
-InverseKinematicsTool completed 100 frames in 6 second(s)
+Frame 112 (t=0.56):	total squared error = 0.0222208, marker error: RMS=0.0224726, max=0.0455701 (RP5MT)
+Frame 113 (t=0.565):	total squared error = 0.0217831, marker error: RMS=0.0222502, max=0.0463019 (RP5MT)
+Frame 114 (t=0.57):	total squared error = 0.0212844, marker error: RMS=0.021994, max=0.0465026 (RP5MT)
+Frame 115 (t=0.575):	total squared error = 0.0207315, marker error: RMS=0.0217064, max=0.0464735 (RP5MT)
+Frame 116 (t=0.58):	total squared error = 0.020221, marker error: RMS=0.0214376, max=0.0455037 (RP5MT)
+Frame 117 (t=0.585):	total squared error = 0.0196598, marker error: RMS=0.021138, max=0.0445202 (RP5MT)
+Frame 118 (t=0.59):	total squared error = 0.0191237, marker error: RMS=0.0208478, max=0.0424831 (RP5MT)
+Frame 119 (t=0.595):	total squared error = 0.0186142, marker error: RMS=0.0205682, max=0.0405942 (RMFL)
+Frame 120 (t=0.6):	total squared error = 0.0181223, marker error: RMS=0.0202946, max=0.0393166 (RMFL)
+Frame 121 (t=0.605):	total squared error = 0.0177633, marker error: RMS=0.0200926, max=0.0374922 (RMFL)
+Frame 122 (t=0.61):	total squared error = 0.0175064, marker error: RMS=0.0199468, max=0.0369983 (RELB)
+Frame 123 (t=0.615):	total squared error = 0.0173891, marker error: RMS=0.0198798, max=0.0367631 (RELB)
+Frame 124 (t=0.62):	total squared error = 0.0173277, marker error: RMS=0.0198447, max=0.036387 (RELB)
+Frame 125 (t=0.625):	total squared error = 0.0172735, marker error: RMS=0.0198136, max=0.036099 (RELB)
+Frame 126 (t=0.63):	total squared error = 0.01742, marker error: RMS=0.0198975, max=0.0358824 (RELB)
+Frame 127 (t=0.635):	total squared error = 0.0176594, marker error: RMS=0.0200337, max=0.03567 (RELB)
+Frame 128 (t=0.64):	total squared error = 0.0181014, marker error: RMS=0.0202829, max=0.035499 (RELB)
+Frame 129 (t=0.645):	total squared error = 0.0184978, marker error: RMS=0.0205038, max=0.0362994 (LPAT)
+Frame 130 (t=0.65):	total squared error = 0.0190913, marker error: RMS=0.0208301, max=0.0373703 (LPAT)
+Frame 131 (t=0.655):	total squared error = 0.0197423, marker error: RMS=0.0211823, max=0.0401618 (LP5MT)
+Frame 132 (t=0.66):	total squared error = 0.0205598, marker error: RMS=0.0216164, max=0.0426827 (LP5MT)
+Frame 133 (t=0.665):	total squared error = 0.021439, marker error: RMS=0.0220738, max=0.0458996 (LP5MT)
+Frame 134 (t=0.67):	total squared error = 0.0225464, marker error: RMS=0.0226367, max=0.0482296 (LP5MT)
+Frame 135 (t=0.675):	total squared error = 0.0233697, marker error: RMS=0.0230463, max=0.0509657 (LP5MT)
+Frame 136 (t=0.68):	total squared error = 0.0240098, marker error: RMS=0.0233597, max=0.0521214 (LP5MT)
+Frame 137 (t=0.685):	total squared error = 0.0244096, marker error: RMS=0.0235534, max=0.0528878 (LP5MT)
+Frame 138 (t=0.69):	total squared error = 0.0243697, marker error: RMS=0.0235342, max=0.0534689 (LP5MT)
+Frame 139 (t=0.695):	total squared error = 0.0235747, marker error: RMS=0.0231471, max=0.0528792 (LP5MT)
+Frame 140 (t=0.7):	total squared error = 0.0226214, marker error: RMS=0.0226743, max=0.0511772 (LP5MT)
+Frame 141 (t=0.705):	total squared error = 0.0219925, marker error: RMS=0.0223569, max=0.0495134 (LP5MT)
+InverseKinematicsTool completed 130 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_01\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -8364,12 +8947,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_01_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_01_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_01\ik\TRAIL_071_FAST_01_ik.mot (nr=100 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_01\ik\TRAIL_071_FAST_01_ik.mot (nr=130 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 100 time frames in 233 millisecond(s)
+InverseDynamicsTool: 130 time frames in 199 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_02\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -8565,7 +9148,41 @@ Frame 101 (t=0.505):	total squared error = 0.023983, marker error: RMS=0.0233467
 Frame 102 (t=0.51):	total squared error = 0.0237476, marker error: RMS=0.0232318, max=0.0477742 (RTOE)
 Frame 103 (t=0.515):	total squared error = 0.0235406, marker error: RMS=0.0231304, max=0.0467096 (RTOE)
 Frame 104 (t=0.52):	total squared error = 0.0232171, marker error: RMS=0.0229709, max=0.045372 (RTOE)
-InverseKinematicsTool completed 96 frames in 6 second(s)
+Frame 105 (t=0.525):	total squared error = 0.0227074, marker error: RMS=0.0227174, max=0.0443819 (RTOE)
+Frame 106 (t=0.53):	total squared error = 0.0222248, marker error: RMS=0.0224746, max=0.0443521 (RP5MT)
+Frame 107 (t=0.535):	total squared error = 0.0218052, marker error: RMS=0.0222615, max=0.0444132 (RP5MT)
+Frame 108 (t=0.54):	total squared error = 0.0214709, marker error: RMS=0.0220901, max=0.0447969 (RP5MT)
+Frame 109 (t=0.545):	total squared error = 0.0210227, marker error: RMS=0.0218584, max=0.043769 (RP5MT)
+Frame 110 (t=0.55):	total squared error = 0.020525, marker error: RMS=0.0215981, max=0.0429163 (RP5MT)
+Frame 111 (t=0.555):	total squared error = 0.0200994, marker error: RMS=0.021373, max=0.0410312 (RP5MT)
+Frame 112 (t=0.56):	total squared error = 0.0196026, marker error: RMS=0.0211072, max=0.0394026 (RMFL)
+Frame 113 (t=0.565):	total squared error = 0.0192118, marker error: RMS=0.0208957, max=0.0393328 (RELB)
+Frame 114 (t=0.57):	total squared error = 0.0188348, marker error: RMS=0.0206897, max=0.039007 (RELB)
+Frame 115 (t=0.575):	total squared error = 0.0186173, marker error: RMS=0.0205699, max=0.0387149 (RELB)
+Frame 116 (t=0.58):	total squared error = 0.0185433, marker error: RMS=0.020529, max=0.0383737 (RELB)
+Frame 117 (t=0.585):	total squared error = 0.0186555, marker error: RMS=0.020591, max=0.0380153 (RELB)
+Frame 118 (t=0.59):	total squared error = 0.0188982, marker error: RMS=0.0207245, max=0.0375854 (RELB)
+Frame 119 (t=0.595):	total squared error = 0.0193066, marker error: RMS=0.0209472, max=0.0370782 (RELB)
+Frame 120 (t=0.6):	total squared error = 0.0198304, marker error: RMS=0.0212295, max=0.0401292 (LP5MT)
+Frame 121 (t=0.605):	total squared error = 0.0204589, marker error: RMS=0.0215633, max=0.0434433 (LP5MT)
+Frame 122 (t=0.61):	total squared error = 0.0213708, marker error: RMS=0.0220386, max=0.0457507 (LP5MT)
+Frame 123 (t=0.615):	total squared error = 0.0219121, marker error: RMS=0.022316, max=0.0492224 (LP5MT)
+Frame 124 (t=0.62):	total squared error = 0.0227469, marker error: RMS=0.0227371, max=0.0509318 (LP5MT)
+Frame 125 (t=0.625):	total squared error = 0.0232911, marker error: RMS=0.0230075, max=0.0532192 (LP5MT)
+Frame 126 (t=0.63):	total squared error = 0.0240269, marker error: RMS=0.023368, max=0.0544451 (LP5MT)
+Frame 127 (t=0.635):	total squared error = 0.0244062, marker error: RMS=0.0235518, max=0.0555465 (LP5MT)
+Frame 128 (t=0.64):	total squared error = 0.0247944, marker error: RMS=0.0237383, max=0.0560545 (LP5MT)
+Frame 129 (t=0.645):	total squared error = 0.024906, marker error: RMS=0.0237917, max=0.0562233 (LP5MT)
+Frame 130 (t=0.65):	total squared error = 0.0246428, marker error: RMS=0.0236657, max=0.0555994 (LP5MT)
+Frame 131 (t=0.655):	total squared error = 0.0240766, marker error: RMS=0.0233922, max=0.0544963 (LP5MT)
+Frame 132 (t=0.66):	total squared error = 0.0234647, marker error: RMS=0.023093, max=0.0530344 (LP5MT)
+Frame 133 (t=0.665):	total squared error = 0.0226933, marker error: RMS=0.0227103, max=0.0512145 (LP5MT)
+Frame 134 (t=0.67):	total squared error = 0.0218469, marker error: RMS=0.0222827, max=0.0490637 (LP5MT)
+Frame 135 (t=0.675):	total squared error = 0.021061, marker error: RMS=0.0218783, max=0.0478743 (LPAT)
+Frame 136 (t=0.68):	total squared error = 0.0202701, marker error: RMS=0.0214636, max=0.0483343 (LPAT)
+Frame 137 (t=0.685):	total squared error = 0.0191575, marker error: RMS=0.0208662, max=0.048656 (LPAT)
+Frame 138 (t=0.69):	total squared error = 0.0185039, marker error: RMS=0.0205072, max=0.048899 (LPAT)
+InverseKinematicsTool completed 130 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_02\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -8674,12 +9291,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_02_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_02_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_02\ik\TRAIL_071_FAST_02_ik.mot (nr=96 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_02\ik\TRAIL_071_FAST_02_ik.mot (nr=130 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 96 time frames in 212 millisecond(s)
+InverseDynamicsTool: 130 time frames in 181 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_03\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -8876,7 +9493,38 @@ Frame 100 (t=0.5):	total squared error = 0.0238914, marker error: RMS=0.023302, 
 Frame 101 (t=0.505):	total squared error = 0.023673, marker error: RMS=0.0231953, max=0.0450601 (RPAT)
 Frame 102 (t=0.51):	total squared error = 0.0233823, marker error: RMS=0.0230525, max=0.0446181 (RPAT)
 Frame 103 (t=0.515):	total squared error = 0.0229248, marker error: RMS=0.0228258, max=0.0439154 (RPAT)
-InverseKinematicsTool completed 97 frames in 6 second(s)
+Frame 104 (t=0.52):	total squared error = 0.0225208, marker error: RMS=0.0226238, max=0.0436312 (RP5MT)
+Frame 105 (t=0.525):	total squared error = 0.0222166, marker error: RMS=0.0224705, max=0.0442851 (RP5MT)
+Frame 106 (t=0.53):	total squared error = 0.0221158, marker error: RMS=0.0224194, max=0.0444065 (RP5MT)
+Frame 107 (t=0.535):	total squared error = 0.0219281, marker error: RMS=0.0223241, max=0.0442636 (RP5MT)
+Frame 108 (t=0.54):	total squared error = 0.0217277, marker error: RMS=0.0222219, max=0.043725 (RP5MT)
+Frame 109 (t=0.545):	total squared error = 0.0213277, marker error: RMS=0.0220164, max=0.042626 (RP5MT)
+Frame 110 (t=0.55):	total squared error = 0.0209379, marker error: RMS=0.0218142, max=0.0416551 (RELB)
+Frame 111 (t=0.555):	total squared error = 0.0205098, marker error: RMS=0.0215901, max=0.0419751 (RELB)
+Frame 112 (t=0.56):	total squared error = 0.0201539, marker error: RMS=0.0214019, max=0.0419762 (RELB)
+Frame 113 (t=0.565):	total squared error = 0.019879, marker error: RMS=0.0212555, max=0.0418268 (RELB)
+Frame 114 (t=0.57):	total squared error = 0.0196645, marker error: RMS=0.0211405, max=0.0415848 (RELB)
+Frame 115 (t=0.575):	total squared error = 0.0196362, marker error: RMS=0.0211253, max=0.041139 (RELB)
+Frame 116 (t=0.58):	total squared error = 0.0196895, marker error: RMS=0.0211539, max=0.0409151 (RELB)
+Frame 117 (t=0.585):	total squared error = 0.0197975, marker error: RMS=0.0212118, max=0.0404174 (RELB)
+Frame 118 (t=0.59):	total squared error = 0.0200288, marker error: RMS=0.0213354, max=0.0400207 (RELB)
+Frame 119 (t=0.595):	total squared error = 0.0203385, marker error: RMS=0.0214997, max=0.0397286 (RELB)
+Frame 120 (t=0.6):	total squared error = 0.0208692, marker error: RMS=0.0217785, max=0.0393992 (RELB)
+Frame 121 (t=0.605):	total squared error = 0.0217206, marker error: RMS=0.0222182, max=0.041009 (LP5MT)
+Frame 122 (t=0.61):	total squared error = 0.0225318, marker error: RMS=0.0226293, max=0.0447008 (LP5MT)
+Frame 123 (t=0.615):	total squared error = 0.0236715, marker error: RMS=0.0231946, max=0.0468202 (LP5MT)
+Frame 124 (t=0.62):	total squared error = 0.0247602, marker error: RMS=0.023722, max=0.0498096 (LP5MT)
+Frame 125 (t=0.625):	total squared error = 0.0260391, marker error: RMS=0.0243269, max=0.0526757 (LP5MT)
+Frame 126 (t=0.63):	total squared error = 0.0271962, marker error: RMS=0.0248615, max=0.0546665 (LP5MT)
+Frame 127 (t=0.635):	total squared error = 0.028264, marker error: RMS=0.0253449, max=0.0569941 (LP5MT)
+Frame 128 (t=0.64):	total squared error = 0.0290587, marker error: RMS=0.0256987, max=0.0584394 (LP5MT)
+Frame 129 (t=0.645):	total squared error = 0.0294763, marker error: RMS=0.0258827, max=0.058998 (LP5MT)
+Frame 130 (t=0.65):	total squared error = 0.0294536, marker error: RMS=0.0258728, max=0.0587956 (LP5MT)
+Frame 131 (t=0.655):	total squared error = 0.0291627, marker error: RMS=0.0257447, max=0.0580947 (LP5MT)
+Frame 132 (t=0.66):	total squared error = 0.0283611, marker error: RMS=0.0253884, max=0.0567051 (LP5MT)
+Frame 133 (t=0.665):	total squared error = 0.0267831, marker error: RMS=0.024672, max=0.0546083 (LP5MT)
+Frame 134 (t=0.67):	total squared error = 0.0251957, marker error: RMS=0.0239297, max=0.0520886 (LP5MT)
+InverseKinematicsTool completed 128 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_03\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -8985,12 +9633,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_03_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_03_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_03\ik\TRAIL_071_FAST_03_ik.mot (nr=97 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_03\ik\TRAIL_071_FAST_03_ik.mot (nr=128 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 97 time frames in 212 millisecond(s)
+InverseDynamicsTool: 128 time frames in 182 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_04\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -9191,7 +9839,36 @@ Frame 102 (t=0.51):	total squared error = 0.0211185, marker error: RMS=0.0219081
 Frame 103 (t=0.515):	total squared error = 0.0210445, marker error: RMS=0.0218697, max=0.0438456 (RPAT)
 Frame 104 (t=0.52):	total squared error = 0.0208594, marker error: RMS=0.0217733, max=0.0432757 (RPAT)
 Frame 105 (t=0.525):	total squared error = 0.0206061, marker error: RMS=0.0216407, max=0.0425146 (RPAT)
-InverseKinematicsTool completed 101 frames in 6 second(s)
+Frame 106 (t=0.53):	total squared error = 0.0203442, marker error: RMS=0.0215027, max=0.0418525 (RPAT)
+Frame 107 (t=0.535):	total squared error = 0.0201763, marker error: RMS=0.0214138, max=0.0418949 (RP5MT)
+Frame 108 (t=0.54):	total squared error = 0.0200281, marker error: RMS=0.021335, max=0.0424034 (RP5MT)
+Frame 109 (t=0.545):	total squared error = 0.019977, marker error: RMS=0.0213078, max=0.0423872 (RP5MT)
+Frame 110 (t=0.55):	total squared error = 0.0197816, marker error: RMS=0.0212033, max=0.0422266 (RMFL)
+Frame 111 (t=0.555):	total squared error = 0.0195849, marker error: RMS=0.0210976, max=0.0411864 (RMFL)
+Frame 112 (t=0.56):	total squared error = 0.0192537, marker error: RMS=0.0209185, max=0.0400799 (RMFL)
+Frame 113 (t=0.565):	total squared error = 0.0189636, marker error: RMS=0.0207603, max=0.0387613 (RELB)
+Frame 114 (t=0.57):	total squared error = 0.0187293, marker error: RMS=0.0206317, max=0.0386402 (RELB)
+Frame 115 (t=0.575):	total squared error = 0.0187919, marker error: RMS=0.0206661, max=0.0381578 (RELB)
+Frame 116 (t=0.58):	total squared error = 0.01863, marker error: RMS=0.0205769, max=0.0382853 (RELB)
+Frame 117 (t=0.585):	total squared error = 0.01868, marker error: RMS=0.0206045, max=0.0380668 (RELB)
+Frame 118 (t=0.59):	total squared error = 0.0188546, marker error: RMS=0.0207006, max=0.0377835 (RELB)
+Frame 119 (t=0.595):	total squared error = 0.019108, marker error: RMS=0.0208392, max=0.037686 (RELB)
+Frame 120 (t=0.6):	total squared error = 0.0195143, marker error: RMS=0.0210596, max=0.0376273 (RELB)
+Frame 121 (t=0.605):	total squared error = 0.020122, marker error: RMS=0.021385, max=0.0398177 (LP5MT)
+Frame 122 (t=0.61):	total squared error = 0.0207677, marker error: RMS=0.0217254, max=0.0421715 (LP5MT)
+Frame 123 (t=0.615):	total squared error = 0.0218134, marker error: RMS=0.0222656, max=0.0444562 (LP5MT)
+Frame 124 (t=0.62):	total squared error = 0.0227421, marker error: RMS=0.0227347, max=0.0475636 (LP5MT)
+Frame 125 (t=0.625):	total squared error = 0.023867, marker error: RMS=0.0232902, max=0.0500188 (LP5MT)
+Frame 126 (t=0.63):	total squared error = 0.0249617, marker error: RMS=0.0238183, max=0.052202 (LP5MT)
+Frame 127 (t=0.635):	total squared error = 0.02598, marker error: RMS=0.0242993, max=0.0542856 (LP5MT)
+Frame 128 (t=0.64):	total squared error = 0.0266778, marker error: RMS=0.0246234, max=0.0556874 (LP5MT)
+Frame 129 (t=0.645):	total squared error = 0.0270657, marker error: RMS=0.0248018, max=0.0565495 (LP5MT)
+Frame 130 (t=0.65):	total squared error = 0.0270785, marker error: RMS=0.0248077, max=0.0563472 (LP5MT)
+Frame 131 (t=0.655):	total squared error = 0.0268626, marker error: RMS=0.0247086, max=0.0558568 (LP5MT)
+Frame 132 (t=0.66):	total squared error = 0.0258052, marker error: RMS=0.0242174, max=0.0537292 (LP5MT)
+Frame 133 (t=0.665):	total squared error = 0.0246647, marker error: RMS=0.0236762, max=0.0520578 (LP5MT)
+Frame 134 (t=0.67):	total squared error = 0.0236589, marker error: RMS=0.0231884, max=0.0493919 (LP5MT)
+InverseKinematicsTool completed 130 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_04\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -9300,12 +9977,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_04_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_04_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_04\ik\TRAIL_071_FAST_04_ik.mot (nr=101 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_04\ik\TRAIL_071_FAST_04_ik.mot (nr=130 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 101 time frames in 177 millisecond(s)
+InverseDynamicsTool: 130 time frames in 187 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_05\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -9506,7 +10183,37 @@ Frame 123 (t=0.615):	total squared error = 0.122303, marker error: RMS=0.052722,
 Frame 124 (t=0.62):	total squared error = 0.121701, marker error: RMS=0.0525922, max=0.226436 (RWR)
 Frame 125 (t=0.625):	total squared error = 0.121061, marker error: RMS=0.0524536, max=0.226947 (RWR)
 Frame 126 (t=0.63):	total squared error = 0.120679, marker error: RMS=0.0523708, max=0.227496 (RWR)
-InverseKinematicsTool completed 101 frames in 6 second(s)
+Frame 127 (t=0.635):	total squared error = 0.120074, marker error: RMS=0.0522393, max=0.227895 (RWR)
+Frame 128 (t=0.64):	total squared error = 0.119494, marker error: RMS=0.052113, max=0.228281 (RWR)
+Frame 129 (t=0.645):	total squared error = 0.119051, marker error: RMS=0.0520163, max=0.228681 (RWR)
+Frame 130 (t=0.65):	total squared error = 0.118902, marker error: RMS=0.0519838, max=0.228892 (RWR)
+Frame 131 (t=0.655):	total squared error = 0.118504, marker error: RMS=0.0518968, max=0.2288 (RWR)
+Frame 132 (t=0.66):	total squared error = 0.118232, marker error: RMS=0.0518371, max=0.228806 (RWR)
+Frame 133 (t=0.665):	total squared error = 0.118245, marker error: RMS=0.0518399, max=0.229083 (RWR)
+Frame 134 (t=0.67):	total squared error = 0.118123, marker error: RMS=0.0518132, max=0.229439 (RWR)
+Frame 135 (t=0.675):	total squared error = 0.118076, marker error: RMS=0.0518029, max=0.229669 (RWR)
+Frame 136 (t=0.68):	total squared error = 0.118733, marker error: RMS=0.0519468, max=0.230593 (RWR)
+Frame 137 (t=0.685):	total squared error = 0.119028, marker error: RMS=0.0520113, max=0.231364 (RWR)
+Frame 138 (t=0.69):	total squared error = 0.119623, marker error: RMS=0.0521412, max=0.232082 (RWR)
+Frame 139 (t=0.695):	total squared error = 0.120495, marker error: RMS=0.0523308, max=0.233161 (RWR)
+Frame 140 (t=0.7):	total squared error = 0.121548, marker error: RMS=0.0525591, max=0.234097 (RWR)
+Frame 141 (t=0.705):	total squared error = 0.122674, marker error: RMS=0.0528019, max=0.235033 (RWR)
+Frame 142 (t=0.71):	total squared error = 0.123883, marker error: RMS=0.0530615, max=0.235932 (RWR)
+Frame 143 (t=0.715):	total squared error = 0.125245, marker error: RMS=0.0533525, max=0.236525 (RWR)
+Frame 144 (t=0.72):	total squared error = 0.126921, marker error: RMS=0.0537081, max=0.237309 (RWR)
+Frame 145 (t=0.725):	total squared error = 0.128731, marker error: RMS=0.0540898, max=0.237549 (RWR)
+Frame 146 (t=0.73):	total squared error = 0.130787, marker error: RMS=0.0545199, max=0.23825 (RWR)
+Frame 147 (t=0.735):	total squared error = 0.132499, marker error: RMS=0.0548757, max=0.237945 (RWR)
+Frame 148 (t=0.74):	total squared error = 0.134279, marker error: RMS=0.055243, max=0.237842 (RWR)
+Frame 149 (t=0.745):	total squared error = 0.135899, marker error: RMS=0.0555753, max=0.23784 (RWR)
+Frame 150 (t=0.75):	total squared error = 0.137007, marker error: RMS=0.0558015, max=0.237156 (RWR)
+Frame 151 (t=0.755):	total squared error = 0.137935, marker error: RMS=0.0559901, max=0.236498 (RWR)
+Frame 152 (t=0.76):	total squared error = 0.138839, marker error: RMS=0.0561732, max=0.236188 (RWR)
+Frame 153 (t=0.765):	total squared error = 0.139465, marker error: RMS=0.0562998, max=0.235632 (RWR)
+Frame 154 (t=0.77):	total squared error = 0.139902, marker error: RMS=0.0563879, max=0.235827 (RWR)
+Frame 155 (t=0.775):	total squared error = 0.139755, marker error: RMS=0.0563582, max=0.234897 (RWR)
+Frame 156 (t=0.78):	total squared error = 0.13906, marker error: RMS=0.0562179, max=0.234763 (RWR)
+InverseKinematicsTool completed 131 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_05\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -9615,12 +10322,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_05_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_05_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_05\ik\TRAIL_071_FAST_05_ik.mot (nr=101 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_05\ik\TRAIL_071_FAST_05_ik.mot (nr=131 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 101 time frames in 234 millisecond(s)
+InverseDynamicsTool: 131 time frames in 198 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_06\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -9825,7 +10532,37 @@ Frame 135 (t=0.675):	total squared error = 0.0227501, marker error: RMS=0.022738
 Frame 136 (t=0.68):	total squared error = 0.0221122, marker error: RMS=0.0224176, max=0.0449971 (LP5MT)
 Frame 137 (t=0.685):	total squared error = 0.0213979, marker error: RMS=0.0220526, max=0.0444769 (LP5MT)
 Frame 138 (t=0.69):	total squared error = 0.0208105, marker error: RMS=0.0217478, max=0.043971 (LP5MT)
-InverseKinematicsTool completed 105 frames in 6 second(s)
+Frame 139 (t=0.695):	total squared error = 0.0200914, marker error: RMS=0.0213687, max=0.0425924 (RELB)
+Frame 140 (t=0.7):	total squared error = 0.0195655, marker error: RMS=0.0210872, max=0.0424733 (RELB)
+Frame 141 (t=0.705):	total squared error = 0.0189412, marker error: RMS=0.0207481, max=0.0424335 (RELB)
+Frame 142 (t=0.71):	total squared error = 0.0186107, marker error: RMS=0.0205663, max=0.042351 (RELB)
+Frame 143 (t=0.715):	total squared error = 0.0181434, marker error: RMS=0.0203064, max=0.042398 (RELB)
+Frame 144 (t=0.72):	total squared error = 0.01779, marker error: RMS=0.0201076, max=0.0422218 (RELB)
+Frame 145 (t=0.725):	total squared error = 0.0173402, marker error: RMS=0.0198518, max=0.0419298 (RELB)
+Frame 146 (t=0.73):	total squared error = 0.0170455, marker error: RMS=0.0196824, max=0.0414729 (RELB)
+Frame 147 (t=0.735):	total squared error = 0.0167379, marker error: RMS=0.019504, max=0.0413853 (RELB)
+Frame 148 (t=0.74):	total squared error = 0.0165695, marker error: RMS=0.0194057, max=0.0408531 (RELB)
+Frame 149 (t=0.745):	total squared error = 0.0164198, marker error: RMS=0.0193178, max=0.0402622 (RELB)
+Frame 150 (t=0.75):	total squared error = 0.0164682, marker error: RMS=0.0193463, max=0.0396811 (RELB)
+Frame 151 (t=0.755):	total squared error = 0.0166786, marker error: RMS=0.0194695, max=0.0390862 (RELB)
+Frame 152 (t=0.76):	total squared error = 0.0172191, marker error: RMS=0.0197824, max=0.0384546 (RELB)
+Frame 153 (t=0.765):	total squared error = 0.0177632, marker error: RMS=0.0200925, max=0.0379838 (RELB)
+Frame 154 (t=0.77):	total squared error = 0.0183052, marker error: RMS=0.0203968, max=0.0375342 (RELB)
+Frame 155 (t=0.775):	total squared error = 0.0195367, marker error: RMS=0.0210717, max=0.0383805 (RP5MT)
+Frame 156 (t=0.78):	total squared error = 0.0208955, marker error: RMS=0.0217922, max=0.0422966 (RP5MT)
+Frame 157 (t=0.785):	total squared error = 0.0225814, marker error: RMS=0.0226542, max=0.0458779 (RP5MT)
+Frame 158 (t=0.79):	total squared error = 0.0246306, marker error: RMS=0.0236598, max=0.0498315 (RTOE)
+Frame 159 (t=0.795):	total squared error = 0.0266361, marker error: RMS=0.0246042, max=0.0552808 (RTOE)
+Frame 160 (t=0.8):	total squared error = 0.0284734, marker error: RMS=0.0254386, max=0.0606587 (RTOE)
+Frame 161 (t=0.805):	total squared error = 0.029841, marker error: RMS=0.0260424, max=0.064659 (RTOE)
+Frame 162 (t=0.81):	total squared error = 0.0307126, marker error: RMS=0.0264199, max=0.0679484 (RTOE)
+Frame 163 (t=0.815):	total squared error = 0.0310043, marker error: RMS=0.0265451, max=0.0697904 (RTOE)
+Frame 164 (t=0.82):	total squared error = 0.0307769, marker error: RMS=0.0264476, max=0.0701052 (RTOE)
+Frame 165 (t=0.825):	total squared error = 0.0301997, marker error: RMS=0.0261984, max=0.0694757 (RTOE)
+Frame 166 (t=0.83):	total squared error = 0.0290647, marker error: RMS=0.0257014, max=0.0676084 (RTOE)
+Frame 167 (t=0.835):	total squared error = 0.0274809, marker error: RMS=0.0249913, max=0.0643822 (RTOE)
+Frame 168 (t=0.84):	total squared error = 0.0260207, marker error: RMS=0.0243183, max=0.0607286 (RTOE)
+InverseKinematicsTool completed 135 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_06\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -9934,12 +10671,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_06_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_06_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_06\ik\TRAIL_071_FAST_06_ik.mot (nr=105 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_06\ik\TRAIL_071_FAST_06_ik.mot (nr=135 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 105 time frames in 251 millisecond(s)
+InverseDynamicsTool: 135 time frames in 189 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_07\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -10143,7 +10880,38 @@ Frame 122 (t=0.61):	total squared error = 0.0234985, marker error: RMS=0.0231097
 Frame 123 (t=0.615):	total squared error = 0.0232213, marker error: RMS=0.0229729, max=0.0496169 (LP5MT)
 Frame 124 (t=0.62):	total squared error = 0.0228158, marker error: RMS=0.0227715, max=0.0495492 (LP5MT)
 Frame 125 (t=0.625):	total squared error = 0.0223528, marker error: RMS=0.0225393, max=0.0485863 (LP5MT)
-InverseKinematicsTool completed 104 frames in 6 second(s)
+Frame 126 (t=0.63):	total squared error = 0.0218367, marker error: RMS=0.0222775, max=0.0473788 (LP5MT)
+Frame 127 (t=0.635):	total squared error = 0.02108, marker error: RMS=0.0218882, max=0.0453538 (LP5MT)
+Frame 128 (t=0.64):	total squared error = 0.0202798, marker error: RMS=0.0214687, max=0.043283 (LP5MT)
+Frame 129 (t=0.645):	total squared error = 0.0193383, marker error: RMS=0.0209644, max=0.0408551 (LP5MT)
+Frame 130 (t=0.65):	total squared error = 0.0187162, marker error: RMS=0.0206245, max=0.0399856 (RELB)
+Frame 131 (t=0.655):	total squared error = 0.0180609, marker error: RMS=0.0202602, max=0.0397341 (RELB)
+Frame 132 (t=0.66):	total squared error = 0.0173901, marker error: RMS=0.0198804, max=0.0393883 (RELB)
+Frame 133 (t=0.665):	total squared error = 0.01695, marker error: RMS=0.0196272, max=0.0387907 (RELB)
+Frame 134 (t=0.67):	total squared error = 0.016561, marker error: RMS=0.0194007, max=0.0382925 (RELB)
+Frame 135 (t=0.675):	total squared error = 0.0163138, marker error: RMS=0.0192554, max=0.03763 (RELB)
+Frame 136 (t=0.68):	total squared error = 0.0160966, marker error: RMS=0.0191267, max=0.0366168 (RELB)
+Frame 137 (t=0.685):	total squared error = 0.0159879, marker error: RMS=0.019062, max=0.0360692 (RELB)
+Frame 138 (t=0.69):	total squared error = 0.0159322, marker error: RMS=0.0190288, max=0.0351394 (RELB)
+Frame 139 (t=0.695):	total squared error = 0.0158379, marker error: RMS=0.0189724, max=0.0347291 (RELB)
+Frame 140 (t=0.7):	total squared error = 0.0159065, marker error: RMS=0.0190135, max=0.0341032 (RELB)
+Frame 141 (t=0.705):	total squared error = 0.0160787, marker error: RMS=0.0191161, max=0.0336743 (RELB)
+Frame 142 (t=0.71):	total squared error = 0.0164533, marker error: RMS=0.0193375, max=0.0334967 (RELB)
+Frame 143 (t=0.715):	total squared error = 0.0172409, marker error: RMS=0.0197949, max=0.0344483 (RP5MT)
+Frame 144 (t=0.72):	total squared error = 0.0182066, marker error: RMS=0.0203417, max=0.0374173 (RP5MT)
+Frame 145 (t=0.725):	total squared error = 0.0194846, marker error: RMS=0.0210436, max=0.0404836 (RP5MT)
+Frame 146 (t=0.73):	total squared error = 0.0210583, marker error: RMS=0.0218769, max=0.0433904 (RP5MT)
+Frame 147 (t=0.735):	total squared error = 0.0226165, marker error: RMS=0.0226718, max=0.0466224 (RP5MT)
+Frame 148 (t=0.74):	total squared error = 0.0241636, marker error: RMS=0.0234344, max=0.0504754 (RTOE)
+Frame 149 (t=0.745):	total squared error = 0.0253409, marker error: RMS=0.0239986, max=0.0543538 (RTOE)
+Frame 150 (t=0.75):	total squared error = 0.0262025, marker error: RMS=0.0244031, max=0.0576286 (RTOE)
+Frame 151 (t=0.755):	total squared error = 0.0266731, marker error: RMS=0.0246212, max=0.059975 (RTOE)
+Frame 152 (t=0.76):	total squared error = 0.0267264, marker error: RMS=0.0246459, max=0.0609279 (RTOE)
+Frame 153 (t=0.765):	total squared error = 0.026422, marker error: RMS=0.0245051, max=0.0608472 (RTOE)
+Frame 154 (t=0.77):	total squared error = 0.0255342, marker error: RMS=0.0240899, max=0.0594258 (RTOE)
+Frame 155 (t=0.775):	total squared error = 0.0241717, marker error: RMS=0.0234384, max=0.0569371 (RTOE)
+Frame 156 (t=0.78):	total squared error = 0.0230329, marker error: RMS=0.0228796, max=0.0538438 (RTOE)
+InverseKinematicsTool completed 135 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_07\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -10252,12 +11020,12 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_07_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_07_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_07\ik\TRAIL_071_FAST_07_ik.mot (nr=104 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_07\ik\TRAIL_071_FAST_07_ik.mot (nr=135 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 104 time frames in 265 millisecond(s)
+InverseDynamicsTool: 135 time frames in 199 millisecond(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_08\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -10460,7 +11228,36 @@ Frame 114 (t=0.57):	total squared error = 0.02144, marker error: RMS=0.0220743, 
 Frame 115 (t=0.575):	total squared error = 0.020567, marker error: RMS=0.0216202, max=0.0433667 (RELB)
 Frame 116 (t=0.58):	total squared error = 0.019787, marker error: RMS=0.0212062, max=0.042897 (RELB)
 Frame 117 (t=0.585):	total squared error = 0.0190714, marker error: RMS=0.0208192, max=0.0426174 (RELB)
-InverseKinematicsTool completed 103 frames in 7 second(s)
+Frame 118 (t=0.59):	total squared error = 0.0185165, marker error: RMS=0.0205141, max=0.0421128 (RELB)
+Frame 119 (t=0.595):	total squared error = 0.0180196, marker error: RMS=0.020237, max=0.0418423 (RELB)
+Frame 120 (t=0.6):	total squared error = 0.0176846, marker error: RMS=0.020048, max=0.0416184 (RELB)
+Frame 121 (t=0.605):	total squared error = 0.0174105, marker error: RMS=0.0198921, max=0.0413437 (RELB)
+Frame 122 (t=0.61):	total squared error = 0.0172371, marker error: RMS=0.0197927, max=0.0413998 (RELB)
+Frame 123 (t=0.615):	total squared error = 0.0170205, marker error: RMS=0.019668, max=0.0412368 (RELB)
+Frame 124 (t=0.62):	total squared error = 0.0168226, marker error: RMS=0.0195533, max=0.0406886 (RELB)
+Frame 125 (t=0.625):	total squared error = 0.0166707, marker error: RMS=0.0194648, max=0.0402368 (RELB)
+Frame 126 (t=0.63):	total squared error = 0.0167824, marker error: RMS=0.0195299, max=0.0396123 (RELB)
+Frame 127 (t=0.635):	total squared error = 0.0166001, marker error: RMS=0.0194235, max=0.0391782 (RELB)
+Frame 128 (t=0.64):	total squared error = 0.0166815, marker error: RMS=0.0194711, max=0.0390737 (RELB)
+Frame 129 (t=0.645):	total squared error = 0.0169175, marker error: RMS=0.0196084, max=0.0385428 (RELB)
+Frame 130 (t=0.65):	total squared error = 0.0173526, marker error: RMS=0.0198589, max=0.0380237 (RELB)
+Frame 131 (t=0.655):	total squared error = 0.0179528, marker error: RMS=0.0201995, max=0.0376745 (RELB)
+Frame 132 (t=0.66):	total squared error = 0.0188574, marker error: RMS=0.0207021, max=0.0371284 (RELB)
+Frame 133 (t=0.665):	total squared error = 0.0197293, marker error: RMS=0.0211753, max=0.0391253 (RP5MT)
+Frame 134 (t=0.67):	total squared error = 0.0208738, marker error: RMS=0.0217808, max=0.0417508 (RP5MT)
+Frame 135 (t=0.675):	total squared error = 0.0222481, marker error: RMS=0.0224864, max=0.044359 (RP5MT)
+Frame 136 (t=0.68):	total squared error = 0.0238056, marker error: RMS=0.0232602, max=0.0465431 (RP5MT)
+Frame 137 (t=0.685):	total squared error = 0.0251749, marker error: RMS=0.0239198, max=0.0495072 (RP5MT)
+Frame 138 (t=0.69):	total squared error = 0.0263688, marker error: RMS=0.0244804, max=0.0519734 (RP5MT)
+Frame 139 (t=0.695):	total squared error = 0.0272643, marker error: RMS=0.0248926, max=0.0550589 (RTOE)
+Frame 140 (t=0.7):	total squared error = 0.027942, marker error: RMS=0.0252001, max=0.0580886 (RTOE)
+Frame 141 (t=0.705):	total squared error = 0.0282634, marker error: RMS=0.0253446, max=0.0598543 (RTOE)
+Frame 142 (t=0.71):	total squared error = 0.0283487, marker error: RMS=0.0253829, max=0.0609717 (RTOE)
+Frame 143 (t=0.715):	total squared error = 0.0277866, marker error: RMS=0.0251299, max=0.0605295 (RTOE)
+Frame 144 (t=0.72):	total squared error = 0.0267867, marker error: RMS=0.0246736, max=0.0591046 (RTOE)
+Frame 145 (t=0.725):	total squared error = 0.0255596, marker error: RMS=0.0241019, max=0.0563957 (RTOE)
+Frame 146 (t=0.73):	total squared error = 0.0246798, marker error: RMS=0.0236834, max=0.0531293 (RTOE)
+InverseKinematicsTool completed 132 frames in 6 second(s)
 
 Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_08\TRAIL_071.osim
 Couldn't find file 'r_pelvis.vtp'.
@@ -10569,10 +11366,10 @@ ExternalForce::Right
 Data source being set to TRAIL_071_FAST_08_grf.mot
 ExternalForce::Left
 Data source being set to TRAIL_071_FAST_08_grf.mot
-Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_08\ik\TRAIL_071_FAST_08_ik.mot (nr=103 nc=40)
+Storage: read data file =C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_FAST_08\ik\TRAIL_071_FAST_08_ik.mot (nr=132 nc=40)
 
 
 Low-pass filtering coordinates data with a cutoff frequency of 6...
 
-InverseDynamicsTool: 103 time frames in 186 millisecond(s)
+InverseDynamicsTool: 132 time frames in 192 millisecond(s)
 

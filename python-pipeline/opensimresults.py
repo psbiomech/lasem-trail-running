@@ -150,15 +150,36 @@ class OsimResultsKey():
                 # PROCESS EVENTS BASED ON TASK
                 
                 # match task and find time window for foot
+                
+                # static trial
                 if self.task.casefold() == "static":
                     print("Static trial. Nothing to be done.")
+
                 
-                elif self.task.casefold() == "run":
+                # run stride cycle on ipsilateral leg, stance on contralateral
+                if self.task.casefold() == "run_stridecycle":
+                    
+                    # assume first event is ipsi FS, last event next ipsi FS
+                    if self.events["leg_task"][f] == "run_stridecycle":
+                        e0 = 0
+                        e1 = len(self.events["labels"]) - 1
+                        t0 = self.events["time"][e0]
+                        t1 = self.events["time"][e1]
+                    else:
+                        e0 = self.events["labels"].index(foot.upper() + "FS")
+                        e1 = self.events["labels"].index(foot.upper() + "FO")
+                        t0 = self.events["time"][e0]
+                        t1 = self.events["time"][e1]                        
+                
+                
+                # run stance on both legs
+                elif self.task.casefold() == "run_stance":
                     e0 = self.events["labels"].index(foot.upper() + "FS")
                     e1 = self.events["labels"].index(foot.upper() + "FO")
                     t0 = self.events["time"][e0]
                     t1 = self.events["time"][e1]
-
+                    
+                    
                 #
                 # ###################################
                 
@@ -287,7 +308,10 @@ def export_opensim_results(meta, user, analyses):
                 condition = osimresultskey.condition
                 
                 # foot
-                for foot in ["r","l"]:
+                for f, foot in enumerate(["r","l"]):
+                    
+                    # leg task
+                    leg_task = osimresultskey.events["leg_task"][f]
                     
                     # analysis
                     for ans in analyses:
@@ -309,13 +333,13 @@ def export_opensim_results(meta, user, analyses):
                             drow = data[:, v]
 
                             # create new line of data
-                            csvrow = [subj, group, trial, task, condition, foot, ans, variable] + drow.tolist()
+                            csvrow = [subj, group, trial, task, condition, foot, leg_task, ans, variable] + drow.tolist()
                             csvdata.append(csvrow)
 
 
     # create empty dataframe
     print("\nCreating dataframe...")
-    headers = ["subj", "group", "trial", "task", "condition", "foot", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "group", "trial", "task", "condition", "foot", "leg_task", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers

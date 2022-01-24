@@ -112,7 +112,8 @@ class TRAILSettings(UserSettings):
         
         # file suffixes based on task
         self.trialprefixes = {}
-        self.trialprefixes["run"] = ["EP", "FAST"]
+        self.trialprefixes["run_stance"] = ["EP", "FAST"]
+        self.trialprefixes["run_stridecycle"] = ["EP", "FAST"]
                         
         # file name format regex pattern:
         #   (subjprefix)_(num code)_(trialprefix)_(alphanum code)

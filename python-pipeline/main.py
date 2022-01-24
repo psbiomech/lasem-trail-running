@@ -36,7 +36,7 @@ print("Done.\n")
 
 print("Building new output database... ", end="")
 import builddatabase as bd
-traildb = bd.build_database("TRAIL", user, "run")
+traildb = bd.build_database("TRAIL", user, "run_stridecycle")
 print("Done.\n")
 
 # print("Loading existing output database... ", end="")
