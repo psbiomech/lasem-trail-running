@@ -60,7 +60,7 @@ with open(pkfile,"rb") as fid:
 import pickle as pk
 
 # file path and name prefix
-fprefix = "TRAIL_071_FAST_06"
+fprefix = "TRAIL_071_FAST_01"
 fpath = "C:\\Users\\Owner\\Documents\\data\\TRAIL Test Data\\outputDatabase\\TRAIL_071\\Baseline\\" + fprefix + "\\"
 prefix = fpath + fprefix
 

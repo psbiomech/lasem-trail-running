@@ -134,7 +134,7 @@ class OsimResultsKey():
             results[ans] = {}        
             
             # split by feet
-            for f, foot in enumerate(["r","l"]):
+            for f, foot in enumerate(["r", "l"]):
                                 
                 # copy raw data
                 data0 = self.results["raw"][ans]["data"]
@@ -159,10 +159,10 @@ class OsimResultsKey():
                 # run stride cycle on ipsilateral leg, stance on contralateral
                 if self.task.casefold() == "run_stridecycle":
                     
-                    # assume first event is ipsi FS, last event next ipsi FS
+                    # time window depends on leg task
                     if self.events["leg_task"][f] == "run_stridecycle":
-                        e0 = 0
-                        e1 = len(self.events["labels"]) - 1
+                        e0 = self.events["labels"].index(foot.upper() + "FS")
+                        e1 = e0 + 4
                         t0 = self.events["time"][e0]
                         t1 = self.events["time"][e1]
                     else:

@@ -107,17 +107,21 @@ class TrialKey():
             events["leg_task"] = ["static", "static"]
 
             
-        # run full stride cycle on one leg, stance on other leg  
+        # run full stride cycle
         elif task.casefold().startswith("run_stridecycle"):
             
-            # assume stride cycle is from first foot strike on force plate to
-            # the next foot strike on the same leg (IFS ---> IFS), thus one leg
-            # will have full stride cycle, other leg will have stance only.
+            # some trials will have 2 full stride cycles, some will only have
+            # one, so in the latter case the contralateral leg will report
+            # stance only
             
-            # calculate the time window of interest (assume first FS is start
-            # of the trial time window, third FS is end of window)
+            # calculate the time window of interest (assume 7 events means a 
+            # full stride cycle is available on each leg, less then 7 events
+            # assume stance on contralateral leg)
             fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
-            fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][2]
+            if len(events["labels"]) < 7:
+                fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][2]
+            else:
+                fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][3]                        
             events["window_time0"] = events["time0"][fsidx0:fsidx1 + 1]
             events["window_labels"] = events["labels"][fsidx0:fsidx1 + 1]
             
@@ -131,19 +135,28 @@ class TrialKey():
             #   col1: right foot
             #   col2: left foot
             events["fp_sequence"] = [[0, 0]]
-            if events["window_labels"][0][0] == "R":
-                events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3], [0, 0]])
+            if len(events["labels"]) < 7:
+                if events["window_labels"][0][0] == "R":
+                    events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3], [0, 0]])
+                else:
+                    events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0], [0, 0]])
             else:
-                events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0], [0, 0]])
+                if events["window_labels"][0][0] == "R":
+                    events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3], [0, 0], [0, 0], [0, 0]])
+                else:
+                    events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0], [0, 0], [0, 0], [0, 0]])                
 
             # leg task is stride cycle on ipsilateral, stance on contralateral
-            if events["window_labels"][0][0] == "R":
-                events["leg_task"] = ["run_stridecycle", "run_stance"]
+            if len(events["labels"]) < 7:
+                if events["window_labels"][0][0] == "R":
+                    events["leg_task"] = ["run_stridecycle", "run_stance"]
+                else:
+                    events["leg_task"] = ["run_stance", "run_stridecycle"]
             else:
-                events["leg_task"] = ["run_stance", "run_stridecycle"]
+                events["leg_task"] = ["run_stridecycle", "run_stridecycle"]              
             
 
-        # run stance phase only both legs
+        # run stance phase only, both legs
         elif task.casefold().startswith("run_stance"):
                                         
             # assume first pair of stance phases (IFS ---> CFO) is the required 
