@@ -344,9 +344,10 @@ def export_opensim_results(meta, user, analyses):
 
     # write data to file with headers
     print("\nWriting to CSV text file...")
+    csvfile = user.csvfileprefix + task + ".csv"
     fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
-    csvdf.to_csv(os.path.join(fpath,user.csvfile), index = False)
+    csvdf.to_csv(os.path.join(fpath,csvfile), index = False)
     
     
     print("\n")

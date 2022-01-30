@@ -26,7 +26,10 @@ class UserSettings():
         self.infolder = []
         self.outfolder = []
         self.trialgroupfolders = []
+
+        # export data
         self.csvfolder = []
+        self.csvfileprefix = []
         
         # meta data file
         self.metadatafile = []
@@ -38,14 +41,17 @@ class UserSettings():
         # setup file folders
         self.refsetuppath = []
         self.refexternalloads = []
+        self.refreserveactuators = []
         self.refsetupscale = []
         self.refsetupik = []
         self.refsetupid = []
+        self.refsetupso = []
 
         # OpenSim analysis codes
         self.scalecode = []
         self.ikcode = []
         self.idcode = []
+        self.socode = []
         
         # file prefixes
         self.subjprefix = []
@@ -81,7 +87,7 @@ class TRAILSettings(UserSettings):
 
         # export data
         self.csvfolder = "csvfolder"
-        self.csvfile = "trail_opensim_results_all.csv"
+        self.csvfileprefix = "trail_opensim_results_all_"
         
         # meta data file
         self.metadatafile = "TRAIL.pkl"
@@ -93,14 +99,17 @@ class TRAILSettings(UserSettings):
         # setup file and folders
         self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
         self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
+        self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators.xml"
         self.refsetupscale = "LASEM_TRAIL_Setup_Scale.xml"
         self.refsetupik = "LASEM_TRAIL_Setup_IK.xml"
         self.refsetupid = "LASEM_TRAIL_Setup_ID.xml"
+        self.refsetupso = "LASEM_TRAIL_Setup_Analysis.xml"
         
         # OpenSim analysis codes
         self.scalecode = "scale"
         self.ikcode = "ik"
         self.idcode = "id"
+        self.socode = "so"
         
         # file prefixes
         self.subjprefix = "TRAIL_"

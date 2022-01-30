@@ -86,8 +86,7 @@ def opensim_pipeline(meta, user, analyses):
                         elif ans == "id":
                             run_opensim_id(osimkey, user)
                         elif ans == "so":
-                            #run_opensim_so(osimkey, user)
-                            pass
+                            run_opensim_so(osimkey, user)
                         elif ans == "rra":
                             #run_opensim_rra(osimkey, user)
                             pass
@@ -117,6 +116,7 @@ def run_opensim_scale(osimkey, user):
     print("------------------------------------------------")
     
     # create an ScaleTool from a generic setup file
+    print("Create new ScaleTool...")
     refsetuppath = user.refsetuppath
     refsetupfile = user.refsetupscale
     tool = opensim.ScaleTool(os.path.join(refsetuppath, refsetupfile))
@@ -198,7 +198,9 @@ def run_opensim_scale(osimkey, user):
         print("---> ERROR: Scale failed. Skipping Scale for %s." % trial)
     finally:
         print("------------------------------------------------\n")
-        
+    
+    # ******************************    
+    
     return None
 
 
@@ -220,6 +222,7 @@ def run_opensim_ik(osimkey, user):
     print("------------------------------------------------")
     
     # create an IK Tool from a generic setup file
+    print("Create new IKTool...")
     refsetuppath = user.refsetuppath
     refsetupfile = user.refsetupik
     tool = opensim.InverseKinematicsTool(os.path.join(refsetuppath, refsetupfile))
@@ -266,7 +269,9 @@ def run_opensim_ik(osimkey, user):
         print("---> ERROR: IK failed. Skipping IK for %s." % trial)
     finally:
         print("------------------------------------------------\n")
-        
+    
+    # ******************************
+    
     return None
 
 
@@ -288,6 +293,7 @@ def run_opensim_id(osimkey, user):
     print("------------------------------------------------")
     
     # create an ID Tool from a generic setup file
+    print("Create new IDTool...")
     refsetuppath = user.refsetuppath
     refsetupfile = user.refsetupid
     tool = opensim.InverseDynamicsTool(os.path.join(refsetuppath, refsetupfile))
@@ -357,11 +363,124 @@ def run_opensim_id(osimkey, user):
         print("---> ERROR: ID failed. Skipping ID for %s." % trial)
     finally:
         print("------------------------------------------------\n")
+
+    # ******************************
         
     return None    
     
+
+
+'''
+run_opensim_so(osimkey, user):
+    Set up and run the Tool using the API. A generic XML setup file is
+    initially loaded, and then modified using the API. The Tool is then run
+    via the API. Results are printed to text files in the remote folder.
+'''
+def run_opensim_so(osimkey, user):
+    
+    # trial folder, model and trial
+    fpath = osimkey.outpath
+    modelfile = osimkey.model
+    trial = osimkey.trial
+
+    print("Performing SO on trial: %s" % trial)
+    print("------------------------------------------------")
+    
+    # create an generic AnalyzeTool from the template setup file (set the flag
+    # aLoadModelAndInput = false as we are only configuring the setup file at 
+    # this stage)
+    print("Create new AnalyzeTool...")
+    refsetuppath = user.refsetuppath
+    refsetupfile = user.refsetupso
+    tool = opensim.AnalyzeTool(os.path.join(refsetuppath, refsetupfile), False)
+    
+    # set the model in the tool
+    print("Loading the model: %s..." % modelfile)
+    tool.setModelFilename(os.path.join(fpath, modelfile))   
+ 
+    # append reserve actuators (need to create a new ArrayStr with one element, 
+    # the file name, and then pass the ArrayStr to setForceFiles)
+    print("Appending reserve actuators...")
+    tool.setReplaceForceSet(False)
+    fsvec = opensim.ArrayStr()
+    refrefreserveactuators = user.refreserveactuators
+    fsvec.append(os.path.join(refsetuppath, refrefreserveactuators))
+    tool.setForceSetFiles(fsvec)
+        
+    # set the initial and final times (limit to between first and last event)
+    t0 = float(osimkey.events["time"][0])
+    t1 = float(osimkey.events["time"][-1])
+    print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
+    tool.setInitialTime(t0)
+    tool.setFinalTime(t1)
+
+    # set coordinates data file
+    print("Setting coordinates data file...")
+    tool.setCoordinatesFileName(os.path.join(fpath, user.ikcode, trial + "_ik.mot"))
+    tool.setLowpassCutoffFrequency(6.0)
+    
+    # set output directories and generalised forces storage file (note:
+    # InverseDynamicsTool XML parser does not seem to like full paths
+    # for the OutputGenForceFileName tag, so need to set results dir)
+    print("Setting output file name...")
+    stofilepath = os.path.join(fpath, user.socode)
+    if not os.path.isdir(stofilepath): os.makedirs(stofilepath)
+    tool.setResultsDir(stofilepath)
+    
+    # create an external loads object from template, set it up, and
+    # print to destination folder (This is not the best way to do this,
+    # but Opensim Tools are designed to read directly from XML files,
+    # so better to fully set up an external loads file, print it then
+    # load it again into the Tool, than to create an ExternalLoads
+    # object and connect it to the Model. This also ensures a copy of
+    # the external loads file is available in the trial folder in case
+    # a one-off analysis needs to be run in future.)
+    print("Creating external loads XML file...")
+    extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
+    if not os.path.isfile(extloadsfile):
+        extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.refexternalloads), True)       
+        extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
+        extloads.printToXML(extloadsfile)  
+
+    # set the external loads file name in the inverse dynamics tool
+    tool.setExternalLoadsFileName(extloadsfile)
+    
+    # create an SO analysis
+    print("Append new SO Analysis to the AnalysisSet...")
+    so = opensim.StaticOptimization()
+    so.setStartTime(t0)
+    so.setEndTime(t1)
+    
+    # add the StaticOptimization analysis to the tool AnalysisSet
+    analyses = tool.getAnalysisSet()
+    analyses.insert(0, so)
     
     
+    # ******************************
+    # RUN TOOL 
+    
+    print("Running the AnalysisTool (SO)...")
+
+    # save the settings in a setup file
+    customsetupfile = os.path.join(fpath, trial + '_Setup_SO.xml')
+    tool.printToXML(customsetupfile)
+    
+    # run the tool (need to load the setup again into a new AnalyzeTool)
+    try:
+        tool2 = opensim.AnalyzeTool(customsetupfile)
+        tool2.run()
+        print("Done.")
+    except:
+        print("---> ERROR: SO failed. Skipping SO for %s." % trial)
+    finally:
+        print("------------------------------------------------\n")
+
+    # ******************************
+        
+    return None    
+    
+
+        
 
 '''
 -----------------------------------
