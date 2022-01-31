@@ -42,6 +42,7 @@ class UserSettings():
         self.refsetuppath = []
         self.refexternalloads = []
         self.refreserveactuators = []
+        self.refrratasks = []
         self.refsetupscale = []
         self.refsetupik = []
         self.refsetupid = []
@@ -100,6 +101,7 @@ class TRAILSettings(UserSettings):
         self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
         self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
         self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators.xml"
+        self.refrratasks = "LASEM_TRAIL_RRA_Tasks.xml"
         self.refsetupscale = "LASEM_TRAIL_Setup_Scale.xml"
         self.refsetupik = "LASEM_TRAIL_Setup_IK.xml"
         self.refsetupid = "LASEM_TRAIL_Setup_ID.xml"

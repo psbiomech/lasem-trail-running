@@ -212,7 +212,7 @@ run_opensim_ik(osimkey, user):
     via the API. Results are printed to text files in the remote folder.
 '''
 def run_opensim_ik(osimkey, user):
-    
+
     # trial folder, model and trial
     fpath = osimkey.outpath
     modelfile = osimkey.model
@@ -482,7 +482,101 @@ def run_opensim_so(osimkey, user):
     return None    
     
 
+
+'''
+run_opensim_rra(osimkey, user):
+    Set up and run the Tool using the API. A generic XML setup file is
+    initially loaded, and then modified using the API. The Tool is then run
+    via the API. Results are printed to text files in the remote folder.
+'''
+def run_opensim_rra(osimkey, user):
+
+    # trial folder, model and trial
+    fpath = osimkey.outpath
+    modelfile = osimkey.model
+    trial = osimkey.trial
+    
+    print("Performing RRA on trial: %s" % trial)
+    print("------------------------------------------------")
+    
+    # create an RRA Tool from a generic setup file
+    print("Create new RRATool...")
+    refsetuppath = user.refsetuppath
+    refsetupfile = user.refsetupid
+    tool = opensim.InverseDynamicsTool(os.path.join(refsetuppath, refsetupfile))
+    
+    # load the model
+    print("Loading the model: %s..." % modelfile)
+    model = opensim.Model(os.path.join(fpath, modelfile))
+    model.initSystem()
+    
+    # set the model in the tool
+    tool.setModel(model)   
+    
+    # set the initial and final times (limit to between first and last event)
+    t0 = float(osimkey.events["time"][0])
+    t1 = float(osimkey.events["time"][-1])
+    print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
+    tool.setStartTime(t0)
+    tool.setEndTime(t1)
+    
+    # set input directory and coordinates data file
+    print("Setting coordinates data file...")
+    tool.setInputsDir(fpath)
+    tool.setCoordinatesFileName(os.path.join(fpath, user.ikcode, trial + "_ik.mot"))
+    tool.setLowpassCutoffFrequency(6.0)
+    
+    # set output directories and generalised forces storage file (note:
+    # InverseDynamicsTool XML parser does not seem to like full paths
+    # for the OutputGenForceFileName tag, so need to set results dir)
+    print("Setting output file name...")
+    stofilepath = os.path.join(fpath, user.idcode)
+    if not os.path.isdir(stofilepath): os.makedirs(stofilepath)
+    tool.setResultsDir(stofilepath)
+    tool.setOutputGenForceFileName(trial + "_id.sto")
+    
+    # create an external loads object from template, set it up, and
+    # print to destination folder (This is not the best way to do this,
+    # but Opensim Tools are designed to read directly from XML files,
+    # so better to fully set up an external loads file, print it then
+    # load it again into the Tool, than to create an ExternalLoads
+    # object and connect it to the Model. This also ensures a copy of
+    # the external loads file is available in the trial folder in case
+    # a one-off analysis needs to be run in future.)
+    print("Creating external loads XML file...")
+    extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
+    if not os.path.isfile(extloadsfile):
+        extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.refexternalloads), True)       
+        extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
+        extloads.printToXML(extloadsfile)  
+    
+    # set the external loads file name in the inverse dynamics tool
+    tool.setExternalLoadsFileName(extloadsfile)
+    
+    
+    # ******************************
+    # RUN TOOL 
+    
+    print("Running the IDTool...")
+    
+    # save the settings in a setup file
+    tool.printToXML(os.path.join(fpath, trial + '_Setup_ID.xml'))
+    
+    # run the tool
+    try:
+        tool.run()
+        print("Done.")
+    except:
+        print("---> ERROR: ID failed. Skipping ID for %s." % trial)
+    finally:
+        print("------------------------------------------------\n")
+    
+    # ******************************
         
+    return None    
+        
+
+
 
 '''
 -----------------------------------
