@@ -58,21 +58,21 @@ print("\nC3D data extract done.\n")
 # %% RUN OPENSIM PIPELINE
 
 print("Running OpenSim pipeline...\n")
-osp.opensim_pipeline(traildb, user, ["scale","ik","id"])
+osp.opensim_pipeline(traildb, user, ["scale", "ik", "id", "so"])
 print("\nOpenSim pipeline completed.\n")
 
 
 # %% LOAD AND FORMAT RESULTS
 
 print("Converting OpenSim results to Pickle...\n")
-osr.opensim_results_batch_process(traildb, ["scale","ik","id"], 101)
+osr.opensim_results_batch_process(traildb, ["scale", "ik", "id", "so"], 101)
 print("\nOpenSim results converted to Pickle.\n")
 
 
 # %% COLLATE RESULTS FOR RSTATS ANALYSIS
 
 print("Exporting OpenSim results to CSV...\n")
-osr.export_opensim_results(traildb, user, ["scale","ik","id"])
+osr.export_opensim_results(traildb, user, ["scale", "ik", "id", "so"])
 print("CSV export complete.\n")
 
 

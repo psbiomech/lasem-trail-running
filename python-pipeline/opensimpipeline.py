@@ -393,6 +393,7 @@ def run_opensim_so(osimkey, user):
     refsetuppath = user.refsetuppath
     refsetupfile = user.refsetupso
     tool = opensim.AnalyzeTool(os.path.join(refsetuppath, refsetupfile), False)
+    tool.setName(trial)
     
     # set the model in the tool
     print("Loading the model: %s..." % modelfile)
@@ -448,6 +449,7 @@ def run_opensim_so(osimkey, user):
     # create an SO analysis
     print("Append new SO Analysis to the AnalysisSet...")
     so = opensim.StaticOptimization()
+    so.setName("so")
     so.setStartTime(t0)
     so.setEndTime(t1)
     

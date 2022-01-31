@@ -97,7 +97,7 @@ with open(os.path.join(fpath, fname),"rb") as fid:
     traildb = pk.load(fid)
 
 # run OpenSim pipeline
-analyses = ["scale","ik","id"]
+analyses = ["scale", "ik", "id"]
 osp.opensim_pipeline(traildb, user, analyses)
 
 
@@ -177,15 +177,15 @@ with open(pkfile,"rb") as fid:
 osp.run_opensim_id(osimkey1, user)
 
 
-# %% GET RESULTS
+# %% CREATE OSIMRESULTSKEY FROM OSIMKEY AND OPENSIM RESULTS
 
 
 import opensimresults as osr
 import pickle as pk
 
 # file path and name prefix
-fprefix = "TRAIL_071_FAST_06"
-#fprefix = "TRAIL_071_EP_01"
+#fprefix = "TRAIL_071_FAST_02"
+fprefix = "TRAIL_071_EP_01"
 fpath = "C:\\Users\\Owner\\Documents\\data\\TRAIL Test Data\\outputDatabase\\TRAIL_071\\Baseline\\" + fprefix + "\\"
 prefix = fpath + fprefix
 
@@ -195,7 +195,7 @@ with open(pkfile,"rb") as fid:
     osimkey1 = pk.load(fid)
 
 # get results of dynamic trial using OsimKey
-analyses = ["scale","ik","id"]
+analyses = ["scale", "ik", "id", "so"]
 osimresult1 = osr.OsimResultsKey(osimkey1, analyses, 101)
 
 
@@ -207,6 +207,43 @@ import opensimresults as osr
 
 test0  = np.array([[1, 2, 3, 4, 5],[2, 4, 6, 8, 10]]).transpose()
 test1 = osr.resample1d(test0, 11)
+
+
+# %% OSIMRESULTSKEY BATCH PROCESS TEST
+
+import pickle as pk
+import opensimresults as osr
+import usersettings as uset
+
+# load user settings
+user = uset.TRAILSettings()
+
+# metadata
+fpath = "C:\\Users\\Owner\\Documents\\data\\TRAIL Test Data\\outputDatabase\\"
+fname = "TRAIL.pkl"
+pkfile = fpath + fname
+with open(pkfile,"rb") as fid: 
+    traildb = pk.load(fid)
+
+# batch process
+analyses = ["so"]
+osr.opensim_results_batch_process(traildb, analyses, 101)
+
+
+# %% LOAD AN OSIMRESULTSKEY
+
+import pickle as pk
+
+# file path and name prefix
+fprefix = "TRAIL_071_EP_01"
+fpath = "C:\\Users\\Owner\\Documents\\data\\TRAIL Test Data\\outputDatabase\\TRAIL_071\\Baseline\\" + fprefix + "\\"
+prefix = fpath + fprefix
+
+# OsimResultsKey
+pkfile = prefix + "_opensim_results.pkl"
+with open(pkfile,"rb") as fid: 
+    osimkey1 = pk.load(fid)
+
 
 
 # %% COLLATE AND EXPORT TEST
@@ -227,5 +264,5 @@ with open(pkfile,"rb") as fid:
     traildb = pk.load(fid)
 
 # collate and export
-analyses = ["ik","id"]
+analyses = ["ik", "id"]
 csvdata = osr.export_opensim_results(traildb, user, analyses)
