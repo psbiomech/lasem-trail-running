@@ -88,7 +88,7 @@ def opensim_pipeline(meta, user, analyses):
                         elif ans == "so":
                             run_opensim_so(osimkey, user)
                         elif ans == "rra":
-                            #run_opensim_rra(osimkey, user)
+                            run_opensim_rra(osimkey, user)
                             pass
                         elif ans == "cmc":
                             #run_opensim_cmc(osimkey, user)
@@ -343,7 +343,7 @@ def run_opensim_id(osimkey, user):
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
 
-    # set the external loads file name in the inverse dynamics tool
+    # set the external loads file name
     tool.setExternalLoadsFileName(extloadsfile)
     
     
@@ -398,16 +398,7 @@ def run_opensim_so(osimkey, user):
     # set the model in the tool
     print("Loading the model: %s..." % modelfile)
     tool.setModelFilename(os.path.join(fpath, modelfile))   
- 
-    # append reserve actuators (need to create a new ArrayStr with one element, 
-    # the file name, and then pass the ArrayStr to setForceFiles)
-    print("Appending reserve actuators...")
-    tool.setReplaceForceSet(False)
-    fsvec = opensim.ArrayStr()
-    refrefreserveactuators = user.refreserveactuators
-    fsvec.append(os.path.join(refsetuppath, refrefreserveactuators))
-    tool.setForceSetFiles(fsvec)
-        
+  
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0])
     t1 = float(osimkey.events["time"][-1])
@@ -420,9 +411,7 @@ def run_opensim_so(osimkey, user):
     tool.setCoordinatesFileName(os.path.join(fpath, user.ikcode, trial + "_ik.mot"))
     tool.setLowpassCutoffFrequency(6.0)
     
-    # set output directories and generalised forces storage file (note:
-    # InverseDynamicsTool XML parser does not seem to like full paths
-    # for the OutputGenForceFileName tag, so need to set results dir)
+    # set output directory
     print("Setting output file name...")
     stofilepath = os.path.join(fpath, user.socode)
     if not os.path.isdir(stofilepath): os.makedirs(stofilepath)
@@ -443,7 +432,7 @@ def run_opensim_so(osimkey, user):
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
 
-    # set the external loads file name in the inverse dynamics tool
+    # set the external loads file name
     tool.setExternalLoadsFileName(extloadsfile)
     
     # create an SO analysis
@@ -456,6 +445,38 @@ def run_opensim_so(osimkey, user):
     # add the StaticOptimization analysis to the tool AnalysisSet
     analyses = tool.getAnalysisSet()
     analyses.insert(0, so)
+
+
+    # ******************************
+    # PREPARE RESERVE ACTUATORS
+    # (set the pelvis reserves to act at pelvis COM)
+        
+    # get the pelvis COM location from the model
+    model = opensim.Model(os.path.join(fpath, modelfile))
+    pelvis = opensim.Body.safeDownCast(model.findComponent("pelvis"))
+    pelviscom = pelvis.getMassCenter() 
+    
+    # load reference actuator forceset, get the pelvis actuators and set force
+    # application point to pelvis COM
+    refrefreserveactuators = user.refreserveactuators
+    residforceset = opensim.ForceSet(os.path.join(refsetuppath, refrefreserveactuators))
+    for x in ["FX","FY","FZ"]:
+        residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
+        residforce.set_point(pelviscom)
+
+    # write updated actuator set to file    
+    forcesetfile = trial + "_Reserve_Actuators.xml"
+    residforceset.printToXML(os.path.join(fpath, forcesetfile))
+      
+    # append reserve actuators
+    # (note: need to create a new ArrayStr with one element, add the file name,
+    # and then pass the ArrayStr to setForceSetFiles; however, the tool does
+    # not like whitespace in the <force_set_files> XML property)
+    print("Appending reserve actuators...")
+    fsvec = opensim.ArrayStr()    
+    fsvec.append(forcesetfile)
+    tool.setForceSetFiles(fsvec)
+    tool.setReplaceForceSet(False)    
     
     
     # ******************************
@@ -500,40 +521,25 @@ def run_opensim_rra(osimkey, user):
     print("------------------------------------------------")
     
     # create an RRA Tool from a generic setup file
+    # (note: set loadModel=false for manual load later)
     print("Create new RRATool...")
     refsetuppath = user.refsetuppath
-    refsetupfile = user.refsetupid
-    tool = opensim.InverseDynamicsTool(os.path.join(refsetuppath, refsetupfile))
-    
-    # load the model
-    print("Loading the model: %s..." % modelfile)
-    model = opensim.Model(os.path.join(fpath, modelfile))
-    model.initSystem()
-    
-    # set the model in the tool
-    tool.setModel(model)   
+    refsetupfile = user.refsetuprra
+    tool = opensim.RRATool(os.path.join(refsetuppath, refsetupfile), False)      
     
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0])
     t1 = float(osimkey.events["time"][-1])
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
-    tool.setStartTime(t0)
-    tool.setEndTime(t1)
-    
-    # set input directory and coordinates data file
-    print("Setting coordinates data file...")
-    tool.setInputsDir(fpath)
-    tool.setCoordinatesFileName(os.path.join(fpath, user.ikcode, trial + "_ik.mot"))
-    tool.setLowpassCutoffFrequency(6.0)
-    
-    # set output directories and generalised forces storage file (note:
-    # InverseDynamicsTool XML parser does not seem to like full paths
-    # for the OutputGenForceFileName tag, so need to set results dir)
-    print("Setting output file name...")
-    stofilepath = os.path.join(fpath, user.idcode)
-    if not os.path.isdir(stofilepath): os.makedirs(stofilepath)
-    tool.setResultsDir(stofilepath)
-    tool.setOutputGenForceFileName(trial + "_id.sto")
+    tool.setInitialTime(t0)
+    tool.setFinalTime(t1)
+
+    # set flag to adjust model COM and set body to torso
+    tool.setAdjustCOMToReduceResiduals(True)
+    tool.setAdjustedCOMBody("torso")
+
+    # set desired kinematics file name (original IK results)
+    tool.setDesiredKinematicsFileName(os.path.join(fpath, user.ikcode, trial + "_ik.mot"))
     
     # create an external loads object from template, set it up, and
     # print to destination folder (This is not the best way to do this,
@@ -550,25 +556,109 @@ def run_opensim_rra(osimkey, user):
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
     
-    # set the external loads file name in the inverse dynamics tool
+    # set the external loads file name
     tool.setExternalLoadsFileName(extloadsfile)
     
+    # set output directory
+    print("Setting output folder name...")
+    stofilepath = os.path.join(fpath, user.rracode)
+    if not os.path.isdir(stofilepath): os.makedirs(stofilepath)
+    tool.setResultsDir(stofilepath)
+
+
+    # ******************************
+    # PREPARE RRA ACTUATORS
+    # (set the pelvis reserves to act at pelvis COM)
+    
+    # get the pelvis COM location from the model
+    model = opensim.Model(os.path.join(fpath, modelfile))
+    pelvis = opensim.Body.safeDownCast(model.findComponent("pelvis"))
+    pelviscom = pelvis.getMassCenter()
+    
+    # load reference actuator forceset, get the pelvis actuators and set force
+    # application point to pelvis COM
+    refforcesetfile = user.refrraactuators
+    residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
+    for x in ["FX","FY","FZ"]:
+        residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
+        residforce.set_point(pelviscom)
+
+    # write actuator set to file
+    forcesetfile = trial + "_RRA_Actuators.xml"
+    residforceset.printToXML(os.path.join(fpath, forcesetfile))
+    
+    # replace reserve actuators
+    # (note: need to create a new ArrayStr with one element, add the file name,
+    # and then pass the ArrayStr to setForceSetFiles; however, the tool does
+    # not like whitespace in the <force_set_files> XML property)
+    fsvec = opensim.ArrayStr();
+    fsvec.append(forcesetfile)
+    tool.setForceSetFiles(fsvec)
+    tool.setReplaceForceSet(True)
+    
+
+    # ******************************
+    # PREPARE RRA TASKS
+ 
+    # load RRA tasks set
+    rratasksfile = user.refrratasks
+    rrataskset = opensim.CMC_TaskSet(os.path.join(refsetuppath, rratasksfile))
+    
+    # updates here...
+    # e.g. controller weights and gains
+    
+    # print tasks to trial folder
+    rrataskset.printToXML(os.path.join(fpath, trial + "_RRA_Tasks.xml"))
+    
+    # set RRA tasks file in tool
+    tool.setTaskSetFileName(os.path.join(fpath, trial + "_RRA_Tasks.xml"))
+       
     
     # ******************************
-    # RUN TOOL 
+    # RUN TOOL
     
-    print("Running the IDTool...")
+    print("Running the RRATool... (%d iterations)" %  user.rraiter)
     
-    # save the settings in a setup file
-    tool.printToXML(os.path.join(fpath, trial + '_Setup_ID.xml'))
-    
-    # run the tool
     try:
-        tool.run()
-        print("Done.")
+
+        # run the tool require number of iterations
+        rraadjustedmodel = []
+        for i in range(user.rraiter):
+            
+            print("---> Iteration: %d" % (i + 1))
+            
+            # set tool name based on current iteration
+            rraiter = "RRA_" + str(i + 1)
+            rraname = trial + "_" + rraiter
+            tool.setName(rraname)
+            
+            # get the model, ensure model MTP joints are locked (only needs to
+            # be done on the first iteration
+            if i==0:
+                rramodelfile = os.path.join(fpath, modelfile)
+                #lockMTPJoints(rramodelfile)
+            else:
+                rramodelfile = rraadjustedmodel
+                
+            # set model file name
+            tool.setModelFilename(rramodelfile)
+            
+            # set new adjusted model file name
+            rraadjustedmodel = os.path.join(fpath, rraname + "_Model.xml")
+            tool.setOutputModelFileName(rraadjustedmodel)
+            
+            # save the current settings in a setup file
+            rrasetupfile = os.path.join(fpath, trial + "_Setup_" + rraiter + ".xml")
+            tool.printToXML(rrasetupfile)
+            
+            # load the current setup file, run the current RRA tool
+            rratool2 = opensim.RRATool(rrasetupfile);
+            rratool2.run();            
+        
     except:
-        print("---> ERROR: ID failed. Skipping ID for %s." % trial)
+        print("---> ERROR: RRA failed. Skipping RRA for %s." % trial)
     finally:
+        print("Done.")
         print("------------------------------------------------\n")
     
     # ******************************

@@ -47,12 +47,14 @@ class UserSettings():
         self.refsetupik = []
         self.refsetupid = []
         self.refsetupso = []
+        self.refsetuprra = []
 
         # OpenSim analysis codes
         self.scalecode = []
         self.ikcode = []
         self.idcode = []
         self.socode = []
+        self.rracode = []
         
         # file prefixes
         self.subjprefix = []
@@ -69,7 +71,10 @@ class UserSettings():
         self.fnpat = []      
 
         # output samples
-        self.samples = []        
+        self.samples = [] 
+        
+        # RRA iterations
+        self.rraiter = 2        
     
     
         
@@ -81,7 +86,7 @@ class TRAILSettings(UserSettings):
     def __init__(self):
         
         # data folders
-        self.rootpath = r"C:\Users\Owner\Documents\data\TRAIL Test Data"
+        self.rootpath = r"C:\Users\Owner\Documents\data\TRAIL_Test_Data"
         self.infolder = r"inputDatabase\Events"
         self.outfolder = "outputDatabase"
         self.trialgroupfolders = ["Baseline"]
@@ -101,17 +106,20 @@ class TRAILSettings(UserSettings):
         self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
         self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
         self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators.xml"
+        self.refrraactuators = "LASEM_TRAIL_RRA_Actuators.xml"
         self.refrratasks = "LASEM_TRAIL_RRA_Tasks.xml"
         self.refsetupscale = "LASEM_TRAIL_Setup_Scale.xml"
         self.refsetupik = "LASEM_TRAIL_Setup_IK.xml"
         self.refsetupid = "LASEM_TRAIL_Setup_ID.xml"
         self.refsetupso = "LASEM_TRAIL_Setup_Analysis.xml"
+        self.refsetuprra = "LASEM_TRAIL_Setup_RRA.xml"
         
         # OpenSim analysis codes
         self.scalecode = "scale"
         self.ikcode = "ik"
         self.idcode = "id"
         self.socode = "so"
+        self.rracode = "rra"
         
         # file prefixes
         self.subjprefix = "TRAIL_"
@@ -132,3 +140,6 @@ class TRAILSettings(UserSettings):
         
         # output samples
         self.samples = 101
+        
+        # RRA iterations
+        self.rraiter = 2
