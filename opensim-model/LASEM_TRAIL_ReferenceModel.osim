@@ -13659,7 +13659,7 @@
 						<!--All properties of this object have their default values.-->
 					</TendonForceLengthCurve>
 				</Millard2012EquilibriumMuscle>
-				<CoordinateActuator name="lumbar_ext">
+				<CoordinateActuator name="lumbar_extension">
 					<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
 					<min_control>-Inf</min_control>
 					<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
@@ -13669,7 +13669,7 @@
 					<!--The maximum generalized force produced by this actuator.-->
 					<optimal_force>10</optimal_force>
 				</CoordinateActuator>
-				<CoordinateActuator name="lumbar_bend">
+				<CoordinateActuator name="lumbar_bending">
 					<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
 					<min_control>-Inf</min_control>
 					<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
@@ -13679,7 +13679,7 @@
 					<!--The maximum generalized force produced by this actuator.-->
 					<optimal_force>10</optimal_force>
 				</CoordinateActuator>
-				<CoordinateActuator name="lumbar_rot">
+				<CoordinateActuator name="lumbar_rotation">
 					<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
 					<min_control>-Inf</min_control>
 					<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
@@ -13689,7 +13689,7 @@
 					<!--The maximum generalized force produced by this actuator.-->
 					<optimal_force>10</optimal_force>
 				</CoordinateActuator>
-				<CoordinateActuator name="shoulder_flex_r">
+				<CoordinateActuator name="arm_flex_r">
 					<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
 					<min_control>-Inf</min_control>
 					<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
@@ -13699,7 +13699,7 @@
 					<!--The maximum generalized force produced by this actuator.-->
 					<optimal_force>10</optimal_force>
 				</CoordinateActuator>
-				<CoordinateActuator name="shoulder_add_r">
+				<CoordinateActuator name="arm_add_r">
 					<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
 					<min_control>-Inf</min_control>
 					<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
@@ -13709,7 +13709,7 @@
 					<!--The maximum generalized force produced by this actuator.-->
 					<optimal_force>10</optimal_force>
 				</CoordinateActuator>
-				<CoordinateActuator name="shoulder_rot_r">
+				<CoordinateActuator name="arm_rot_r">
 					<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
 					<min_control>-Inf</min_control>
 					<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
@@ -13759,7 +13759,7 @@
 					<!--The maximum generalized force produced by this actuator.-->
 					<optimal_force>10</optimal_force>
 				</CoordinateActuator>
-				<CoordinateActuator name="shoulder_flex_l">
+				<CoordinateActuator name="arm_flex_l">
 					<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
 					<min_control>-Inf</min_control>
 					<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
@@ -13769,7 +13769,7 @@
 					<!--The maximum generalized force produced by this actuator.-->
 					<optimal_force>10</optimal_force>
 				</CoordinateActuator>
-				<CoordinateActuator name="shoulder_add_l">
+				<CoordinateActuator name="arm_add_l">
 					<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
 					<min_control>-Inf</min_control>
 					<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->
@@ -13779,7 +13779,7 @@
 					<!--The maximum generalized force produced by this actuator.-->
 					<optimal_force>10</optimal_force>
 				</CoordinateActuator>
-				<CoordinateActuator name="shoulder_rot_l">
+				<CoordinateActuator name="arm_rot_l">
 					<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
 					<min_control>-Inf</min_control>
 					<!--Maximum allowed value for control signal. Used primarily when solving for control values.-->

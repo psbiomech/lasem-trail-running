@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <OpenSimDocument Version="40000">
-	<CMC_TaskSet name="Rajagopal_RRA_Tasks">
+	<CMC_TaskSet name="Rajagopal_CMC_Tasks">
 		<defaults>
 			<CMC_Joint name="default">
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->

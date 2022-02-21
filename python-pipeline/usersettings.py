@@ -21,60 +21,7 @@ UserSettings:
 class UserSettings():
     def __init__(self):
         
-        # data folders
-        self.rootpath = []
-        self.infolder = []
-        self.outfolder = []
-        self.trialgroupfolders = []
-
-        # export data
-        self.csvfolder = []
-        self.csvfileprefix = []
-        
-        # meta data file
-        self.metadatafile = []
-        
-        # reference model
-        self.refmodelpath = []
-        self.refmodelfile = []
-
-        # setup file folders
-        self.refsetuppath = []
-        self.refexternalloads = []
-        self.refreserveactuators = []
-        self.refrratasks = []
-        self.refsetupscale = []
-        self.refsetupik = []
-        self.refsetupid = []
-        self.refsetupso = []
-        self.refsetuprra = []
-
-        # OpenSim analysis codes
-        self.scalecode = []
-        self.ikcode = []
-        self.idcode = []
-        self.socode = []
-        self.rracode = []
-        
-        # file prefixes
-        self.subjprefix = []
-
-        # static trial info
-        self.staticprefix = []
-        self.staticused = []
-        self.staticfpchannel = []        
-        
-        # file suffixes based on task
-        self.trialprefixes = {}
-        
-        # file name format regex pattern
-        self.fnpat = []      
-
-        # output samples
-        self.samples = [] 
-        
-        # RRA iterations
-        self.rraiter = 2        
+        self.isempty = True    
     
     
         
@@ -85,8 +32,15 @@ TRAILSettings:
 class TRAILSettings(UserSettings):
     def __init__(self):
         
+        self.isempty = False
+        
+        
+        
+        # ******************************
+        # GENERAL SETTINGS
+        
         # data folders
-        self.rootpath = r"C:\Users\Owner\Documents\data\TRAIL_Test_Data"
+        self.rootpath = r"C:\Users\Owner\Documents\data\TRAIL Test Data"
         self.infolder = r"inputDatabase\Events"
         self.outfolder = "outputDatabase"
         self.trialgroupfolders = ["Baseline"]
@@ -96,30 +50,7 @@ class TRAILSettings(UserSettings):
         self.csvfileprefix = "trail_opensim_results_all_"
         
         # meta data file
-        self.metadatafile = "TRAIL.pkl"
-        
-        # reference model
-        self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model"
-        self.refmodelfile = "LASEM_TRAIL_ReferenceModel.osim"
-
-        # setup file and folders
-        self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
-        self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
-        self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators.xml"
-        self.refrraactuators = "LASEM_TRAIL_RRA_Actuators.xml"
-        self.refrratasks = "LASEM_TRAIL_RRA_Tasks.xml"
-        self.refsetupscale = "LASEM_TRAIL_Setup_Scale.xml"
-        self.refsetupik = "LASEM_TRAIL_Setup_IK.xml"
-        self.refsetupid = "LASEM_TRAIL_Setup_ID.xml"
-        self.refsetupso = "LASEM_TRAIL_Setup_Analysis.xml"
-        self.refsetuprra = "LASEM_TRAIL_Setup_RRA.xml"
-        
-        # OpenSim analysis codes
-        self.scalecode = "scale"
-        self.ikcode = "ik"
-        self.idcode = "id"
-        self.socode = "so"
-        self.rracode = "rra"
+        self.metadatafile = "TRAIL.pkl"        
         
         # file prefixes
         self.subjprefix = "TRAIL_"
@@ -140,6 +71,45 @@ class TRAILSettings(UserSettings):
         
         # output samples
         self.samples = 101
+       
         
-        # RRA iterations
+       
+        # ******************************
+        # OPENSIM PARAMETERS
+        
+        # OpenSim reference model
+        self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model"
+        self.refmodelfile = "LASEM_TRAIL_ReferenceModel.osim"
+
+        # OpenSim setup files and folders
+        self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
+        self.refsetupscale = "LASEM_TRAIL_Setup_Scale.xml"
+        self.refsetupik = "LASEM_TRAIL_Setup_IK.xml"
+        self.refsetupid = "LASEM_TRAIL_Setup_ID.xml"
+        self.refsetupso = "LASEM_TRAIL_Setup_Analysis.xml"
+        self.refsetuprra = "LASEM_TRAIL_Setup_RRA.xml"
+        
+        # OpenSim additional files
+        self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
+        self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators.xml"
+        self.refrraactuators = "LASEM_TRAIL_RRA_Actuators.xml"
+        self.refrratasks = "LASEM_TRAIL_RRA_Tasks.xml"
+        self.refcmcactuators = "LASEM_TRAIL_CMC_Actuators.xml"
+        self.refcmctasks = "LASEM_TRAIL_CMC_Tasks.xml"
+        self.refcmccontrolconstraints = "LASEM_TRAIL_CMC_ControlConstraints.xml"
+        
+        # OpenSim analysis codes
+        self.scalecode = "scale"
+        self.ikcode = "ik"
+        self.idcode = "id"
+        self.socode = "so"
+        self.rracode = "rra"
+        self.cmccode = "cmc"
+        
+        # OpenSim RRA parameters
         self.rraiter = 2
+        
+        # OpenSim CMC parameters
+        self.use_rra_model = True
+        self.use_fast_target = True
+        

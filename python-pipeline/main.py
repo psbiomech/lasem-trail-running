@@ -58,7 +58,8 @@ print("\nC3D data extract done.\n")
 # %% RUN OPENSIM PIPELINE
 
 print("Running OpenSim pipeline...\n")
-osp.opensim_pipeline(traildb, user, ["scale", "ik", "id", "so"])
+#osp.opensim_pipeline(traildb, user, ["scale", "ik", "id", "so"])
+osp.opensim_pipeline(traildb, user, ["rra"])
 print("\nOpenSim pipeline completed.\n")
 
 
