@@ -908,21 +908,16 @@ def write_ground_forces_mot_file(osimkey):
     # output dataframe info
     ns = len(osimkey.forces["time"])
     nc = 19    
-    t0 = osimkey.forces["time"][0]
-    tf = osimkey.forces["time"][-1]
 
     # write headers
     fname = osimkey.trial + "_grf.mot"
     fpath = osimkey.outpath
     with open(os.path.join(fpath,fname),"w") as f:
         f.write("%s\n" % fname)
+        f.write("version=1\n")
         f.write("nRows=%d\n" % ns)
         f.write("nColumns=%s\n" % nc)
-        f.write("\n")
-        f.write("name %s\n" % fname)
-        f.write("datacolumns %d\n" % nc)
-        f.write("datarows %d\n" % ns)
-        f.write("range %f %f\n" % (t0, tf))
+        f.write("inDegrees=yes\n")
         f.write("endheader\n")
 
     # build data array
@@ -936,11 +931,11 @@ def write_ground_forces_mot_file(osimkey):
     datamat[:,16:19] = osimkey.forces["data"]["left"]["T"]    
         
     # convert to dataframe
-    headers = ["time", "grf_right_vx", "grf_right_vy", "grf_right_vz", "grf_right_px", "grf_right_py", "grf_right_pz", "grf_left_vx", "grf_left_vy", "grf_left_vz", "grf_left_px", "grf_left_py", "grf_left_pz", "grf_right_tx", "grf_right_ty", "grf_right_tz", "grf_left_tx", "grf_left_ty", "grf_left_tz"]
+    headers = ["time", "ground_force_vx", "ground_force_vy", "ground_force_vz", "ground_force_px", "ground_force_py", "ground_force_pz", "1_ground_force_vx", "1_ground_force_vy", "1_ground_force_vz", "1_ground_force_px", "1_ground_force_py", "1_ground_force_pz", "ground_torque_x", "ground_torque_y", "ground_torque_z", "1_ground_torque_x", "1_ground_torque_y", "1_ground_torque_z"]
     data = pd.DataFrame(datamat, columns=headers)
         
     # write table
-    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=True, index=False)
+    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=True, index=False, float_format="%20.10f")
     
     return data
 
