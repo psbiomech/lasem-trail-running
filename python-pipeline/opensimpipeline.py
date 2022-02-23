@@ -457,43 +457,43 @@ def run_opensim_so(osimkey, user):
     # (set the pelvis reserves to act at pelvis COM, or use default application
     # at the ground-pelvis origin located at pelvis geometric centre)
         
-    # # get the pelvis COM location from the model
-    # model = opensim.Model(os.path.join(fpath, modelfile))
-    # pelvis = opensim.Body.safeDownCast(model.findComponent("pelvis"))
-    # pelviscom = pelvis.getMassCenter() 
+    # get the pelvis COM location from the model
+    model = opensim.Model(os.path.join(fpath, modelfile))
+    pelvis = opensim.Body.safeDownCast(model.findComponent("pelvis"))
+    pelviscom = pelvis.getMassCenter() 
     
-    # # load reference actuator forceset, get the pelvis actuators and set force
-    # # application point to pelvis COM
-    # refrefreserveactuators = user.refreserveactuators
-    # residforceset = opensim.ForceSet(os.path.join(refsetuppath, refrefreserveactuators))
-    # for x in ["FX","FY","FZ"]:
-    #     residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
-    #     residforce.set_point(pelviscom)
+    # load reference actuator forceset, get the pelvis actuators and set force
+    # application point to pelvis COM
+    refrefreserveactuators = user.refreserveactuators
+    residforceset = opensim.ForceSet(os.path.join(refsetuppath, refrefreserveactuators))
+    for x in ["FX","FY","FZ"]:
+        residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
+        residforce.set_point(pelviscom)
 
-    # # write updated actuator set to file    
-    # forcesetfile = trial + "_Reserve_Actuators.xml"
-    # residforceset.printToXML(os.path.join(fpath, forcesetfile))
-      
-    # # append reserve actuators
-    # # (note: need to create a new ArrayStr with one element, add the file name,
-    # # and then pass the ArrayStr to setForceSetFiles; however, the tool does
-    # # not like whitespace in the <force_set_files> XML property)
-    # print("Appending reserve actuators...")
-    # fsvec = opensim.ArrayStr()    
-    # fsvec.append(forcesetfile)
-    # tool.setForceSetFiles(fsvec)
-    # tool.setReplaceForceSet(False)   
-
-    # append default reference actuators, with pelvis residuals acting at 
-    # ground-pelvis origin located at pelvis geometric centre
-    refforcesetfile = user.refreserveactuators
-    residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
+    # write updated actuator set to file    
     forcesetfile = trial + "_Reserve_Actuators.xml"
     residforceset.printToXML(os.path.join(fpath, forcesetfile))
-    fsvec = opensim.ArrayStr()
+      
+    # append reserve actuators
+    # (note: need to create a new ArrayStr with one element, add the file name,
+    # and then pass the ArrayStr to setForceSetFiles; however, the tool does
+    # not like whitespace in the <force_set_files> XML property)
+    print("Appending reserve actuators...")
+    fsvec = opensim.ArrayStr()    
     fsvec.append(forcesetfile)
     tool.setForceSetFiles(fsvec)
-    tool.setReplaceForceSet(False)     
+    tool.setReplaceForceSet(False)   
+
+    # # append default reference actuators, with pelvis residuals acting at 
+    # # ground-pelvis origin located at pelvis geometric centre
+    # refforcesetfile = user.refreserveactuators
+    # residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
+    # forcesetfile = trial + "_Reserve_Actuators.xml"
+    # residforceset.printToXML(os.path.join(fpath, forcesetfile))
+    # fsvec = opensim.ArrayStr()
+    # fsvec.append(forcesetfile)
+    # tool.setForceSetFiles(fsvec)
+    # tool.setReplaceForceSet(False)     
 
 
     
@@ -590,42 +590,42 @@ def run_opensim_rra(osimkey, user):
     # (set the pelvis reserves to act at pelvis COM, or use default application
     # at the ground-pelvis origin located at pelvis geometric centre)
     
-    # # get the pelvis COM location from the model
-    # model = opensim.Model(os.path.join(fpath, modelfile))
-    # pelvis = opensim.Body.safeDownCast(model.findComponent("pelvis"))
-    # pelviscom = pelvis.getMassCenter()
+    # get the pelvis COM location from the model
+    model = opensim.Model(os.path.join(fpath, modelfile))
+    pelvis = opensim.Body.safeDownCast(model.findComponent("pelvis"))
+    pelviscom = pelvis.getMassCenter()
     
-    # # load reference actuator forceset, get the pelvis actuators and set force
-    # # application point to pelvis COM
-    # refforcesetfile = user.refrraactuators
-    # residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
-    # for x in ["FX","FY","FZ"]:
-    #     residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
-    #     residforce.set_point(pelviscom)
-
-    # # write actuator set to file
-    # forcesetfile = trial + "_RRA_Actuators.xml"
-    # residforceset.printToXML(os.path.join(fpath, forcesetfile))
-    
-    # # replace reserve actuators
-    # # (note: need to create a new ArrayStr with one element, add the file name,
-    # # and then pass the ArrayStr to setForceSetFiles; however, the tool does
-    # # not like whitespace in the <force_set_files> XML property)
-    # fsvec = opensim.ArrayStr();
-    # fsvec.append(forcesetfile)
-    # tool.setForceSetFiles(fsvec)
-    # tool.setReplaceForceSet(True)
-    
-    # replace actuators with default reference actuators, with pelvis residuals
-    # acting at ground-pelvis origin located at pelvis geometric centre
+    # load reference actuator forceset, get the pelvis actuators and set force
+    # application point to pelvis COM
     refforcesetfile = user.refrraactuators
     residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
+    for x in ["FX","FY","FZ"]:
+        residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
+        residforce.set_point(pelviscom)
+
+    # write actuator set to file
     forcesetfile = trial + "_RRA_Actuators.xml"
-    residforceset.printToXML(os.path.join(fpath, forcesetfile))    
-    fsvec = opensim.ArrayStr()
+    residforceset.printToXML(os.path.join(fpath, forcesetfile))
+    
+    # replace reserve actuators
+    # (note: need to create a new ArrayStr with one element, add the file name,
+    # and then pass the ArrayStr to setForceSetFiles; however, the tool does
+    # not like whitespace in the <force_set_files> XML property)
+    fsvec = opensim.ArrayStr();
     fsvec.append(forcesetfile)
     tool.setForceSetFiles(fsvec)
-    tool.setReplaceForceSet(True)    
+    tool.setReplaceForceSet(True)
+    
+    # # replace actuators with default reference actuators, with pelvis residuals
+    # # acting at ground-pelvis origin located at pelvis geometric centre
+    # refforcesetfile = user.refrraactuators
+    # residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
+    # forcesetfile = trial + "_RRA_Actuators.xml"
+    # residforceset.printToXML(os.path.join(fpath, forcesetfile))    
+    # fsvec = opensim.ArrayStr()
+    # fsvec.append(forcesetfile)
+    # tool.setForceSetFiles(fsvec)
+    # tool.setReplaceForceSet(True)    
     
     
 
@@ -671,7 +671,7 @@ def run_opensim_rra(osimkey, user):
                 rramodelfile = os.path.join(fpath, modelfile)
                 #lockMTPJoints(rramodelfile)
             else:
-                rramodelfile = rraadjustedmodel
+                rramodelfile = rraadjustedmodel 
                 
             # set model file name
             tool.setModelFilename(rramodelfile)
@@ -721,7 +721,7 @@ def run_opensim_cmc(osimkey, user):
     # (note: set loadModel=false for manual load later)
     print("Create new CMCTool...")
     refsetuppath = user.refsetuppath
-    refsetupfile = user.refsetuprra
+    refsetupfile = user.refsetupcmc
     tool = opensim.CMCTool(os.path.join(refsetuppath, refsetupfile), False)      
     
     # set the initial and final times (limit to between first and last event)
@@ -755,6 +755,8 @@ def run_opensim_cmc(osimkey, user):
     if not os.path.isdir(stofilepath): os.makedirs(stofilepath)
     tool.setResultsDir(stofilepath)
 
+    # use fast target (should normally be set to true)
+    tool.setUseFastTarget(user.use_fast_target)
 
 
     # ******************************
@@ -762,42 +764,47 @@ def run_opensim_cmc(osimkey, user):
     # (set the pelvis reserves to act at pelvis COM, or use default application
     # at the ground-pelvis origin located at pelvis geometric centre)
     
-    # # get the pelvis COM location from the model
-    # model = opensim.Model(os.path.join(fpath, modelfile))
-    # pelvis = opensim.Body.safeDownCast(model.findComponent("pelvis"))
-    # pelviscom = pelvis.getMassCenter()
+    # get the pelvis COM location from the desired model
+    # (the pelvis COM should be the same for both models anyway)
+    if user.use_rra_model:
+        rramodelfile = trial + "_RRA_" + str(user.rraiter) + "_AdjustedModel.osim"
+    else:
+        rramodelfile = modelfile   
+    model = opensim.Model(os.path.join(fpath, rramodelfile))
+    pelvis = opensim.Body.safeDownCast(model.findComponent("pelvis"))
+    pelviscom = pelvis.getMassCenter()
     
-    # # load reference actuator forceset, get the pelvis actuators and set force
-    # # application point to pelvis COM
-    # refforcesetfile = user.refcmcactuators
-    # residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
-    # for x in ["FX","FY","FZ"]:
-    #     residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
-    #     residforce.set_point(pelviscom)
-
-    # # write actuator set to file
-    # forcesetfile = trial + "_CMC_Actuators.xml"
-    # residforceset.printToXML(os.path.join(fpath, forcesetfile))
-    
-    # # replace reserve actuators
-    # # (note: need to create a new ArrayStr with one element, add the file name,
-    # # and then pass the ArrayStr to setForceSetFiles; however, the tool does
-    # # not like whitespace in the <force_set_files> XML property)
-    # fsvec = opensim.ArrayStr();
-    # fsvec.append(forcesetfile)
-    # tool.setForceSetFiles(fsvec)
-    # tool.setReplaceForceSet(False)
-    
-    # append default reference actuators, with pelvis residuals acting at 
-    # ground-pelvis origin located at pelvis geometric centre
+    # load reference actuator forceset, get the pelvis actuators and set force
+    # application point to pelvis COM
     refforcesetfile = user.refcmcactuators
     residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
+    for x in ["FX","FY","FZ"]:
+        residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
+        residforce.set_point(pelviscom)
+
+    # write actuator set to file
     forcesetfile = trial + "_CMC_Actuators.xml"
-    residforceset.printToXML(os.path.join(fpath, forcesetfile))      
-    fsvec = opensim.ArrayStr()
+    residforceset.printToXML(os.path.join(fpath, forcesetfile))
+    
+    # replace reserve actuators
+    # (note: need to create a new ArrayStr with one element, add the file name,
+    # and then pass the ArrayStr to setForceSetFiles; however, the tool does
+    # not like whitespace in the <force_set_files> XML property)
+    fsvec = opensim.ArrayStr();
     fsvec.append(forcesetfile)
     tool.setForceSetFiles(fsvec)
-    tool.setReplaceForceSet(False)    
+    tool.setReplaceForceSet(False)
+    
+    # # append default reference actuators, with pelvis residuals acting at 
+    # # ground-pelvis origin located at pelvis geometric centre
+    # refforcesetfile = user.refcmcactuators
+    # residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
+    # forcesetfile = trial + "_CMC_Actuators.xml"
+    # residforceset.printToXML(os.path.join(fpath, forcesetfile))      
+    # fsvec = opensim.ArrayStr()
+    # fsvec.append(forcesetfile)
+    # tool.setForceSetFiles(fsvec)
+    # tool.setReplaceForceSet(False)    
     
 
     
@@ -850,16 +857,15 @@ def run_opensim_cmc(osimkey, user):
         actualmodelfile = modelfile
     tool.setModelFilename(os.path.join(fpath, actualmodelfile))
         
-    # set desired kinematics file
+    # set desired kinematics file and filter frequency
     if user.use_rra_model:
         kinfile = os.path.join(fpath, user.rracode, trial + "_RRA_" + str(user.rraiter) + "_Kinematics_q.sto")
+        filtfreq = 6.0
     else:
-        kinfile = os.path.join(fpath, user.ikcode, trial + "_ik.mot")     
+        kinfile = os.path.join(fpath, user.ikcode, trial + "_ik.mot")    
+        filtfreq = -1
 
     tool.setDesiredKinematicsFileName(kinfile)
-    
-    # set the desired kinematics filter frequency
-    filtfreq = 6.0
     tool.setLowpassCutoffFrequency(filtfreq)
 
     
@@ -877,8 +883,7 @@ def run_opensim_cmc(osimkey, user):
     # use_fast_target flag)
     try:
         tool2 = opensim.CMCTool(customsetupfile)
-        tool2.setUseFastTarget(user.use_fast_target)
-        tool2.run()
+        #tool2.run()
         print("Done.")
     except:
         print("---> ERROR: CMC failed. Skipping CMC for %s." % trial)

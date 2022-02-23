@@ -88,6 +88,7 @@ class TRAILSettings(UserSettings):
         self.refsetupid = "LASEM_TRAIL_Setup_ID.xml"
         self.refsetupso = "LASEM_TRAIL_Setup_Analysis.xml"
         self.refsetuprra = "LASEM_TRAIL_Setup_RRA.xml"
+        self.refsetupcmc = "LASEM_TRAIL_Setup_CMC.xml"
         
         # OpenSim additional files
         self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
@@ -107,9 +108,9 @@ class TRAILSettings(UserSettings):
         self.cmccode = "cmc"
         
         # OpenSim RRA parameters
-        self.rraiter = 2
+        self.rraiter = 1
         
         # OpenSim CMC parameters
         self.use_rra_model = True
-        self.use_fast_target = True
+        self.use_fast_target = False
         
