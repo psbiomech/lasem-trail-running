@@ -108,9 +108,9 @@ class TRAILSettings(UserSettings):
         self.cmccode = "cmc"
         
         # OpenSim RRA parameters
-        self.rraiter = 1
+        self.rraiter = 2
         
         # OpenSim CMC parameters
         self.use_rra_model = True
-        self.use_fast_target = False
+        self.use_fast_target = True
         

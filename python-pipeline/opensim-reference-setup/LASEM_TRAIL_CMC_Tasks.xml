@@ -1,8 +1,350 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <OpenSimDocument Version="40000">
 	<CMC_TaskSet name="Rajagopal_CMC_Tasks">
-		<defaults>
-			<CMC_Joint name="default">
+		<objects>
+			<CMC_Joint name="pelvis_tz">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 25</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>pelvis_tz</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="pelvis_tx">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 25</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>pelvis_tx</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="pelvis_ty">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 100</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>pelvis_ty</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="pelvis_tilt">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 500 </weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>pelvis_tilt</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="pelvis_list">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 200 </weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>pelvis_list</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="pelvis_rotation">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 50</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>pelvis_rotation</coordinate>
+			</CMC_Joint>			
+			<CMC_Joint name="hip_flexion_r">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 50</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>hip_flexion_r</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="hip_adduction_r">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 50</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>hip_adduction_r</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="hip_rotation_r">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 10</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>hip_rotation_r</coordinate>
+			</CMC_Joint>			
+			<CMC_Joint name="knee_angle_r">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 75</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>knee_angle_r</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="ankle_angle_r">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 100</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>ankle_angle_r</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="hip_flexion_l">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 50</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>hip_flexion_l</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="hip_adduction_l">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 50</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>hip_adduction_l</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="hip_rotation_l">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 10</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>hip_rotation_l</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="knee_angle_l">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 75</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>knee_angle_l</coordinate>
+			</CMC_Joint>			
+			<CMC_Joint name="ankle_angle_l">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 100</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>ankle_angle_l</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="lumbar_extension">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 75</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>lumbar_extension</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="lumbar_bending">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 50</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>lumbar_bending</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="lumbar_rotation">
+				<!--Flag (true or false) indicating whether or not a task is enabled.-->
+				<on>true</on>
+				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
+				<weight> 25</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
+				<!--Name of the coordinate to be tracked.-->
+				<coordinate>lumbar_rotation</coordinate>
+			</CMC_Joint>
+			<CMC_Joint name="arm_flex_r">
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
@@ -14,213 +356,9 @@
 				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
 				<active>true false false </active>
 				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
-				<kp> 100 1 1</kp>
+				<kp> 100</kp>
 				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
-				<kv> 20 1 1</kv>
-				<!--Feedforward acceleration gain.  This is normally set to 1.0, so no gain.-->
-				<ka> 1 1 1</ka>
-				<!--Direction vector[3] for component 0 of a task. Joint tasks do not use this property.-->
-				<r0> 0 0 0</r0>
-				<!--Direction vector[3] for component 1 of a task. Joint tasks do not use this property.-->
-				<r1> 0 0 0</r1>
-				<!--Direction vector[3] for component 2 of a task. Joint tasks do not use this property.-->
-				<r2> 0 0 0</r2>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate />
-				<!--Error limit on the tracking accuracy for this coordinate. If the tracking errors approach this limit, the weighting for this coordinate is increased. -->
-				<limit>0</limit>
-			</CMC_Joint>
-		</defaults>
-		<objects>
-			<CMC_Joint name="pelvis_tilt">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>pelvis_tilt</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="pelvis_list">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>			
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>pelvis_list</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="pelvis_rotation">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>pelvis_rotation</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="pelvis_tx">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>pelvis_tx</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="pelvis_ty">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>pelvis_ty</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="pelvis_tz">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>pelvis_tz</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="hip_flexion_r">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>hip_flexion_r</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="hip_adduction_r">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>hip_adduction_r</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="hip_rotation_r">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>hip_rotation_r</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="knee_angle_r">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>knee_angle_r</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="subtalar_angle_r">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>subtalar_angle_r</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="mtp_angle_r">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>false</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 1</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>mtp_angle_r</coordinate>
-			</CMC_Joint>						
-			<CMC_Joint name="ankle_angle_r">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>ankle_angle_r</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="hip_flexion_l">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>hip_flexion_l</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="hip_adduction_l">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>hip_adduction_l</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="hip_rotation_l">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>hip_rotation_l</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="knee_angle_l">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>knee_angle_l</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="subtalar_angle_l">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>subtalar_angle_l</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="mtp_angle_l">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>false</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 1</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>mtp_angle_l</coordinate>
-			</CMC_Joint>			
-			<CMC_Joint name="ankle_angle_l">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>ankle_angle_l</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="lumbar_extension">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>lumbar_extension</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="lumbar_bending">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>lumbar_bending</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="lumbar_rotation">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 20</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>lumbar_rotation</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="arm_flex_r">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>true</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<kv> 20</kv>
 				<!--Name of the coordinate to be tracked.-->
 				<coordinate>arm_flex_r</coordinate>
 			</CMC_Joint>
@@ -228,7 +366,17 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 1</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
 				<!--Name of the coordinate to be tracked.-->
 				<coordinate>arm_add_r</coordinate>
 			</CMC_Joint>
@@ -236,7 +384,17 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 1</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
 				<!--Name of the coordinate to be tracked.-->
 				<coordinate>arm_rot_r</coordinate>
 			</CMC_Joint>
@@ -244,7 +402,17 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 1</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
 				<!--Name of the coordinate to be tracked.-->
 				<coordinate>elbow_flex_r</coordinate>
 			</CMC_Joint>
@@ -253,30 +421,34 @@
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
 				<weight> 1</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
 				<!--Name of the coordinate to be tracked.-->
 				<coordinate>pro_sup_r</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="wrist_flex_r">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>false</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 1</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>wrist_flex_r</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="wrist_dev_r">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>false</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 1</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>wrist_dev_r</coordinate>
 			</CMC_Joint>
 			<CMC_Joint name="arm_flex_l">
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 1</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
 				<!--Name of the coordinate to be tracked.-->
 				<coordinate>arm_flex_l</coordinate>
 			</CMC_Joint>
@@ -284,7 +456,17 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 1</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
 				<!--Name of the coordinate to be tracked.-->
 				<coordinate>arm_add_l</coordinate>
 			</CMC_Joint>
@@ -292,7 +474,17 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 1</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
 				<!--Name of the coordinate to be tracked.-->
 				<coordinate>arm_rot_l</coordinate>
 			</CMC_Joint>
@@ -300,7 +492,17 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 1</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
 				<!--Name of the coordinate to be tracked.-->
 				<coordinate>elbow_flex_l</coordinate>
 			</CMC_Joint>
@@ -309,25 +511,19 @@
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
 				<weight> 1</weight>
+				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
+				<wrt_body>-1</wrt_body>
+				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
+				<express_body>-1</express_body>
+				<!--Array of 3 flags (each true or false) specifying whether a component of a task is active.  For example, tracking the trajectory of a point in space could have three components (x,y,z).  This allows each of those to be made active (true) or inactive (false).  A task for tracking a joint coordinate only has one component.-->
+				<active>true false false </active>
+				<!--Position error feedback gain (stiffness). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kp> 100</kp>
+				<!--Velocity error feedback gain (damping). To achieve critical damping of errors, choose kv = 2*sqrt(kp).-->
+				<kv> 20</kv>
 				<!--Name of the coordinate to be tracked.-->
 				<coordinate>pro_sup_l</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="wrist_flex_l">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>false</on>
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 1</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>wrist_flex_l</coordinate>
-			</CMC_Joint>
-			<CMC_Joint name="wrist_dev_l">
-				<!--Flag (true or false) indicating whether or not a task is enabled.-->
-				<on>false</on>			
-				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 1</weight>
-				<!--Name of the coordinate to be tracked.-->
-				<coordinate>wrist_dev_l</coordinate>
-			</CMC_Joint>
+			</CMC_Joint>			
 		</objects>
 		<groups />
 	</CMC_TaskSet>

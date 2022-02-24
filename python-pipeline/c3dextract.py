@@ -106,6 +106,9 @@ class TrialKey():
             # leg task is static (R, L)
             events["leg_task"] = ["static", "static"]
 
+            # last event index (0-based) for OpenSim analyses that require
+            # kinetics (e.g., ID, SO, RRA and CMC)
+            events["opensim_last_event_idx"] = -1
             
         # run full stride cycle
         elif task.casefold().startswith("run_stridecycle"):
@@ -155,6 +158,10 @@ class TrialKey():
             else:
                 events["leg_task"] = ["run_stridecycle", "run_stridecycle"]              
             
+            # last event index (0-based) for OpenSim analyses that require
+            # kinetics (e.g., ID, SO, RRA and CMC)
+            events["opensim_last_event_idx"] = 4
+            
 
         # run stance phase only, both legs
         elif task.casefold().startswith("run_stance"):
@@ -186,6 +193,10 @@ class TrialKey():
                 
             # leg task is same for both legs  (R, L)
             events["leg_task"] = ["run_stance", "run_stance"]
+            
+            # last event index (0-based) for OpenSim analyses that require
+            # kinetics (e.g., ID, SO, RRA and CMC)
+            events["opensim_last_event_idx"] = 3
             
         #
         # ###################################
@@ -393,6 +404,7 @@ class OpenSimKey():
         events["time"] = trialkey.events["window_time0"]
         events["labels"] = trialkey.events["window_labels"]
         events["leg_task"] = trialkey.events["leg_task"]
+        events["opensim_last_event_idx"] = trialkey.events["opensim_last_event_idx"]
     
         self.events = events
     
@@ -489,13 +501,18 @@ class OpenSimKey():
                 # intervals to the output array for the relevant foot
                 for h, g in enumerate(leg):
                     for n, m in enumerate(trialkey.events["fp_sequence"][:,h]):
-                        if m == fp:                        
+                        if m == fp:                                     
                             idx0 = np.where(forces["time"] >= trialkey.events["window_intervals0"][n,0])[0][0]
                             idx1 = np.where(forces["time"] <= trialkey.events["window_intervals0"][n,1])[0][-1]
                             data[g]["F"][idx0:idx1+1,:] = F[idx0:idx1+1,:]
                             data[g]["cop"][idx0:idx1+1,:] = cop[idx0:idx1+1,:]
                             data[g]["T"][idx0:idx1+1,:] = T[idx0:idx1+1,:]
-            
+
+                # zero all forces if vertical force is below threshold
+                # note: threshold value must be > 0 (TBD)
+                if threshold > 0:
+                    pass
+                
         # store force data
         forces["data"] = data
         

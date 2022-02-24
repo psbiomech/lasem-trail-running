@@ -34,32 +34,39 @@ print("Done.\n")
 
 # %% META DATABASE (BUILD NEW OR LOAD EXISTING)
 
-print("Building new output database... ", end="")
-import builddatabase as bd
-traildb = bd.build_database("TRAIL", user, "run_stridecycle")
-print("Done.\n")
-
-# print("Loading existing output database... ", end="")
-# import pickle as pk
-# import os
-# dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
-# with open(dbfilepath,"rb") as fid:
-#     traildb = pk.load(fid)
+# print("Building new output database... ", end="")
+# import builddatabase as bd
+# traildb = bd.build_database("TRAIL", user, "run_stridecycle")
 # print("Done.\n")
+
+print("Loading existing output database... ", end="")
+import pickle as pk
+import os
+dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
+with open(dbfilepath,"rb") as fid:
+    traildb = pk.load(fid)
+print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
 print("Extracting C3D data, creating OpenSim files...\n")
-c3dex.c3d_batch_process(user, traildb, lasem, 2, 15, -1)
+c3dex.c3d_batch_process(user, traildb, lasem, 2, -1, -1)
 print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
 
-print("Running OpenSim pipeline...\n")
-osp.opensim_pipeline(traildb, user, ["scale", "ik", "id", "so"])
-#osp.opensim_pipeline(traildb, user, ["scale", "ik", "id", "rra", "cmc"])
+# print("Running OpenSim SO pipeline...\n")
+# osp.opensim_pipeline(traildb, user, ["scale", "ik", "id", "so"])
+# print("\nOpenSim pipeline completed.\n")
+
+# print("Running OpenSim CMC pipeline...\n")
+# osp.opensim_pipeline(traildb, user, ["scale", "ik", "rra", "cmc"])
+# print("\nOpenSim pipeline completed.\n")
+
+print("Running OpenSim SO + CMC pipeline...\n")
+osp.opensim_pipeline(traildb, user, ["scale", "ik", "id", "so", "rra", "cmc"])
 print("\nOpenSim pipeline completed.\n")
 
 

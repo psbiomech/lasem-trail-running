@@ -78,7 +78,7 @@ def opensim_pipeline(meta, user, analyses):
                     # copy the model into the trial folder
                     shutil.copy(modelfullpath, pkpath)
                     
-                    # run the required analyses
+                    # run the required analyses, check success
                     for ans in analyses:
                         if not os.path.exists(os.path.join(pkpath, ans)): os.makedirs(os.path.join(pkpath, ans))
                         if ans == "ik":
@@ -266,7 +266,7 @@ def run_opensim_ik(osimkey, user):
         
     # run the tool
     try:
-        tool.run()
+        tool.run()        
         print("Done.")
     except:
         print("---> ERROR: IK failed. Skipping IK for %s." % trial)
@@ -311,7 +311,7 @@ def run_opensim_id(osimkey, user):
     
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0])
-    t1 = float(osimkey.events["time"][-1])
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setStartTime(t0)
     tool.setEndTime(t1)
@@ -405,7 +405,7 @@ def run_opensim_so(osimkey, user):
   
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0])
-    t1 = float(osimkey.events["time"][-1])
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
     tool.setFinalTime(t1)
@@ -547,7 +547,7 @@ def run_opensim_rra(osimkey, user):
     
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0])
-    t1 = float(osimkey.events["time"][-1])
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
     tool.setFinalTime(t1)
@@ -726,7 +726,7 @@ def run_opensim_cmc(osimkey, user):
     
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0])
-    t1 = float(osimkey.events["time"][-1])
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
     tool.setFinalTime(t1)
@@ -860,10 +860,10 @@ def run_opensim_cmc(osimkey, user):
     # set desired kinematics file and filter frequency
     if user.use_rra_model:
         kinfile = os.path.join(fpath, user.rracode, trial + "_RRA_" + str(user.rraiter) + "_Kinematics_q.sto")
-        filtfreq = 6.0
+        filtfreq = -1
     else:
         kinfile = os.path.join(fpath, user.ikcode, trial + "_ik.mot")    
-        filtfreq = -1
+        filtfreq = 6.0
 
     tool.setDesiredKinematicsFileName(kinfile)
     tool.setLowpassCutoffFrequency(filtfreq)
@@ -883,7 +883,7 @@ def run_opensim_cmc(osimkey, user):
     # use_fast_target flag)
     try:
         tool2 = opensim.CMCTool(customsetupfile)
-        #tool2.run()
+        tool2.run()
         print("Done.")
     except:
         print("---> ERROR: CMC failed. Skipping CMC for %s." % trial)
@@ -1000,6 +1000,6 @@ def write_marker_trajctory_trc_file(osimkey):
     data[0] = data[0].astype(int)
     
     # write table, no headers
-    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=False, index=False)
+    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=False, index=False, float_format="%20.10f")
     
     return data
