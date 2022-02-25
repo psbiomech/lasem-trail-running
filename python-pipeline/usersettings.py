@@ -64,6 +64,7 @@ class TRAILSettings(UserSettings):
         self.trialprefixes = {}
         self.trialprefixes["run_stance"] = ["EP", "FAST"]
         self.trialprefixes["run_stridecycle"] = ["EP", "FAST"]
+        self.trialprefixes["run_stridecycle_fast"] = ["FAST"]
                         
         # file name format regex pattern:
         #   (subjprefix)_(num code)_(trialprefix)_(alphanum code)
@@ -76,6 +77,10 @@ class TRAILSettings(UserSettings):
        
         # ******************************
         # OPENSIM PARAMETERS
+        
+        # OpenSim log file
+        self.logfilepath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline"
+        self.logfile = "out.log"
         
         # OpenSim reference model
         self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model"

@@ -39,6 +39,10 @@ def opensim_pipeline(meta, user, analyses):
     
     # lower case analyses list
     analyses = [a.casefold() for a in analyses]
+
+    # clear OpenSim log file
+    logfile0 = os.path.join(user.logfilepath, user.logfile)    
+    if os.path.isfile(logfile0): os.remove(logfile0)
     
     # run OpenSim for all valid trials
     for subj in meta:
@@ -64,6 +68,10 @@ def opensim_pipeline(meta, user, analyses):
                     # get the full model path
                     modelfile = meta[subj]["trials"][group][trial]["osim"]
                     modelfullpath = os.path.join(pkpath, modelfile)
+                    
+                    # copy the OpenSim log file into the local folder
+                    logfile1 = os.path.join(pkpath, meta[subj]["trials"][group][trial]["trial"] + ".log")
+                    shutil.copyfile(logfile0, logfile1)                    
             
             # find dynamic trials and run requested analyses
             for trial in meta[subj]["trials"][group]:
@@ -78,7 +86,7 @@ def opensim_pipeline(meta, user, analyses):
                     # copy the model into the trial folder
                     shutil.copy(modelfullpath, pkpath)
                     
-                    # run the required analyses, check success
+                    # run the required analyses
                     for ans in analyses:
                         if not os.path.exists(os.path.join(pkpath, ans)): os.makedirs(os.path.join(pkpath, ans))
                         if ans == "ik":
@@ -91,6 +99,10 @@ def opensim_pipeline(meta, user, analyses):
                             run_opensim_rra(osimkey, user)
                         elif ans == "cmc":
                             run_opensim_cmc(osimkey, user)
+                            
+                    # copy the OpenSim log file into the local folder
+                    logfile1 = os.path.join(pkpath, meta[subj]["trials"][group][trial]["trial"] + ".log")
+                    shutil.copyfile(logfile0, logfile1)  
    
                             
     return None
@@ -126,7 +138,6 @@ def run_opensim_scale(osimkey, user):
     # set subject name
     tool.setName(osimkey.subject)
     
-
     
     # ******************************
     # GENERIC MODEL MAKER
@@ -139,7 +150,6 @@ def run_opensim_scale(osimkey, user):
     modelmaker = tool.getGenericModelMaker()
     modelmaker.setModelFileName(os.path.join(refmodelpath, refmodelfile))
     
-
 
     # ******************************
     # MODEL SCALER
@@ -158,7 +168,6 @@ def run_opensim_scale(osimkey, user):
     
     # set output model file name
     modelscaler.setOutputModelFileName(os.path.join(fpath, model + ".osim"))
-
     
     
     # ******************************
@@ -181,7 +190,6 @@ def run_opensim_scale(osimkey, user):
      
     # set output marker file
     markerplacer.setOutputMarkerFileName(os.path.join(fpath, trial + "_markers.xml"))   
-
 
 
     # ******************************
@@ -237,8 +245,9 @@ def run_opensim_ik(osimkey, user):
     # set the model in the tool
     tool.setModel(model)
 
-    # set the initial and final times (limit to between first and last event)
-    t0 = float(osimkey.events["time"][0])
+    # set the initial and final times (limit to between first and last event,
+    # but allow extra 0.05 sec at start for CMC)
+    t0 = float(osimkey.events["time"][0]) - 0.05
     t1 = float(osimkey.events["time"][-1])
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setStartTime(t0)
@@ -253,7 +262,6 @@ def run_opensim_ik(osimkey, user):
     motfilepath = os.path.join(fpath, user.ikcode)
     if not os.path.isdir(motfilepath): os.makedirs(motfilepath)
     tool.setOutputMotionFileName(os.path.join(motfilepath, trial + "_ik.mot"))  
-
 
 
     # ******************************
@@ -349,7 +357,6 @@ def run_opensim_id(osimkey, user):
     # set the external loads file name
     tool.setExternalLoadsFileName(extloadsfile)
     
-
     
     # ******************************
     # RUN TOOL 
@@ -451,7 +458,6 @@ def run_opensim_so(osimkey, user):
     analyses.insert(0, so)
 
 
-
     # ******************************
     # PREPARE RESERVE ACTUATORS
     # (set the pelvis reserves to act at pelvis COM, or use default application
@@ -494,7 +500,6 @@ def run_opensim_so(osimkey, user):
     # fsvec.append(forcesetfile)
     # tool.setForceSetFiles(fsvec)
     # tool.setReplaceForceSet(False)     
-
 
     
     # ******************************
@@ -546,7 +551,7 @@ def run_opensim_rra(osimkey, user):
     tool = opensim.RRATool(os.path.join(refsetuppath, refsetupfile), False)      
     
     # set the initial and final times (limit to between first and last event)
-    t0 = float(osimkey.events["time"][0])
+    t0 = float(osimkey.events["time"][0]) - 0.05
     t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
@@ -582,7 +587,6 @@ def run_opensim_rra(osimkey, user):
     stofilepath = os.path.join(fpath, user.rracode)
     if not os.path.isdir(stofilepath): os.makedirs(stofilepath)
     tool.setResultsDir(stofilepath)
-
 
 
     # ******************************
@@ -628,7 +632,6 @@ def run_opensim_rra(osimkey, user):
     # tool.setReplaceForceSet(True)    
     
     
-
     # ******************************
     # PREPARE RRA TASKS
  
@@ -645,7 +648,6 @@ def run_opensim_rra(osimkey, user):
     # set RRA tasks file in tool
     tool.setTaskSetFileName(os.path.join(fpath, trial + "_RRA_Tasks.xml"))
        
-
     
     # ******************************
     # RUN TOOL
@@ -725,7 +727,7 @@ def run_opensim_cmc(osimkey, user):
     tool = opensim.CMCTool(os.path.join(refsetuppath, refsetupfile), False)      
     
     # set the initial and final times (limit to between first and last event)
-    t0 = float(osimkey.events["time"][0])
+    t0 = float(osimkey.events["time"][0]) - 0.05
     t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
@@ -806,7 +808,6 @@ def run_opensim_cmc(osimkey, user):
     # tool.setForceSetFiles(fsvec)
     # tool.setReplaceForceSet(False)    
     
-
     
     # ******************************
     # PREPARE CMC TASKS
@@ -826,7 +827,6 @@ def run_opensim_cmc(osimkey, user):
     tool.setTaskSetFileName(os.path.join(fpath, trial + "_CMC_Tasks.xml"))
        
 
-
     # ******************************
     # PREPARE CMC CONTROL CONSTRAINTS
     # (allows for trial-specific controller constraints to be applied)
@@ -844,7 +844,6 @@ def run_opensim_cmc(osimkey, user):
     # set CMC control constraints file in tool
     tool.setConstraintsFileName(os.path.join(fpath, trial + '_CMC_ControlConstraints.xml'))
     
-
 
     # ******************************
     # SET THE MODEL AND KINEMATICS
@@ -867,8 +866,7 @@ def run_opensim_cmc(osimkey, user):
 
     tool.setDesiredKinematicsFileName(kinfile)
     tool.setLowpassCutoffFrequency(filtfreq)
-
-    
+   
     
     # ******************************
     # RUN TOOL
