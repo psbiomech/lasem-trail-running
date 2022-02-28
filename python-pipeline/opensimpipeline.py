@@ -41,8 +41,8 @@ def opensim_pipeline(meta, user, analyses):
     analyses = [a.casefold() for a in analyses]
 
     # clear OpenSim log file
-    logfile0 = os.path.join(user.logfilepath, user.logfile)    
-    if os.path.isfile(logfile0): os.remove(logfile0)
+    #logfile0 = os.path.join(user.logfilepath, user.logfile)    
+    #if os.path.isfile(logfile0): os.remove(logfile0)
     
     # run OpenSim for all valid trials
     for subj in meta:
@@ -70,11 +70,19 @@ def opensim_pipeline(meta, user, analyses):
                     modelfullpath = os.path.join(pkpath, modelfile)
                     
                     # copy the OpenSim log file into the local folder
-                    logfile1 = os.path.join(pkpath, meta[subj]["trials"][group][trial]["trial"] + ".log")
-                    shutil.copyfile(logfile0, logfile1)                    
+                    #logfile1 = os.path.join(pkpath, meta[subj]["trials"][group][trial]["trial"] + ".log")
+                    #shutil.copyfile(logfile0, logfile1)                    
             
             # find dynamic trials and run requested analyses
             for trial in meta[subj]["trials"][group]:
+                
+                
+                # ****** FOR TESTING ONLY ******
+                #if trial != "TRAIL_071_EP_02":
+                #    print("%s ---> SKIP" % trial)
+                #    continue
+                # ******************************
+                
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
 
                     # load the OsimKey
@@ -101,8 +109,8 @@ def opensim_pipeline(meta, user, analyses):
                             run_opensim_cmc(osimkey, user)
                             
                     # copy the OpenSim log file into the local folder
-                    logfile1 = os.path.join(pkpath, meta[subj]["trials"][group][trial]["trial"] + ".log")
-                    shutil.copyfile(logfile0, logfile1)  
+                    #logfile1 = os.path.join(pkpath, meta[subj]["trials"][group][trial]["trial"] + ".log")
+                    #shutil.copyfile(logfile0, logfile1)  
    
                             
     return None
@@ -119,10 +127,11 @@ def run_opensim_scale(osimkey, user):
     
     # trial folder, model and trial
     fpath = osimkey.outpath
-    model = osimkey.subject
+    subject = osimkey.subject
+    model = osimkey.model
     trial = osimkey.trial
 
-    print("\nCreating scaled model: %s" % model)
+    print("\nCreating scaled model: %s" % subject)
     print("------------------------------------------------")
     
     # create an ScaleTool from a generic setup file
@@ -167,7 +176,7 @@ def run_opensim_scale(osimkey, user):
     modelscaler.setTimeRange(twindow)
     
     # set output model file name
-    modelscaler.setOutputModelFileName(os.path.join(fpath, model + ".osim"))
+    modelscaler.setOutputModelFileName(os.path.join(fpath, model))
     
     
     # ******************************
@@ -186,7 +195,7 @@ def run_opensim_scale(osimkey, user):
     markerplacer.setOutputMotionFileName(os.path.join(fpath, trial + "_static_ik.mot"))
     
     # set output model file
-    markerplacer.setOutputModelFileName(os.path.join(fpath, model + ".osim"))    
+    markerplacer.setOutputModelFileName(os.path.join(fpath, model))    
      
     # set output marker file
     markerplacer.setOutputMarkerFileName(os.path.join(fpath, trial + "_markers.xml"))   
@@ -200,10 +209,33 @@ def run_opensim_scale(osimkey, user):
     # save the settings in a setup file
     tool.printToXML(os.path.join(fpath, trial + "_Setup_Scale.xml"))
 
-    # run the tool
+    # run the tool, and scale the model if required
     try:
+        
+        # run the tool
         tool.run()
+        
+        # scale the model FoM if required
+        print("---> Scaling muscle FoM in model...")
+        sf_fom = user.fom_scalefactor
+        if sf_fom >= 0:
+            shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_FoM.osim"))
+            model0 = opensim.Model(os.path.join(fpath, model))
+            refmodel = opensim.Model(os.path.join(refmodelpath, refmodelfile))
+            model1 = update_osim_fom(model0, sf_fom, refmodel)
+            model1.printToXML(os.path.join(fpath, model))
+            
+        # scale the model FoM if required
+        print("---> Scaling muscle LsT in model...")
+        sf_lst = user.lst_scalefactor
+        if sf_lst > 0:
+            shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LsT.osim"))
+            model0 = opensim.Model(os.path.join(fpath, model))
+            model1 = update_osim_lst(model0, sf_lst)
+            model1.printToXML(os.path.join(fpath, model))            
+                    
         print("Done.")
+                
     except:
         print("---> ERROR: Scale failed. Skipping Scale for %s." % trial)
     finally:
@@ -247,7 +279,7 @@ def run_opensim_ik(osimkey, user):
 
     # set the initial and final times (limit to between first and last event,
     # but allow extra 0.05 sec at start for CMC)
-    t0 = float(osimkey.events["time"][0]) - 0.05
+    t0 = float(osimkey.events["time"][0]) + user.cmc_start_time_offset
     t1 = float(osimkey.events["time"][-1])
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setStartTime(t0)
@@ -551,8 +583,8 @@ def run_opensim_rra(osimkey, user):
     tool = opensim.RRATool(os.path.join(refsetuppath, refsetupfile), False)      
     
     # set the initial and final times (limit to between first and last event)
-    t0 = float(osimkey.events["time"][0]) - 0.05
-    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
+    t0 = float(osimkey.events["time"][0]) + user.cmc_start_time_offset
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]]) + user.cmc_end_time_offset
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
     tool.setFinalTime(t1)
@@ -727,8 +759,8 @@ def run_opensim_cmc(osimkey, user):
     tool = opensim.CMCTool(os.path.join(refsetuppath, refsetupfile), False)      
     
     # set the initial and final times (limit to between first and last event)
-    t0 = float(osimkey.events["time"][0]) - 0.05
-    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
+    t0 = float(osimkey.events["time"][0]) + user.cmc_start_time_offset
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]]) + user.cmc_end_time_offset
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
     tool.setFinalTime(t1)
@@ -757,7 +789,9 @@ def run_opensim_cmc(osimkey, user):
     if not os.path.isdir(stofilepath): os.makedirs(stofilepath)
     tool.setResultsDir(stofilepath)
 
-    # use fast target (should normally be set to true)
+    # use fast target (should normally be set to true, but set to false if 
+    # having difficulty solving, e.g. pathological movement patterns or dynamic
+    # movement patterns such as fast running)
     tool.setUseFastTarget(user.use_fast_target)
 
 
@@ -863,7 +897,6 @@ def run_opensim_cmc(osimkey, user):
     else:
         kinfile = os.path.join(fpath, user.ikcode, trial + "_ik.mot")    
         filtfreq = 6.0
-
     tool.setDesiredKinematicsFileName(kinfile)
     tool.setLowpassCutoffFrequency(filtfreq)
    
@@ -897,9 +930,53 @@ def run_opensim_cmc(osimkey, user):
 
 '''
 -----------------------------------
------ FUNCTIONS: OPENSIM DATA -----
+---- FUNCTIONS: MISCELLANEOUS -----
 -----------------------------------
 '''
+
+
+
+'''
+update_osim_fom(modelfullpath, scalefactor, refmodelpath):
+    Update the OpenSim model FoM by a fixed scale factor, or using the scaling
+    law described by Handsfield et al. 2013 (scalefactor = -1).
+'''
+def update_osim_fom(model, scalefactor, refmodel):
+    
+    # load the model and get the muscles
+    allmuscles = model.getMuscles()
+    
+    # scale by a fixed scale factor
+    if scalefactor > 0:
+        for m in range(allmuscles.getSize()):
+            currmuscle = allmuscles.get(m)
+            currmuscle.setMaxIsometricForce(scalefactor * currmuscle.getMaxIsometricForce())
+    elif scalefactor == 0:
+        # Handsfield scaling law: TBD
+        pass
+        
+    return model
+            
+
+
+'''
+update_osim_lst(modelfullpath, scalefactor):
+    Update the OpenSim model LsT by a fixed scale factor, or using the scaling
+    law described by Handsfield et al. 2013 (scalefactor = -1).
+'''
+def update_osim_lst(model, scalefactor):
+    
+    # load the model and get the muscles
+    allmuscles = model.getMuscles()
+    
+    # scale by a fixed scale factor
+    if scalefactor > 0:
+        for m in range(allmuscles.getSize()):
+            currmuscle = allmuscles.get(m)
+            currmuscle.set_tendon_slack_length(scalefactor * currmuscle.get_tendon_slack_length())
+                    
+    return model
+            
 
 
 '''

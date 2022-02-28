@@ -212,7 +212,7 @@ import usersettings as uset
 user = uset.TRAILSettings()
 
 # file path and name prefix
-fprefix = "TRAIL_071_FAST_01"
+fprefix = "TRAIL_071_EP_01"
 fpath = "C:\\Users\\Owner\\Documents\\data\\TRAIL Test Data\\outputDatabase\\TRAIL_071\\Baseline\\" + fprefix + "\\"
 prefix = fpath + fprefix
 
@@ -236,7 +236,7 @@ import usersettings as uset
 user = uset.TRAILSettings()
 
 # file path and name prefix
-fprefix = "TRAIL_071_FAST_01"
+fprefix = "TRAIL_071_EP_01"
 fpath = "C:\\Users\\Owner\\Documents\\data\\TRAIL Test Data\\outputDatabase\\TRAIL_071\\Baseline\\" + fprefix + "\\"
 prefix = fpath + fprefix
 

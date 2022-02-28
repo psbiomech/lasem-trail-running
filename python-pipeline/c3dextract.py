@@ -202,7 +202,6 @@ class TrialKey():
         # ###################################
         
 
-                        
         self.events = events
         
         return None

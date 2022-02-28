@@ -112,10 +112,16 @@ class TRAILSettings(UserSettings):
         self.rracode = "rra"
         self.cmccode = "cmc"
         
+        # OpenSim Scale parameters
+        self.fom_scalefactor = 1.5
+        self.lst_scalefactor = -1
+        
         # OpenSim RRA parameters
         self.rraiter = 2
-        
+                
         # OpenSim CMC parameters
         self.use_rra_model = True
         self.use_fast_target = True
+        self.cmc_start_time_offset = -0.5   # minimum -0.03 sec
+        self.cmc_end_time_offset = -0.05     # due to final event time errors
         
