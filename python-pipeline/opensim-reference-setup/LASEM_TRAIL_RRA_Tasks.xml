@@ -6,7 +6,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 50</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -24,7 +24,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 2.5</weight>
+				<weight> 25</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -78,7 +78,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 50</weight>
+				<weight> 250</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -96,7 +96,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 50</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -114,7 +114,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 10</weight>
+				<weight> 75</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -132,7 +132,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 2.5</weight>
+				<weight> 50</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -150,7 +150,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 1</weight>
+				<weight> 10</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -168,7 +168,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 10</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -186,7 +186,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 2.5</weight>
+				<weight> 25</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -204,7 +204,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 10</weight>
+				<weight> 75</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -222,7 +222,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 50</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -240,7 +240,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 1</weight>
+				<weight> 10</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -258,7 +258,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 5</weight>
+				<weight> 10</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -276,7 +276,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 2.5</weight>
+				<weight> 25</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -294,7 +294,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 50</weight>
+				<weight> 75</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -312,7 +312,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 25</weight>
+				<weight> 50</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
@@ -330,7 +330,7 @@
 				<!--Flag (true or false) indicating whether or not a task is enabled.-->
 				<on>true</on>
 				<!--Weight with which a task is tracked relative to other tasks. To track a task more tightly, make the weight larger.-->
-				<weight> 15</weight>
+				<weight> 25</weight>
 				<!--Name of body frame with respect to which a tracking objective is specified. The special name 'center_of_mass' refers to the system center of mass. This property is not used for tracking joint angles.-->
 				<wrt_body>-1</wrt_body>
 				<!--Name of body frame in which the tracking objectives are expressed.  This property is not used for tracking joint angles.-->
