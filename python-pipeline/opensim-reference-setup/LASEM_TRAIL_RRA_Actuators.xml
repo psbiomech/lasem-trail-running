@@ -46,7 +46,7 @@
 				<!--Fixed direction about which torque is applied, in Ground or body A frame depending on 'torque_is_global' property.-->
 				<axis>1 -0 -0</axis>
 				<!--The maximum torque produced by this actuator when fully activated.-->
-				<optimal_force>100</optimal_force>
+				<optimal_force>1000</optimal_force>
 				<min_control> -1 </min_control>
 				<max_control> 1 </max_control>
 			</TorqueActuator>
@@ -58,7 +58,7 @@
 				<!--Fixed direction about which torque is applied, in Ground or body A frame depending on 'torque_is_global' property.-->
 				<axis>-0 1 -0</axis>
 				<!--The maximum torque produced by this actuator when fully activated.-->
-				<optimal_force>100</optimal_force>
+				<optimal_force>1000</optimal_force>
 				<min_control> -1 </min_control>
 				<max_control> 1 </max_control>
 			</TorqueActuator>
@@ -70,7 +70,7 @@
 				<!--Fixed direction about which torque is applied, in Ground or body A frame depending on 'torque_is_global' property.-->
 				<axis>-0 -0 1</axis>
 				<!--The maximum torque produced by this actuator when fully activated.-->
-				<optimal_force>100</optimal_force>
+				<optimal_force>1000</optimal_force>
 				<min_control> -1 </min_control>
 				<max_control> 1 </max_control>
 			</TorqueActuator>
