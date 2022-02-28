@@ -122,6 +122,6 @@ class TRAILSettings(UserSettings):
         # OpenSim CMC parameters
         self.use_rra_model = True
         self.use_fast_target = True
-        self.cmc_start_time_offset = -0.5   # minimum -0.03 sec
-        self.cmc_end_time_offset = -0.05     # due to final event time errors
+        self.cmc_start_time_offset = -0.05   # minimum -0.03 sec
+        self.cmc_end_time_offset = -0.1     # due to final event time errors
         
