@@ -122,7 +122,7 @@ class TRAILSettings(UserSettings):
         self.cmccode = "cmc"
         
         # OpenSim Scale parameters
-        self.fom_scalefactor = 1.5
+        self.fom_scalefactor = 4
         self.lst_scalefactor = -1
         
         # OpenSim RRA parameters

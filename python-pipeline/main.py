@@ -61,13 +61,13 @@ print("\nC3D data extract done.\n")
 # osp.opensim_pipeline(traildb, user, ["scale", "ik", "id", "so"])
 # print("\nOpenSim pipeline completed.\n")
 
-# print("Running OpenSim CMC pipeline...\n")
-# osp.opensim_pipeline(traildb, user, ["scale", "ik", "rra", "cmc"])
-# print("\nOpenSim pipeline completed.\n")
-
-print("Running OpenSim SO + CMC pipeline...\n")
+print("Running OpenSim CMC pipeline...\n")
 osp.opensim_pipeline(traildb, user, ["scale", "ik", "rra", "cmc"])
 print("\nOpenSim pipeline completed.\n")
+
+# print("Running OpenSim SO + CMC pipeline...\n")
+# osp.opensim_pipeline(traildb, user, ["scale", "ik", "id", "so", "rra", "cmc"])
+# print("\nOpenSim pipeline completed.\n")
 
 
 # %% LOAD AND FORMAT RESULTS
