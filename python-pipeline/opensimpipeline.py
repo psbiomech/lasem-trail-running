@@ -78,9 +78,9 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 # ****** FOR TESTING ONLY ******
-                #if trial != "TRAIL_071_EP_02":
-                #    print("%s ---> SKIP" % trial)
-                #    continue
+                if trial != "TRAIL_071_EP_01":
+                    print("%s ---> SKIP" % trial)
+                    continue
                 # ******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:

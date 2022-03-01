@@ -5,6 +5,7 @@ LASEM C3D file data extract
 @author: Prasanna Sritharan
 """
 
+import scipy.signal as signal
 import statistics as stats
 import numpy as np
 import pyc3dserver as c3d
@@ -289,7 +290,8 @@ class TrialKey():
         forces["time0"] = c3dkey.forces["TIME"] - c3dkey.forces["TIME"][0]    
         forces["frames"] = c3dkey.forces["FRAME"]
         forces["frames0"] = c3dkey.forces["FRAME"] - c3dkey.forces["FRAME"][0]    
- 
+        forces["rate"] = c3dkey.forces["RATE"]
+    
         # get forces for only used force plates
         ns = len(forces["time"])
         for f in lab.fp_used:
@@ -379,7 +381,7 @@ OpenSimKey:
     processing through OpenSim.
 '''
 class OpenSimKey():
-    def __init__(self, trialkey, ref_model, c3dpath, threshold):
+    def __init__(self, trialkey, ref_model, c3dpath, filter_butter_order, filter_cutoff, filter_threshold):
         self.subject = trialkey.subject_name
         self.trial = trialkey.trial_name
         self.mass = trialkey.mass
@@ -391,7 +393,7 @@ class OpenSimKey():
         self.outpath = c3dpath
         self.__set_events(trialkey)
         self.__set_markers(trialkey) 
-        self.__set_forces(trialkey, threshold)      
+        self.__set_forces(trialkey, filter_butter_order, filter_cutoff, filter_threshold)      
         return None
     
     def __set_events(self, trialkey):
@@ -448,7 +450,7 @@ class OpenSimKey():
         
         return None
                    
-    def __set_forces(self, trialkey, threshold):
+    def __set_forces(self, trialkey, filter_butter_order, filter_cutoff, filter_threshold):
  
         # initiliase temporary output arrays
         data = {}
@@ -466,6 +468,7 @@ class OpenSimKey():
         # time and frame vectors
         forces["time"] = trialkey.forces["time0"]
         forces["frames"] = np.arange(1,len(trialkey.forces["time0"]) + 1)
+        forces["rate"] = trialkey.forces["rate"]
 
         # get forces for only used force plates (dynamic trials only)
         if trialkey.task != "static":
@@ -490,11 +493,14 @@ class OpenSimKey():
                     F[n,:] = change_coordinates(F_lab[n,:], rotmat, originvec0)
                     cop[n,:] = change_coordinates(cop_lab[n,:], rotmat, originvec0)
                     T[n,:] = change_coordinates(T_lab[n,:], rotmat, originvec0)            
-                
+                                                
                 # offset the CoP using offset marker
                 offset = [0., 0., 0.]
                 if trialkey.markers["offset_marker"]: offset = self.markers["offset"]
                 for n in range(ns): cop[n,:] = cop[n,:] - offset
+
+                # filter and floor the force plate data
+                F, T, cop = filter_and_floor_fp(F, T, cop, 1, forces["rate"], filter_butter_order, filter_cutoff, filter_threshold)
     
                 # for each force plate, add force plate data for any active
                 # intervals to the output array for the relevant foot
@@ -506,11 +512,6 @@ class OpenSimKey():
                             data[g]["F"][idx0:idx1+1,:] = F[idx0:idx1+1,:]
                             data[g]["cop"][idx0:idx1+1,:] = cop[idx0:idx1+1,:]
                             data[g]["T"][idx0:idx1+1,:] = T[idx0:idx1+1,:]
-
-                # zero all forces if vertical force is below threshold
-                # note: threshold value must be > 0 (TBD)
-                if threshold > 0:
-                    pass
                 
         # store force data
         forces["data"] = data
@@ -531,11 +532,11 @@ class OpenSimKey():
 
 
 '''
-c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
+c3d_batch_process(user, meta, lab, xdir, usermass):
     Batch processing for C3D data extract, and OpenSim input file write,
     obtains mass from used static trial in each group if mass = -1.
 '''
-def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
+def c3d_batch_process(user, meta, lab, xdir, usermass):
 
     # extract C3D data for OpenSim
     print("\n")
@@ -573,7 +574,7 @@ def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                 task = meta[subj]["trials"][group][trial]["task"]
                 condition = meta[subj]["trials"][group][trial]["condition"]
-                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, threshold, user.refmodelfile, user.staticfpchannel, mass)                           
+                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.filter_butter_order, user.filter_cutoff, user.filter_threshold)                           
                 
                 # get the mass from the used static trial
                 if usedstatic: mass = osimkey.mass
@@ -604,7 +605,7 @@ def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                 task = meta[subj]["trials"][group][trial]["task"]
                 condition = meta[subj]["trials"][group][trial]["condition"]
-                c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, threshold, user.refmodelfile, user.staticfpchannel, mass)                           
+                c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.filter_butter_order, user.filter_cutoff, user.filter_threshold)                           
                      
             #
             # ###################################                    
@@ -614,12 +615,13 @@ def c3d_batch_process(user, meta, lab, xdir, threshold, usermass):
 
 
 '''
-c3d_extract(trial, c3dpath, c3dpath, lab, condition, xdir, threshold, 
-            ref_model, static_fp_channel, mass):
+c3d_extract(trial, c3dpath, c3dpath, lab, condition, xdir, ref_model, 
+            static_fp_channel, mass, filter_butter_order, filter_cutoff, 
+            filter_threshold):
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, threshold, ref_model, static_fp_channel, mass):
+def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, ref_model, static_fp_channel, mass, filter_butter_order, filter_cutoff, filter_threshold):
     
     # load C3D file
     itf = c3d.c3dserver()
@@ -642,7 +644,7 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, threshold, 
     trialkey = TrialKey(lab, task, condition, c3dkey, xdir, static_fp_channel, mass)
     
     # opensim input data
-    osimkey = OpenSimKey(trialkey, ref_model, c3dpath, threshold)
+    osimkey = OpenSimKey(trialkey, ref_model, c3dpath, filter_butter_order, filter_cutoff, filter_threshold)
     
     # save key files
     with open(os.path.join(c3dpath, trial + "_c3dkey.pkl"),"wb") as f: pk.dump(c3dkey, f)
@@ -778,6 +780,34 @@ def calculate_subject_mass(c3dkey, static_fp_channel):
     mass = abs(stats.mean(data)) / 9.81
     
     return mass, idx0, idx1
+    
+   
+    
+'''
+filter_and_floor_fp(filter_and_floor_fp(F, T, CoP, vert_idx, sample_rate,
+                    butter_order, cutoff, threshold)):
+    Filter the force plate data, and floor data below threshold.
+'''    
+def filter_and_floor_fp(F, T, cop, vert_col_idx, sample_rate, butter_order, cutoff, threshold):
+    
+    # filter design
+    Wn = sample_rate / 2
+    cutoff = 50
+    normalised_cutoff = cutoff / Wn
+    b, a = signal.butter(butter_order, normalised_cutoff, "lowpass")
+    
+    # apply filter
+    F1 = signal.filtfilt(b, a, F, axis = 0)
+    T1 = signal.filtfilt(b, a, T, axis = 0)
+    
+    # apply threshold
+    Fy = F1[:, vert_col_idx]
+    idxs = np.where(Fy < threshold)
+    F1[idxs, :] = 0.0
+    T1[idxs, :] = 0.0
+    cop[idxs, :] = 0.0
+    
+    return F1, T1, cop
     
     
     

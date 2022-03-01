@@ -74,6 +74,15 @@ class TRAILSettings(UserSettings):
         self.samples = 101
        
         
+        # ******************************
+        # C3D DATA PROCESSING     
+       
+        # force plate data filter
+        self.filter_butter_order = 4
+        self.filter_cutoff = 15
+        self.filter_threshold = 10
+        
+        
        
         # ******************************
         # OPENSIM PARAMETERS
@@ -113,7 +122,7 @@ class TRAILSettings(UserSettings):
         self.cmccode = "cmc"
         
         # OpenSim Scale parameters
-        self.fom_scalefactor = 1.5
+        self.fom_scalefactor = 3
         self.lst_scalefactor = -1
         
         # OpenSim RRA parameters

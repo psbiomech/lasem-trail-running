@@ -338,3 +338,44 @@ with open(pkfile,"rb") as fid:
 # collate and export
 analyses = ["ik", "id"]
 csvdata = osr.export_opensim_results(traildb, user, analyses)
+
+
+# %% FILTERING DATA
+
+import pickle as pk
+import numpy as np
+import scipy.signal as signal
+import matplotlib.pyplot as plt
+
+
+# file path and name prefix
+fprefix = "TRAIL_071_EP_01"
+fpath = "C:\\Users\\Owner\\Documents\\data\\TRAIL Test Data\\outputDatabase\\TRAIL_071\\Baseline\\" + fprefix + "\\"
+prefix = fpath + fprefix
+
+# OsimKey
+pkfile = prefix + "_osimkey.pkl"
+with open(pkfile, "rb") as fid: 
+    osimkey1 = pk.load(fid)
+    
+# data
+grf0 = osimkey1.forces["data"]["left"]["F"][:, 1]
+
+# filter design
+samplerate = 1200.0
+Wn = samplerate / 2
+cutoff = 50
+normalised_cutoff = cutoff / Wn
+b, a = signal.butter(4, normalised_cutoff, "lowpass")
+
+# filtered data
+grf1 = signal.filtfilt(b, a, grf0)
+
+# floor below threshold
+threshold = 10
+idxs = np.where(grf1 < threshold)
+grf1[idxs] = 0
+
+# plot
+grfs = np.transpose([grf0, grf1])
+plt.plot(grfs)
