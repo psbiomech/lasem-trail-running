@@ -792,7 +792,6 @@ def filter_and_floor_fp(F, T, cop, vert_col_idx, sample_rate, butter_order, cuto
     
     # filter design
     Wn = sample_rate / 2
-    cutoff = 50
     normalised_cutoff = cutoff / Wn
     b, a = signal.butter(butter_order, normalised_cutoff, "lowpass")
     

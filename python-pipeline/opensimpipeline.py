@@ -78,9 +78,9 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 # ****** FOR TESTING ONLY ******
-                # if trial != "TRAIL_071_EP_01":
-                #     print("%s ---> SKIP" % trial)
-                #     continue
+                if trial != "TRAIL_071_EP_01":
+                    print("%s ---> SKIP" % trial)
+                    continue
                 # ******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
@@ -218,7 +218,7 @@ def run_opensim_scale(osimkey, user):
         # scale the model FoM if required
         print("---> Scaling muscle FoM in model...")
         sf_fom = user.fom_scalefactor
-        if sf_fom >= 0:
+        if (type(sf_fom) is dict) or (sf_fom >= 0):
             shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_FoM.osim"))
             model0 = opensim.Model(os.path.join(fpath, model))
             refmodel = opensim.Model(os.path.join(refmodelpath, refmodelfile))
@@ -228,7 +228,7 @@ def run_opensim_scale(osimkey, user):
         # scale the model FoM if required
         print("---> Scaling muscle LsT in model...")
         sf_lst = user.lst_scalefactor
-        if sf_lst > 0:
+        if (type(sf_lst) is dict) or (sf_lst > 0):
             shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LsT.osim"))
             model0 = opensim.Model(os.path.join(fpath, model))
             model1 = update_osim_lst(model0, sf_lst)
@@ -969,11 +969,21 @@ def update_osim_lst(model, scalefactor):
     # load the model and get the muscles
     allmuscles = model.getMuscles()
     
-    # scale by a fixed scale factor
-    if scalefactor > 0:
-        for m in range(allmuscles.getSize()):
-            currmuscle = allmuscles.get(m)
-            currmuscle.set_tendon_slack_length(scalefactor * currmuscle.get_tendon_slack_length())
+    # scale all by a fixed scale factor
+    if type(scalefactor) is float:
+        if scalefactor > 0:
+            for m in range(allmuscles.getSize()):
+                currmuscle = allmuscles.get(m)
+                currmuscle.set_tendon_slack_length(scalefactor * currmuscle.get_tendon_slack_length())
+
+    # custom scale selected variables
+    elif type(scalefactor) is dict:
+        for sfname in scalefactor:
+            for m in range(allmuscles.getSize()):
+                currmuscle = allmuscles.get(m)
+                mname = currmuscle.getName()
+                if mname.startswith(sfname):
+                    currmuscle.set_tendon_slack_length(scalefactor[sfname] * currmuscle.get_tendon_slack_length())
                     
     return model
             

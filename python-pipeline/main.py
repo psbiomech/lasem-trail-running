@@ -6,7 +6,6 @@ Process and run LASEM TRAIL project data through OpenSim
 """
 
 import usersettings as uset
-import c3dextract as c3dex
 import labsetup as labs
 import opensimpipeline as osp
 import opensimresults as osr
@@ -34,40 +33,49 @@ print("Done.\n")
 
 # %% META DATABASE (BUILD NEW OR LOAD EXISTING)
 
-# print("Building new output database... ", end="")
-# import builddatabase as bd
-# traildb = bd.build_database("TRAIL", user, "run_stridecycle")
-# print("Done.\n")
-
-print("Loading existing output database... ", end="")
-import pickle as pk
-import os
-dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
-with open(dbfilepath,"rb") as fid:
-    traildb = pk.load(fid)
+print("Building new output database... ", end="")
+import builddatabase as bd
+traildb = bd.build_database("TRAIL", user, "run_stridecycle")
 print("Done.\n")
+
+# print("Loading existing output database... ", end="")
+# import pickle as pk
+# import os
+# dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
+# with open(dbfilepath,"rb") as fid:
+#     traildb = pk.load(fid)
+# print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-print("Extracting C3D data, creating OpenSim files...\n")
-c3dex.c3d_batch_process(user, traildb, lasem, 2, -1)
-print("\nC3D data extract done.\n")
+# print("Extracting C3D data, creating OpenSim files...\n")
+# import c3dextract as c3dex
+# c3dex.c3d_batch_process(user, traildb, lasem, 2, -1)
+# print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
 
-# print("Running OpenSim SO pipeline...\n")
-# osp.opensim_pipeline(traildb, user, ["scale", "ik", "id", "so"])
+# print("Running OpenSim basic analyses (IK, ID)...\n")
+# osp.opensim_pipeline(traildb, user, ["scale", "ik", "id"])
 # print("\nOpenSim pipeline completed.\n")
 
-print("Running OpenSim CMC pipeline...\n")
-osp.opensim_pipeline(traildb, user, ["scale", "ik", "rra", "cmc"])
+# print("Running additional OpenSim analyses (SO)...\n")
+# osp.opensim_pipeline(traildb, user, ["so"])
+# print("\nOpenSim pipeline completed.\n")
+
+# print("Running additional OpenSim analyses (RRA, CMC)...\n")
+# osp.opensim_pipeline(traildb, user, ["rra", "cmc"])
+# print("\nOpenSim pipeline completed.\n")
+
+# print("Running additional OpenSim analyses (SO + CMC)...\n")
+# osp.opensim_pipeline(traildb, user, ["so", "rra", "cmc"])
+# print("\nOpenSim pipeline completed.\n")
+
+print("Running custom OpenSim analyses series...\n")
+osp.opensim_pipeline(traildb, user, ["scale", "rra", "cmc"])
 print("\nOpenSim pipeline completed.\n")
-
-# print("Running OpenSim SO + CMC pipeline...\n")
-# osp.opensim_pipeline(traildb, user, ["scale", "ik", "id", "so", "rra", "cmc"])
-# print("\nOpenSim pipeline completed.\n")
 
 
 # %% LOAD AND FORMAT RESULTS
