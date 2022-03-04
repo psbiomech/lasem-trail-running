@@ -11,6 +11,7 @@ import numpy as np
 import pickle as pk
 import os
 import shutil
+import re
 
 
 '''
@@ -78,7 +79,8 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 # ****** FOR TESTING ONLY ******
-                if trial != "TRAIL_071_EP_01":
+                trialre = re.compile("TRAIL_071_(\w+)_01")
+                if not trialre.match("TRAIL_071_EP_01"):
                     print("%s ---> SKIP" % trial)
                     continue
                 # ******************************
@@ -938,22 +940,49 @@ def run_opensim_cmc(osimkey, user):
 
 '''
 update_osim_fom(modelfullpath, scalefactor, refmodelpath):
-    Update the OpenSim model FoM by a fixed scale factor, or using the scaling
-    law described by Handsfield et al. 2013 (scalefactor = -1).
+    Update all OpenSim model FoM by a fixed scale factor, or using the scaling
+    law described by Handsfield et al. 2013 (scalefactor = -1), alternatively, 
+    apply a custom scale factor to selected muscles.
+    
+    Accepted types for scalefactor:
+        
+        float: apply a fixed scale factor to all muscles
+            e.g scalefactor = 2.5
+            
+        dict (key, float): for each selected muscle (key) in the dict, apply
+                custom scale factor (float). The muscle (key) may be a full
+                muscle name (e.g. "vasint_r") or just the prefix (e.g.
+                "vasint"). If the latter, then the scale factor is applied to
+                all muscles found with that prefix.
+            e.g. scalefactor = {}
+                 scalefactor["vasint"] = 1.5
+                 scalefactor["semimem"] = 2.0
+        
 '''
 def update_osim_fom(model, scalefactor, refmodel):
     
     # load the model and get the muscles
     allmuscles = model.getMuscles()
     
-    # scale by a fixed scale factor
-    if scalefactor > 0:
-        for m in range(allmuscles.getSize()):
-            currmuscle = allmuscles.get(m)
-            currmuscle.setMaxIsometricForce(scalefactor * currmuscle.getMaxIsometricForce())
-    elif scalefactor == 0:
-        # Handsfield scaling law: TBD
-        pass
+    # scale by a fixed scale factor, or use Handsfield scaling law
+    if type(scalefactor) is float:
+        if scalefactor > 0:
+            for m in range(allmuscles.getSize()):
+                currmuscle = allmuscles.get(m)
+                currmuscle.setMaxIsometricForce(scalefactor * currmuscle.getMaxIsometricForce())
+        elif scalefactor == -1:
+            # Handsfield scaling law: TBD
+            pass
+                        
+    # custom scale selected variables
+    elif type(scalefactor) is dict:
+        for sfname in scalefactor:
+            for m in range(allmuscles.getSize()):
+                currmuscle = allmuscles.get(m)
+                mname = currmuscle.getName()
+                if mname.startswith(sfname):
+                    currmuscle.setMaxIsometricForce(scalefactor[sfname] * currmuscle.getMaxIsometricForce())
+
         
     return model
             
@@ -961,8 +990,22 @@ def update_osim_fom(model, scalefactor, refmodel):
 
 '''
 update_osim_lst(modelfullpath, scalefactor):
-    Update the OpenSim model LsT by a fixed scale factor, or using the scaling
-    law described by Handsfield et al. 2013 (scalefactor = -1).
+    Update all OpenSim model LsT by a fixed scale factor, or apply a custom
+    scale factor to selected muscles.
+    
+    Accepted types for scalefactor:
+        
+        float: apply a fixed scale factor to all muscles
+            e.g scalefactor = 2.5
+            
+        dict (key, float): for each selected muscle (key) in the dict, apply
+                custom scale factor (float). The muscle (key) may be a full
+                muscle name (e.g. "vasint_r") or just the prefix (e.g.
+                "vasint"). If the latter, then the scale factor is applied to
+                all muscles found with that prefix.
+            e.g. scalefactor = {}
+                 scalefactor["vasint"] = 1.5
+                 scalefactor["semimem"] = 2.0 
 '''
 def update_osim_lst(model, scalefactor):
     

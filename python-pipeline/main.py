@@ -65,17 +65,17 @@ print("Done.\n")
 # osp.opensim_pipeline(traildb, user, ["so"])
 # print("\nOpenSim pipeline completed.\n")
 
-# print("Running additional OpenSim analyses (RRA, CMC)...\n")
-# osp.opensim_pipeline(traildb, user, ["rra", "cmc"])
-# print("\nOpenSim pipeline completed.\n")
+print("Running additional OpenSim analyses (RRA, CMC)...\n")
+osp.opensim_pipeline(traildb, user, ["rra", "cmc"])
+print("\nOpenSim pipeline completed.\n")
 
 # print("Running additional OpenSim analyses (SO + CMC)...\n")
 # osp.opensim_pipeline(traildb, user, ["so", "rra", "cmc"])
 # print("\nOpenSim pipeline completed.\n")
 
-print("Running custom OpenSim analyses series...\n")
-osp.opensim_pipeline(traildb, user, ["scale", "rra", "cmc"])
-print("\nOpenSim pipeline completed.\n")
+# print("Running custom OpenSim analyses series...\n")
+# osp.opensim_pipeline(traildb, user, ["scale", "rra", "cmc"])
+# print("\nOpenSim pipeline completed.\n")
 
 
 # %% LOAD AND FORMAT RESULTS
