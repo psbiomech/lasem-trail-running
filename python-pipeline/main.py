@@ -57,21 +57,21 @@ print("Done.\n")
 
 # %% RUN OPENSIM PIPELINE
 
-# print("Running OpenSim basic analyses (IK, ID)...\n")
-# osp.opensim_pipeline(traildb, user, ["scale", "ik", "id"])
-# print("\nOpenSim pipeline completed.\n")
+print("Running OpenSim basic analyses (IK, ID)...\n")
+osp.opensim_pipeline(traildb, user, ["scale", "ik", "id"])
+print("\nOpenSim pipeline completed.\n")
 
 # print("Running additional OpenSim analyses (SO)...\n")
 # osp.opensim_pipeline(traildb, user, ["so"])
 # print("\nOpenSim pipeline completed.\n")
 
-print("Running additional OpenSim analyses (RRA, CMC)...\n")
-osp.opensim_pipeline(traildb, user, ["rra", "cmc"])
-print("\nOpenSim pipeline completed.\n")
-
-# print("Running additional OpenSim analyses (SO + CMC)...\n")
-# osp.opensim_pipeline(traildb, user, ["so", "rra", "cmc"])
+# print("Running additional OpenSim analyses (RRA, CMC)...\n")
+# osp.opensim_pipeline(traildb, user, ["rra", "cmc"])
 # print("\nOpenSim pipeline completed.\n")
+
+print("Running additional OpenSim analyses (SO + CMC)...\n")
+osp.opensim_pipeline(traildb, user, ["so", "rra", "cmc"])
+print("\nOpenSim pipeline completed.\n")
 
 # print("Running custom OpenSim analyses series...\n")
 # osp.opensim_pipeline(traildb, user, ["scale", "rra", "cmc"])

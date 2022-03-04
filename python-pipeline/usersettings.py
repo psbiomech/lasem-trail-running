@@ -125,15 +125,17 @@ class TRAILSettings(UserSettings):
         # Usage: *_scalefactors can be either a float or dict (key, float)
         #   float: constant scale factor applied to all
         #   dict (key, float): apply custom scale factor (float) to each listed variable (key)
-        self.fom_scalefactor = 3.5
-        self.lst_scalefactor = {}       
-        self.lst_scalefactor["vasint"] = 1.25
-        self.lst_scalefactor["vaslat"] = 1.25
-        self.lst_scalefactor["vasmed"] = 1.25
-        self.lst_scalefactor["semimem"] = 1.1
-        self.lst_scalefactor["semiten"] = 1.1
-        self.lst_scalefactor["bfsh"] = 1.1  
-        self.lst_scalefactor["bflh"] = 1.1 
+        self.fom_scalefactor = -1
+        self.lst_scalefactor = -1
+        #self.lst_scalefactor = {}       
+        #self.lst_scalefactor["vasint"] = 1.25
+        #self.lst_scalefactor["vaslat"] = 1.25
+        #self.lst_scalefactor["vasmed"] = 1.25
+        #self.lst_scalefactor["semimem"] = 1.1
+        #self.lst_scalefactor["semiten"] = 1.1
+        #self.lst_scalefactor["bfsh"] = 1.1  
+        #self.lst_scalefactor["bflh"] = 1.1
+        
         
         # OpenSim RRA parameters
         self.rraiter = 2

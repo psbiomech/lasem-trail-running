@@ -11,7 +11,6 @@ import numpy as np
 import pickle as pk
 import os
 import shutil
-import re
 
 
 '''
@@ -79,8 +78,9 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 # ****** FOR TESTING ONLY ******
-                trialre = re.compile("TRAIL_071_(\w+)_01")
-                if not trialre.match("TRAIL_071_EP_01"):
+                import re
+                trialre = re.compile("TRAIL_071_EP_(\w+)")
+                if not trialre.match(trial):
                     print("%s ---> SKIP" % trial)
                     continue
                 # ******************************
