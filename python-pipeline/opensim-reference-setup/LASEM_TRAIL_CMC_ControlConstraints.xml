@@ -191,13 +191,13 @@
 			<ControlLinear name="addmagIsch_r.excitation"/>
 			<ControlLinear name="addmagMid_r.excitation"/>
 			<ControlLinear name="addmagProx_r.excitation"/>
-			<ControlLinear name="bflh_r.excitation"/>
-			<ControlLinear name="bfsh_r.excitation"/>
+			<ControlLinear name="bflh140_r.excitation"/>
+			<ControlLinear name="bfsh140_r.excitation"/>
 			<ControlLinear name="edl_r.excitation"/>
 			<ControlLinear name="ehl_r.excitation"/>
 			<ControlLinear name="fdl_r.excitation"/>
 			<ControlLinear name="fhl_r.excitation"/>
-			<ControlLinear name="gaslat_r.excitation" />
+			<ControlLinear name="gaslat140_r.excitation" />
 			<ControlLinear name="gasmed_r.excitation" />
 			<ControlLinear name="glmax1_r.excitation"/>
 			<ControlLinear name="glmax2_r.excitation"/>
@@ -223,7 +223,7 @@
 			<ControlLinear name="tib_ant_r.excitation"/>
 			<ControlLinear name="tib_post_r.excitation"/>
 			<ControlLinear name="vasint_r.excitation"/>
-			<ControlLinear name="vaslat_r.excitation"/>
+			<ControlLinear name="vaslat140_r.excitation"/>
 			<ControlLinear name="vasmed_r.excitation"/>			
 			<ControlLinear name="addbrev_l.excitation"/>
 			<ControlLinear name="addlong_l.excitation"/>
@@ -231,13 +231,13 @@
 			<ControlLinear name="addmagIsch_l.excitation"/>
 			<ControlLinear name="addmagMid_l.excitation"/>
 			<ControlLinear name="addmagProx_l.excitation"/>
-			<ControlLinear name="bflh_l.excitation"/>
-			<ControlLinear name="bfsh_l.excitation"/>
+			<ControlLinear name="bflh140_l.excitation"/>
+			<ControlLinear name="bfsh140_l.excitation"/>
 			<ControlLinear name="edl_l.excitation"/>
 			<ControlLinear name="ehl_l.excitation"/>
 			<ControlLinear name="fdl_l.excitation"/>
 			<ControlLinear name="fhl_l.excitation"/>
-			<ControlLinear name="gaslat_l.excitation" />
+			<ControlLinear name="gaslat140_l.excitation" />
 			<ControlLinear name="gasmed_l.excitation" />			
 			<ControlLinear name="glmax1_l.excitation"/>
 			<ControlLinear name="glmax2_l.excitation"/>
@@ -263,7 +263,7 @@
 			<ControlLinear name="tib_ant_l.excitation"/>
 			<ControlLinear name="tib_post_l.excitation"/>
 			<ControlLinear name="vasint_l.excitation"/>
-			<ControlLinear name="vaslat_l.excitation"/>
+			<ControlLinear name="vaslat140_l.excitation"/>
 			<ControlLinear name="vasmed_l.excitation"/>
 		
 		</objects>

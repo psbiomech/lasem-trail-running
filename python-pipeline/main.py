@@ -49,10 +49,10 @@ print("Done.\n")
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-# print("Extracting C3D data, creating OpenSim files...\n")
-# import c3dextract as c3dex
-# c3dex.c3d_batch_process(user, traildb, lasem, 2, -1)
-# print("\nC3D data extract done.\n")
+print("Extracting C3D data, creating OpenSim files...\n")
+import c3dextract as c3dex
+c3dex.c3d_batch_process(user, traildb, lasem, 2, -1)
+print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE

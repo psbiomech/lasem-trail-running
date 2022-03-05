@@ -80,7 +80,7 @@ class TRAILSettings(UserSettings):
         # force plate data filter
         self.filter_butter_order = 4
         self.filter_cutoff = 15
-        self.filter_threshold = 10
+        self.filter_threshold = 0
         
         
        
@@ -143,6 +143,6 @@ class TRAILSettings(UserSettings):
         # OpenSim CMC parameters
         self.use_rra_model = True
         self.use_fast_target = True
-        self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
+        self.cmc_start_time_offset = -0.05  # to enable CMC initalisation
         self.cmc_end_time_offset = -0.1     # due to final event time errors
         

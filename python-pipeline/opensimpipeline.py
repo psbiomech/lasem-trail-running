@@ -78,11 +78,11 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 # ****** FOR TESTING ONLY ******
-                import re
-                trialre = re.compile("TRAIL_071_EP_(\w+)")
-                if not trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
+                # import re
+                # trialre = re.compile("TRAIL_071_EP_01")
+                # if not trialre.match(trial):
+                #     print("%s ---> SKIP" % trial)
+                #     continue
                 # ******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
