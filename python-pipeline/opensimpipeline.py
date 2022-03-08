@@ -218,9 +218,9 @@ def run_opensim_scale(osimkey, user):
         tool.run()
         
         # scale the model FoM if required
-        print("---> Scaling muscle FoM in model...")
         sf_fom = user.fom_scalefactor
         if (type(sf_fom) is dict) or (sf_fom >= 0):
+            print("---> Scaling muscle FoM in model...")
             shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_FoM.osim"))
             model0 = opensim.Model(os.path.join(fpath, model))
             refmodel = opensim.Model(os.path.join(refmodelpath, refmodelfile))
@@ -228,9 +228,9 @@ def run_opensim_scale(osimkey, user):
             model1.printToXML(os.path.join(fpath, model))
             
         # scale the model FoM if required
-        print("---> Scaling muscle LsT in model...")
         sf_lst = user.lst_scalefactor
         if (type(sf_lst) is dict) or (sf_lst > 0):
+            print("---> Scaling muscle LsT in model...")
             shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LsT.osim"))
             model0 = opensim.Model(os.path.join(fpath, model))
             model1 = update_osim_lst(model0, sf_lst)
