@@ -850,7 +850,7 @@ def smooth_transitions(F, T, cop, vert_col_idx, threshold, window):
     idxdn = np.where(Fy_diff == -1)
     
     # rectify drift on foot strike
-    for xi in idxup:
+    for xi in idxup[0]:
         
         # x window
         x = int(xi)
@@ -873,7 +873,7 @@ def smooth_transitions(F, T, cop, vert_col_idx, threshold, window):
         cop[x - window:x, :] = cop[x, :]
 
     # rectify drift on foot off
-    for xi in idxdn:
+    for xi in idxdn[0]:
         
         # x window
         x = int(xi)

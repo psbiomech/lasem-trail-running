@@ -79,8 +79,8 @@ class TRAILSettings(UserSettings):
        
         # force plate data filter
         self.filter_butter_order = 4
-        self.filter_cutoff = 50
-        self.filter_threshold = 50
+        self.filter_cutoff = 30
+        self.filter_threshold = 10
         self.smooth_window = 10
         
         
@@ -126,7 +126,7 @@ class TRAILSettings(UserSettings):
         # Usage: *_scalefactors can be either a float or dict (key, float)
         #   float: constant scale factor applied to all
         #   dict (key, float): apply custom scale factor (float) to each listed variable (key)
-        self.fom_scalefactor = -1
+        self.fom_scalefactor = 3.0
         # self.fom_scalefactor = {}
         # self.fom_scalefactor["gasmed"] = 2.0
         # self.fom_scalefactor["gaslat"] = 2.0
@@ -156,6 +156,6 @@ class TRAILSettings(UserSettings):
         # OpenSim CMC parameters
         self.use_rra_model = True
         self.use_fast_target = True
-        self.cmc_start_time_offset = -0.05  # to enable CMC initalisation
+        self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
         self.cmc_end_time_offset = -0.1    # due to final event time errors
         
