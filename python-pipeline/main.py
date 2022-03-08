@@ -74,7 +74,7 @@ osp.opensim_pipeline(traildb, user, ["so", "rra", "cmc"])
 print("\nOpenSim pipeline completed.\n")
 
 # print("Running custom OpenSim analyses series...\n")
-# osp.opensim_pipeline(traildb, user, ["scale", "rra", "cmc"])
+# osp.opensim_pipeline(traildb, user, ["cmc"])
 # print("\nOpenSim pipeline completed.\n")
 
 

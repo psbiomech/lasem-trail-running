@@ -124,20 +124,9 @@ class TRAILSettings(UserSettings):
         
         # OpenSim Scale parameters
         self.fom_scalefactor = {}
-        self.fom_scalefactor["all"] = 2.5
-        # self.fom_scalefactor["edl"] = 6.0
-        # self.fom_scalefactor["ehl"] = 6.0
-        # self.fom_scalefactor["tibant"] = 6.0       
+        self.fom_scalefactor["all"] = 2.0
         self.lst_scalefactor = {}
-        self.lst_scalefactor["all"] = 0
-        # self.lst_scalefactor["vasint"] = 1.25
-        # self.lst_scalefactor["vaslat"] = 1.25
-        # self.lst_scalefactor["vasmed"] = 1.25
-        # self.lst_scalefactor["semimem"] = 1.1
-        # self.lst_scalefactor["semiten"] = 1.1
-        # self.lst_scalefactor["bfsh"] = 1.1  
-        # self.lst_scalefactor["bflh"] = 1.1
-        
+        self.lst_scalefactor["all"] = 0       
         
         # OpenSim RRA parameters
         self.rraiter = 2
