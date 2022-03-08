@@ -4,7 +4,7 @@
 	<defaults>
 		<ControlLinear name="default">
 			<is_model_control> true </is_model_control>
-			<extrapolate> false </extrapolate>
+			<extrapolate> true </extrapolate>
 			<default_min> 0.02 </default_min>
 			<default_max> 1.0 </default_max>
 			<use_steps> true </use_steps>
@@ -14,173 +14,173 @@
 		
 			<!-- RESIDUAL ACTUATORS -->
 			<ControlLinear name="FX.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="FY.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="FZ.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="MX.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="MY.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="MZ.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>	
 
 			<!-- RESERVE ACTUATORS -->			
 			<!-- No reserves required for locked coordinates -->
 			<ControlLinear name="hip_flexion_r_reserve.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="hip_adduction_r_reserve.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="hip_rotation_r_reserve.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="knee_angle_r_reserve.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="ankle_angle_r_reserve.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="hip_flexion_l_reserve.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="hip_adduction_l_reserve.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="hip_rotation_l_reserve.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="knee_angle_l_reserve.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="ankle_angle_l_reserve.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1000</default_min>
+				<default_max>  1000</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			
 			<!-- TORQUE ACTUATORS -->
 			<ControlLinear name="lumbar_ext.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="lumbar_bend.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="lumbar_rot.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_flex_r.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_add_r.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_rot_r.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="elbow_flex_r.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="pro_sup_r.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="wrist_flex_r.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="wrist_dev_r.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_flex_l.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_add_l.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_rot_l.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="elbow_flex_l.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="pro_sup_l.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="wrist_flex_l.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="wrist_dev_l.excitation">
-				<default_min> -1000 </default_min>
-				<default_max>  1000 </default_max>
+				<default_min> -1</default_min>
+				<default_max>  1</default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 

@@ -79,8 +79,9 @@ class TRAILSettings(UserSettings):
        
         # force plate data filter
         self.filter_butter_order = 4
-        self.filter_cutoff = 15
-        self.filter_threshold = 0
+        self.filter_cutoff = 50
+        self.filter_threshold = 50
+        self.smooth_window = 10
         
         
        
@@ -126,15 +127,27 @@ class TRAILSettings(UserSettings):
         #   float: constant scale factor applied to all
         #   dict (key, float): apply custom scale factor (float) to each listed variable (key)
         self.fom_scalefactor = -1
+        # self.fom_scalefactor = {}
+        # self.fom_scalefactor["gasmed"] = 2.0
+        # self.fom_scalefactor["gaslat"] = 2.0
+        # self.fom_scalefactor["glmax"] = 2.0
+        # self.fom_scalefactor["glmed"] = 2.0
+        # self.fom_scalefactor["glmin"] = 2.0
+        # self.fom_scalefactor["iliacus"] = 2.0
+        # self.fom_scalefactor["psoas"] = 2.0
+        # self.fom_scalefactor["soleus"] = 2.0
+        # self.fom_scalefactor["vasint"] = 2.0
+        # self.fom_scalefactor["vaslat"] = 2.0
+        # self.fom_scalefactor["vaslmed"] = 2.0        
         self.lst_scalefactor = -1
-        #self.lst_scalefactor = {}       
-        #self.lst_scalefactor["vasint"] = 1.25
-        #self.lst_scalefactor["vaslat"] = 1.25
-        #self.lst_scalefactor["vasmed"] = 1.25
-        #self.lst_scalefactor["semimem"] = 1.1
-        #self.lst_scalefactor["semiten"] = 1.1
-        #self.lst_scalefactor["bfsh"] = 1.1  
-        #self.lst_scalefactor["bflh"] = 1.1
+        # self.lst_scalefactor = {}       
+        # self.lst_scalefactor["vasint"] = 1.25
+        # self.lst_scalefactor["vaslat"] = 1.25
+        # self.lst_scalefactor["vasmed"] = 1.25
+        # self.lst_scalefactor["semimem"] = 1.1
+        # self.lst_scalefactor["semiten"] = 1.1
+        # self.lst_scalefactor["bfsh"] = 1.1  
+        # self.lst_scalefactor["bflh"] = 1.1
         
         
         # OpenSim RRA parameters
@@ -144,5 +157,5 @@ class TRAILSettings(UserSettings):
         self.use_rra_model = True
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.05  # to enable CMC initalisation
-        self.cmc_end_time_offset = -0.1     # due to final event time errors
+        self.cmc_end_time_offset = -0.1    # due to final event time errors
         
