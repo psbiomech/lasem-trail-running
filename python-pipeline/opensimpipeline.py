@@ -78,11 +78,11 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 # ****** FOR TESTING ONLY ******
-                import re
-                trialre = re.compile("TRAIL_071_EP_01")
-                if not trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
+                # import re
+                # trialre = re.compile("TRAIL_071_EP_01")
+                # if not trialre.match(trial):
+                #     print("%s ---> SKIP" % trial)
+                #     continue
                 # ******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
@@ -941,23 +941,26 @@ def run_opensim_cmc(osimkey, user):
 '''
 update_osim_fom(modelfullpath, scalefactor, refmodelpath):
     Update all OpenSim model FoM by a fixed scale factor, or using the scaling
-    law described by Handsfield et al. 2013 (scalefactor = -1), alternatively, 
-    apply a custom scale factor to selected muscles.
+    law described by Handsfield et al. 2013 (scalefactor["all"] = -1), and/or 
+    apply a custom scale factor to selected muscles. To ignore scale factors,
+    set scalefactor["all"] = 0.
     
-    Accepted types for scalefactor:
+    Usage:
         
-        float: apply a fixed scale factor to all muscles
-            e.g scalefactor = 2.5
-            
+        dict ("all", 0): do not scale (use model as-is)
+        dict ("all", -1): apply Handsfield scaling law
+        dict ("all", float): apply fixed scale factor to all muscles, this can
+                be overwritten for specific muscles by adding additional dict
+                items for each muscle as per below.
         dict (key, float): for each selected muscle (key) in the dict, apply
                 custom scale factor (float). The muscle (key) may be a full
                 muscle name (e.g. "vasint_r") or just the prefix (e.g.
                 "vasint"). If the latter, then the scale factor is applied to
                 all muscles found with that prefix.
             e.g. scalefactor = {}
+                 scalefactor["all"] = 1.2
                  scalefactor["vasint"] = 1.5
-                 scalefactor["semimem"] = 2.0
-        
+                 scalefactor["semimem"] = 2.0        
 '''
 def update_osim_fom(model, scalefactor, refmodel):
     
@@ -965,23 +968,28 @@ def update_osim_fom(model, scalefactor, refmodel):
     allmuscles = model.getMuscles()
     
     # scale by a fixed scale factor, or use Handsfield scaling law
-    if type(scalefactor) is float:
-        if scalefactor > 0:
+    sf = 1.0
+    if "all" in scalefactor:
+        if scalefactor["all"] > 0:
+            sf = scalefactor["all"]
             for m in range(allmuscles.getSize()):
                 currmuscle = allmuscles.get(m)
-                currmuscle.setMaxIsometricForce(scalefactor * currmuscle.getMaxIsometricForce())
-        elif scalefactor == -1:
+                currmuscle.setMaxIsometricForce(sf * currmuscle.getMaxIsometricForce())
+        elif scalefactor["all"] == -1:
             # Handsfield scaling law: TBD
-            pass
+            return model
+        elif scalefactor["all"] == 0:
+            return model
                         
-    # custom scale selected variables
-    elif type(scalefactor) is dict:
-        for sfname in scalefactor:
-            for m in range(allmuscles.getSize()):
-                currmuscle = allmuscles.get(m)
-                mname = currmuscle.getName()
-                if mname.startswith(sfname):
-                    currmuscle.setMaxIsometricForce(scalefactor[sfname] * currmuscle.getMaxIsometricForce())
+    # custom scale selected variables, overwrites muscles scaled by "all" key
+    for sfname in scalefactor:
+        if sfname.casefold() == "all": continue
+        for m in range(allmuscles.getSize()):
+            currmuscle = allmuscles.get(m)
+            mname = currmuscle.getName()
+            if mname.startswith(sfname):
+                sfm = scalefactor[sfname] / sf
+                currmuscle.setMaxIsometricForce(sfm * currmuscle.getMaxIsometricForce())
 
         
     return model
@@ -990,22 +998,25 @@ def update_osim_fom(model, scalefactor, refmodel):
 
 '''
 update_osim_lst(modelfullpath, scalefactor):
-    Update all OpenSim model LsT by a fixed scale factor, or apply a custom
-    scale factor to selected muscles.
+    Update all OpenSim model LsT by a fixed scale factor, and/or apply a
+    custom scale factor to selected muscles. To ignore scale factors, set
+    scalefactor["all"] = 0.
     
-    Accepted types for scalefactor:
+    Usage:
         
-        float: apply a fixed scale factor to all muscles
-            e.g scalefactor = 2.5
-            
+        dict ("all", 0): do not scale (use model as-is)
+        dict ("all", float): apply fixed scale factor to all muscles, this can
+                be overwritten for specific muscles by adding additional dict
+                items for each muscle as per below.
         dict (key, float): for each selected muscle (key) in the dict, apply
                 custom scale factor (float). The muscle (key) may be a full
                 muscle name (e.g. "vasint_r") or just the prefix (e.g.
                 "vasint"). If the latter, then the scale factor is applied to
                 all muscles found with that prefix.
             e.g. scalefactor = {}
+                 scalefactor["all"] = 1.2
                  scalefactor["vasint"] = 1.5
-                 scalefactor["semimem"] = 2.0 
+                 scalefactor["semimem"] = 2.0
 '''
 def update_osim_lst(model, scalefactor):
     
@@ -1013,20 +1024,25 @@ def update_osim_lst(model, scalefactor):
     allmuscles = model.getMuscles()
     
     # scale all by a fixed scale factor
-    if type(scalefactor) is float:
-        if scalefactor > 0:
+    sf = 1.0
+    if "all" in scalefactor:
+        if scalefactor["all"] > 0:
+            sf = scalefactor["all"]
             for m in range(allmuscles.getSize()):
                 currmuscle = allmuscles.get(m)
-                currmuscle.set_tendon_slack_length(scalefactor * currmuscle.get_tendon_slack_length())
+                currmuscle.set_tendon_slack_length(sf * currmuscle.get_tendon_slack_length())
+        elif scalefactor["all"] == 0:
+            return model
 
     # custom scale selected variables
-    elif type(scalefactor) is dict:
-        for sfname in scalefactor:
-            for m in range(allmuscles.getSize()):
-                currmuscle = allmuscles.get(m)
-                mname = currmuscle.getName()
-                if mname.startswith(sfname):
-                    currmuscle.set_tendon_slack_length(scalefactor[sfname] * currmuscle.get_tendon_slack_length())
+    for sfname in scalefactor:
+        if sfname.casefold() == "all": continue
+        for m in range(allmuscles.getSize()):
+            currmuscle = allmuscles.get(m)
+            mname = currmuscle.getName()
+            if mname.startswith(sfname):
+                sfm = scalefactor[sfname] / sf
+                currmuscle.set_tendon_slack_length(sfm * currmuscle.get_tendon_slack_length())
                     
     return model
             

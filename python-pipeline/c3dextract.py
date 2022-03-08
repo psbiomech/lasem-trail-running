@@ -569,10 +569,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in meta[subj]["trials"][group]:                
 
                 # ****** FOR TESTING ONLY ******
-                trialre = re.compile("TRAIL_071_Static_(\w+)")
-                if trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
+                # trialre = re.compile("TRAIL_071_Static_(\w+)")
+                # if trialre.match(trial):
+                #     print("%s ---> SKIP" % trial)
+                #     continue
                 # ******************************
                 
                 # ignore dynamic trials
@@ -608,10 +608,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 # ****** FOR TESTING ONLY ******                
-                trialre = re.compile("TRAIL_071_EP_01")
-                if not trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
+                # trialre = re.compile("TRAIL_071_EP_01")
+                # if not trialre.match(trial):
+                #     print("%s ---> SKIP" % trial)
+                #     continue
                 # ******************************
                 
                 # ignore static trials

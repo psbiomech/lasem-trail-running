@@ -79,8 +79,8 @@ class TRAILSettings(UserSettings):
        
         # force plate data filter
         self.filter_butter_order = 4
-        self.filter_cutoff = 30
-        self.filter_threshold = 10
+        self.filter_cutoff = 40
+        self.filter_threshold = 15
         self.smooth_window = 10
         
         
@@ -123,24 +123,13 @@ class TRAILSettings(UserSettings):
         self.cmccode = "cmc"
         
         # OpenSim Scale parameters
-        # Usage: *_scalefactors can be either a float or dict (key, float)
-        #   float: constant scale factor applied to all
-        #   dict (key, float): apply custom scale factor (float) to each listed variable (key)
-        self.fom_scalefactor = 3.0
-        # self.fom_scalefactor = {}
-        # self.fom_scalefactor["gasmed"] = 2.0
-        # self.fom_scalefactor["gaslat"] = 2.0
-        # self.fom_scalefactor["glmax"] = 2.0
-        # self.fom_scalefactor["glmed"] = 2.0
-        # self.fom_scalefactor["glmin"] = 2.0
-        # self.fom_scalefactor["iliacus"] = 2.0
-        # self.fom_scalefactor["psoas"] = 2.0
-        # self.fom_scalefactor["soleus"] = 2.0
-        # self.fom_scalefactor["vasint"] = 2.0
-        # self.fom_scalefactor["vaslat"] = 2.0
-        # self.fom_scalefactor["vaslmed"] = 2.0        
-        self.lst_scalefactor = -1
-        # self.lst_scalefactor = {}       
+        self.fom_scalefactor = {}
+        self.fom_scalefactor["all"] = 2.5
+        # self.fom_scalefactor["edl"] = 6.0
+        # self.fom_scalefactor["ehl"] = 6.0
+        # self.fom_scalefactor["tibant"] = 6.0       
+        self.lst_scalefactor = {}
+        self.lst_scalefactor["all"] = 0
         # self.lst_scalefactor["vasint"] = 1.25
         # self.lst_scalefactor["vaslat"] = 1.25
         # self.lst_scalefactor["vasmed"] = 1.25
