@@ -383,7 +383,7 @@ OpenSimKey:
     processing through OpenSim.
 '''
 class OpenSimKey():
-    def __init__(self, trialkey, ref_model, c3dpath, filter_butter_order, filter_cutoff, filter_threshold, smooth_window):
+    def __init__(self, trialkey, ref_model, c3dpath, filter_butter_order, filter_cutoff, filter_threshold, smooth_cop_offset, smooth_window):
         self.subject = trialkey.subject_name
         self.trial = trialkey.trial_name
         self.mass = trialkey.mass
@@ -395,7 +395,7 @@ class OpenSimKey():
         self.outpath = c3dpath
         self.__set_events(trialkey)
         self.__set_markers(trialkey) 
-        self.__set_forces(trialkey, filter_butter_order, filter_cutoff, filter_threshold, smooth_window)      
+        self.__set_forces(trialkey, filter_butter_order, filter_cutoff, filter_threshold, smooth_cop_offset, smooth_window)      
         return None
     
     def __set_events(self, trialkey):
@@ -452,7 +452,7 @@ class OpenSimKey():
         
         return None
                    
-    def __set_forces(self, trialkey, filter_butter_order, filter_cutoff, filter_threshold, smooth_window):
+    def __set_forces(self, trialkey, filter_butter_order, filter_cutoff, filter_threshold, smooth_cop_offset, smooth_window):
  
         # initiliase temporary output arrays
         data = {}
@@ -501,12 +501,12 @@ class OpenSimKey():
                 if trialkey.markers["offset_marker"]: offset = self.markers["offset"]
                 for n in range(ns): cop[n,:] = cop[n,:] - offset
 
-                # filter and floor the force plate data
-                F1, T1, cop1 = filter_and_floor_fp(F, T, cop, 1, forces["rate"], filter_butter_order, filter_cutoff, filter_threshold)
-    
                 # smooth the foot-strike and foot-off edges
-                F2, T2, cop2 = smooth_transitions(F1, T1, cop1, 1, filter_threshold, smooth_window)
-    
+                F1, T1, cop1 = smooth_transitions(F, T, cop, 1, filter_threshold, smooth_cop_offset, smooth_window)
+
+                # filter and floor the force plate data
+                F2, T2, cop2 = filter_and_floor_fp(F1, T1, cop1, 1, forces["rate"], filter_butter_order, filter_cutoff, filter_threshold)
+        
                 # for each force plate, add force plate data for any active
                 # intervals to the output array for the relevant foot
                 for h, g in enumerate(leg):
@@ -588,7 +588,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                 task = meta[subj]["trials"][group][trial]["task"]
                 condition = meta[subj]["trials"][group][trial]["condition"]
-                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.filter_butter_order, user.filter_cutoff, user.filter_threshold, user.smooth_window)                           
+                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.filter_butter_order, user.filter_cutoff, user.filter_threshold, user.smooth_cop_fixed_offset, user.smooth_window)                           
                 
                 # get the mass from the used static trial
                 if usedstatic: mass = osimkey.mass
@@ -608,10 +608,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 # ****** FOR TESTING ONLY ******                
-                # trialre = re.compile("TRAIL_071_EP_01")
-                # if not trialre.match(trial):
-                #     print("%s ---> SKIP" % trial)
-                #     continue
+                trialre = re.compile("TRAIL_071_EP_02")
+                if not trialre.match(trial):
+                    print("%s ---> SKIP" % trial)
+                    continue
                 # ******************************
                 
                 # ignore static trials
@@ -626,7 +626,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                 task = meta[subj]["trials"][group][trial]["task"]
                 condition = meta[subj]["trials"][group][trial]["condition"]
-                c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.filter_butter_order, user.filter_cutoff, user.filter_threshold, user.smooth_window)                           
+                c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.filter_butter_order, user.filter_cutoff, user.filter_threshold, user.smooth_cop_fixed_offset, user.smooth_window)                           
                      
             #
             # ###################################                    
@@ -642,7 +642,7 @@ c3d_extract(trial, c3dpath, c3dpath, lab, condition, xdir, ref_model,
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, ref_model, static_fp_channel, mass, filter_butter_order, filter_cutoff, filter_threshold, smooth_window):
+def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, ref_model, static_fp_channel, mass, filter_butter_order, filter_cutoff, filter_threshold, smooth_cop_offset, smooth_window):
     
     # load C3D file
     itf = c3d.c3dserver()
@@ -665,7 +665,7 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, ref_model, 
     trialkey = TrialKey(lab, task, condition, c3dkey, xdir, static_fp_channel, mass)
     
     # opensim input data
-    osimkey = OpenSimKey(trialkey, ref_model, c3dpath, filter_butter_order, filter_cutoff, filter_threshold, smooth_window)
+    osimkey = OpenSimKey(trialkey, ref_model, c3dpath, filter_butter_order, filter_cutoff, filter_threshold, smooth_cop_offset, smooth_window)
     
     # save key files
     with open(os.path.join(c3dpath, trial + "_c3dkey.pkl"),"wb") as f: pk.dump(c3dkey, f)
@@ -832,13 +832,14 @@ def filter_and_floor_fp(F, T, cop, vert_col_idx, sample_rate, butter_order, cuto
     
   
 '''
-smooth_transitions(F, T, CoP, vert_col_idx, threshold, window):
+smooth_transitions(F, T, CoP, vert_col_idx, threshold, cop_fixed_offset, 
+                   window):
     Smooth the transitions at foot-strike and foot-off. Affix the transitioning
     forces at the heel (i.e. first valid GRF) to avoid drift of the CoP from
     the force plate centre to the foot, which can create large moments about
     the lower limb joints.
 '''
-def smooth_transitions(F, T, cop, vert_col_idx, threshold, window):
+def smooth_transitions(F, T, cop, vert_col_idx, threshold, cop_fixed_offset, window):
     
     # find threshold indices
     Fy = F[:, vert_col_idx].copy()
@@ -869,8 +870,8 @@ def smooth_transitions(F, T, cop, vert_col_idx, threshold, window):
         t1window = tspline(x1window)
         T[x - window:x, :] = t1window      
         
-        # # CoP window
-        cop[x - window:x, :] = cop[x, :]
+        # CoP window, affix to a point reasonably ahead
+        cop[x - window:x, :] = cop[x + cop_fixed_offset, :]
 
     # rectify drift on foot off
     for xi in idxdn[0]:
@@ -892,7 +893,7 @@ def smooth_transitions(F, T, cop, vert_col_idx, threshold, window):
         t1window = tspline(x1window)
         T[x - 1:x + window - 1, :] = t1window      
         
-        # # CoP window
+        # CoP window
         cop[x - 1:x + window - 1, :] = cop[x - 1, :]
 
         

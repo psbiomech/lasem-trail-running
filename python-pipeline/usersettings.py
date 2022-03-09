@@ -64,6 +64,7 @@ class TRAILSettings(UserSettings):
         self.trialprefixes = {}
         self.trialprefixes["run_stance"] = ["EP", "FAST"]
         self.trialprefixes["run_stridecycle"] = ["EP", "FAST"]
+        self.trialprefixes["run_stridecycle_ep"] = ["EP", "FAST"]
         self.trialprefixes["run_stridecycle_fast"] = ["FAST"]
                         
         # file name format regex pattern:
@@ -81,7 +82,9 @@ class TRAILSettings(UserSettings):
         self.filter_butter_order = 4
         self.filter_cutoff = 40
         self.filter_threshold = 15
-        self.smooth_window = 10
+        self.smooth_cop_fixed_offset = 50
+        self.smooth_window = 25
+        
         
         
        
@@ -125,8 +128,16 @@ class TRAILSettings(UserSettings):
         # OpenSim Scale parameters
         self.fom_scalefactor = {}
         self.fom_scalefactor["all"] = 2.0
+        self.fom_scalefactor["iliacus"] = 3.0
+        self.fom_scalefactor["psoas"] = 3.0
+        self.fom_scalefactor["ehl"] = 3.0
+        self.fom_scalefactor["edl"] = 3.0
+        self.fom_scalefactor["vas"] = 3.0
+        self.fom_scalefactor["glm"] = 3.0
+        self.fom_scalefactor["bf"] = 3.0
+        self.fom_scalefactor["semi"] = 3.0        
         self.lst_scalefactor = {}
-        self.lst_scalefactor["all"] = 0       
+        self.lst_scalefactor["all"] = 0      
         
         # OpenSim RRA parameters
         self.rraiter = 2
@@ -135,5 +146,5 @@ class TRAILSettings(UserSettings):
         self.use_rra_model = True
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
-        self.cmc_end_time_offset = -0.1    # due to final event time errors
+        self.cmc_end_time_offset = -0.05   # due to final event time errors
         
