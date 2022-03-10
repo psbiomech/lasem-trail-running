@@ -506,7 +506,7 @@ class OpenSimKey():
 
                 # filter and floor the force plate data
                 F2, T2, cop2 = filter_and_floor_fp(F1, T1, cop1, 1, forces["rate"], filter_butter_order, filter_cutoff, filter_threshold)
-        
+                    
                 # for each force plate, add force plate data for any active
                 # intervals to the output array for the relevant foot
                 for h, g in enumerate(leg):
@@ -608,10 +608,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 # ****** FOR TESTING ONLY ******                
-                trialre = re.compile("TRAIL_071_EP_02")
-                if not trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
+                # trialre = re.compile("TRAIL_071_EP_08")
+                # if not trialre.match(trial):
+                #     print("%s ---> SKIP" % trial)
+                #     continue
                 # ******************************
                 
                 # ignore static trials

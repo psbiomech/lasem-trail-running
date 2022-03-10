@@ -31,10 +31,10 @@ import pickle as pk
 
 
 '''
-build_database(project, user, task):
+build_database(user, task):
     Build OpenSim output database from user, return metadata dict.
 '''
-def build_database(project, user, task):
+def build_database(user, task):
     
     # parse database, get subject list
     inpath = os.path.join(user.rootpath, user.infolder, user.subjprefix + "*")
@@ -50,7 +50,7 @@ def build_database(project, user, task):
         # basic info
         meta[subj] = {}
         meta[subj]["subj"] = subj
-        meta[subj]["project"] = project
+        meta[subj]["project"] = user.project
         meta[subj]["outpath"] = os.path.join(outpath, subj)
         
         # trial subfolders
@@ -97,6 +97,6 @@ def build_database(project, user, task):
                 shutil.copy(os.path.join(meta[subj]["trials"][group][trial]["inpath"], meta[subj]["trials"][group][trial]["c3dfile"]), trialoutpath)
                 
     # save the metadata dict
-    with open(os.path.join(outpath, project + ".pkl"),"wb") as fid: pk.dump(meta, fid)
+    with open(os.path.join(outpath, user.project + ".pkl"),"wb") as fid: pk.dump(meta, fid)
     
     return meta

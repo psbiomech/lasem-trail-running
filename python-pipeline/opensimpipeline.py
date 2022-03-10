@@ -78,11 +78,11 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 # ****** FOR TESTING ONLY ******
-                import re
-                trialre = re.compile("TRAIL_071_EP_02")
-                if not trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
+                # import re
+                # trialre = re.compile("TRAIL_071_EP_08")
+                # if not trialre.match(trial):
+                #     print("%s ---> SKIP" % trial)
+                #     continue
                 # ******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
@@ -586,7 +586,7 @@ def run_opensim_rra(osimkey, user):
     
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0]) + user.cmc_start_time_offset
-    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]]) + user.cmc_end_time_offset
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]]) + user.rra_end_time_offset
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
     tool.setFinalTime(t1)
@@ -762,7 +762,7 @@ def run_opensim_cmc(osimkey, user):
     
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0]) + user.cmc_start_time_offset
-    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]]) + user.cmc_end_time_offset
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
     tool.setFinalTime(t1)

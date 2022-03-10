@@ -31,14 +31,14 @@ print("Done.\n")
 
 # %% USER SETTINGS
 print("Loading user settings... ", end="")
-user = uset.TRAILSettings()
+user = uset.TRAILSettings_RUN_EP()
 print("Done.\n")
 
 
 # %% META DATABASE (BUILD NEW OR LOAD EXISTING)
 
 print("Building new output database... ", end="")
-traildb = bd.build_database("TRAIL", user, "run_stridecycle_ep")
+traildb = bd.build_database(user, "run_stridecycle")
 print("Done.\n")
 
 # print("Loading existing output database... ", end="")
