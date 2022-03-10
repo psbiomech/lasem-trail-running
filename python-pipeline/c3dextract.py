@@ -501,11 +501,15 @@ class OpenSimKey():
                 if trialkey.markers["offset_marker"]: offset = self.markers["offset"]
                 for n in range(ns): cop[n,:] = cop[n,:] - offset
 
-                # smooth the foot-strike and foot-off edges
-                F1, T1, cop1 = smooth_transitions(F, T, cop, 1, filter_threshold, smooth_cop_offset, smooth_window)
+                # smooth the foot-strike and foot-off edges, then filter and 
+                # floor the force plate dat
+                F1, T1, cop1 = filter_and_floor_fp(F, T, cop, 1, forces["rate"], filter_butter_order, filter_cutoff, filter_threshold)                
+                F2, T2, cop2 = smooth_transitions(F1, T1, cop1, 1, filter_threshold, smooth_cop_offset, smooth_window)
 
-                # filter and floor the force plate data
-                F2, T2, cop2 = filter_and_floor_fp(F1, T1, cop1, 1, forces["rate"], filter_butter_order, filter_cutoff, filter_threshold)
+                # smooth the foot-strike and foot-off edges, then filter and 
+                # floor the force plate dat
+                #F1, T1, cop1 = smooth_transitions(F, T, cop, 1, filter_threshold, smooth_cop_offset, smooth_window)
+                #F2, T2, cop2 = filter_and_floor_fp(F1, T1, cop1, 1, forces["rate"], filter_butter_order, filter_cutoff, filter_threshold)
                     
                 # for each force plate, add force plate data for any active
                 # intervals to the output array for the relevant foot
