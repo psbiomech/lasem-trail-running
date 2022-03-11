@@ -259,8 +259,8 @@ class TRAILSettings_RUN_FAST(UserSettings):
         self.fom_scalefactor["glm"] = 3.0
         self.fom_scalefactor["bf"] = 3.0
         self.fom_scalefactor["semi"] = 3.0       
-        self.fom_scalefactor["gas"] = 1.0
-        self.fom_scalefactor["sol"] = 5.0
+        self.fom_scalefactor["gas"] = 1.5
+        self.fom_scalefactor["sol"] = 6.0
         self.lst_scalefactor = {}
         self.lst_scalefactor["all"] = 0      
         
