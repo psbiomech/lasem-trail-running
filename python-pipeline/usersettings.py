@@ -109,11 +109,11 @@ class TRAILSettings_RUN_EP(UserSettings):
         # OpenSim additional files
         self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
         self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators.xml"
-        self.refrraactuators = "LASEM_TRAIL_RRA_Actuators.xml"
-        self.refrratasks = "LASEM_TRAIL_RRA_Tasks.xml"
-        self.refcmcactuators = "LASEM_TRAIL_CMC_Actuators.xml"
-        self.refcmctasks = "LASEM_TRAIL_CMC_Tasks.xml"
-        self.refcmccontrolconstraints = "LASEM_TRAIL_CMC_ControlConstraints.xml"
+        self.refrraactuators = "LASEM_TRAIL_RRA_Actuators_RUN_EP.xml"
+        self.refrratasks = "LASEM_TRAIL_RRA_Tasks_RUN_EP.xml"
+        self.refcmcactuators = "LASEM_TRAIL_CMC_Actuators_RUN_EP.xml"
+        self.refcmctasks = "LASEM_TRAIL_CMC_Tasks_RUN_EP.xml"
+        self.refcmccontrolconstraints = "LASEM_TRAIL_CMC_ControlConstraints_RUN_EP.xml"
         
         # OpenSim analysis codes
         self.scalecode = "scale"
@@ -125,19 +125,10 @@ class TRAILSettings_RUN_EP(UserSettings):
         
         # OpenSim Scale parameters
         self.fom_scalefactor = {}
-        self.fom_scalefactor["all"] = 2.0
-        self.fom_scalefactor["iliacus"] = 3.0
-        self.fom_scalefactor["psoas"] = 3.0
-        self.fom_scalefactor["ehl"] = 3.0
-        self.fom_scalefactor["edl"] = 3.0
-        self.fom_scalefactor["vas"] = 3.0
-        self.fom_scalefactor["glm"] = 3.0
-        self.fom_scalefactor["bf"] = 3.0
-        self.fom_scalefactor["semi"] = 3.0       
-        self.fom_scalefactor["gas"] = 1.0
-        self.fom_scalefactor["sol"] = 5.0
-        self.lst_scalefactor = {}
-        self.lst_scalefactor["all"] = 0      
+        self.fom_scalefactor["all"] = 2.5
+        self.fom_scalefactor["sol"] = 4.0
+        self.lom_scalefactor = {}
+        self.lom_scalefactor["all"] = 1.1      
         
         # OpenSim RRA parameters
         self.rraiter = 2
@@ -147,6 +138,7 @@ class TRAILSettings_RUN_EP(UserSettings):
         self.use_rra_model = True
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
+        self.cmc_end_time_offset = 0.0
 
 
 
@@ -206,9 +198,9 @@ class TRAILSettings_RUN_FAST(UserSettings):
         # force plate data filter
         self.filter_butter_order = 4
         self.filter_cutoff = 40
-        self.filter_threshold = 16
+        self.filter_threshold = 15
         self.smooth_cop_fixed_offset = 50
-        self.smooth_window = 25
+        self.smooth_window = 15
         
         
         # ******************************
@@ -234,11 +226,11 @@ class TRAILSettings_RUN_FAST(UserSettings):
         # OpenSim additional files
         self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
         self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators.xml"
-        self.refrraactuators = "LASEM_TRAIL_RRA_Actuators.xml"
-        self.refrratasks = "LASEM_TRAIL_RRA_Tasks.xml"
-        self.refcmcactuators = "LASEM_TRAIL_CMC_Actuators.xml"
-        self.refcmctasks = "LASEM_TRAIL_CMC_Tasks.xml"
-        self.refcmccontrolconstraints = "LASEM_TRAIL_CMC_ControlConstraints.xml"
+        self.refrraactuators = "LASEM_TRAIL_RRA_Actuators_RUN_FAST.xml"
+        self.refrratasks = "LASEM_TRAIL_RRA_Tasks_RUN_FAST.xml"
+        self.refcmcactuators = "LASEM_TRAIL_CMC_Actuators_RUN_FAST.xml"
+        self.refcmctasks = "LASEM_TRAIL_CMC_Tasks_RUN_FAST.xml"
+        self.refcmccontrolconstraints = "LASEM_TRAIL_CMC_ControlConstraints_RUN_FAST.xml"
         
         # OpenSim analysis codes
         self.scalecode = "scale"
@@ -250,19 +242,10 @@ class TRAILSettings_RUN_FAST(UserSettings):
         
         # OpenSim Scale parameters
         self.fom_scalefactor = {}
-        self.fom_scalefactor["all"] = 2.0
-        self.fom_scalefactor["iliacus"] = 3.0
-        self.fom_scalefactor["psoas"] = 3.0
-        self.fom_scalefactor["ehl"] = 3.0
-        self.fom_scalefactor["edl"] = 3.0
-        self.fom_scalefactor["vas"] = 3.0
-        self.fom_scalefactor["glm"] = 3.0
-        self.fom_scalefactor["bf"] = 3.0
-        self.fom_scalefactor["semi"] = 3.0       
-        self.fom_scalefactor["gas"] = 1.5
-        self.fom_scalefactor["sol"] = 6.0
-        self.lst_scalefactor = {}
-        self.lst_scalefactor["all"] = 0      
+        self.fom_scalefactor["all"] = 3.0
+        self.fom_scalefactor["sol"] = 5.0
+        self.lom_scalefactor = {}
+        self.lom_scalefactor["all"] = 0      
         
         # OpenSim RRA parameters
         self.rraiter = 2       
@@ -272,3 +255,4 @@ class TRAILSettings_RUN_FAST(UserSettings):
         self.use_rra_model = True
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
+        self.cmc_end_time_offset = 0.03

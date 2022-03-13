@@ -78,11 +78,11 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 # ****** FOR TESTING ONLY ******
-                import re
-                trialre = re.compile("TRAIL_071_FAST_01")
-                if not trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
+                # import re
+                # trialre = re.compile("TRAIL_071_EP_01")
+                # if not trialre.match(trial):
+                #     print("%s ---> SKIP" % trial)
+                #     continue
                 # ******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
@@ -233,7 +233,7 @@ def run_opensim_scale(osimkey, user):
             print("---> Scaling muscle LsT in model...")
             shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LsT.osim"))
             model0 = opensim.Model(os.path.join(fpath, model))
-            model1 = update_osim_lst(model0, sf_lst)
+            model1 = update_osim_lom(model0, sf_lst)
             model1.printToXML(os.path.join(fpath, model))            
                     
         print("Done.")
@@ -762,7 +762,7 @@ def run_opensim_cmc(osimkey, user):
     
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0]) + user.cmc_start_time_offset
-    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]]) + user.cmc_end_time_offset
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
     tool.setFinalTime(t1)
@@ -997,10 +997,11 @@ def update_osim_fom(model, scalefactor, refmodel):
 
 
 '''
-update_osim_lst(modelfullpath, scalefactor):
-    Update all OpenSim model LsT by a fixed scale factor, and/or apply a
+update_osim_lom(modelfullpath, scalefactor):
+    Update all OpenSim model LoM by a fixed scale factor, and/or apply a
     custom scale factor to selected muscles. To ignore scale factors, set
-    scalefactor["all"] = 0.
+    scalefactor["all"] = 0. Then adjust the LsT so that the total MTU rest
+    length (LMT = LoM + LsT) remains constant.
     
     Usage:
         
@@ -1018,31 +1019,54 @@ update_osim_lst(modelfullpath, scalefactor):
                  scalefactor["vasint"] = 1.5
                  scalefactor["semimem"] = 2.0
 '''
-def update_osim_lst(model, scalefactor):
+def update_osim_lom(model, scalefactor):
     
     # load the model and get the muscles
     allmuscles = model.getMuscles()
     
-    # scale all by a fixed scale factor
+    # scale all by a fixed scale factor, but also adjust the tendon slack
+    # length to keep the total MTU rest length constant
     sf = 1.0
     if "all" in scalefactor:
         if scalefactor["all"] > 0:
             sf = scalefactor["all"]
             for m in range(allmuscles.getSize()):
-                currmuscle = allmuscles.get(m)
-                currmuscle.set_tendon_slack_length(sf * currmuscle.get_tendon_slack_length())
+                
+                # current MTU properties
+                currmuscle = allmuscles.get(m)                                
+                lom0 = currmuscle.get_optimal_fiber_length()
+                lst0 = currmuscle.get_tendon_slack_length()
+                lmt = lom0 + lst0
+                
+                # new MTU properties
+                lom1 = lom0 * sf
+                lst1 = lmt - lom1
+                currmuscle.set_optimal_fiber_length(lom1)
+                currmuscle.set_tendon_slack_length(lst1)
+                
         elif scalefactor["all"] == 0:
             return model
 
-    # custom scale selected variables
+    # custom scale selected variables, adjust tendon slack length to ensure
+    # total MTU rest length is constant     
     for sfname in scalefactor:
         if sfname.casefold() == "all": continue
         for m in range(allmuscles.getSize()):
             currmuscle = allmuscles.get(m)
             mname = currmuscle.getName()
             if mname.startswith(sfname):
+                
+                # current MTU properties
+                lom0 = currmuscle.get_optimal_fiber_length()
+                lst0 = currmuscle.get_tendon_slack_length()
+                lmt = lom0 + lst0
+                
+                # new MTU properties
                 sfm = scalefactor[sfname] / sf
-                currmuscle.set_tendon_slack_length(sfm * currmuscle.get_tendon_slack_length())
+                lom1 = lom0 * sfm
+                lst1 = lmt - lom1
+                currmuscle.set_tendon_slack_length(lom1)
+                currmuscle.set_tendon_slack_length(lst1)
                     
     return model
             

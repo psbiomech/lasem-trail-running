@@ -31,7 +31,7 @@ print("Done.\n")
 
 # %% USER SETTINGS
 print("Loading user settings... ", end="")
-user = uset.TRAILSettings_RUN_FAST()
+user = uset.TRAILSettings_RUN_EP()
 print("Done.\n")
 
 
