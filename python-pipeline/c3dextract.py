@@ -612,7 +612,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 # ****** FOR TESTING ONLY ******                
-                # trialre = re.compile("TRAIL_071_EP_01")
+                # trialre = re.compile("TRAIL_071_FAST_01")
                 # if not trialre.match(trial):
                 #     print("%s ---> SKIP" % trial)
                 #     continue
