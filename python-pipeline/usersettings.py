@@ -197,9 +197,9 @@ class TRAILSettings_RUN_FAST(UserSettings):
        
         # force plate data filter
         self.filter_butter_order = 4
-        self.filter_cutoff = 40
+        self.filter_cutoff = 15
         self.filter_threshold = 15
-        self.smooth_cop_fixed_offset = 50
+        self.smooth_cop_fixed_offset = 25
         self.smooth_window = 15
         
         
@@ -242,10 +242,10 @@ class TRAILSettings_RUN_FAST(UserSettings):
         
         # OpenSim Scale parameters
         self.fom_scalefactor = {}
-        self.fom_scalefactor["all"] = 4.0
+        self.fom_scalefactor["all"] = 5.0
         self.fom_scalefactor["sol"] = 7.0
         self.lom_scalefactor = {}
-        self.lom_scalefactor["all"] = 1.1       
+        self.lom_scalefactor["all"] = 1.1   
         
         # OpenSim RRA parameters
         self.rraiter = 2       
@@ -254,5 +254,5 @@ class TRAILSettings_RUN_FAST(UserSettings):
         # OpenSim CMC parameters
         self.use_rra_model = True
         self.use_fast_target = True
-        self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
+        self.cmc_start_time_offset = -0.05  # to enable CMC initalisation
         self.cmc_end_time_offset = 0.03
