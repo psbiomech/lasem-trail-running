@@ -80,7 +80,7 @@ class TRAILSettings_RUN_EP(UserSettings):
        
         # force plate data filter
         self.filter_butter_order = 4
-        self.filter_cutoff = 40
+        self.filter_cutoff = 15
         self.filter_threshold = 16   # prefer 15N, but 16N required for EP_08
         self.smooth_cop_fixed_offset = 50
         self.smooth_window = 25
@@ -130,9 +130,14 @@ class TRAILSettings_RUN_EP(UserSettings):
         self.lom_scalefactor = {}
         self.lom_scalefactor["all"] = 1.1      
         
+        # OpenSim IK parameters
+        self.kinematics_filter_cutoff = 15.0
+        
         # OpenSim RRA parameters
+        self.update_mass = True
         self.rraiter = 2
-        self.rra_end_time_offset = 0.03
+        self.rra_start_time_offset = -0.05
+        self.rra_end_time_offset = 0.05
                 
         # OpenSim CMC parameters
         self.use_rra_model = True
@@ -197,10 +202,10 @@ class TRAILSettings_RUN_FAST(UserSettings):
        
         # force plate data filter
         self.filter_butter_order = 4
-        self.filter_cutoff = 15
+        self.filter_cutoff = 40
         self.filter_threshold = 15
         self.smooth_cop_fixed_offset = 25
-        self.smooth_window = 15
+        self.smooth_window = 20
         
         
         # ******************************
@@ -212,7 +217,7 @@ class TRAILSettings_RUN_FAST(UserSettings):
         
         # OpenSim reference model
         self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model"
-        self.refmodelfile = "LASEM_TRAIL_ReferenceModel.osim"
+        self.refmodelfile = "LASEM_TRAIL_ReferenceModel_Unclamped.osim"
 
         # OpenSim setup files and folders
         self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
@@ -242,17 +247,22 @@ class TRAILSettings_RUN_FAST(UserSettings):
         
         # OpenSim Scale parameters
         self.fom_scalefactor = {}
-        self.fom_scalefactor["all"] = 5.0
+        self.fom_scalefactor["all"] = 4.0
         self.fom_scalefactor["sol"] = 7.0
         self.lom_scalefactor = {}
-        self.lom_scalefactor["all"] = 1.1   
+        self.lom_scalefactor["all"] = 1.1  
+        
+        # OpenSim IK parameters
+        self.kinematics_filter_cutoff = 15.0
         
         # OpenSim RRA parameters
-        self.rraiter = 2       
-        self.rra_end_time_offset = 0.03        
+        self.update_mass = True
+        self.rraiter = 2   
+        self.rra_start_time_offset = -0.03  # to enable CMC initalisation
+        self.rra_end_time_offset = 0.01     # slightly wider than CMC end time       
         
         # OpenSim CMC parameters
         self.use_rra_model = True
         self.use_fast_target = True
-        self.cmc_start_time_offset = -0.05  # to enable CMC initalisation
-        self.cmc_end_time_offset = 0.03
+        self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
+        self.cmc_end_time_offset = 0.01

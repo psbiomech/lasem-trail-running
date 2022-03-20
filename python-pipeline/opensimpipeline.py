@@ -11,6 +11,7 @@ import numpy as np
 import pickle as pk
 import os
 import shutil
+import re
 
 
 '''
@@ -36,13 +37,13 @@ opensim_pipeline(meta, user):
     Run OpenSim pipeline: Scale, IK, ID, SO, RRA, CMC.
 '''
 def opensim_pipeline(meta, user, analyses):
+
+    # note: I haven't worked out how to run OpenSim in a local folder, simply 
+    # changing the pwd doesn't work. So need to clear the log file before each
+    # analysis, then copy the log file to the local folder after completion.
     
     # lower case analyses list
     analyses = [a.casefold() for a in analyses]
-
-    # clear OpenSim log file
-    #logfile0 = os.path.join(user.logfilepath, user.logfile)    
-    #if os.path.isfile(logfile0): os.remove(logfile0)
     
     # run OpenSim for all valid trials
     for subj in meta:
@@ -55,9 +56,9 @@ def opensim_pipeline(meta, user, analyses):
                 if meta[subj]["trials"][group][trial]["usedstatic"]:
                     
                     # load the OsimKey
-                    pkpath = meta[subj]["trials"][group][trial]["outpath"]
-                    pkfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
-                    with open(os.path.join(pkpath, pkfile),"rb") as fid: 
+                    pklpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
+                    with open(os.path.join(pklpath, pklfile),"rb") as fid: 
                         osimkey = pk.load(fid)
                     
                     # run the scale tool if requested
@@ -67,38 +68,38 @@ def opensim_pipeline(meta, user, analyses):
                     
                     # get the full model path
                     modelfile = meta[subj]["trials"][group][trial]["osim"]
-                    modelfullpath = os.path.join(pkpath, modelfile)
+                    modelfullpath = os.path.join(pklpath, modelfile)
                     
-                    # copy the OpenSim log file into the local folder
-                    #logfile1 = os.path.join(pkpath, meta[subj]["trials"][group][trial]["trial"] + ".log")
-                    #shutil.copyfile(logfile0, logfile1)                    
             
             # find dynamic trials and run requested analyses
             for trial in meta[subj]["trials"][group]:
                 
                 
                 # ****** FOR TESTING ONLY ******
-                # import re
-                # trialre = re.compile("TRAIL_071_FAST_01")
-                # if not trialre.match(trial):
-                #     print("%s ---> SKIP" % trial)
-                #     continue
+                trialre = re.compile("TRAIL_071_FAST_01")
+                if not trialre.match(trial):
+                    print("%s ---> SKIP" % trial)
+                    continue
                 # ******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
 
                     # load the OsimKey
-                    pkpath = meta[subj]["trials"][group][trial]["outpath"]
-                    pkfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
-                    with open(os.path.join(pkpath, pkfile),"rb") as fid: 
+                    pklpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
+                    with open(os.path.join(pklpath, pklfile),"rb") as fid: 
                         osimkey = pk.load(fid)
                     
                     # copy the model into the trial folder
-                    shutil.copy(modelfullpath, pkpath)
+                    shutil.copy(modelfullpath, pklpath)
                     
                     # run the required analyses
                     for ans in analyses:
-                        if not os.path.exists(os.path.join(pkpath, ans)): os.makedirs(os.path.join(pkpath, ans))
+                        
+                        # create output folder
+                        if not os.path.exists(os.path.join(pklpath, ans)): os.makedirs(os.path.join(pklpath, ans))
+                        
+                        # analyses
                         if ans == "ik":
                             run_opensim_ik(osimkey, user)
                         elif ans == "id":
@@ -109,11 +110,6 @@ def opensim_pipeline(meta, user, analyses):
                             run_opensim_rra(osimkey, user)
                         elif ans == "cmc":
                             run_opensim_cmc(osimkey, user)
-                            
-                    # copy the OpenSim log file into the local folder
-                    #logfile1 = os.path.join(pkpath, meta[subj]["trials"][group][trial]["trial"] + ".log")
-                    #shutil.copyfile(logfile0, logfile1)  
-   
                             
     return None
 
@@ -132,6 +128,9 @@ def run_opensim_scale(osimkey, user):
     subject = osimkey.subject
     model = osimkey.model
     trial = osimkey.trial
+
+    # clear log file
+    open("out.log", "w").close()
 
     print("\nCreating scaled model: %s" % subject)
     print("------------------------------------------------")
@@ -228,19 +227,20 @@ def run_opensim_scale(osimkey, user):
             model1.printToXML(os.path.join(fpath, model))
             
         # scale the model FoM if required
-        sf_lst = user.lst_scalefactor
-        if (type(sf_lst) is dict) or (sf_lst > 0):
+        sf_lom = user.lom_scalefactor
+        if (type(sf_lom) is dict) or (sf_lom > 0):
             print("---> Scaling muscle LsT in model...")
             shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LsT.osim"))
             model0 = opensim.Model(os.path.join(fpath, model))
-            model1 = update_osim_lom(model0, sf_lst)
-            model1.printToXML(os.path.join(fpath, model))            
-                    
+            model1 = update_osim_lom(model0, sf_lom)
+            model1.printToXML(os.path.join(fpath, model))                         
+            
         print("Done.")
                 
     except:
         print("---> ERROR: Scale failed. Skipping Scale for %s." % trial)
     finally:
+        shutil.copyfile("out.log", os.path.join(fpath, "out_SCALE.log"))
         print("------------------------------------------------\n")
     
     # ******************************    
@@ -262,6 +262,9 @@ def run_opensim_ik(osimkey, user):
     modelfile = osimkey.model
     trial = osimkey.trial
 
+    # clear log file
+    open("out.log", "w").close()
+
     print("Performing IK on trial: %s" % trial)
     print("------------------------------------------------")
     
@@ -280,9 +283,9 @@ def run_opensim_ik(osimkey, user):
     tool.setModel(model)
 
     # set the initial and final times (limit to between first and last event,
-    # but allow extra 0.05 sec at start for CMC)
-    t0 = float(osimkey.events["time"][0]) + user.cmc_start_time_offset
-    t1 = float(osimkey.events["time"][-1])
+    # but allow extra time at start and end for RRA/CMC)
+    t0 = float(osimkey.events["time"][0]) + user.rra_start_time_offset
+    t1 = float(osimkey.events["time"][-1]) + user.rra_end_time_offset
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setStartTime(t0)
     tool.setEndTime(t1)
@@ -308,11 +311,12 @@ def run_opensim_ik(osimkey, user):
         
     # run the tool
     try:
-        tool.run()        
+        tool.run()     
         print("Done.")
     except:
         print("---> ERROR: IK failed. Skipping IK for %s." % trial)
     finally:
+        shutil.copyfile("out.log", os.path.join(fpath, "out_IK.log")) 
         print("------------------------------------------------\n")
     
     # ******************************
@@ -334,6 +338,9 @@ def run_opensim_id(osimkey, user):
     modelfile = osimkey.model
     trial = osimkey.trial
 
+    # clear log file
+    open("out.log", "w").close()
+    
     print("Performing ID on trial: %s" % trial)
     print("------------------------------------------------")
     
@@ -407,6 +414,7 @@ def run_opensim_id(osimkey, user):
     except:
         print("---> ERROR: ID failed. Skipping ID for %s." % trial)
     finally:
+        shutil.copyfile("out.log", os.path.join(fpath, "out_ID.log")) 
         print("------------------------------------------------\n")
 
     # ******************************
@@ -428,6 +436,9 @@ def run_opensim_so(osimkey, user):
     modelfile = osimkey.model
     trial = osimkey.trial
 
+    # clear log file
+    open("out.log", "w").close()
+    
     print("Performing SO on trial: %s" % trial)
     print("------------------------------------------------")
     
@@ -553,6 +564,7 @@ def run_opensim_so(osimkey, user):
     except:
         print("---> ERROR: SO failed. Skipping SO for %s." % trial)
     finally:
+        shutil.copyfile("out.log", os.path.join(fpath, "out_SO.log")) 
         print("------------------------------------------------\n")
 
     # ******************************
@@ -585,7 +597,7 @@ def run_opensim_rra(osimkey, user):
     tool = opensim.RRATool(os.path.join(refsetuppath, refsetupfile), False)      
     
     # set the initial and final times (limit to between first and last event)
-    t0 = float(osimkey.events["time"][0]) + user.cmc_start_time_offset
+    t0 = float(osimkey.events["time"][0]) + user.rra_start_time_offset
     t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]]) + user.rra_end_time_offset
     print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
     tool.setInitialTime(t0)
@@ -595,8 +607,9 @@ def run_opensim_rra(osimkey, user):
     tool.setAdjustCOMToReduceResiduals(True)
     tool.setAdjustedCOMBody("torso")
 
-    # set desired kinematics file name (original IK results)
+    # set desired kinematics file name and filter frequency
     tool.setDesiredKinematicsFileName(os.path.join(fpath, user.ikcode, trial + "_ik.mot"))
+    tool.setLowpassCutoffFrequency(user.kinematics_filter_cutoff)
     
     # create an external loads object from template, set it up, and
     # print to destination folder (This is not the best way to do this,
@@ -687,12 +700,15 @@ def run_opensim_rra(osimkey, user):
     # RUN TOOL
     
     print("Running the RRATool, %d iterations...\n---> (this may take a while)" %  user.rraiter)
-    
-    try:
 
+    try:
+        
         # run the tool require number of iterations
-        rraadjustedmodel = []
+        rra_adjusted_model_file = []
         for i in range(user.rraiter):
+            
+            # clear log file
+            open("out.log", "w").close()
             
             print("---> Iteration: %d" % (i + 1))
             
@@ -707,27 +723,42 @@ def run_opensim_rra(osimkey, user):
                 rramodelfile = os.path.join(fpath, modelfile)
                 #lockMTPJoints(rramodelfile)
             else:
-                rramodelfile = rraadjustedmodel 
+                rramodelfile = rra_adjusted_model_file 
                 
             # set model file name
             tool.setModelFilename(rramodelfile)
             
             # set new adjusted model file name
-            rraadjustedmodel = os.path.join(fpath, rraname + "_AdjustedModel.osim")
-            tool.setOutputModelFileName(rraadjustedmodel)
+            rra_adjusted_model_file = os.path.join(fpath, rraname + "_AdjustedModel.osim")
+            tool.setOutputModelFileName(rra_adjusted_model_file)
             
             # save the current settings in a setup file
             rrasetupfile = os.path.join(fpath, trial + "_Setup_" + rraiter + ".xml")
             tool.printToXML(rrasetupfile)
             
             # load the current setup file, run the current RRA tool
-            rratool2 = opensim.RRATool(rrasetupfile);
-            rratool2.run();            
-        
+            try:
+                rratool2 = opensim.RRATool(rrasetupfile)
+                rratool2.run()
+            except:
+                print("---> ERROR: RRA iteration %d failed. Skipping RRA for %s." % (i + 1, trial))
+            else:
+                shutil.copyfile("out.log", os.path.join(fpath, "out_" + rraiter + ".log"))                     
+
+ 
+            # update the RRA model segment masses, print the new model and
+            # overwrite the model file parameter for the next iteration
+            if user.update_mass:
+                rra_model = opensim.Model(rra_adjusted_model_file)
+                rra_adjusted_model = perform_recommended_mass_change(rra_model, os.path.join(fpath, "out_" + rraiter + ".log"))
+                rra_adjusted_model_file = os.path.join(fpath, rraname + "_MassAdjustedModel.osim")
+                rra_adjusted_model.printToXML(rra_adjusted_model_file)
+            
+
+    except: 
+        print("---> ERROR: RRA failed. Skipping RRA for %s. Log file not copied." % trial)
+    else:
         print("Done.")
-        
-    except:
-        print("---> ERROR: RRA failed. Skipping RRA for %s." % trial)
     finally:
         print("------------------------------------------------\n")
     
@@ -749,6 +780,9 @@ def run_opensim_cmc(osimkey, user):
     fpath = osimkey.outpath
     modelfile = osimkey.model
     trial = osimkey.trial
+
+    # clear log file
+    open("out.log", "w").close()
     
     print("Performing CMC on trial: %s" % trial)
     print("------------------------------------------------")
@@ -803,7 +837,7 @@ def run_opensim_cmc(osimkey, user):
     # at the ground-pelvis origin located at pelvis geometric centre)
     
     # get the pelvis COM location from the desired model
-    # (the pelvis COM should be the same for both models anyway)
+    # (the pelvis COM should be the same for all models anyway)
     if user.use_rra_model:
         rramodelfile = trial + "_RRA_" + str(user.rraiter) + "_AdjustedModel.osim"
     else:
@@ -887,7 +921,11 @@ def run_opensim_cmc(osimkey, user):
 
     # set the desired model
     if user.use_rra_model:
-        actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_AdjustedModel.osim"
+        #actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_AdjustedModel.osim"
+        if user.update_mass:
+            actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_MassAdjustedModel.osim"
+        else:
+            actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_AdjustedModel.osim"
     else:
         actualmodelfile = modelfile
     tool.setModelFilename(os.path.join(fpath, actualmodelfile))
@@ -898,7 +936,7 @@ def run_opensim_cmc(osimkey, user):
         filtfreq = -1
     else:
         kinfile = os.path.join(fpath, user.ikcode, trial + "_ik.mot")    
-        filtfreq = 6.0
+        filtfreq = user.kinematics_filter_cutoff
     tool.setDesiredKinematicsFileName(kinfile)
     tool.setLowpassCutoffFrequency(filtfreq)
    
@@ -921,6 +959,7 @@ def run_opensim_cmc(osimkey, user):
     except:
         print("---> ERROR: CMC failed. Skipping CMC for %s." % trial)
     finally:
+        shutil.copyfile("out.log", os.path.join(fpath, "out_CMC.log"))
         print("------------------------------------------------\n")
     
     # ******************************
@@ -1145,7 +1184,7 @@ def write_marker_trajctory_trc_file(osimkey):
     # write headers
     fname = osimkey.trial + "_markers.trc"
     fpath = osimkey.outpath
-    with open(os.path.join(fpath,fname),"w") as f:
+    with open(os.path.join(fpath,fname), "w") as f:
         f.write("PathFileType\t4\t(X/Y/Z)\t%s\n" % fname)
         f.write("DataRate\tCameraRate\tNumFrames\tNumMarkers\tUnits\tOrigDataRate\tOrigDataStartFrame\tOrigNumFrames\n")
         f.write("%d\t%d\t%d\t%d\t%s\t%d\t%d\t%d\n" % (rate, rate, ns, nm, "mm", rate, 1, ns))
@@ -1171,3 +1210,33 @@ def write_marker_trajctory_trc_file(osimkey):
     data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=False, index=False, float_format="%20.10f")
     
     return data
+
+
+'''
+perform_recommended_mass_change(rra_model, rra_log_file_fullpath):
+    Extract the recommended mass changes from the RRA log file and update the
+    model segment masses. The parameter rra_log_file_fullpath should contain 
+    the full path to the relevant log file.
+'''
+def perform_recommended_mass_change(rra_model, rra_log_file_fullpath):
+    
+    # define the output format
+    mstr = re.compile("\*  (\w+): orig mass = (\d+.\d+), new mass = (\d+.\d+)")
+        
+    # parse the log file and extract current and recommended masses
+    new_mass_set = {}
+    with open(rra_log_file_fullpath, "r") as f:
+        for line in f:
+            tokens = mstr.match(line)
+            if tokens:
+                new_mass_set[tokens[1]] = {}
+                new_mass_set[tokens[1]]["old"] = float(tokens[2])
+                new_mass_set[tokens[1]]["new"] = float(tokens[3])              
+    
+    # update segment masses
+    bodyset = rra_model.getBodySet()
+    for key in new_mass_set:
+        body = bodyset.get(key)
+        body.setMass(new_mass_set[key]["new"])
+               
+    return rra_model

@@ -99,88 +99,68 @@
 			
 			<!-- TORQUE ACTUATORS -->
 			<ControlLinear name="lumbar_ext.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="lumbar_bend.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="lumbar_rot.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_flex_r.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_add_r.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_rot_r.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="elbow_flex_r.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="pro_sup_r.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
-				<use_steps> false </use_steps>
-			</ControlLinear>
-			<ControlLinear name="wrist_flex_r.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
-				<use_steps> false </use_steps>
-			</ControlLinear>
-			<ControlLinear name="wrist_dev_r.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_flex_l.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_add_l.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="shoulder_rot_l.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="elbow_flex_l.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 			<ControlLinear name="pro_sup_l.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
-				<use_steps> false </use_steps>
-			</ControlLinear>
-			<ControlLinear name="wrist_flex_l.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
-				<use_steps> false </use_steps>
-			</ControlLinear>
-			<ControlLinear name="wrist_dev_l.excitation">
-				<default_min> -1</default_min>
-				<default_max>  1</default_max>
+				<default_min> -1000 </default_min>
+				<default_max>  1000 </default_max>
 				<use_steps> false </use_steps>
 			</ControlLinear>
 

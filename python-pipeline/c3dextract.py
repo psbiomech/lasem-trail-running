@@ -573,10 +573,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in meta[subj]["trials"][group]:                
 
                 # ****** FOR TESTING ONLY ******
-                # trialre = re.compile("TRAIL_071_Static_(\w+)")
-                # if trialre.match(trial):
-                #     print("%s ---> SKIP" % trial)
-                #     continue
+                trialre = re.compile("TRAIL_071_Static_(\w+)")
+                if trialre.match(trial):
+                    print("%s ---> SKIP" % trial)
+                    continue
                 # ******************************
                 
                 # ignore dynamic trials
@@ -612,10 +612,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in  meta[subj]["trials"][group]:                
 
                 # ****** FOR TESTING ONLY ******                
-                # trialre = re.compile("TRAIL_071_FAST_01")
-                # if not trialre.match(trial):
-                #     print("%s ---> SKIP" % trial)
-                #     continue
+                trialre = re.compile("TRAIL_071_FAST_01")
+                if not trialre.match(trial):
+                    print("%s ---> SKIP" % trial)
+                    continue
                 # ******************************
                 
                 # ignore static trials
@@ -845,6 +845,9 @@ smooth_transitions(F, T, CoP, vert_col_idx, threshold, cop_fixed_offset,
 '''
 def smooth_transitions(F, T, cop, vert_col_idx, threshold, cop_fixed_offset, window):
     
+    # ignore if threshold is a negative number
+    if threshold < 0: return F, T, cop
+    
     # find threshold indices
     Fy = F[:, vert_col_idx].copy()
     idxs1 = np.where(Fy >= threshold)
@@ -875,7 +878,7 @@ def smooth_transitions(F, T, cop, vert_col_idx, threshold, cop_fixed_offset, win
         T[x - window:x, :] = t1window      
         
         # CoP window, affix to a point reasonably ahead
-        cop[x - window:x, :] = cop[x + cop_fixed_offset, :]
+        cop[x - window:x, :] = cop[x, :]
 
     # rectify drift on foot off
     for xi in idxdn[0]:
