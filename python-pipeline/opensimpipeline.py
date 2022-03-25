@@ -232,14 +232,14 @@ def run_opensim_scale(osimkey, user):
             model1 = update_osim_fom(model0, sf_fom, refmodel)
             model1.printToXML(os.path.join(fpath, model))
             
-        # # scale the model LoM (const LMT) if required
-        # sf_lom = user.lom_scalefactor
-        # if (type(sf_lom) is dict) or (sf_lom > 0):
-        #     print("---> Scaling muscle LoM in model (LMT remains constant)...")
-        #     shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LoM_LsT.osim"))
-        #     model0 = opensim.Model(os.path.join(fpath, model))
-        #     model1 = update_osim_lom_const_lmt(model0, sf_lom)
-        #     model1.printToXML(os.path.join(fpath, model))  
+        # scale the model LoM (const LMT) if required
+        sf_lom = user.lom_scalefactor
+        if (type(sf_lom) is dict) or (sf_lom > 0):
+            print("---> Scaling muscle LoM in model (LMT remains constant)...")
+            shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LoM_LsT.osim"))
+            model0 = opensim.Model(os.path.join(fpath, model))
+            model1 = update_osim_lom_const_lmt(model0, sf_lom)
+            model1.printToXML(os.path.join(fpath, model))  
 
         # # scale the model LoM if required
         # sf_lst = user.lst_scalefactor
@@ -416,7 +416,7 @@ def run_opensim_id(osimkey, user):
     print("Creating external loads XML file...")
     extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
     if not os.path.isfile(extloadsfile):
-        extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.refexternalloads), True)       
+        extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.additionalfilesfolder, user.refexternalloads), True)       
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
 
@@ -509,7 +509,7 @@ def run_opensim_so(osimkey, user):
     print("Creating external loads XML file...")
     extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
     if not os.path.isfile(extloadsfile):
-        extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.refexternalloads), True)       
+        extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.additionalfilesfolder, user.refexternalloads), True)       
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
 
@@ -541,7 +541,7 @@ def run_opensim_so(osimkey, user):
     # load reference actuator forceset, get the pelvis actuators and set force
     # application point to pelvis COM
     refrefreserveactuators = user.refreserveactuators
-    residforceset = opensim.ForceSet(os.path.join(refsetuppath, refrefreserveactuators))
+    residforceset = opensim.ForceSet(os.path.join(refsetuppath, user.additionalfilesfolder, refrefreserveactuators))
     for x in ["FX","FY","FZ"]:
         residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
         residforce.set_point(pelviscom)
@@ -647,7 +647,7 @@ def run_opensim_rra(osimkey, user):
     print("Creating external loads XML file...")
     extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
     if not os.path.isfile(extloadsfile):
-        extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.refexternalloads), True)       
+        extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.additionalfilesfolder, user.refexternalloads), True)       
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
     
@@ -674,7 +674,7 @@ def run_opensim_rra(osimkey, user):
     # load reference actuator forceset, get the pelvis actuators and set force
     # application point to pelvis COM
     refforcesetfile = user.refrraactuators
-    residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
+    residforceset = opensim.ForceSet(os.path.join(refsetuppath, user.additionalfilesfolder, refforcesetfile))
     for x in ["FX","FY","FZ"]:
         residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
         residforce.set_point(pelviscom)
@@ -709,7 +709,7 @@ def run_opensim_rra(osimkey, user):
  
     # load RRA tasks set
     rratasksfile = user.refrratasks
-    rrataskset = opensim.CMC_TaskSet(os.path.join(refsetuppath, rratasksfile))
+    rrataskset = opensim.CMC_TaskSet(os.path.join(refsetuppath, user.additionalfilesfolder, rratasksfile))
     
     # updates here...
     # e.g. controller weights and gains
@@ -735,34 +735,41 @@ def run_opensim_rra(osimkey, user):
             # clear log file
             open("out.log", "w").close()
             
-            print("---> Iteration: %d" % (i + 1))
-            
             # set tool name based on current iteration
             rraiter = "RRA_" + str(i + 1)
             rraname = trial + "_" + rraiter
             tool.setName(rraname)
             
             # get the model, ensure model MTP joints are locked (only needs to
-            # be done on the first iteration
+            # be done on the first iteration)
             if i==0:
                 rramodelfile = os.path.join(fpath, modelfile)
-                #lockMTPJoints(rramodelfile)
             else:
                 rramodelfile = rra_adjusted_model_file 
-                
+
+            # update the model to prescribe upper body kinematics from IK
+            if (i == 0) and user.prescribe_upper_body_motion:
+                coord_list = user.prescribed_coord_list
+                model0 = opensim.Model(rramodelfile)   
+                ikdata = pd.read_csv(os.path.join(fpath, user.ikcode, trial + "_ik.mot"), sep = "\t", header = 8)
+                model1 = prescribe_kinematics(model0, ikdata, coord_list, user.filter_butter_order, user.filter_cutoff)
+                model1.printToXML(rramodelfile)
+
             # set model file name
             tool.setModelFilename(rramodelfile)
             
             # set new adjusted model file name
-            rra_adjusted_model_file = os.path.join(fpath, rraname + "_AdjustedModel.osim")
+            rra_adjusted_model_file = os.path.join(fpath, rraname + "_TorsoAdjusted.osim")
             tool.setOutputModelFileName(rra_adjusted_model_file)
             
             # save the current settings in a setup file
             rrasetupfile = os.path.join(fpath, trial + "_Setup_" + rraiter + ".xml")
             tool.printToXML(rrasetupfile)
             
+            print("---> Iteration: %d" % (i + 1))
+            
             # load the current setup file, run the current RRA tool
-            try:
+            try:               
                 rratool2 = opensim.RRATool(rrasetupfile)
                 rratool2.run()
             except:
@@ -776,7 +783,7 @@ def run_opensim_rra(osimkey, user):
             if user.update_mass:
                 rra_model = opensim.Model(rra_adjusted_model_file)
                 rra_adjusted_model = perform_recommended_mass_change(rra_model, os.path.join(fpath, "out_" + rraiter + ".log"))
-                rra_adjusted_model_file = os.path.join(fpath, rraname + "_MassAdjustedModel.osim")
+                rra_adjusted_model_file = os.path.join(fpath, rraname + "_TorsoAdjusted_MassUpdated.osim")
                 rra_adjusted_model.printToXML(rra_adjusted_model_file)
             
 
@@ -837,7 +844,7 @@ def run_opensim_cmc(osimkey, user):
     print("Creating external loads XML file...")
     extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
     if not os.path.isfile(extloadsfile):
-        extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.refexternalloads), True)       
+        extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.additionalfilesfolder, user.refexternalloads), True)       
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
     
@@ -864,7 +871,7 @@ def run_opensim_cmc(osimkey, user):
     # get the pelvis COM location from the desired model
     # (the pelvis COM should be the same for all models anyway)
     if user.use_rra_model:
-        rramodelfile = trial + "_RRA_" + str(user.rraiter) + "_AdjustedModel.osim"
+        rramodelfile = trial + "_RRA_" + str(user.rraiter) + "_TorsoAdjusted.osim"
     else:
         rramodelfile = modelfile   
     model = opensim.Model(os.path.join(fpath, rramodelfile))
@@ -874,7 +881,7 @@ def run_opensim_cmc(osimkey, user):
     # load reference actuator forceset, get the pelvis actuators and set force
     # application point to pelvis COM
     refforcesetfile = user.refcmcactuators
-    residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
+    residforceset = opensim.ForceSet(os.path.join(refsetuppath, user.additionalfilesfolder, refforcesetfile))
     for x in ["FX","FY","FZ"]:
         residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
         residforce.set_point(pelviscom)
@@ -910,7 +917,7 @@ def run_opensim_cmc(osimkey, user):
  
     # load CMC tasks set
     cmctasksfile = user.refcmctasks
-    cmctaskset = opensim.CMC_TaskSet(os.path.join(refsetuppath, cmctasksfile))
+    cmctaskset = opensim.CMC_TaskSet(os.path.join(refsetuppath, user.additionalfilesfolder, cmctasksfile))
     
     # updates here... (TBD)
     # e.g. controller weights and gains
@@ -928,7 +935,7 @@ def run_opensim_cmc(osimkey, user):
 
     # load reference CMC control constraints
     cmccontrolsfile = user.refcmccontrolconstraints
-    cmccontrolset = opensim.ControlSet(os.path.join(refsetuppath, cmccontrolsfile))
+    cmccontrolset = opensim.ControlSet(os.path.join(refsetuppath, user.additionalfilesfolder, cmccontrolsfile))
     
     # updates here... (TBD)
     # e.g. actuator gains
@@ -947,9 +954,9 @@ def run_opensim_cmc(osimkey, user):
     # initial desired model name
     if user.use_rra_model:
         if user.update_mass:
-            actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_MassAdjustedModel.osim"
+            actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_TorsoAdjusted_MassUpdated.osim"
         else:
-            actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_AdjustedModel.osim"
+            actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_TorsoAdjusted.osim"
     else:
         actualmodelfile = modelfile
         
@@ -963,14 +970,14 @@ def run_opensim_cmc(osimkey, user):
     tool.setDesiredKinematicsFileName(kinfile)
     tool.setLowpassCutoffFrequency(filtfreq)
          
-    # update the model to prescribe upper body kinematics
-    if user.prescribe_upper_body_motion:
-        coord_list = ["arm_flex_r", "arm_add_r", "arm_rot_r", "elbow_flex_r", "pro_sup_r", "wrist_flex_r", "wrist_dev_r", "arm_flex_l", "arm_add_l", "arm_rot_l", "elbow_flex_l", "pro_sup_l", "wrist_flex_l", "wrist_dev_l"]
-        model0 = opensim.Model(os.path.join(fpath, actualmodelfile))   
-        ikdata = pd.read_csv(kinfile, sep = "\t", header = 8)
-        model1 = prescribe_kinematics(model0, ikdata, coord_list, user.filter_butter_order, user.filter_cutoff)
-        actualmodelfile = actualmodelfile.rstrip(".osim") + "_PrescribedUpper.osim"
-        model1.printToXML(os.path.join(fpath, actualmodelfile))
+    # # update the model to prescribe upper body kinematics
+    # if user.prescribe_upper_body_motion:
+    #     coord_list = ["lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex_r", "arm_add_r", "arm_rot_r", "elbow_flex_r", "pro_sup_r", "wrist_flex_r", "wrist_dev_r", "arm_flex_l", "arm_add_l", "arm_rot_l", "elbow_flex_l", "pro_sup_l", "wrist_flex_l", "wrist_dev_l"]
+    #     model0 = opensim.Model(os.path.join(fpath, actualmodelfile))   
+    #     ikdata = pd.read_csv(kinfile, sep = "\t", header = 8)
+    #     model1 = prescribe_kinematics(model0, ikdata, coord_list, user.filter_butter_order, user.filter_cutoff)
+    #     actualmodelfile = actualmodelfile.rstrip(".osim") + "_PrescribedUpper.osim"
+    #     model1.printToXML(os.path.join(fpath, actualmodelfile))
 
     # set the model in the tool
     tool.setModelFilename(os.path.join(fpath, actualmodelfile))

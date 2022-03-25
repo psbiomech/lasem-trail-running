@@ -37,15 +37,15 @@ print("Done.\n")
 
 # %% META DATABASE (BUILD NEW OR LOAD EXISTING)
 
-# print("Building new output database... ", end="")
-# traildb = bd.build_database(user, "run_stridecycle")
-# print("Done.\n")
-
-print("Loading existing output database... ", end="")
-dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
-with open(dbfilepath,"rb") as fid:
-    traildb = pk.load(fid)
+print("Building new output database... ", end="")
+traildb = bd.build_database(user, "run_stridecycle")
 print("Done.\n")
+
+# print("Loading existing output database... ", end="")
+# dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
+# with open(dbfilepath,"rb") as fid:
+#     traildb = pk.load(fid)
+# print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES

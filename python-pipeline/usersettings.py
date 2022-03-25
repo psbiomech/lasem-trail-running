@@ -107,6 +107,7 @@ class TRAILSettings_RUN_EP(UserSettings):
         self.refsetupcmc = "LASEM_TRAIL_Setup_CMC.xml"
         
         # OpenSim additional files
+        self.additionalfilesfolder = "EP"
         self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
         self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators.xml"
         self.refrraactuators = "LASEM_TRAIL_RRA_Actuators_RUN_EP.xml"
@@ -138,9 +139,10 @@ class TRAILSettings_RUN_EP(UserSettings):
         self.rraiter = 2
         self.rra_start_time_offset = -0.05
         self.rra_end_time_offset = 0.05
-                
-        # OpenSim CMC parameters
         self.prescribe_upper_body_motion = True
+        self.prescribed_coord_list = ["lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex_r", "arm_add_r", "arm_rot_r", "elbow_flex_r", "pro_sup_r", "wrist_flex_r", "wrist_dev_r", "arm_flex_l", "arm_add_l", "arm_rot_l", "elbow_flex_l", "pro_sup_l", "wrist_flex_l", "wrist_dev_l"]
+
+        # OpenSim CMC parameters
         self.use_rra_model = True
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
@@ -203,9 +205,9 @@ class TRAILSettings_RUN_FAST(UserSettings):
        
         # force plate data filter
         self.filter_butter_order = 4
-        self.filter_cutoff = 15.0
+        self.filter_cutoff = 40.0
         self.filter_threshold = 15.0
-        self.smooth_cop_fixed_offset = 25   # required but not used
+        self.smooth_cop_fixed_offset = 25   # required but not currently used
         self.smooth_window = 20
         
         
@@ -218,7 +220,7 @@ class TRAILSettings_RUN_FAST(UserSettings):
         
         # OpenSim reference model
         self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model"
-        self.refmodelfile = "LASEM_TRAIL_ReferenceModel.osim"
+        self.refmodelfile = "LASEM_TRAIL_ReferenceModel_Unclamped.osim"
 
         # OpenSim setup files and folders
         self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
@@ -230,6 +232,7 @@ class TRAILSettings_RUN_FAST(UserSettings):
         self.refsetupcmc = "LASEM_TRAIL_Setup_CMC.xml"
         
         # OpenSim additional files
+        self.additionalfilesfolder = "FAST"
         self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
         self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators.xml"
         self.refrraactuators = "LASEM_TRAIL_RRA_Actuators_RUN_FAST.xml"
@@ -250,23 +253,24 @@ class TRAILSettings_RUN_FAST(UserSettings):
         # self.fom_scalefactor = -1
         self.fom_scalefactor = {}
         self.fom_scalefactor["all"] = 3.0
-        #self.fom_scalefactor["sol"] = 7.0
+        # self.fom_scalefactor["sol"] = 7.0
         # self.lom_scalefactor = -1
         self.lom_scalefactor = {}
         self.lom_scalefactor["all"] = 1.1
         
         # OpenSim IK parameters
-        self.kinematics_filter_cutoff = 15.0
+        self.kinematics_filter_cutoff = 20.0
         
         # OpenSim RRA parameters
         self.update_mass = True
         self.rraiter = 2   
         self.rra_start_time_offset = -0.03  # to enable CMC initalisation
-        self.rra_end_time_offset = 0.0     # slightly wider than CMC end time       
-        
-        # OpenSim CMC parameters
+        self.rra_end_time_offset = 0.03     # slightly wider than CMC end time       
         self.prescribe_upper_body_motion = True
+        self.prescribed_coord_list = ["lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex_r", "arm_add_r", "arm_rot_r", "elbow_flex_r", "pro_sup_r", "wrist_flex_r", "wrist_dev_r", "arm_flex_l", "arm_add_l", "arm_rot_l", "elbow_flex_l", "pro_sup_l", "wrist_flex_l", "wrist_dev_l"]
+
+        # OpenSim CMC parameters
         self.use_rra_model = True
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
-        self.cmc_end_time_offset = 0.0
+        self.cmc_end_time_offset = 0.03
