@@ -77,10 +77,10 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 # ****** FOR TESTING ONLY ******
-                trialre = re.compile("TRAIL_071_FAST_01")
-                if not trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
+                # trialre = re.compile("TRAIL_071_FAST_01")
+                # if not trialre.match(trial):
+                #     print("%s ---> SKIP" % trial)
+                #     continue
                 # ******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
@@ -220,7 +220,7 @@ def run_opensim_scale(osimkey, user):
         
         # ******************************
         # UPDATE MODEL MUSCLE PROPERTIES
-        # Comment out any unused code blocks below as required       
+        # (comment out any unused code blocks below as required)
         
         # scale the model FoM if required
         sf_fom = user.fom_scalefactor
@@ -232,22 +232,22 @@ def run_opensim_scale(osimkey, user):
             model1 = update_osim_fom(model0, sf_fom, refmodel)
             model1.printToXML(os.path.join(fpath, model))
             
-        # scale the model LoM (const LMT) if required
-        sf_lom = user.lom_scalefactor
-        if (type(sf_lom) is dict) or (sf_lom > 0):
-            print("---> Scaling muscle LoM in model (LMT remains constant)...")
-            shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LoM_LsT.osim"))
-            model0 = opensim.Model(os.path.join(fpath, model))
-            model1 = update_osim_lom_const_lmt(model0, sf_lom)
-            model1.printToXML(os.path.join(fpath, model))  
+        # # scale the model LoM (const LMT) if required
+        # sf_lom_lmt = user.lom_lmt_scalefactor
+        # if (type(sf_lom_lmt) is dict) or (sf_lom_lmt > 0):
+        #     print("---> Scaling muscle LoM in model (LMT remains constant)...")
+        #     shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LoM_LsT.osim"))
+        #     model0 = opensim.Model(os.path.join(fpath, model))
+        #     model1 = update_osim_lom_const_lmt(model0, sf_lom_lmt)
+        #     model1.printToXML(os.path.join(fpath, model))  
 
         # # scale the model LoM if required
-        # sf_lst = user.lst_scalefactor
-        # if (type(sf_lst) is dict) or (sf_lst >= 0):
+        # sf_lom = user.lst_scalefactor
+        # if (type(sf_lom) is dict) or (sf_lom >= 0):
         #     print("---> Scaling muscle LoM in model...")
         #     shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LoM.osim"))
         #     model0 = opensim.Model(os.path.join(fpath, model))
-        #     model1 = update_osim_lom(model0, sf_lst)
+        #     model1 = update_osim_lom(model0, sf_lom)
         #     model1.printToXML(os.path.join(fpath, model)) 
 
         # # scale the model LsT if required
@@ -970,7 +970,8 @@ def run_opensim_cmc(osimkey, user):
     tool.setDesiredKinematicsFileName(kinfile)
     tool.setLowpassCutoffFrequency(filtfreq)
          
-    # # update the model to prescribe upper body kinematics
+    # # update the model to prescribe upper body kinematics (should be done in
+    # # RRA step but can be done here if required)
     # if user.prescribe_upper_body_motion:
     #     coord_list = ["lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex_r", "arm_add_r", "arm_rot_r", "elbow_flex_r", "pro_sup_r", "wrist_flex_r", "wrist_dev_r", "arm_flex_l", "arm_add_l", "arm_rot_l", "elbow_flex_l", "pro_sup_l", "wrist_flex_l", "wrist_dev_l"]
     #     model0 = opensim.Model(os.path.join(fpath, actualmodelfile))   
