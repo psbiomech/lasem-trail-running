@@ -573,7 +573,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             for trial in meta[subj]["trials"][group]:                
 
                 # ****** FOR TESTING ONLY ******
-                trialre = re.compile("TRAIL_071_Static_(\w+)")
+                trialre = re.compile("TRAIL_071_Static_02")
                 if trialre.match(trial):
                     print("%s ---> SKIP" % trial)
                     continue
@@ -806,23 +806,18 @@ def calculate_subject_mass(c3dkey, static_fp_channel):
     
     return mass, idx0, idx1
     
-   
+
     
 '''
-filter_and_floor_fp(filter_and_floor_fp(F, T, CoP, vert_idx, sample_rate,
-                    butter_order, cutoff, threshold)):
+filter_and_floor_fp(F, T, CoP, vert_idx, sample_rate, butter_order, cutoff, 
+                    threshold):
     Filter the force plate data, and floor data below threshold.
 '''    
 def filter_and_floor_fp(F, T, cop, vert_col_idx, sample_rate, butter_order, cutoff, threshold):
     
-    # filter design
-    Wn = sample_rate / 2
-    normalised_cutoff = cutoff / Wn
-    b, a = signal.butter(butter_order, normalised_cutoff, "lowpass")
-    
     # apply filter
-    F1 = signal.filtfilt(b, a, F, axis = 0)
-    T1 = signal.filtfilt(b, a, T, axis = 0)
+    F1 = filter_timeseries(F, sample_rate, butter_order, cutoff)
+    T1 = filter_timeseries(T, sample_rate, butter_order, cutoff)
     
     # apply threshold
     Fy = F1[:, vert_col_idx]
@@ -833,7 +828,26 @@ def filter_and_floor_fp(F, T, cop, vert_col_idx, sample_rate, butter_order, cuto
     
     return F1, T1, cop
     
+
+
+'''
+filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
+    Filter timeseries data. Raw data can be a list, or an array with rows
+    representing time steps and columns as variables.
+''' 
+def filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
     
+    # filter design
+    Wn = sample_rate / 2
+    normalised_cutoff = cutoff / Wn
+    b, a = signal.butter(butter_order, normalised_cutoff, "lowpass")
+    
+    # apply filter
+    data_filtered = signal.filtfilt(b, a, data_raw, axis = 0)
+
+    return data_filtered
+    
+
   
 '''
 smooth_transitions(F, T, CoP, vert_col_idx, threshold, cop_fixed_offset, 

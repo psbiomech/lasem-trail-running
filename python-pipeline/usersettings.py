@@ -82,7 +82,7 @@ class TRAILSettings_RUN_EP(UserSettings):
         self.filter_butter_order = 4
         self.filter_cutoff = 15
         self.filter_threshold = 16   # prefer 15N, but 16N required for EP_08
-        self.smooth_cop_fixed_offset = 50
+        self.smooth_cop_fixed_offset = 50    # required but not used
         self.smooth_window = 25
 
        
@@ -128,10 +128,10 @@ class TRAILSettings_RUN_EP(UserSettings):
         self.fom_scalefactor["all"] = 2.5
         self.fom_scalefactor["sol"] = 4.0
         self.lom_scalefactor = {}
-        self.lom_scalefactor["all"] = 1.1      
+        self.lom_scalefactor["all"] = 1.1  
         
         # OpenSim IK parameters
-        self.kinematics_filter_cutoff = 15.0
+        self.kinematics_filter_cutoff = 15
         
         # OpenSim RRA parameters
         self.update_mass = True
@@ -140,6 +140,7 @@ class TRAILSettings_RUN_EP(UserSettings):
         self.rra_end_time_offset = 0.05
                 
         # OpenSim CMC parameters
+        self.prescribe_upper_body_motion = True
         self.use_rra_model = True
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
@@ -202,9 +203,9 @@ class TRAILSettings_RUN_FAST(UserSettings):
        
         # force plate data filter
         self.filter_butter_order = 4
-        self.filter_cutoff = 15
-        self.filter_threshold = 15
-        self.smooth_cop_fixed_offset = 25
+        self.filter_cutoff = 15.0
+        self.filter_threshold = 15.0
+        self.smooth_cop_fixed_offset = 25   # required but not used
         self.smooth_window = 20
         
         
@@ -217,7 +218,7 @@ class TRAILSettings_RUN_FAST(UserSettings):
         
         # OpenSim reference model
         self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model"
-        self.refmodelfile = "LASEM_TRAIL_ReferenceModel_Unclamped.osim"
+        self.refmodelfile = "LASEM_TRAIL_ReferenceModel.osim"
 
         # OpenSim setup files and folders
         self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
@@ -246,12 +247,13 @@ class TRAILSettings_RUN_FAST(UserSettings):
         self.cmccode = "cmc"
         
         # OpenSim Scale parameters
+        # self.fom_scalefactor = -1
         self.fom_scalefactor = {}
         self.fom_scalefactor["all"] = 3.0
-        self.fom_scalefactor["sol"] = 5.0
-        self.lom_scalefactor = -1
-        #self.lom_scalefactor = {}
-        #self.lom_scalefactor["all"] = 1.0  
+        #self.fom_scalefactor["sol"] = 7.0
+        # self.lom_scalefactor = -1
+        self.lom_scalefactor = {}
+        self.lom_scalefactor["all"] = 1.1
         
         # OpenSim IK parameters
         self.kinematics_filter_cutoff = 15.0
@@ -260,10 +262,11 @@ class TRAILSettings_RUN_FAST(UserSettings):
         self.update_mass = True
         self.rraiter = 2   
         self.rra_start_time_offset = -0.03  # to enable CMC initalisation
-        self.rra_end_time_offset = 0.01     # slightly wider than CMC end time       
+        self.rra_end_time_offset = 0.0     # slightly wider than CMC end time       
         
         # OpenSim CMC parameters
+        self.prescribe_upper_body_motion = True
         self.use_rra_model = True
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
-        self.cmc_end_time_offset = 0.01
+        self.cmc_end_time_offset = 0.0

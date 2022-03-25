@@ -6,6 +6,7 @@ Run OpenSim pipeline, write input data files
 """
 
 import opensim
+import scipy.signal as signal
 import pandas as pd
 import numpy as np
 import pickle as pk
@@ -216,6 +217,11 @@ def run_opensim_scale(osimkey, user):
         # run the tool
         tool.run()
         
+        
+        # ******************************
+        # UPDATE MODEL MUSCLE PROPERTIES
+        # Comment out any unused code blocks below as required       
+        
         # scale the model FoM if required
         sf_fom = user.fom_scalefactor
         if (type(sf_fom) is dict) or (sf_fom >= 0):
@@ -226,15 +232,34 @@ def run_opensim_scale(osimkey, user):
             model1 = update_osim_fom(model0, sf_fom, refmodel)
             model1.printToXML(os.path.join(fpath, model))
             
-        # scale the model FoM if required
-        sf_lom = user.lom_scalefactor
-        if (type(sf_lom) is dict) or (sf_lom > 0):
-            print("---> Scaling muscle LsT in model...")
-            shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LsT.osim"))
-            model0 = opensim.Model(os.path.join(fpath, model))
-            model1 = update_osim_lom(model0, sf_lom)
-            model1.printToXML(os.path.join(fpath, model))                         
-            
+        # # scale the model LoM (const LMT) if required
+        # sf_lom = user.lom_scalefactor
+        # if (type(sf_lom) is dict) or (sf_lom > 0):
+        #     print("---> Scaling muscle LoM in model (LMT remains constant)...")
+        #     shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LoM_LsT.osim"))
+        #     model0 = opensim.Model(os.path.join(fpath, model))
+        #     model1 = update_osim_lom_const_lmt(model0, sf_lom)
+        #     model1.printToXML(os.path.join(fpath, model))  
+
+        # # scale the model LoM if required
+        # sf_lst = user.lst_scalefactor
+        # if (type(sf_lst) is dict) or (sf_lst >= 0):
+        #     print("---> Scaling muscle LoM in model...")
+        #     shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LoM.osim"))
+        #     model0 = opensim.Model(os.path.join(fpath, model))
+        #     model1 = update_osim_lom(model0, sf_lst)
+        #     model1.printToXML(os.path.join(fpath, model)) 
+
+        # # scale the model LsT if required
+        # sf_lst = user.lst_scalefactor
+        # if (type(sf_lst) is dict) or (sf_lst >= 0):
+        #     print("---> Scaling muscle LsT in model...")
+        #     shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LsT.osim"))
+        #     model0 = opensim.Model(os.path.join(fpath, model))
+        #     model1 = update_osim_lom_const_lmt(model0, sf_lst)
+        #     model1.printToXML(os.path.join(fpath, model))   
+
+
         print("Done.")
                 
     except:
@@ -307,7 +332,7 @@ def run_opensim_ik(osimkey, user):
     print("Running the IKTool...")
 
     # save the settings in a setup file
-    tool.printToXML(os.path.join(fpath, trial + '_Setup_IK.xml'))
+    tool.printToXML(os.path.join(fpath, trial + "_Setup_IK.xml"))
         
     # run the tool
     try:
@@ -405,7 +430,7 @@ def run_opensim_id(osimkey, user):
     print("Running the IDTool...")
 
     # save the settings in a setup file
-    tool.printToXML(os.path.join(fpath, trial + '_Setup_ID.xml'))
+    tool.printToXML(os.path.join(fpath, trial + "_Setup_ID.xml"))
     
     # run the tool
     try:
@@ -553,7 +578,7 @@ def run_opensim_so(osimkey, user):
     print("Running the AnalysisTool (SO)...")
 
     # save the settings in a setup file
-    customsetupfile = os.path.join(fpath, trial + '_Setup_SO.xml')
+    customsetupfile = os.path.join(fpath, trial + "_Setup_SO.xml")
     tool.printToXML(customsetupfile)
     
     # run the tool (need to load the setup again into a new AnalyzeTool)
@@ -909,26 +934,24 @@ def run_opensim_cmc(osimkey, user):
     # e.g. actuator gains
     
     # print control constraints to trial folder
-    cmccontrolset.printToXML(os.path.join(fpath, trial + '_CMC_ControlConstraints.xml'))
+    cmccontrolset.printToXML(os.path.join(fpath, trial + "_CMC_ControlConstraints.xml"))
     
     # set CMC control constraints file in tool
-    tool.setConstraintsFileName(os.path.join(fpath, trial + '_CMC_ControlConstraints.xml'))
+    tool.setConstraintsFileName(os.path.join(fpath, trial + "_CMC_ControlConstraints.xml"))
     
 
     # ******************************
     # SET THE MODEL AND KINEMATICS
     # (use baseline or RRA adjusted model and kinematics)
 
-    # set the desired model
+    # initial desired model name
     if user.use_rra_model:
-        #actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_AdjustedModel.osim"
         if user.update_mass:
             actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_MassAdjustedModel.osim"
         else:
             actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_AdjustedModel.osim"
     else:
         actualmodelfile = modelfile
-    tool.setModelFilename(os.path.join(fpath, actualmodelfile))
         
     # set desired kinematics file and filter frequency
     if user.use_rra_model:
@@ -939,7 +962,19 @@ def run_opensim_cmc(osimkey, user):
         filtfreq = user.kinematics_filter_cutoff
     tool.setDesiredKinematicsFileName(kinfile)
     tool.setLowpassCutoffFrequency(filtfreq)
-   
+         
+    # update the model to prescribe upper body kinematics
+    if user.prescribe_upper_body_motion:
+        coord_list = ["arm_flex_r", "arm_add_r", "arm_rot_r", "elbow_flex_r", "pro_sup_r", "wrist_flex_r", "wrist_dev_r", "arm_flex_l", "arm_add_l", "arm_rot_l", "elbow_flex_l", "pro_sup_l", "wrist_flex_l", "wrist_dev_l"]
+        model0 = opensim.Model(os.path.join(fpath, actualmodelfile))   
+        ikdata = pd.read_csv(kinfile, sep = "\t", header = 8)
+        model1 = prescribe_kinematics(model0, ikdata, coord_list, user.filter_butter_order, user.filter_cutoff)
+        actualmodelfile = actualmodelfile.rstrip(".osim") + "_PrescribedUpper.osim"
+        model1.printToXML(os.path.join(fpath, actualmodelfile))
+
+    # set the model in the tool
+    tool.setModelFilename(os.path.join(fpath, actualmodelfile))
+
     
     # ******************************
     # RUN TOOL
@@ -947,7 +982,7 @@ def run_opensim_cmc(osimkey, user):
     print("Running the CMCTool...\n---> (this may take a while)")
  
     # save the settings in a setup file
-    customsetupfile = os.path.join(fpath, trial + '_Setup_CMC.xml')
+    customsetupfile = os.path.join(fpath, trial + "_Setup_CMC.xml")
     tool.printToXML(customsetupfile)   
  
     # run the tool (need to load the setup again into a new CMCTool and set the
@@ -968,7 +1003,6 @@ def run_opensim_cmc(osimkey, user):
     
     
 
-
 '''
 -----------------------------------
 ---- FUNCTIONS: MISCELLANEOUS -----
@@ -978,7 +1012,7 @@ def run_opensim_cmc(osimkey, user):
 
 
 '''
-update_osim_fom(modelfullpath, scalefactor, refmodelpath):
+update_osim_fom(modelfullpath, scalefactor, refmodel):
     Update all OpenSim model FoM by a fixed scale factor, or using the scaling
     law described by Handsfield et al. 2013 (scalefactor["all"] = -1), and/or 
     apply a custom scale factor to selected muscles. To ignore scale factors,
@@ -1001,7 +1035,7 @@ update_osim_fom(modelfullpath, scalefactor, refmodelpath):
                  scalefactor["vasint"] = 1.5
                  scalefactor["semimem"] = 2.0        
 '''
-def update_osim_fom(model, scalefactor, refmodel):
+def update_osim_fom(model, scalefactor):
     
     # load the model and get the muscles
     allmuscles = model.getMuscles()
@@ -1032,11 +1066,63 @@ def update_osim_fom(model, scalefactor, refmodel):
 
         
     return model
-            
+
 
 
 '''
 update_osim_lom(modelfullpath, scalefactor):
+    Update all OpenSim model LoM by a fixed scale factor, and/or apply a
+    custom scale factor to selected muscles. To ignore scale factors, set
+    scalefactor["all"] = 0.
+    
+    Usage:
+        
+        dict ("all", 0): do not scale (use model as-is)
+        dict ("all", float): apply fixed scale factor to all muscles, this can
+                be overwritten for specific muscles by adding additional dict
+                items for each muscle as per below.
+        dict (key, float): for each selected muscle (key) in the dict, apply
+                custom scale factor (float). The muscle (key) may be a full
+                muscle name (e.g. "vasint_r") or just the prefix (e.g.
+                "vasint"). If the latter, then the scale factor is applied to
+                all muscles found with that prefix.
+            e.g. scalefactor = {}
+                 scalefactor["all"] = 1.2
+                 scalefactor["vasint"] = 1.5
+                 scalefactor["semimem"] = 2.0
+'''
+def update_osim_lom(model, scalefactor):
+    
+    # load the model and get the muscles
+    allmuscles = model.getMuscles()
+    
+    # scale by a fixed scale factor
+    if "all" in scalefactor:
+        if scalefactor["all"] > 0:
+            sf = scalefactor["all"]
+            for m in range(allmuscles.getSize()):
+                currmuscle = allmuscles.get(m)
+                currmuscle.setOptimalFiberLength(sf * currmuscle.getOptimalFibreLength())
+        elif scalefactor["all"] == 0:
+            return model
+                        
+    # custom scale selected variables, overwrites muscles scaled by "all" key
+    for sfname in scalefactor:
+        if sfname.casefold() == "all": continue
+        for m in range(allmuscles.getSize()):
+            currmuscle = allmuscles.get(m)
+            mname = currmuscle.getName()
+            if mname.startswith(sfname):
+                sfm = scalefactor[sfname] / sf
+                currmuscle.setOptimalFiberLength(sfm * currmuscle.getOptimalFiberLength())
+
+        
+    return model
+            
+
+
+'''
+update_osim_lom_const_lmt(modelfullpath, scalefactor):
     Update all OpenSim model LoM by a fixed scale factor, and/or apply a
     custom scale factor to selected muscles. To ignore scale factors, set
     scalefactor["all"] = 0. Then adjust the LsT so that the total MTU rest
@@ -1058,7 +1144,7 @@ update_osim_lom(modelfullpath, scalefactor):
                  scalefactor["vasint"] = 1.5
                  scalefactor["semimem"] = 2.0
 '''
-def update_osim_lom(model, scalefactor):
+def update_osim_lom_const_lmt(model, scalefactor):
     
     # load the model and get the muscles
     allmuscles = model.getMuscles()
@@ -1109,6 +1195,58 @@ def update_osim_lom(model, scalefactor):
                     
     return model
             
+
+
+'''
+update_osim_lst(modelfullpath, scalefactor):
+    Update all OpenSim model LsT by a fixed scale factor, and/or apply a
+    custom scale factor to selected muscles. To ignore scale factors, set
+    scalefactor["all"] = 0.
+    
+    Usage:
+        
+        dict ("all", 0): do not scale (use model as-is)
+        dict ("all", float): apply fixed scale factor to all muscles, this can
+                be overwritten for specific muscles by adding additional dict
+                items for each muscle as per below.
+        dict (key, float): for each selected muscle (key) in the dict, apply
+                custom scale factor (float). The muscle (key) may be a full
+                muscle name (e.g. "vasint_r") or just the prefix (e.g.
+                "vasint"). If the latter, then the scale factor is applied to
+                all muscles found with that prefix.
+            e.g. scalefactor = {}
+                 scalefactor["all"] = 1.2
+                 scalefactor["vasint"] = 1.5
+                 scalefactor["semimem"] = 2.0
+'''
+def update_osim_lst(model, scalefactor):
+    
+    # load the model and get the muscles
+    allmuscles = model.getMuscles()
+    
+    # scale by a fixed scale factor
+    if "all" in scalefactor:
+        if scalefactor["all"] > 0:
+            sf = scalefactor["all"]
+            for m in range(allmuscles.getSize()):
+                currmuscle = allmuscles.get(m)
+                currmuscle.setTendonSlackLength(sf * currmuscle.getTendonSlackLength())
+        elif scalefactor["all"] == 0:
+            return model
+                        
+    # custom scale selected variables, overwrites muscles scaled by "all" key
+    for sfname in scalefactor:
+        if sfname.casefold() == "all": continue
+        for m in range(allmuscles.getSize()):
+            currmuscle = allmuscles.get(m)
+            mname = currmuscle.getName()
+            if mname.startswith(sfname):
+                sfm = scalefactor[sfname] / sf
+                currmuscle.setTendonSlackLength(sfm * currmuscle.getTendonSlackLength())
+
+        
+    return model
+
 
 
 '''
@@ -1212,6 +1350,7 @@ def write_marker_trajctory_trc_file(osimkey):
     return data
 
 
+
 '''
 perform_recommended_mass_change(rra_model, rra_log_file_fullpath):
     Extract the recommended mass changes from the RRA log file and update the
@@ -1240,3 +1379,67 @@ def perform_recommended_mass_change(rra_model, rra_log_file_fullpath):
         body.setMass(new_mass_set[key]["new"])
                
     return rra_model
+
+
+
+'''
+prescribe_kinematics(model, ikdata, coord_list):
+    Prescribe the coordinates listed in coord_list using the data from 
+    ikdata (which can be IK results or RRA results).
+'''
+def prescribe_kinematics(model, ikdata, coord_list, butter_order, cutoff):
+    
+    # get the time vector
+    timevec = ikdata.get("time").to_list()
+    
+    # calculate the sample rate (this can be different to the original C3D
+    # sample rate if RRA kinematics are used instead of IK)
+    sample_rate = 1 / (timevec[1] - timevec[0])
+    
+    # create prescribed joint kinematics object and add to model
+    coordset = model.getCoordinateSet()
+    for coordname in coord_list:
+        
+        # x, y data series
+        xvals = timevec
+        yvals = ikdata.get(coordname).to_list()
+        
+        # if not pelvis transation, convert to radians
+        if not coordname.startswith("pelvis_t"):
+            yvals = np.radians(yvals).tolist()
+        
+        # filter data
+        yvals = filter_timeseries(yvals, sample_rate, butter_order, cutoff)
+        
+        # create a SimmSpline for the timeseries
+        prescribed_spline = opensim.SimmSpline()
+        for n in range(1,len(timevec)):
+            prescribed_spline.addPoint(xvals[n], yvals[n])
+            
+        # apply SimmSpline to coordinate
+        coordinate = coordset.get(coordname)
+        coordinate.set_prescribed(True)
+        coordinate.setPrescribedFunction(prescribed_spline)
+        
+    return model
+   
+         
+        
+'''
+filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
+    Filter timeseries data. Raw data can be a list, or an array with rows
+    representing time steps and columns as variables.
+    
+    Duplicates the same function in c3dextract.py.
+''' 
+def filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
+      
+      # filter design
+      Wn = sample_rate / 2
+      normalised_cutoff = cutoff / Wn
+      b, a = signal.butter(butter_order, normalised_cutoff, "lowpass")
+      
+      # apply filter
+      data_filtered = signal.filtfilt(b, a, data_raw, axis = 0)
+
+      return data_filtered      
