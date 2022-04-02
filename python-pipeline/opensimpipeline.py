@@ -961,7 +961,7 @@ def run_opensim_cmc(osimkey, user):
         actualmodelfile = modelfile
         
     # set desired kinematics file and filter frequency
-    if user.use_rra_model:
+    if user.use_rra_kinematics:
         kinfile = os.path.join(fpath, user.rracode, trial + "_RRA_" + str(user.rraiter) + "_Kinematics_q.sto")
         filtfreq = -1
     else:

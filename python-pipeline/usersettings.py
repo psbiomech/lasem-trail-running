@@ -144,6 +144,7 @@ class TRAILSettings_RUN_EP(UserSettings):
 
         # OpenSim CMC parameters
         self.use_rra_model = True
+        self.use_rra_kinematics = True
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
         self.cmc_end_time_offset = 0.0
@@ -205,7 +206,7 @@ class TRAILSettings_RUN_FAST(UserSettings):
        
         # force plate data filter
         self.filter_butter_order = 4
-        self.filter_cutoff = 40
+        self.filter_cutoff = 15
         self.filter_threshold = 15
         self.smooth_cop_fixed_offset = 25   # required but not currently used
         self.smooth_window = 20
@@ -220,7 +221,7 @@ class TRAILSettings_RUN_FAST(UserSettings):
         
         # OpenSim reference model
         self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-model"
-        self.refmodelfile = "LASEM_TRAIL_ReferenceModel_Unclamped.osim"
+        self.refmodelfile = "LASEM_TRAIL_ReferenceModel_Unclamped_NoUpperActuators.osim"
 
         # OpenSim setup files and folders
         self.refsetuppath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline\opensim-reference-setup"
@@ -234,7 +235,7 @@ class TRAILSettings_RUN_FAST(UserSettings):
         # OpenSim additional files
         self.additionalfilesfolder = "FAST"
         self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
-        self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators.xml"
+        self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators_WithUpper.xml"
         self.refrraactuators = "LASEM_TRAIL_RRA_Actuators_RUN_FAST.xml"
         self.refrratasks = "LASEM_TRAIL_RRA_Tasks_RUN_FAST.xml"
         self.refcmcactuators = "LASEM_TRAIL_CMC_Actuators_RUN_FAST.xml"
@@ -259,7 +260,7 @@ class TRAILSettings_RUN_FAST(UserSettings):
         # self.lom_scalefactor["all"] = 1.1
         
         # OpenSim IK parameters
-        self.kinematics_filter_cutoff = 15
+        self.kinematics_filter_cutoff = 6
         
         # OpenSim RRA parameters
         self.update_mass = True
@@ -271,6 +272,7 @@ class TRAILSettings_RUN_FAST(UserSettings):
 
         # OpenSim CMC parameters
         self.use_rra_model = True
+        self.use_rra_kinematics = False
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
         self.cmc_end_time_offset = 0.0

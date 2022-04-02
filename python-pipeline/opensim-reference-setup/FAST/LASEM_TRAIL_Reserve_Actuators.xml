@@ -89,7 +89,7 @@
 				<max_control> Inf </max_control>
 			</TorqueActuator>
 
-			<!-- RESERVE ACTUATORS -->
+			<!-- LOWER BODY RESERVE ACTUATORS -->
 			<CoordinateActuator name="reserve_hip_flexion_r">
 				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
 				<min_control>-Inf</min_control>
