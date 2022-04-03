@@ -253,9 +253,9 @@ class TRAILSettings_RUN_FAST(UserSettings):
         # OpenSim Scale parameters
         # self.fom_scalefactor = -1
         self.fom_scalefactor = {}
-        self.fom_scalefactor["all"] = 3.0
-        #elf.fom_scalefactor["sol"] = 7.0
-        #self.lom_scalefactor = -1
+        self.fom_scalefactor["all"] = 4.0
+        # self.fom_scalefactor["sol"] = 7.0
+        # self.lom_scalefactor = -1
         # self.lom_scalefactor = {}
         # self.lom_scalefactor["all"] = 1.1
         

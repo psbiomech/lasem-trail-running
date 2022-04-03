@@ -77,10 +77,10 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 # ****** FOR TESTING ONLY ******
-                # trialre = re.compile("TRAIL_071_FAST_01")
-                # if not trialre.match(trial):
-                #     print("%s ---> SKIP" % trial)
-                #     continue
+                trialre = re.compile("TRAIL_071_FAST_01")
+                if not trialre.match(trial):
+                    print("%s ---> SKIP" % trial)
+                    continue
                 # ******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
@@ -753,6 +753,7 @@ def run_opensim_rra(osimkey, user):
                 model0 = opensim.Model(rramodelfile)   
                 ikdata = pd.read_csv(os.path.join(fpath, user.ikcode, trial + "_ik.mot"), sep = "\t", header = 8)
                 model1 = prescribe_kinematics(model0, ikdata, coord_list, user.filter_butter_order, user.filter_cutoff)
+                rramodelfile = rramodelfile.rstrip(".osim") + "_PrescribedUpper.osim"
                 model1.printToXML(rramodelfile)
 
             # set model file name
