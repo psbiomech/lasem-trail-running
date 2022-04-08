@@ -77,10 +77,10 @@ def opensim_pipeline(meta, user, analyses):
                 
                 
                 # ****** FOR TESTING ONLY ******
-                trialre = re.compile("TRAIL_071_FAST_01")
-                if not trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
+                # trialre = re.compile("TRAIL_071_FAST_01")
+                # if not trialre.match(trial):
+                #     print("%s ---> SKIP" % trial)
+                #     continue
                 # ******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
@@ -223,41 +223,45 @@ def run_opensim_scale(osimkey, user):
         # (comment out any unused code blocks below as required)
         
         # scale the model FoM if required
-        sf_fom = user.fom_scalefactor
-        if (type(sf_fom) is dict) or (sf_fom >= 0):
-            print("---> Scaling muscle FoM in model...")
-            shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_FoM.osim"))
-            model0 = opensim.Model(os.path.join(fpath, model))
-            refmodel = opensim.Model(os.path.join(refmodelpath, refmodelfile))
-            model1 = update_osim_fom(model0, sf_fom, refmodel)
-            model1.printToXML(os.path.join(fpath, model))
+        if hasattr(user, "fom_scalefactor"):
+            sf_fom = user.fom_scalefactor
+            if (type(sf_fom) is dict):
+                print("---> Scaling muscle FoM in model...")
+                shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_FoM.osim"))
+                model0 = opensim.Model(os.path.join(fpath, model))
+                refmodel = opensim.Model(os.path.join(refmodelpath, refmodelfile))
+                model1 = update_osim_fom(model0, sf_fom, refmodel)
+                model1.printToXML(os.path.join(fpath, model))
             
-        # # scale the model LoM (const LMT) if required
-        # sf_lom_lmt = user.lom_lmt_scalefactor
-        # if (type(sf_lom_lmt) is dict) or (sf_lom_lmt > 0):
-        #     print("---> Scaling muscle LoM in model (LMT remains constant)...")
-        #     shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LoM_LsT.osim"))
-        #     model0 = opensim.Model(os.path.join(fpath, model))
-        #     model1 = update_osim_lom_const_lmt(model0, sf_lom_lmt)
-        #     model1.printToXML(os.path.join(fpath, model))  
+        # scale the model LoM (maintain constant LMT) if required
+        if hasattr(user, "lom_lmt_scalefactor"):
+            sf_lom_lmt = user.lom_lmt_scalefactor
+            if (type(sf_lom_lmt) is dict):
+                print("---> Scaling muscle LoM in model (LMT remains constant)...")
+                shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LoM_LsT.osim"))
+                model0 = opensim.Model(os.path.join(fpath, model))
+                model1 = update_osim_lom_const_lmt(model0, sf_lom_lmt)
+                model1.printToXML(os.path.join(fpath, model))  
 
-        # # scale the model LoM if required
-        # sf_lom = user.lst_scalefactor
-        # if (type(sf_lom) is dict) or (sf_lom >= 0):
-        #     print("---> Scaling muscle LoM in model...")
-        #     shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LoM.osim"))
-        #     model0 = opensim.Model(os.path.join(fpath, model))
-        #     model1 = update_osim_lom(model0, sf_lom)
-        #     model1.printToXML(os.path.join(fpath, model)) 
+        # scale the model LoM if required
+        if hasattr(user, "lom_scalefactor"):
+            sf_lom = user.lom_scalefactor
+            if (type(sf_lom) is dict):
+                print("---> Scaling muscle LoM in model...")
+                shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LoM.osim"))
+                model0 = opensim.Model(os.path.join(fpath, model))
+                model1 = update_osim_lom(model0, sf_lom)
+                model1.printToXML(os.path.join(fpath, model)) 
 
-        # # scale the model LsT if required
-        # sf_lst = user.lst_scalefactor
-        # if (type(sf_lst) is dict) or (sf_lst >= 0):
-        #     print("---> Scaling muscle LsT in model...")
-        #     shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LsT.osim"))
-        #     model0 = opensim.Model(os.path.join(fpath, model))
-        #     model1 = update_osim_lom_const_lmt(model0, sf_lst)
-        #     model1.printToXML(os.path.join(fpath, model))   
+        # scale the model LsT if required
+        if hasattr(user, "lst_scalefactor"):
+            sf_lst = user.lst_scalefactor
+            if (type(sf_lst) is dict):
+                print("---> Scaling muscle LsT in model...")
+                shutil.copyfile(os.path.join(fpath, model), os.path.join(fpath, subject + "_original_LsT.osim"))
+                model0 = opensim.Model(os.path.join(fpath, model))
+                model1 = update_osim_lom_const_lmt(model0, sf_lst)
+                model1.printToXML(os.path.join(fpath, model))   
 
 
         print("Done.")
@@ -1044,7 +1048,7 @@ update_osim_fom(modelfullpath, scalefactor, refmodel):
                  scalefactor["vasint"] = 1.5
                  scalefactor["semimem"] = 2.0        
 '''
-def update_osim_fom(model, scalefactor):
+def update_osim_fom(model, scalefactor, refmodel):
     
     # load the model and get the muscles
     allmuscles = model.getMuscles()
@@ -1058,7 +1062,7 @@ def update_osim_fom(model, scalefactor):
                 currmuscle = allmuscles.get(m)
                 currmuscle.setMaxIsometricForce(sf * currmuscle.getMaxIsometricForce())
         elif scalefactor["all"] == -1:
-            # Handsfield scaling law: TBD
+            # Handsfield scaling law: TBD, requires refmodel
             return model
         elif scalefactor["all"] == 0:
             return model

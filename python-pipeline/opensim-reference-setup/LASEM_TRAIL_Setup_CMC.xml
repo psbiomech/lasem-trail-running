@@ -24,7 +24,7 @@
 		<!--Minimum integration step size.-->
 		<minimum_integrator_step_size>1e-08</minimum_integrator_step_size>
 		<!--Integrator error tolerance. When the error is greater, the integrator step size is decreased.-->
-		<integrator_error_tolerance>0.0001</integrator_error_tolerance>
+		<integrator_error_tolerance>0.00001</integrator_error_tolerance>
 		<!--Set of analyses to be run during the investigation.-->
 		<AnalysisSet name="Analyses">
 			<objects />
@@ -66,6 +66,6 @@
 		<!--Print level for the optimizer, 0 - 3. 0=no printing, 3=detailed printing, 2=in between-->
 		<optimizer_print_level>3</optimizer_print_level>
 		<!--True-false flag indicating whether or not to turn on verbose printing for cmc.-->
-		<use_verbose_printing>true</use_verbose_printing>
+		<use_verbose_printing>false</use_verbose_printing>
 	</CMCTool>
 </OpenSimDocument>

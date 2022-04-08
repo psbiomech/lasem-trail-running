@@ -251,13 +251,13 @@ class TRAILSettings_RUN_FAST(UserSettings):
         self.cmccode = "cmc"
         
         # OpenSim Scale parameters
-        # self.fom_scalefactor = -1
         self.fom_scalefactor = {}
-        self.fom_scalefactor["all"] = 4.0
-        # self.fom_scalefactor["sol"] = 7.0
-        # self.lom_scalefactor = -1
-        # self.lom_scalefactor = {}
-        # self.lom_scalefactor["all"] = 1.1
+        self.fom_scalefactor["all"] = 3.0
+        #self.fom_scalefactor["sol"] = 5.0        
+        #self.fom_scalefactor["vas"] = 5.0
+        #self.lom_scalefactor = {}
+        #self.lom_scalefactor["sol"] = 1.2
+
         
         # OpenSim IK parameters
         self.kinematics_filter_cutoff = 6
@@ -272,7 +272,7 @@ class TRAILSettings_RUN_FAST(UserSettings):
 
         # OpenSim CMC parameters
         self.use_rra_model = True
-        self.use_rra_kinematics = False
+        self.use_rra_kinematics = True
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
         self.cmc_end_time_offset = 0.0

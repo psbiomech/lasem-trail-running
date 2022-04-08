@@ -13,11 +13,18 @@ import opensimpipeline as osp
 import opensimresults as osr
 import pickle as pk
 import os
+import datetime
 
 
 print("\n\n\n")
 print("----------------------------------------")
 print("TRAIL: DATA PROCESSING & OPENSIM")
+print("----------------------------------------")
+
+# start time stamp
+ts0 = datetime.datetime.now();
+print("Start: %s" % ts0)
+
 print("----------------------------------------")
 print("\n")
 
@@ -87,5 +94,18 @@ print("Exporting OpenSim results to CSV...\n")
 osr.export_opensim_results(traildb, user, ["scale", "ik", "id", "so"])
 print("CSV export complete.\n")
 
+
+# %% END
+
+print("\n")
+print("----------------------------------------")
+
+# end time stamp
+ts1 = datetime.datetime.now();
+print("End: %s" % ts1)
+datetime.datetime.now()
+
+print("----------------------------------------")
+print("\n")
 
 
