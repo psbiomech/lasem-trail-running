@@ -106,7 +106,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_flexion_r</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>50</optimal_force>
+				<optimal_force>1</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="hip_adduction_r_reserve">
 				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
@@ -116,7 +116,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_adduction_r</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>100</optimal_force>
+				<optimal_force>5</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="hip_rotation_r_reserve">
 				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
@@ -126,7 +126,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_rotation_r</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>100</optimal_force>
+				<optimal_force>5</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="knee_angle_r_reserve">
 				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
@@ -136,7 +136,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>knee_angle_r</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>10</optimal_force>
+				<optimal_force>1</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="ankle_angle_r_reserve">
 				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
@@ -146,7 +146,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>ankle_angle_r</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>5</optimal_force>
+				<optimal_force>1</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="hip_flexion_l_reserve">
 				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
@@ -156,7 +156,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_flexion_l</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>50</optimal_force>
+				<optimal_force>1</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="hip_adduction_l_reserve">
 				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
@@ -166,7 +166,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_adduction_l</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>100</optimal_force>
+				<optimal_force>5</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="hip_rotation_l_reserve">
 				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
@@ -176,7 +176,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>hip_rotation_l</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>100</optimal_force>
+				<optimal_force>5</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="knee_angle_l_reserve">
 				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
@@ -186,7 +186,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>knee_angle_l</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>10</optimal_force>
+				<optimal_force>1</optimal_force>
 			</CoordinateActuator>
 			<CoordinateActuator name="ankle_angle_l_reserve">
 				<!--Minimum allowed value for control signal. Used primarily when solving for control values.-->
@@ -196,7 +196,7 @@
 				<!--Name of the generalized coordinate to which the actuator applies.-->
 				<coordinate>ankle_angle_l</coordinate>
 				<!--The maximum generalized force produced by this actuator.-->
-				<optimal_force>5</optimal_force>
+				<optimal_force>1</optimal_force>
 			</CoordinateActuator>
 		</objects>
 	</ForceSet>

@@ -253,11 +253,8 @@ class TRAILSettings_RUN_FAST(UserSettings):
         # OpenSim Scale parameters
         self.fom_scalefactor = {}
         self.fom_scalefactor["all"] = 3.0
-        #self.fom_scalefactor["sol"] = 5.0        
-        #self.fom_scalefactor["vas"] = 5.0
-        #self.lom_scalefactor = {}
-        #self.lom_scalefactor["sol"] = 1.2
-
+        #self.lom_lmt_scalefactor = {}
+        #self.lom_lmt_scalefactor["all"] = 1.1
         
         # OpenSim IK parameters
         self.kinematics_filter_cutoff = 6
