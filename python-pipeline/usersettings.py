@@ -84,7 +84,6 @@ class TRAILSettings_RUN_EP(UserSettings):
         self.filter_threshold = 16   # prefer 15N, but 16N required for EP_08
         self.smooth_cop_fixed_offset = 50    # required but not used
         self.smooth_window = 25
-
        
         # ******************************
         # OPENSIM PARAMETERS
@@ -107,14 +106,14 @@ class TRAILSettings_RUN_EP(UserSettings):
         self.refsetupcmc = "LASEM_TRAIL_Setup_CMC.xml"
         
         # OpenSim additional files
-        self.additionalfilesfolder = "EP"
+        self.additionalfilesfolder = "FAST"
         self.refexternalloads = "LASEM_TRAIL_ExternalLoads.xml"
         self.refreserveactuators = "LASEM_TRAIL_Reserve_Actuators.xml"
-        self.refrraactuators = "LASEM_TRAIL_RRA_Actuators_RUN_EP.xml"
-        self.refrratasks = "LASEM_TRAIL_RRA_Tasks_RUN_EP.xml"
-        self.refcmcactuators = "LASEM_TRAIL_CMC_Actuators_RUN_EP.xml"
-        self.refcmctasks = "LASEM_TRAIL_CMC_Tasks_RUN_EP.xml"
-        self.refcmccontrolconstraints = "LASEM_TRAIL_CMC_ControlConstraints_RUN_EP.xml"
+        self.refrraactuators = "LASEM_TRAIL_RRA_Actuators_RUN_FAST.xml"
+        self.refrratasks = "LASEM_TRAIL_RRA_Tasks_RUN_FAST.xml"
+        self.refcmcactuators = "LASEM_TRAIL_CMC_Actuators_RUN_FAST.xml"
+        self.refcmctasks = "LASEM_TRAIL_CMC_Tasks_RUN_FAST.xml"
+        self.refcmccontrolconstraints = "LASEM_TRAIL_CMC_ControlConstraints_RUN_FAST.xml"
         
         # OpenSim analysis codes
         self.scalecode = "scale"
@@ -126,19 +125,20 @@ class TRAILSettings_RUN_EP(UserSettings):
         
         # OpenSim Scale parameters
         self.fom_scalefactor = {}
-        self.fom_scalefactor["all"] = 2.5
-        self.fom_scalefactor["sol"] = 4.0
-        self.lom_scalefactor = {}
-        self.lom_scalefactor["all"] = 1.1  
+        self.fom_scalefactor["all"] = 3.0
+        #self.fom_scalefactor["all"] = 2.5
+        #self.fom_scalefactor["sol"] = 4.0
+        #self.lom_scalefactor = {}
+        #self.lom_scalefactor["all"] = 1.1  
         
         # OpenSim IK parameters
-        self.kinematics_filter_cutoff = 15
+        self.kinematics_filter_cutoff = 6 #15
         
         # OpenSim RRA parameters
         self.update_mass = True
         self.rraiter = 2
-        self.rra_start_time_offset = -0.05
-        self.rra_end_time_offset = 0.05
+        self.rra_start_time_offset = -0.03
+        self.rra_end_time_offset = 0.03
         self.prescribe_upper_body_motion = True
         self.prescribed_coord_list = ["lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex_r", "arm_add_r", "arm_rot_r", "elbow_flex_r", "pro_sup_r", "wrist_flex_r", "wrist_dev_r", "arm_flex_l", "arm_add_l", "arm_rot_l", "elbow_flex_l", "pro_sup_l", "wrist_flex_l", "wrist_dev_l"]
 
