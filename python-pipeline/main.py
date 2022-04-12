@@ -37,8 +37,9 @@ print("Done.\n")
 
 
 # %% USER SETTINGS
+
 print("Loading user settings... ", end="")
-user = uset.TRAILSettings_RUN_FAST()
+user = uset.TRAILSettings_RUN()
 print("Done.\n")
 
 
@@ -64,21 +65,21 @@ print("\nC3D data extract done.\n")
 
 # %% RUN OPENSIM PIPELINE
 
-# print("Running OpenSim model scaling (SCALE)...\n")
-# osp.opensim_pipeline(traildb, user, ["scale"])
-# print("\nOpenSim model scaling (SCALE) completed.\n")
+print("Running OpenSim model scaling (SCALE)...\n")
+osp.opensim_pipeline(traildb, user, ["scale"])
+print("\nOpenSim model scaling (SCALE) completed.\n")
 
-# print("Running OpenSim basic analyses (IK, ID, SO)...\n")
-# osp.opensim_pipeline(traildb, user, ["ik", "id", "so"])
-# print("\nOpenSim basic analyses (IK, ID, SO) completed.\n")
+print("Running OpenSim basic analyses (IK, ID, SO)...\n")
+osp.opensim_pipeline(traildb, user, ["ik", "id", "so"])
+print("\nOpenSim basic analyses (IK, ID, SO) completed.\n")
 
-# print("Running additional OpenSim analyses (RRA, CMC)...\n")
-# osp.opensim_pipeline(traildb, user, ["rra", "cmc"])
-# print("\nOpenSim additional analyses (RRA, CMC) completed.\n")
+print("Running additional OpenSim analyses (RRA, CMC)...\n")
+osp.opensim_pipeline(traildb, user, ["rra", "cmc"])
+print("\nOpenSim additional analyses (RRA, CMC) completed.\n")
 
-print("Running single OpenSim analysis...\n")
-osp.opensim_pipeline(traildb, user, ["cmc"])
-print("\nOpenSim single analysis completed.\n")
+# print("Running single OpenSim analysis...\n")
+# osp.opensim_pipeline(traildb, user, ["cmc"])
+# print("\nOpenSim single analysis completed.\n")
 
 
 # %% LOAD AND FORMAT RESULTS

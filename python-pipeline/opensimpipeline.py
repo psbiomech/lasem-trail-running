@@ -974,16 +974,6 @@ def run_opensim_cmc(osimkey, user):
         filtfreq = user.kinematics_filter_cutoff
     tool.setDesiredKinematicsFileName(kinfile)
     tool.setLowpassCutoffFrequency(filtfreq)
-         
-    # # update the model to prescribe upper body kinematics (should be done in
-    # # RRA step but can be done here if required)
-    # if user.prescribe_upper_body_motion:
-    #     coord_list = ["lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex_r", "arm_add_r", "arm_rot_r", "elbow_flex_r", "pro_sup_r", "wrist_flex_r", "wrist_dev_r", "arm_flex_l", "arm_add_l", "arm_rot_l", "elbow_flex_l", "pro_sup_l", "wrist_flex_l", "wrist_dev_l"]
-    #     model0 = opensim.Model(os.path.join(fpath, actualmodelfile))   
-    #     ikdata = pd.read_csv(kinfile, sep = "\t", header = 8)
-    #     model1 = prescribe_kinematics(model0, ikdata, coord_list, user.filter_butter_order, user.filter_cutoff)
-    #     actualmodelfile = actualmodelfile.rstrip(".osim") + "_PrescribedUpper.osim"
-    #     model1.printToXML(os.path.join(fpath, actualmodelfile))
 
     # set the model in the tool
     tool.setModelFilename(os.path.join(fpath, actualmodelfile))
