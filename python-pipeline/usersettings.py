@@ -106,6 +106,10 @@ class TRAILSettings_RUN(UserSettings):
         self.trialprefixes = {}
         self.trialprefixes["run_stance"] = ["EP", "FAST"]
         self.trialprefixes["run_stridecycle"] = ["EP", "FAST"]
+        self.trialprefixes["run_stance_ep"] = ["EP"]
+        self.trialprefixes["run_stridecycle_ep"] = ["EP"]
+        self.trialprefixes["run_stance_fast"] = ["FAST"]
+        self.trialprefixes["run_stridecycle_fast"] = ["FAST"]
                         
         # file name format regex pattern:
         #   (subjprefix)_(num code)_(trialprefix)_(alphanum code)

@@ -74,7 +74,7 @@ osp.opensim_pipeline(traildb, user, ["ik", "id", "so"])
 print("\nOpenSim basic analyses (IK, ID, SO) completed.\n")
 
 print("Running additional OpenSim analyses (RRA, CMC)...\n")
-osp.opensim_pipeline(traildb, user, ["rra", "cmc"])
+osp.opensim_pipeline(traildb, user, ["rra",  "cmc"])
 print("\nOpenSim additional analyses (RRA, CMC) completed.\n")
 
 # print("Running single OpenSim analysis...\n")
