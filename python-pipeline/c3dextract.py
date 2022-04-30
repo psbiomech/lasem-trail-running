@@ -383,7 +383,7 @@ OpenSimKey:
     processing through OpenSim.
 '''
 class OpenSimKey():
-    def __init__(self, trialkey, ref_model, c3dpath, filter_butter_order, filter_cutoff, filter_threshold, smooth_cop_offset, smooth_window):
+    def __init__(self, trialkey, ref_model, c3dpath, fp_filter_butter_order, fp_filter_cutoff, fp_filter_threshold, fp_smooth_cop_offset, fp_smooth_window, marker_filter_butter_order, marker_filter_cutoff):
         self.subject = trialkey.subject_name
         self.trial = trialkey.trial_name
         self.mass = trialkey.mass
@@ -394,8 +394,8 @@ class OpenSimKey():
         self.condition = trialkey.condition
         self.outpath = c3dpath
         self.__set_events(trialkey)
-        self.__set_markers(trialkey) 
-        self.__set_forces(trialkey, filter_butter_order, filter_cutoff, filter_threshold, smooth_cop_offset, smooth_window)      
+        self.__set_markers(trialkey, marker_filter_butter_order, marker_filter_cutoff) 
+        self.__set_forces(trialkey, fp_filter_butter_order, fp_filter_cutoff, fp_filter_threshold, fp_smooth_cop_offset, fp_smooth_window)      
         return None
     
     def __set_events(self, trialkey):
@@ -413,7 +413,7 @@ class OpenSimKey():
     
         return None
     
-    def __set_markers(self, trialkey):
+    def __set_markers(self, trialkey, marker_filter_butter_order, marker_filter_cutoff):
         
         # initialise dict
         markers = {}
@@ -444,15 +444,20 @@ class OpenSimKey():
                        
         # offset X and Z trajectories (OpenSim coordinates system) of markers
         data_offset = data
+        markers0 = {}
         for mkr in data.keys():
             for n in range(ns): data_offset[mkr][n,:] = data[mkr][n,:] - markers["offset"]
-            markers[mkr] = data_offset[mkr]
-            
+            markers0[mkr] = data_offset[mkr]
+        
+        # filter marker data
+        for mkr in data.keys():
+            markers[mkr] = filter_timeseries(markers0[mkr], markers["rate"], marker_filter_butter_order, marker_filter_cutoff)
+                
         self.markers = markers
         
         return None
                    
-    def __set_forces(self, trialkey, filter_butter_order, filter_cutoff, filter_threshold, smooth_cop_offset, smooth_window):
+    def __set_forces(self, trialkey, fp_filter_butter_order, fp_filter_cutoff, fp_filter_threshold, fp_smooth_cop_offset, fp_smooth_window):
  
         # initiliase temporary output arrays
         data = {}
@@ -508,8 +513,8 @@ class OpenSimKey():
 
                 # smooth the foot-strike and foot-off edges, then filter and 
                 # floor the force plate data
-                F1, T1, cop1 = smooth_transitions(F, T, cop, 1, filter_threshold, smooth_cop_offset, smooth_window)
-                F2, T2, cop2 = filter_and_floor_fp(F1, T1, cop1, 1, forces["rate"], filter_butter_order, filter_cutoff, filter_threshold)
+                F1, T1, cop1 = smooth_transitions(F, T, cop, 1, fp_filter_threshold, fp_smooth_cop_offset, fp_smooth_window)
+                F2, T2, cop2 = filter_and_floor_fp(F1, T1, cop1, 1, forces["rate"], fp_filter_butter_order, fp_filter_cutoff, fp_filter_threshold)
                     
                 # for each force plate, add force plate data for any active
                 # intervals to the output array for the relevant foot
@@ -518,8 +523,8 @@ class OpenSimKey():
                         if m == fp:                                     
                             idx0 = np.where(forces["time"] >= trialkey.events["window_intervals0"][n,0])[0][0]
                             idx1 = np.where(forces["time"] <= trialkey.events["window_intervals0"][n,1])[0][-1]
-                            idx0s = idx0 - smooth_window
-                            idx1s = idx1 + smooth_window - 1
+                            idx0s = idx0 - fp_smooth_window
+                            idx1s = idx1 + fp_smooth_window - 1
                             data[g]["F"][idx0s:idx1s + 1,:] = F2[idx0s:idx1s + 1,:]
                             data[g]["cop"][idx0s:idx1s + 1,:] = cop2[idx0s:idx1s + 1,:]
                             data[g]["T"][idx0s:idx1s + 1,:] = T2[idx0s:idx1s + 1,:]
@@ -572,12 +577,12 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             osimkey = {}
             for trial in meta[subj]["trials"][group]:                
 
-                # ****** FOR TESTING ONLY ******
-                # trialre = re.compile("TRAIL_071_Static_02")
-                # if trialre.match(trial):
-                #     print("%s ---> SKIP" % trial)
-                #     continue
-                # ******************************
+                #****** FOR TESTING ONLY ******
+                trialre = re.compile("TRAIL_071_Static_02")
+                if trialre.match(trial):
+                    print("%s ---> SKIP" % trial)
+                    continue
+                #******************************
                 
                 # ignore dynamic trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
@@ -592,7 +597,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                 task = meta[subj]["trials"][group][trial]["task"]
                 condition = meta[subj]["trials"][group][trial]["condition"]
-                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.filter_butter_order, user.filter_cutoff, user.filter_threshold, user.smooth_cop_fixed_offset, user.smooth_window)                           
+                osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.fp_filter_butter_order, user.fp_filter_cutoff, user.fp_filter_threshold, user.fp_smooth_cop_fixed_offset, user.fp_smooth_window, user.marker_filter_butter_order, user.marker_filter_cutoff)                           
                 
                 # get the mass from the used static trial
                 if usedstatic: mass = osimkey.mass
@@ -611,12 +616,12 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             # process dynamic C3D files
             for trial in  meta[subj]["trials"][group]:                
 
-                # ****** FOR TESTING ONLY ******                
-                # trialre = re.compile("TRAIL_071_FAST_01")
-                # if not trialre.match(trial):
-                #     print("%s ---> SKIP" % trial)
-                #     continue
-                # ******************************
+                #****** FOR TESTING ONLY ******                
+                trialre = re.compile("TRAIL_071_EP_01")
+                if not trialre.match(trial):
+                    print("%s ---> SKIP" % trial)
+                    continue
+                #******************************
                 
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
@@ -630,7 +635,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                 c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                 task = meta[subj]["trials"][group][trial]["task"]
                 condition = meta[subj]["trials"][group][trial]["condition"]
-                c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.filter_butter_order, user.filter_cutoff, user.filter_threshold, user.smooth_cop_fixed_offset, user.smooth_window)                           
+                c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, user.refmodelfile, user.staticfpchannel, mass, user.fp_filter_butter_order, user.fp_filter_cutoff, user.fp_filter_threshold, user.fp_smooth_cop_fixed_offset, user.fp_smooth_window, user.marker_filter_butter_order, user.marker_filter_cutoff)                           
                      
             #
             # ###################################                    
@@ -641,12 +646,12 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
 
 '''
 c3d_extract(trial, c3dpath, c3dpath, lab, condition, xdir, ref_model, 
-            static_fp_channel, mass, filter_butter_order, filter_cutoff, 
-            filter_threshold):
+            static_fp_channel, mass, fp_filter_butter_order, fp_filter_cutoff, 
+            fp_filter_threshold, fp_smooth_cop_offset, fp_smooth_window):
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, ref_model, static_fp_channel, mass, filter_butter_order, filter_cutoff, filter_threshold, smooth_cop_offset, smooth_window):
+def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, ref_model, static_fp_channel, mass, fp_filter_butter_order, fp_filter_cutoff, fp_filter_threshold, fp_smooth_cop_offset, fp_smooth_window, marker_filter_butter_order, marker_filter_cutoff):
     
     # load C3D file
     itf = c3d.c3dserver()
@@ -669,7 +674,7 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, task, condition, xdir, ref_model, 
     trialkey = TrialKey(lab, task, condition, c3dkey, xdir, static_fp_channel, mass)
     
     # opensim input data
-    osimkey = OpenSimKey(trialkey, ref_model, c3dpath, filter_butter_order, filter_cutoff, filter_threshold, smooth_cop_offset, smooth_window)
+    osimkey = OpenSimKey(trialkey, ref_model, c3dpath, fp_filter_butter_order, fp_filter_cutoff, fp_filter_threshold, fp_smooth_cop_offset, fp_smooth_window, marker_filter_butter_order, marker_filter_cutoff)
     
     # save key files
     with open(os.path.join(c3dpath, trial + "_c3dkey.pkl"),"wb") as f: pk.dump(c3dkey, f)
@@ -833,9 +838,13 @@ def filter_and_floor_fp(F, T, cop, vert_col_idx, sample_rate, butter_order, cuto
 '''
 filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
     Filter timeseries data. Raw data can be a list, or an array with rows
-    representing time steps and columns as variables.
+    representing time steps and columns as variables. Set cutoff < 0 if
+    filtering not required.
 ''' 
 def filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
+    
+    # return if cutoff < 0 (i.e. filtering not required)
+    if cutoff < 0: return data_raw
     
     # filter design
     Wn = sample_rate / 2

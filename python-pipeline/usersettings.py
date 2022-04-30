@@ -43,6 +43,7 @@ class UserSettings():
         
         # OpenSim log file
         self.logfilepath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\python-pipeline"
+        self.triallogfolder = "log"
         self.logfile = "out.log"
         
         # OpenSim reference model
@@ -122,12 +123,16 @@ class TRAILSettings_RUN(UserSettings):
         # ******************************
         # C3D DATA PROCESSING     
        
-        # force plate data filter
-        self.filter_butter_order = 4
-        self.filter_cutoff = 15
-        self.filter_threshold = 15
-        self.smooth_cop_fixed_offset = 25   # required but not currently used
-        self.smooth_window = 20
+        # marker data filter (set cutoff to -1 if not required)
+        self.marker_filter_butter_order = 4
+        self.marker_filter_cutoff = -1
+       
+        # force plate data filter (set cutoff to -1 if not required)
+        self.fp_filter_butter_order = 4
+        self.fp_filter_cutoff = 15
+        self.fp_filter_threshold = 15
+        self.fp_smooth_cop_fixed_offset = 25   # required but not currently used
+        self.fp_smooth_window = 20
         
         
         # ******************************
@@ -150,6 +155,7 @@ class TRAILSettings_RUN(UserSettings):
         #self.lom_lmt_scalefactor["all"] = 1.1
         
         # OpenSim IK parameters
+        self.kinematics_filter_butter_order = 4
         self.kinematics_filter_cutoff = 6
         
         # OpenSim RRA parameters
@@ -158,7 +164,7 @@ class TRAILSettings_RUN(UserSettings):
         self.rra_start_time_offset = -0.03  # to enable CMC initalisation
         self.rra_end_time_offset = 0.03     # slightly wider than CMC end time       
         self.prescribe_upper_body_motion = True
-        self.prescribed_coord_list = ["lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex_r", "arm_add_r", "arm_rot_r", "elbow_flex_r", "pro_sup_r", "wrist_flex_r", "wrist_dev_r", "arm_flex_l", "arm_add_l", "arm_rot_l", "elbow_flex_l", "pro_sup_l", "wrist_flex_l", "wrist_dev_l"]
+        self.prescribe_coord_list = ["lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex_r", "arm_add_r", "arm_rot_r", "elbow_flex_r", "pro_sup_r", "wrist_flex_r", "wrist_dev_r", "arm_flex_l", "arm_add_l", "arm_rot_l", "elbow_flex_l", "pro_sup_l", "wrist_flex_l", "wrist_dev_l"]
 
         # OpenSim CMC parameters
         self.use_rra_model = True

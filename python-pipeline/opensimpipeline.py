@@ -61,6 +61,11 @@ def opensim_pipeline(meta, user, analyses):
                     pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
                     with open(os.path.join(pklpath, pklfile),"rb") as fid: 
                         osimkey = pk.load(fid)
+                        
+                    # create an OpenSim log folder
+                    logfolder = os.path.join(pklpath, user.triallogfolder)
+                    if not os.path.isdir(logfolder):
+                        os.makedirs(logfolder)
                     
                     # run the scale tool if requested
                     if "scale" in analyses:
@@ -76,12 +81,12 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
                 
                 
-                # ****** FOR TESTING ONLY ******
-                # trialre = re.compile("TRAIL_071_FAST_01")
-                # if not trialre.match(trial):
-                #     print("%s ---> SKIP" % trial)
-                #     continue
-                # ******************************
+                #****** FOR TESTING ONLY ******
+                trialre = re.compile("TRAIL_071_EP_01")
+                if not trialre.match(trial):
+                    print("%s ---> SKIP" % trial)
+                    continue
+                #******************************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
 
@@ -90,6 +95,11 @@ def opensim_pipeline(meta, user, analyses):
                     pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
                     with open(os.path.join(pklpath, pklfile),"rb") as fid: 
                         osimkey = pk.load(fid)
+
+                    # create an OpenSim log folder
+                    logfolder = os.path.join(pklpath, user.triallogfolder)
+                    if not os.path.isdir(logfolder):
+                        os.makedirs(logfolder)
                     
                     # copy the model into the trial folder
                     shutil.copy(modelfullpath, pklpath)
@@ -269,7 +279,7 @@ def run_opensim_scale(osimkey, user):
     except:
         print("---> ERROR: Scale failed. Skipping Scale for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, "out_SCALE.log"))
+        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_SCALE.log"))
         print("------------------------------------------------\n")
     
     # ******************************    
@@ -345,7 +355,7 @@ def run_opensim_ik(osimkey, user):
     except:
         print("---> ERROR: IK failed. Skipping IK for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, "out_IK.log")) 
+        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_IK.log")) 
         print("------------------------------------------------\n")
     
     # ******************************
@@ -443,7 +453,7 @@ def run_opensim_id(osimkey, user):
     except:
         print("---> ERROR: ID failed. Skipping ID for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, "out_ID.log")) 
+        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_ID.log")) 
         print("------------------------------------------------\n")
 
     # ******************************
@@ -593,7 +603,7 @@ def run_opensim_so(osimkey, user):
     except:
         print("---> ERROR: SO failed. Skipping SO for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, "out_SO.log")) 
+        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_SO.log")) 
         print("------------------------------------------------\n")
 
     # ******************************
@@ -753,10 +763,10 @@ def run_opensim_rra(osimkey, user):
 
             # update the model to prescribe upper body kinematics from IK
             if (i == 0) and user.prescribe_upper_body_motion:
-                coord_list = user.prescribed_coord_list
+                coord_list = user.prescribe_coord_list
                 model0 = opensim.Model(rramodelfile)   
                 ikdata = pd.read_csv(os.path.join(fpath, user.ikcode, trial + "_ik.mot"), sep = "\t", header = 8)
-                model1 = prescribe_kinematics(model0, ikdata, coord_list, user.filter_butter_order, user.filter_cutoff)
+                model1 = prescribe_kinematics(model0, ikdata, coord_list, user.kinematics_filter_butter_order, user.kinematics_filter_cutoff)
                 rramodelfile = rramodelfile.rstrip(".osim") + "_PrescribedUpper.osim"
                 model1.printToXML(rramodelfile)
 
@@ -780,7 +790,7 @@ def run_opensim_rra(osimkey, user):
             except:
                 print("---> ERROR: RRA iteration %d failed. Skipping RRA for %s." % (i + 1, trial))
             else:
-                shutil.copyfile("out.log", os.path.join(fpath, "out_" + rraiter + ".log"))                     
+                shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_" + rraiter + ".log"))                     
 
  
             # update the RRA model segment masses, print the new model and
@@ -997,7 +1007,7 @@ def run_opensim_cmc(osimkey, user):
     except:
         print("---> ERROR: CMC failed. Skipping CMC for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, "out_CMC.log"))
+        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_CMC.log"))
         print("------------------------------------------------\n")
     
     # ******************************
