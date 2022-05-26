@@ -66,6 +66,7 @@ class UserSettings():
         self.socode = "so"
         self.rracode = "rra"
         self.cmccode = "cmc"
+        self.jrcode = "jr"
         
         
         
@@ -172,3 +173,10 @@ class TRAILSettings_RUN(UserSettings):
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
         self.cmc_end_time_offset = 0.0
+        
+        # OpenSim JR parameters
+        self.jr_joints = {}
+        self.jr_joints["all"] = ["child", "child"]
+        self.jr_use_cmc_forces = False
+
+        

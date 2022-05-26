@@ -45,15 +45,15 @@ print("Done.\n")
 
 # %% META DATABASE (BUILD NEW OR LOAD EXISTING)
 
-print("Building new output database... ", end="")
-traildb = bd.build_database(user, "run_stridecycle")
-print("Done.\n")
-
-# print("Loading existing output database... ", end="")
-# dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
-# with open(dbfilepath,"rb") as fid:
-#     traildb = pk.load(fid)
+# print("Building new output database... ", end="")
+# traildb = bd.build_database(user, "run_stridecycle")
 # print("Done.\n")
+
+print("Loading existing output database... ", end="")
+dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
+with open(dbfilepath,"rb") as fid:
+    traildb = pk.load(fid)
+print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
@@ -65,24 +65,25 @@ print("\nC3D data extract done.\n")
 
 # %% RUN OPENSIM PIPELINE
 
-print("Running OpenSim model scaling (SCALE)...\n")
+print("Running OpenSim model scaling: SCALE...\n")
 osp.opensim_pipeline(traildb, user, ["scale"])
 print("\nOpenSim model scaling (SCALE) completed.\n")
 
-print("Running OpenSim basic analyses (IK, ID, SO)...\n")
+print("Running OpenSim analyses: IK, ID, SO...\n")
 osp.opensim_pipeline(traildb, user, ["ik", "id", "so"])
-print("\nOpenSim basic analyses (IK, ID, SO) completed.\n")
+print("\nOpenSim analyses (IK, ID, SO) completed.\n")
 
-print("Running additional OpenSim analyses (RRA, CMC)...\n")
+print("Running OpenSim analyses: RRA, CMC...\n")
 osp.opensim_pipeline(traildb, user, ["rra",  "cmc"])
-print("\nOpenSim additional analyses (RRA, CMC) completed.\n")
+print("\nOpenSim analyses (RRA, CMC) completed.\n")
 
+print("Running OpenSim analyses: JR...\n")
+osp.opensim_pipeline(traildb, user, ["jr"])
+print("\nOpenSim analyses (JR) completed.\n")
 
-# %% RUN OPENSIM SINGLE ANALYSIS
-
-# print("Running single OpenSim analysis...\n")
-# osp.opensim_pipeline(traildb, user, ["rra"])
-# print("\nOpenSim single analysis completed.\n")
+#****** FOR TESTING ONLY ******
+#osp.opensim_pipeline(traildb, user, ["rra"])
+#******************************
 
 
 # %% LOAD AND FORMAT RESULTS

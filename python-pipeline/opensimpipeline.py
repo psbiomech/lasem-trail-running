@@ -35,7 +35,7 @@ import re
 
 '''
 opensim_pipeline(meta, user):
-    Run OpenSim pipeline: Scale, IK, ID, SO, RRA, CMC.
+    Run OpenSim tools pipeline
 '''
 def opensim_pipeline(meta, user, analyses):
 
@@ -121,6 +121,8 @@ def opensim_pipeline(meta, user, analyses):
                             run_opensim_rra(osimkey, user)
                         elif ans == "cmc":
                             run_opensim_cmc(osimkey, user)
+                        elif ans == "jr":
+                            run_opensim_jr(osimkey, user)
                             
     return None
 
@@ -530,6 +532,10 @@ def run_opensim_so(osimkey, user):
     # set the external loads file name
     tool.setExternalLoadsFileName(extloadsfile)
     
+    
+    # ******************************
+    # CREATE STATIC OPTIMISATION ANALYSIS   
+    
     # create an SO analysis
     print("Append new SO Analysis to the AnalysisSet...")
     so = opensim.StaticOptimization()
@@ -624,6 +630,9 @@ def run_opensim_rra(osimkey, user):
     fpath = osimkey.outpath
     modelfile = osimkey.model
     trial = osimkey.trial
+
+    # clear log file
+    open("out.log", "w").close()
     
     print("Performing RRA on trial: %s" % trial)
     print("------------------------------------------------")
@@ -797,7 +806,7 @@ def run_opensim_rra(osimkey, user):
             # overwrite the model file parameter for the next iteration
             if user.update_mass:
                 rra_model = opensim.Model(rra_adjusted_model_file)
-                rra_adjusted_model = perform_recommended_mass_change(rra_model, os.path.join(fpath, "out_" + rraiter + ".log"))
+                rra_adjusted_model = perform_recommended_mass_change(rra_model, os.path.join(fpath, user.triallogfolder, "out_" + rraiter + ".log"))
                 rra_adjusted_model_file = os.path.join(fpath, rraname + "_TorsoAdjusted_MassUpdated.osim")
                 rra_adjusted_model.printToXML(rra_adjusted_model_file)
             
@@ -839,7 +848,8 @@ def run_opensim_cmc(osimkey, user):
     print("Create new CMCTool...")
     refsetuppath = user.refsetuppath
     refsetupfile = user.refsetupcmc
-    tool = opensim.CMCTool(os.path.join(refsetuppath, refsetupfile), False)      
+    tool = opensim.CMCTool(os.path.join(refsetuppath, refsetupfile), False)
+    tool.setName(trial)     
     
     # set the initial and final times (limit to between first and last event)
     t0 = float(osimkey.events["time"][0]) + user.cmc_start_time_offset
@@ -902,6 +912,7 @@ def run_opensim_cmc(osimkey, user):
         residforce.set_point(pelviscom)
 
     # write actuator set to file
+    print("Preparing CMC actuators...")
     forcesetfile = trial + "_CMC_Actuators.xml"
     residforceset.printToXML(os.path.join(fpath, forcesetfile))
     
@@ -931,6 +942,7 @@ def run_opensim_cmc(osimkey, user):
     # (allows for trial-specific controller weights and gains to be applied)
  
     # load CMC tasks set
+    print("Preparing CMC tasks...")
     cmctasksfile = user.refcmctasks
     cmctaskset = opensim.CMC_TaskSet(os.path.join(refsetuppath, user.additionalfilesfolder, cmctasksfile))
     
@@ -949,6 +961,7 @@ def run_opensim_cmc(osimkey, user):
     # (allows for trial-specific controller constraints to be applied)
 
     # load reference CMC control constraints
+    print("Preparing CMC control constraints...")
     cmccontrolsfile = user.refcmccontrolconstraints
     cmccontrolset = opensim.ControlSet(os.path.join(refsetuppath, user.additionalfilesfolder, cmccontrolsfile))
     
@@ -966,7 +979,8 @@ def run_opensim_cmc(osimkey, user):
     # SET THE MODEL AND KINEMATICS
     # (use baseline or RRA adjusted model and kinematics)
 
-    # initial desired model name
+    # desired model name
+    print("Loading the model...")
     if user.use_rra_model:
         if user.update_mass:
             actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_TorsoAdjusted_MassUpdated.osim"
@@ -974,8 +988,10 @@ def run_opensim_cmc(osimkey, user):
             actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_TorsoAdjusted.osim"
     else:
         actualmodelfile = modelfile
+    tool.setModelFilename(os.path.join(fpath, actualmodelfile))
         
     # set desired kinematics file and filter frequency
+    print("Setting coordinates data file...")
     if user.use_rra_kinematics:
         kinfile = os.path.join(fpath, user.rracode, trial + "_RRA_" + str(user.rraiter) + "_Kinematics_q.sto")
         filtfreq = -1
@@ -985,8 +1001,6 @@ def run_opensim_cmc(osimkey, user):
     tool.setDesiredKinematicsFileName(kinfile)
     tool.setLowpassCutoffFrequency(filtfreq)
 
-    # set the model in the tool
-    tool.setModelFilename(os.path.join(fpath, actualmodelfile))
 
     
     # ******************************
@@ -1015,6 +1029,203 @@ def run_opensim_cmc(osimkey, user):
     return None    
     
     
+
+'''
+run_opensim_jr(osimkey, user):
+    Set up and run the Tool using the API. A generic XML setup file is
+    initially loaded, and then modified using the API. The Tool is then run
+    via the API. Results are printed to text files in the remote folder.
+'''
+def run_opensim_jr(osimkey, user):
+    
+    # trial folder, model and trial
+    fpath = osimkey.outpath
+    modelfile = osimkey.model
+    trial = osimkey.trial
+
+    # clear log file
+    open("out.log", "w").close()
+    
+    print("Performing JR on trial: %s" % trial)
+    print("------------------------------------------------")
+    
+    # create an generic AnalyzeTool from the template setup file (set the flag
+    # aLoadModelAndInput = false as we are only configuring the setup file at 
+    # this stage)
+    print("Create new AnalyzeTool...")
+    refsetuppath = user.refsetuppath
+    refsetupfile = user.refsetupso
+    tool = opensim.AnalyzeTool(os.path.join(refsetuppath, refsetupfile), False)
+    tool.setName(trial) 
+  
+    # set the initial and final times (limit to between first and last event)
+    t0 = float(osimkey.events["time"][0])
+    t1 = float(osimkey.events["time"][osimkey.events["opensim_last_event_idx"]])
+    print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
+    tool.setInitialTime(t0)
+    tool.setFinalTime(t1)
+    
+    # set output directory
+    print("Setting output file name...")
+    stofilepath = os.path.join(fpath, user.jrcode)
+    if not os.path.isdir(stofilepath): os.makedirs(stofilepath)
+    tool.setResultsDir(stofilepath)
+    
+    # create an external loads object from template, set it up, and
+    # print to destination folder (This is not the best way to do this,
+    # but Opensim Tools are designed to read directly from XML files,
+    # so better to fully set up an external loads file, print it then
+    # load it again into the Tool, than to create an ExternalLoads
+    # object and connect it to the Model. This also ensures a copy of
+    # the external loads file is available in the trial folder in case
+    # a one-off analysis needs to be run in future.)
+    print("Creating external loads XML file...")
+    extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
+    if not os.path.isfile(extloadsfile):
+        extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.additionalfilesfolder, user.refexternalloads), True)       
+        extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
+        extloads.printToXML(extloadsfile)  
+
+    # set the external loads file name
+    tool.setExternalLoadsFileName(extloadsfile)
+    
+    
+    # ******************************
+    # CREATE JOINT REACTION ANALYSIS   
+    
+    # create an JR analysis
+    print("Create new JR Analysis to the AnalysisSet...")
+    jr = opensim.JointReaction()
+    jr.setName("jr")
+    jr.setStartTime(t0)
+    jr.setEndTime(t1)
+    
+    # set the muscle forces 
+    print("Setting muscle forces...")
+    if user.jr_use_cmc_forces:
+        forcefile = os.path.join(fpath, user.cmccode, trial + "_Actuation_force.sto")
+    else:
+        forcefile = os.path.join(fpath, user.socode, trial + "_so_force.sto")         
+    jr.setForcesFileName(forcefile)
+    
+    # set the joints to be analysed
+    print("Setting joints to be analysed...")
+    joints = opensim.ArrayStr()
+    onbodys = opensim.ArrayStr()
+    inframes = opensim.ArrayStr()
+    for j in user.jr_joints.keys():
+        joints.append(j)
+        onbodys.append(user.jr_joints[j][0])
+        inframes.append(user.jr_joints[j][1])
+    jr.setJointNames(joints)
+    jr.setOnBody(onbodys)
+    jr.setInFrame(inframes)
+    
+    # add the StaticOptimization analysis to the tool AnalysisSet
+    print("Append new JR Analysis to the AnalysisSet...")
+    analyses = tool.getAnalysisSet()
+    analyses.insert(0, jr)
+
+
+    # ******************************
+    # PREPARE RESERVE ACTUATORS
+    # (set the pelvis reserves to act at pelvis COM, or use default application
+    # at the ground-pelvis origin located at pelvis geometric centre)
+        
+    # get the pelvis COM location from the model
+    model = opensim.Model(os.path.join(fpath, modelfile))
+    pelvis = opensim.Body.safeDownCast(model.findComponent("pelvis"))
+    pelviscom = pelvis.getMassCenter() 
+    
+    # load reference actuator forceset, get the pelvis actuators and set force
+    # application point to pelvis COM
+    refrefreserveactuators = user.refreserveactuators
+    residforceset = opensim.ForceSet(os.path.join(refsetuppath, user.additionalfilesfolder, refrefreserveactuators))
+    for x in ["FX","FY","FZ"]:
+        residforce = opensim.PointActuator.safeDownCast(residforceset.get(x))
+        residforce.set_point(pelviscom)
+
+    # write updated actuator set to file    
+    forcesetfile = trial + "_Reserve_Actuators.xml"
+    residforceset.printToXML(os.path.join(fpath, forcesetfile))
+      
+    # append reserve actuators
+    # (note: need to create a new ArrayStr with one element, add the file name,
+    # and then pass the ArrayStr to setForceSetFiles; however, the tool does
+    # not like whitespace in the <force_set_files> XML property)
+    print("Appending reserve actuators...")
+    fsvec = opensim.ArrayStr()    
+    fsvec.append(forcesetfile)
+    tool.setForceSetFiles(fsvec)
+    tool.setReplaceForceSet(False)   
+
+    # # append default reference actuators, with pelvis residuals acting at 
+    # # ground-pelvis origin located at pelvis geometric centre
+    # refforcesetfile = user.refreserveactuators
+    # residforceset = opensim.ForceSet(os.path.join(refsetuppath, refforcesetfile))
+    # forcesetfile = trial + "_Reserve_Actuators.xml"
+    # residforceset.printToXML(os.path.join(fpath, forcesetfile))
+    # fsvec = opensim.ArrayStr()
+    # fsvec.append(forcesetfile)
+    # tool.setForceSetFiles(fsvec)
+    # tool.setReplaceForceSet(False)     
+
+
+    # ******************************
+    # SET THE MODEL AND KINEMATICS
+    # (use baseline or RRA adjusted model and kinematics)
+           
+    # desired model name
+    print("Loading the model...")
+    if user.jr_use_cmc_forces:
+        if user.update_mass:
+            actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_TorsoAdjusted_MassUpdated.osim"
+        else:
+            actualmodelfile = trial + "_RRA_" + str(user.rraiter) + "_TorsoAdjusted.osim"
+    else:
+        actualmodelfile = modelfile
+    tool.setModelFilename(os.path.join(fpath, actualmodelfile))
+        
+    # set coordinates data file
+    print("Setting coordinates data file...")
+    if user.jr_use_cmc_forces:
+        kinfile = os.path.join(fpath, user.cmccode, trial + "_Kinematics_q.sto")
+        filtfreq = -1    
+    else:            
+        kinfile = os.path.join(fpath, user.ikcode, trial + "_ik.mot")
+        filtfreq = 6.0
+    tool.setCoordinatesFileName(kinfile)
+    tool.setLowpassCutoffFrequency(filtfreq)
+    
+    
+    # ******************************
+    # RUN TOOL 
+    
+    print("Running the AnalysisTool (JR)...")
+
+    # save the settings in a setup file
+    customsetupfile = os.path.join(fpath, trial + "_Setup_JR.xml")
+    tool.printToXML(customsetupfile)
+    
+    # run the tool (need to load the setup again into a new AnalyzeTool)
+    try:
+        tool2 = opensim.AnalyzeTool(customsetupfile)
+        tool2.run()
+        print("Done.")
+    except:
+        print("---> ERROR: JR failed. Skipping JR for %s." % trial)
+    finally:
+        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_JR.log")) 
+        print("------------------------------------------------\n")
+
+    # ******************************
+        
+    return None  
+
+    
+    
+
+
 
 '''
 -----------------------------------
