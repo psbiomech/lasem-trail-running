@@ -408,7 +408,6 @@ def run_opensim_id(osimkey, user):
 
     # set input directory and coordinates data file
     print("Setting coordinates data file...")
-    tool.setInputsDir(fpath)
     tool.setCoordinatesFileName(os.path.join(fpath, user.ikcode, trial + "_ik.mot"))
     tool.setLowpassCutoffFrequency(6.0)
     

@@ -1,0 +1,1307 @@
+[2022-05-27 05:38:51.083] [info] Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071.osim
+[2022-05-27 05:38:51.086] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-05-27 05:38:51.086] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-05-27 05:38:51.086] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-05-27 05:38:51.087] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-05-27 05:38:51.087] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-05-27 05:38:51.087] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-05-27 05:38:51.087] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-05-27 05:38:51.087] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-05-27 05:38:51.087] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-05-27 05:38:51.088] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-05-27 05:38:51.089] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-05-27 05:38:51.089] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-05-27 05:38:51.089] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-05-27 05:38:51.089] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-05-27 05:38:51.089] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-05-27 05:38:51.089] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-05-27 05:38:51.089] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-05-27 05:38:51.089] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-05-27 05:38:51.090] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-05-27 05:38:51.090] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-05-27 05:38:51.090] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-05-27 05:38:51.090] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-05-27 05:38:51.090] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-05-27 05:38:51.090] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-05-27 05:38:51.090] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-05-27 05:38:51.090] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-05-27 05:38:51.091] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-05-27 05:38:51.091] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-05-27 05:38:51.091] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-05-27 05:38:51.091] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-05-27 05:38:51.091] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-05-27 05:38:51.091] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-05-27 05:38:51.091] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-05-27 05:38:51.091] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-05-27 05:38:51.092] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-05-27 05:38:51.092] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-05-27 05:38:51.092] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-05-27 05:38:51.092] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-05-27 05:38:51.092] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-05-27 05:38:51.092] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-05-27 05:38:51.092] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-05-27 05:38:51.092] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-05-27 05:38:51.092] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-05-27 05:38:51.092] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-05-27 05:38:51.092] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-05-27 05:38:51.093] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-05-27 05:38:51.094] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-05-27 05:38:51.361] [cout] [info] 
+               MODEL: TRAIL_071
+         coordinates: 39
+              forces: 80
+           actuators: 80
+             muscles: 80
+            analyses: 0
+              probes: 0
+              bodies: 22
+              joints: 22
+         constraints: 2
+             markers: 48
+         controllers: 0
+  contact geometries: 0
+misc modelcomponents: 0
+[2022-05-27 05:38:51.363] [info] Running tool .
+[2022-05-27 05:38:51.812] [info] Frame 19 (t = 0.095):	 total squared error = 0.0207412, marker error: RMS = 0.0217115, max = 0.0565103 (RTOE)
+[2022-05-27 05:38:51.939] [info] Frame 20 (t = 0.1):	 total squared error = 0.0217409, marker error: RMS = 0.0222286, max = 0.0594591 (RTOE)
+[2022-05-27 05:38:52.022] [info] Frame 21 (t = 0.105000):	 total squared error = 0.0226367, marker error: RMS = 0.022682, max = 0.061739 (RTOE)
+[2022-05-27 05:38:52.077] [info] Frame 22 (t = 0.11):	 total squared error = 0.0231906, marker error: RMS = 0.0229578, max = 0.0644448 (RTOE)
+[2022-05-27 05:38:52.123] [info] Frame 23 (t = 0.115):	 total squared error = 0.0235597, marker error: RMS = 0.0231398, max = 0.0653876 (RTOE)
+[2022-05-27 05:38:52.169] [info] Frame 24 (t = 0.12):	 total squared error = 0.0236037, marker error: RMS = 0.0231614, max = 0.0666336 (RTOE)
+[2022-05-27 05:38:52.198] [info] Frame 25 (t = 0.125):	 total squared error = 0.0237014, marker error: RMS = 0.0232092, max = 0.0674245 (RTOE)
+[2022-05-27 05:38:52.243] [info] Frame 26 (t = 0.13):	 total squared error = 0.0236291, marker error: RMS = 0.0231738, max = 0.0671103 (RTOE)
+[2022-05-27 05:38:52.284] [info] Frame 27 (t = 0.135):	 total squared error = 0.0236812, marker error: RMS = 0.0231994, max = 0.0674473 (RTOE)
+[2022-05-27 05:38:52.323] [info] Frame 28 (t = 0.14):	 total squared error = 0.0237276, marker error: RMS = 0.0232221, max = 0.0660302 (RTOE)
+[2022-05-27 05:38:52.370] [info] Frame 29 (t = 0.145):	 total squared error = 0.023776, marker error: RMS = 0.0232457, max = 0.0655413 (RTOE)
+[2022-05-27 05:38:52.406] [info] Frame 30 (t = 0.15):	 total squared error = 0.0239536, marker error: RMS = 0.0233324, max = 0.0635865 (RTOE)
+[2022-05-27 05:38:52.447] [info] Frame 31 (t = 0.155):	 total squared error = 0.0242188, marker error: RMS = 0.0234612, max = 0.0614363 (RTOE)
+[2022-05-27 05:38:52.532] [info] Frame 32 (t = 0.16):	 total squared error = 0.0247756, marker error: RMS = 0.0237294, max = 0.0609957 (RTOE)
+[2022-05-27 05:38:52.608] [info] Frame 33 (t = 0.165):	 total squared error = 0.0249193, marker error: RMS = 0.0237981, max = 0.0587489 (RTOE)
+[2022-05-27 05:38:52.674] [info] Frame 34 (t = 0.17):	 total squared error = 0.0250513, marker error: RMS = 0.023861, max = 0.0562044 (RTOE)
+[2022-05-27 05:38:52.760] [info] Frame 35 (t = 0.175):	 total squared error = 0.0252936, marker error: RMS = 0.0239761, max = 0.0537404 (RTOE)
+[2022-05-27 05:38:52.824] [info] Frame 36 (t = 0.18):	 total squared error = 0.0255147, marker error: RMS = 0.0240807, max = 0.0515581 (RTOE)
+[2022-05-27 05:38:52.878] [info] Frame 37 (t = 0.185):	 total squared error = 0.0257166, marker error: RMS = 0.0241758, max = 0.0501269 (RTOE)
+[2022-05-27 05:38:52.966] [info] Frame 38 (t = 0.19):	 total squared error = 0.0256376, marker error: RMS = 0.0241386, max = 0.0495485 (RTOE)
+[2022-05-27 05:38:53.027] [info] Frame 39 (t = 0.195):	 total squared error = 0.0254072, marker error: RMS = 0.0240299, max = 0.0485165 (RTOE)
+[2022-05-27 05:38:53.097] [info] Frame 40 (t = 0.2):	 total squared error = 0.0250045, marker error: RMS = 0.0238387, max = 0.0480260 (RELB)
+[2022-05-27 05:38:53.138] [info] Frame 41 (t = 0.205000):	 total squared error = 0.0247070, marker error: RMS = 0.0236965, max = 0.0481025 (RTOE)
+[2022-05-27 05:38:53.203] [info] Frame 42 (t = 0.21):	 total squared error = 0.0243878, marker error: RMS = 0.0235429, max = 0.0483703 (RTOE)
+[2022-05-27 05:38:53.243] [info] Frame 43 (t = 0.215):	 total squared error = 0.0240601, marker error: RMS = 0.0233842, max = 0.0488302 (RTOE)
+[2022-05-27 05:38:53.284] [info] Frame 44 (t = 0.22):	 total squared error = 0.0241010, marker error: RMS = 0.0234041, max = 0.0495278 (RTOE)
+[2022-05-27 05:38:53.312] [info] Frame 45 (t = 0.225):	 total squared error = 0.0242957, marker error: RMS = 0.0234984, max = 0.0505006 (RTOE)
+[2022-05-27 05:38:53.351] [info] Frame 46 (t = 0.23):	 total squared error = 0.0244049, marker error: RMS = 0.0235512, max = 0.0512956 (RTOE)
+[2022-05-27 05:38:53.376] [info] Frame 47 (t = 0.235):	 total squared error = 0.0246046, marker error: RMS = 0.0236473, max = 0.0521541 (RTOE)
+[2022-05-27 05:38:53.399] [info] Frame 48 (t = 0.24):	 total squared error = 0.0246937, marker error: RMS = 0.0236901, max = 0.0530594 (RTOE)
+[2022-05-27 05:38:53.439] [info] Frame 49 (t = 0.245):	 total squared error = 0.0248079, marker error: RMS = 0.0237448, max = 0.0533352 (RTOE)
+[2022-05-27 05:38:53.484] [info] Frame 50 (t = 0.25):	 total squared error = 0.024642, marker error: RMS = 0.0236653, max = 0.0535831 (RTOE)
+[2022-05-27 05:38:53.516] [info] Frame 51 (t = 0.255):	 total squared error = 0.0245745, marker error: RMS = 0.0236329, max = 0.0538824 (RTOE)
+[2022-05-27 05:38:53.541] [info] Frame 52 (t = 0.26):	 total squared error = 0.0245455, marker error: RMS = 0.0236189, max = 0.0542611 (RTOE)
+[2022-05-27 05:38:53.590] [info] Frame 53 (t = 0.265):	 total squared error = 0.0244937, marker error: RMS = 0.0235939, max = 0.0545549 (RTOE)
+[2022-05-27 05:38:53.638] [info] Frame 54 (t = 0.27):	 total squared error = 0.024444, marker error: RMS = 0.02357, max = 0.0553334 (RTOE)
+[2022-05-27 05:38:53.691] [info] Frame 55 (t = 0.275):	 total squared error = 0.0245852, marker error: RMS = 0.023638, max = 0.0552218 (RTOE)
+[2022-05-27 05:38:53.761] [info] Frame 56 (t = 0.28):	 total squared error = 0.0245729, marker error: RMS = 0.0236321, max = 0.0556809 (RTOE)
+[2022-05-27 05:38:53.809] [info] Frame 57 (t = 0.285):	 total squared error = 0.0246901, marker error: RMS = 0.0236884, max = 0.0561013 (RTOE)
+[2022-05-27 05:38:53.846] [info] Frame 58 (t = 0.29):	 total squared error = 0.0249576, marker error: RMS = 0.0238163, max = 0.0565551 (RTOE)
+[2022-05-27 05:38:53.891] [info] Frame 59 (t = 0.295):	 total squared error = 0.0250564, marker error: RMS = 0.0238634, max = 0.0572444 (RTOE)
+[2022-05-27 05:38:53.944] [info] Frame 60 (t = 0.3):	 total squared error = 0.0251682, marker error: RMS = 0.0239166, max = 0.0578125 (RTOE)
+[2022-05-27 05:38:53.988] [info] Frame 61 (t = 0.305000):	 total squared error = 0.0252416, marker error: RMS = 0.0239515, max = 0.0580766 (RTOE)
+[2022-05-27 05:38:54.047] [info] Frame 62 (t = 0.31):	 total squared error = 0.0253477, marker error: RMS = 0.0240017, max = 0.0584496 (RTOE)
+[2022-05-27 05:38:54.099] [info] Frame 63 (t = 0.315):	 total squared error = 0.0254005, marker error: RMS = 0.0240267, max = 0.0587089 (RTOE)
+[2022-05-27 05:38:54.145] [info] Frame 64 (t = 0.32):	 total squared error = 0.0253551, marker error: RMS = 0.0240053, max = 0.0586993 (RTOE)
+[2022-05-27 05:38:54.187] [info] Frame 65 (t = 0.325):	 total squared error = 0.0250580, marker error: RMS = 0.0238642, max = 0.058314 (RTOE)
+[2022-05-27 05:38:54.227] [info] Frame 66 (t = 0.33):	 total squared error = 0.0247388, marker error: RMS = 0.0237117, max = 0.057997 (RTOE)
+[2022-05-27 05:38:54.268] [info] Frame 67 (t = 0.335):	 total squared error = 0.0242298, marker error: RMS = 0.0234665, max = 0.0572234 (RTOE)
+[2022-05-27 05:38:54.295] [info] Frame 68 (t = 0.34):	 total squared error = 0.0235312, marker error: RMS = 0.0231257, max = 0.0556905 (RTOE)
+[2022-05-27 05:38:54.325] [info] Frame 69 (t = 0.345):	 total squared error = 0.0225621, marker error: RMS = 0.0226446, max = 0.0540186 (RTOE)
+[2022-05-27 05:38:54.360] [info] Frame 70 (t = 0.35):	 total squared error = 0.0216573, marker error: RMS = 0.0221859, max = 0.0522716 (RTOE)
+[2022-05-27 05:38:54.396] [info] Frame 71 (t = 0.355):	 total squared error = 0.0207136, marker error: RMS = 0.0216971, max = 0.0497572 (RTOE)
+[2022-05-27 05:38:54.435] [info] Frame 72 (t = 0.36):	 total squared error = 0.0195732, marker error: RMS = 0.0210913, max = 0.0469654 (RTOE)
+[2022-05-27 05:38:54.471] [info] Frame 73 (t = 0.365):	 total squared error = 0.0185070, marker error: RMS = 0.0205089, max = 0.0438345 (RTOE)
+[2022-05-27 05:38:54.515] [info] Frame 74 (t = 0.37):	 total squared error = 0.017492, marker error: RMS = 0.0199386, max = 0.0413486 (RELB)
+[2022-05-27 05:38:54.546] [info] Frame 75 (t = 0.375):	 total squared error = 0.0166097, marker error: RMS = 0.0194292, max = 0.0410980 (RELB)
+[2022-05-27 05:38:54.588] [info] Frame 76 (t = 0.38):	 total squared error = 0.01567, marker error: RMS = 0.0188716, max = 0.0408359 (RELB)
+[2022-05-27 05:38:54.632] [info] Frame 77 (t = 0.385):	 total squared error = 0.0148677, marker error: RMS = 0.0183821, max = 0.0404133 (RELB)
+[2022-05-27 05:38:54.675] [info] Frame 78 (t = 0.39):	 total squared error = 0.0142569, marker error: RMS = 0.0180006, max = 0.0401152 (RELB)
+[2022-05-27 05:38:54.722] [info] Frame 79 (t = 0.395):	 total squared error = 0.0136887, marker error: RMS = 0.0176382, max = 0.039749 (RELB)
+[2022-05-27 05:38:54.765] [info] Frame 80 (t = 0.4):	 total squared error = 0.0132906, marker error: RMS = 0.0173798, max = 0.0395612 (RELB)
+[2022-05-27 05:38:54.819] [info] Frame 81 (t = 0.405000):	 total squared error = 0.0129761, marker error: RMS = 0.017173, max = 0.0393305 (RELB)
+[2022-05-27 05:38:54.879] [info] Frame 82 (t = 0.41):	 total squared error = 0.012777, marker error: RMS = 0.0170407, max = 0.0389975 (RELB)
+[2022-05-27 05:38:54.921] [info] Frame 83 (t = 0.415):	 total squared error = 0.012722, marker error: RMS = 0.0170040, max = 0.0388146 (RELB)
+[2022-05-27 05:38:54.959] [info] Frame 84 (t = 0.42):	 total squared error = 0.0127907, marker error: RMS = 0.0170499, max = 0.0385954 (RELB)
+[2022-05-27 05:38:55.006] [info] Frame 85 (t = 0.425):	 total squared error = 0.0130446, marker error: RMS = 0.0172183, max = 0.0383148 (RELB)
+[2022-05-27 05:38:55.053] [info] Frame 86 (t = 0.43):	 total squared error = 0.0134695, marker error: RMS = 0.0174965, max = 0.0382424 (RELB)
+[2022-05-27 05:38:55.099] [info] Frame 87 (t = 0.435):	 total squared error = 0.0140211, marker error: RMS = 0.0178511, max = 0.0381316 (RELB)
+[2022-05-27 05:38:55.137] [info] Frame 88 (t = 0.44):	 total squared error = 0.0146632, marker error: RMS = 0.0182553, max = 0.0380002 (RELB)
+[2022-05-27 05:38:55.200] [info] Frame 89 (t = 0.445):	 total squared error = 0.0154677, marker error: RMS = 0.0187494, max = 0.0380248 (RELB)
+[2022-05-27 05:38:55.245] [info] Frame 90 (t = 0.45):	 total squared error = 0.0163268, marker error: RMS = 0.019263, max = 0.0380842 (RELB)
+[2022-05-27 05:38:55.274] [info] Frame 91 (t = 0.455):	 total squared error = 0.0171525, marker error: RMS = 0.0197441, max = 0.0384528 (LTOE)
+[2022-05-27 05:38:55.318] [info] Frame 92 (t = 0.46):	 total squared error = 0.0180745, marker error: RMS = 0.0202678, max = 0.0414124 (LTOE)
+[2022-05-27 05:38:55.351] [info] Frame 93 (t = 0.465):	 total squared error = 0.0187689, marker error: RMS = 0.0206535, max = 0.0440099 (LTOE)
+[2022-05-27 05:38:55.380] [info] Frame 94 (t = 0.47):	 total squared error = 0.0193198, marker error: RMS = 0.0209544, max = 0.0462799 (LTOE)
+[2022-05-27 05:38:55.423] [info] Frame 95 (t = 0.475):	 total squared error = 0.0199491, marker error: RMS = 0.0212929, max = 0.0487173 (LTOE)
+[2022-05-27 05:38:55.449] [info] Frame 96 (t = 0.48):	 total squared error = 0.0203262, marker error: RMS = 0.0214932, max = 0.0506018 (LTOE)
+[2022-05-27 05:38:55.487] [info] Frame 97 (t = 0.485):	 total squared error = 0.0207290, marker error: RMS = 0.0217051, max = 0.0523545 (LTOE)
+[2022-05-27 05:38:55.530] [info] Frame 98 (t = 0.49):	 total squared error = 0.0212385, marker error: RMS = 0.0219703, max = 0.0539911 (LTOE)
+[2022-05-27 05:38:55.569] [info] Frame 99 (t = 0.495):	 total squared error = 0.0218161, marker error: RMS = 0.022267, max = 0.0553216 (LTOE)
+[2022-05-27 05:38:55.611] [info] Frame 100 (t = 0.5):	 total squared error = 0.0223023, marker error: RMS = 0.0225138, max = 0.0560857 (LTOE)
+[2022-05-27 05:38:55.659] [info] Frame 101 (t = 0.505000):	 total squared error = 0.022923, marker error: RMS = 0.022825, max = 0.056521 (LTOE)
+[2022-05-27 05:38:55.714] [info] Frame 102 (t = 0.51):	 total squared error = 0.0234877, marker error: RMS = 0.0231044, max = 0.0569279 (LTOE)
+[2022-05-27 05:38:55.780] [info] Frame 103 (t = 0.515):	 total squared error = 0.0242112, marker error: RMS = 0.0234575, max = 0.0573254 (LTOE)
+[2022-05-27 05:38:55.828] [info] Frame 104 (t = 0.52):	 total squared error = 0.025243, marker error: RMS = 0.0239521, max = 0.0572178 (LTOE)
+[2022-05-27 05:38:55.889] [info] Frame 105 (t = 0.525):	 total squared error = 0.0262944, marker error: RMS = 0.0244458, max = 0.0569923 (LTOE)
+[2022-05-27 05:38:55.944] [info] Frame 106 (t = 0.53):	 total squared error = 0.0271378, marker error: RMS = 0.0248348, max = 0.0562448 (LTOE)
+[2022-05-27 05:38:55.984] [info] Frame 107 (t = 0.535):	 total squared error = 0.0276599, marker error: RMS = 0.0250726, max = 0.0552576 (LTOE)
+[2022-05-27 05:38:56.036] [info] Frame 108 (t = 0.54):	 total squared error = 0.0278763, marker error: RMS = 0.0251705, max = 0.0540923 (LTOE)
+[2022-05-27 05:38:56.088] [info] Frame 109 (t = 0.545):	 total squared error = 0.0280984, marker error: RMS = 0.0252705, max = 0.0534819 (LTOE)
+[2022-05-27 05:38:56.132] [info] Frame 110 (t = 0.55):	 total squared error = 0.0279825, marker error: RMS = 0.0252184, max = 0.0517316 (LTOE)
+[2022-05-27 05:38:56.186] [info] Frame 111 (t = 0.555):	 total squared error = 0.0277206, marker error: RMS = 0.0251001, max = 0.0502565 (LTOE)
+[2022-05-27 05:38:56.231] [info] Frame 112 (t = 0.56):	 total squared error = 0.027138, marker error: RMS = 0.0248349, max = 0.0491891 (LTOE)
+[2022-05-27 05:38:56.263] [info] Frame 113 (t = 0.565):	 total squared error = 0.0263805, marker error: RMS = 0.0244858, max = 0.0481628 (LTOE)
+[2022-05-27 05:38:56.293] [info] Frame 114 (t = 0.57):	 total squared error = 0.0257665, marker error: RMS = 0.0241992, max = 0.047371 (LTOE)
+[2022-05-27 05:38:56.333] [info] Frame 115 (t = 0.575):	 total squared error = 0.0252863, marker error: RMS = 0.0239726, max = 0.0469545 (LTOE)
+[2022-05-27 05:38:56.363] [info] Frame 116 (t = 0.58):	 total squared error = 0.0249906, marker error: RMS = 0.0238321, max = 0.0470644 (LTOE)
+[2022-05-27 05:38:56.409] [info] Frame 117 (t = 0.585):	 total squared error = 0.0248235, marker error: RMS = 0.0237523, max = 0.0471362 (LTOE)
+[2022-05-27 05:38:56.444] [info] Frame 118 (t = 0.59):	 total squared error = 0.0248617, marker error: RMS = 0.0237706, max = 0.0475216 (LTOE)
+[2022-05-27 05:38:56.472] [info] Frame 119 (t = 0.595):	 total squared error = 0.0250099, marker error: RMS = 0.0238413, max = 0.0476221 (LTOE)
+[2022-05-27 05:38:56.510] [info] Frame 120 (t = 0.6):	 total squared error = 0.0252455, marker error: RMS = 0.0239533, max = 0.0481653 (LTOE)
+[2022-05-27 05:38:56.537] [info] Frame 121 (t = 0.605000):	 total squared error = 0.0253739, marker error: RMS = 0.0240142, max = 0.0482753 (LTOE)
+[2022-05-27 05:38:56.559] [info] Frame 122 (t = 0.61):	 total squared error = 0.025479, marker error: RMS = 0.0240638, max = 0.0489232 (LTOE)
+[2022-05-27 05:38:56.606] [info] Frame 123 (t = 0.615):	 total squared error = 0.0254222, marker error: RMS = 0.0240370, max = 0.0492225 (LTOE)
+[2022-05-27 05:38:56.636] [info] Frame 124 (t = 0.62):	 total squared error = 0.0252831, marker error: RMS = 0.0239712, max = 0.0492405 (LTOE)
+[2022-05-27 05:38:56.682] [info] Frame 125 (t = 0.625):	 total squared error = 0.0251038, marker error: RMS = 0.023886, max = 0.0496902 (LTOE)
+[2022-05-27 05:38:56.720] [info] Frame 126 (t = 0.63):	 total squared error = 0.0248898, marker error: RMS = 0.023784, max = 0.0498444 (LTOE)
+[2022-05-27 05:38:56.753] [info] Frame 127 (t = 0.635):	 total squared error = 0.0246011, marker error: RMS = 0.0236456, max = 0.0498369 (LTOE)
+[2022-05-27 05:38:56.808] [info] Frame 128 (t = 0.64):	 total squared error = 0.0243353, marker error: RMS = 0.0235175, max = 0.0500871 (LTOE)
+[2022-05-27 05:38:56.856] [info] Frame 129 (t = 0.645):	 total squared error = 0.0239882, marker error: RMS = 0.0233492, max = 0.0501200 (LTOE)
+[2022-05-27 05:38:56.906] [info] Frame 130 (t = 0.65):	 total squared error = 0.0236583, marker error: RMS = 0.0231881, max = 0.0501528 (LTOE)
+[2022-05-27 05:38:56.956] [info] Frame 131 (t = 0.655):	 total squared error = 0.0233025, marker error: RMS = 0.0230131, max = 0.0499524 (LTOE)
+[2022-05-27 05:38:57.028] [info] Frame 132 (t = 0.66):	 total squared error = 0.0229267, marker error: RMS = 0.0228268, max = 0.0497394 (LTOE)
+[2022-05-27 05:38:57.086] [info] Frame 133 (t = 0.665):	 total squared error = 0.0227629, marker error: RMS = 0.0227451, max = 0.0494614 (LTOE)
+[2022-05-27 05:38:57.140] [info] Frame 134 (t = 0.67):	 total squared error = 0.0223165, marker error: RMS = 0.022521, max = 0.0489447 (LTOE)
+[2022-05-27 05:38:57.209] [info] Frame 135 (t = 0.675):	 total squared error = 0.0217009, marker error: RMS = 0.0222081, max = 0.0482005 (LTOE)
+[2022-05-27 05:38:57.254] [info] Frame 136 (t = 0.68):	 total squared error = 0.0211593, marker error: RMS = 0.0219293, max = 0.0470621 (LTOE)
+[2022-05-27 05:38:57.303] [info] Frame 137 (t = 0.685):	 total squared error = 0.0205627, marker error: RMS = 0.0216179, max = 0.0458882 (LTOE)
+[2022-05-27 05:38:57.346] [info] Frame 138 (t = 0.69):	 total squared error = 0.0198213, marker error: RMS = 0.0212246, max = 0.0442394 (LTOE)
+[2022-05-27 05:38:57.387] [info] Frame 139 (t = 0.695):	 total squared error = 0.0189084, marker error: RMS = 0.0207301, max = 0.0421598 (LTOE)
+[2022-05-27 05:38:57.428] [info] Frame 140 (t = 0.7):	 total squared error = 0.0179024, marker error: RMS = 0.0201711, max = 0.0401877 (LPAT)
+[2022-05-27 05:38:57.470] [info] Frame 141 (t = 0.705000):	 total squared error = 0.0169896, marker error: RMS = 0.0196501, max = 0.0396351 (RELB)
+[2022-05-27 05:38:57.504] [info] Frame 142 (t = 0.71):	 total squared error = 0.0161732, marker error: RMS = 0.0191722, max = 0.0392474 (RELB)
+[2022-05-27 05:38:57.543] [info] Frame 143 (t = 0.715):	 total squared error = 0.0152717, marker error: RMS = 0.0186302, max = 0.0388522 (RELB)
+[2022-05-27 05:38:57.585] [info] Frame 144 (t = 0.72):	 total squared error = 0.0144955, marker error: RMS = 0.0181506, max = 0.0384526 (RELB)
+[2022-05-27 05:38:57.623] [info] Frame 145 (t = 0.725):	 total squared error = 0.0137686, marker error: RMS = 0.0176896, max = 0.0381816 (RELB)
+[2022-05-27 05:38:57.669] [info] Frame 146 (t = 0.73):	 total squared error = 0.0131314, marker error: RMS = 0.0172755, max = 0.0379068 (RELB)
+[2022-05-27 05:38:57.705] [info] Frame 147 (t = 0.735):	 total squared error = 0.0126513, marker error: RMS = 0.0169567, max = 0.0375075 (RELB)
+[2022-05-27 05:38:57.753] [info] Frame 148 (t = 0.74):	 total squared error = 0.012256, marker error: RMS = 0.0166897, max = 0.0370232 (RELB)
+[2022-05-27 05:38:57.798] [info] Frame 149 (t = 0.745):	 total squared error = 0.0119791, marker error: RMS = 0.0165001, max = 0.0365998 (RELB)
+[2022-05-27 05:38:57.832] [info] Frame 150 (t = 0.75):	 total squared error = 0.011872, marker error: RMS = 0.0164261, max = 0.0361942 (RELB)
+[2022-05-27 05:38:57.870] [info] Frame 151 (t = 0.755):	 total squared error = 0.0116821, marker error: RMS = 0.0162942, max = 0.0358676 (RELB)
+[2022-05-27 05:38:57.934] [info] Frame 152 (t = 0.76):	 total squared error = 0.0116218, marker error: RMS = 0.0162522, max = 0.0356961 (RELB)
+[2022-05-27 05:38:57.996] [info] Frame 153 (t = 0.765):	 total squared error = 0.0115823, marker error: RMS = 0.0162245, max = 0.0354087 (C7)
+[2022-05-27 05:38:58.050] [info] Frame 154 (t = 0.77):	 total squared error = 0.0116363, marker error: RMS = 0.0162623, max = 0.0351579 (C7)
+[2022-05-27 05:38:58.102] [info] Frame 155 (t = 0.775):	 total squared error = 0.0117662, marker error: RMS = 0.0163528, max = 0.0350198 (C7)
+[2022-05-27 05:38:58.148] [info] Frame 156 (t = 0.78):	 total squared error = 0.0120184, marker error: RMS = 0.0165271, max = 0.0347715 (C7)
+[2022-05-27 05:38:58.195] [info] Frame 157 (t = 0.785):	 total squared error = 0.0124702, marker error: RMS = 0.0168349, max = 0.0347066 (RELB)
+[2022-05-27 05:38:58.236] [info] Frame 158 (t = 0.79):	 total squared error = 0.0130743, marker error: RMS = 0.0172378, max = 0.0344908 (RELB)
+[2022-05-27 05:38:58.276] [info] Frame 159 (t = 0.795):	 total squared error = 0.0137611, marker error: RMS = 0.0176848, max = 0.0342068 (RELB)
+[2022-05-27 05:38:58.321] [info] Frame 160 (t = 0.8):	 total squared error = 0.0146564, marker error: RMS = 0.018251, max = 0.0371769 (RTOE)
+[2022-05-27 05:38:58.373] [info] Frame 161 (t = 0.805000):	 total squared error = 0.0156777, marker error: RMS = 0.0188762, max = 0.0413646 (RTOE)
+[2022-05-27 05:38:58.400] [info] Frame 162 (t = 0.81):	 total squared error = 0.0169172, marker error: RMS = 0.0196082, max = 0.045991 (RTOE)
+[2022-05-27 05:38:58.438] [info] Frame 163 (t = 0.815):	 total squared error = 0.0181691, marker error: RMS = 0.0203208, max = 0.0499227 (RTOE)
+[2022-05-27 05:38:58.474] [info] Frame 164 (t = 0.82):	 total squared error = 0.0195715, marker error: RMS = 0.0210905, max = 0.0539197 (RTOE)
+[2022-05-27 05:38:58.502] [info] Frame 165 (t = 0.825):	 total squared error = 0.0209172, marker error: RMS = 0.0218034, max = 0.0577211 (RTOE)
+[2022-05-27 05:38:58.547] [info] Frame 166 (t = 0.83):	 total squared error = 0.0223438, marker error: RMS = 0.0225347, max = 0.0612363 (RTOE)
+[2022-05-27 05:38:58.575] [info] Frame 167 (t = 0.835):	 total squared error = 0.0236953, marker error: RMS = 0.0232062, max = 0.0647142 (RTOE)
+[2022-05-27 05:38:58.601] [info] Frame 168 (t = 0.84):	 total squared error = 0.0247536, marker error: RMS = 0.0237188, max = 0.0676302 (RTOE)
+[2022-05-27 05:38:58.647] [info] Frame 169 (t = 0.845):	 total squared error = 0.0259050, marker error: RMS = 0.0242642, max = 0.0703188 (RTOE)
+[2022-05-27 05:38:58.676] [info] Frame 170 (t = 0.85):	 total squared error = 0.0267116, marker error: RMS = 0.024639, max = 0.0725375 (RTOE)
+[2022-05-27 05:38:58.720] [info] Frame 171 (t = 0.855):	 total squared error = 0.0271516, marker error: RMS = 0.0248411, max = 0.0738948 (RTOE)
+[2022-05-27 05:38:58.746] [info] Frame 172 (t = 0.86):	 total squared error = 0.0273456, marker error: RMS = 0.0249297, max = 0.0749217 (RTOE)
+[2022-05-27 05:38:58.791] [info] Frame 173 (t = 0.865):	 total squared error = 0.0272117, marker error: RMS = 0.0248686, max = 0.0753011 (RTOE)
+[2022-05-27 05:38:58.824] [info] Frame 174 (t = 0.87):	 total squared error = 0.0269568, marker error: RMS = 0.0247519, max = 0.0752207 (RTOE)
+[2022-05-27 05:38:58.867] [info] Frame 175 (t = 0.875):	 total squared error = 0.0266498, marker error: RMS = 0.0246105, max = 0.0741537 (RTOE)
+[2022-05-27 05:38:58.919] [info] Frame 176 (t = 0.88):	 total squared error = 0.0264149, marker error: RMS = 0.0245018, max = 0.0728195 (RTOE)
+[2022-05-27 05:38:58.975] [info] Frame 177 (t = 0.885):	 total squared error = 0.0261693, marker error: RMS = 0.0243876, max = 0.0714884 (RTOE)
+[2022-05-27 05:38:59.021] [info] Frame 178 (t = 0.89):	 total squared error = 0.0263030, marker error: RMS = 0.0244498, max = 0.0698856 (RTOE)
+[2022-05-27 05:38:59.096] [info] Frame 179 (t = 0.895):	 total squared error = 0.0268026, marker error: RMS = 0.024681, max = 0.0681598 (RTOE)
+[2022-05-27 05:38:59.154] [info] Frame 180 (t = 0.9):	 total squared error = 0.0273768, marker error: RMS = 0.024944, max = 0.0667574 (RTOE)
+[2022-05-27 05:38:59.230] [info] Frame 181 (t = 0.905000):	 total squared error = 0.0276374, marker error: RMS = 0.0250624, max = 0.0651864 (RTOE)
+[2022-05-27 05:38:59.289] [info] Frame 182 (t = 0.91):	 total squared error = 0.0278228, marker error: RMS = 0.0251463, max = 0.0634429 (RTOE)
+[2022-05-27 05:38:59.326] [info] Frame 183 (t = 0.915):	 total squared error = 0.0280308, marker error: RMS = 0.0252401, max = 0.0614714 (RTOE)
+[2022-05-27 05:38:59.377] [info] Frame 184 (t = 0.92):	 total squared error = 0.0281182, marker error: RMS = 0.0252794, max = 0.0596312 (RTOE)
+[2022-05-27 05:38:59.414] [info] Frame 185 (t = 0.925):	 total squared error = 0.0281974, marker error: RMS = 0.025315, max = 0.057991 (RTOE)
+[2022-05-27 05:38:59.460] [info] Frame 186 (t = 0.93):	 total squared error = 0.0278787, marker error: RMS = 0.0251715, max = 0.0564349 (RTOE)
+[2022-05-27 05:38:59.501] [info] Frame 187 (t = 0.935):	 total squared error = 0.0273807, marker error: RMS = 0.0249457, max = 0.0552791 (RTOE)
+[2022-05-27 05:38:59.546] [info] Frame 188 (t = 0.94):	 total squared error = 0.0267429, marker error: RMS = 0.0246534, max = 0.0545571 (RTOE)
+[2022-05-27 05:38:59.571] [info] Frame 189 (t = 0.945):	 total squared error = 0.0260602, marker error: RMS = 0.0243367, max = 0.0539409 (RTOE)
+[2022-05-27 05:38:59.623] [info] Frame 190 (t = 0.95):	 total squared error = 0.0254996, marker error: RMS = 0.0240736, max = 0.0537829 (RTOE)
+[2022-05-27 05:38:59.661] [info] Frame 191 (t = 0.955):	 total squared error = 0.0250691, marker error: RMS = 0.0238695, max = 0.0538874 (RTOE)
+[2022-05-27 05:38:59.701] [info] Frame 192 (t = 0.96):	 total squared error = 0.0247228, marker error: RMS = 0.0237040, max = 0.0540165 (RTOE)
+[2022-05-27 05:38:59.732] [info] Frame 193 (t = 0.965):	 total squared error = 0.0246831, marker error: RMS = 0.023685, max = 0.054565 (RTOE)
+[2022-05-27 05:38:59.765] [info] Frame 194 (t = 0.97):	 total squared error = 0.0246165, marker error: RMS = 0.023653, max = 0.0546433 (RTOE)
+[2022-05-27 05:38:59.820] [info] Frame 195 (t = 0.975):	 total squared error = 0.0247448, marker error: RMS = 0.0237146, max = 0.0553355 (RTOE)
+[2022-05-27 05:38:59.854] [info] Frame 196 (t = 0.98):	 total squared error = 0.0248844, marker error: RMS = 0.0237814, max = 0.0558464 (RTOE)
+[2022-05-27 05:38:59.890] [info] Frame 197 (t = 0.985):	 total squared error = 0.0250020, marker error: RMS = 0.0238375, max = 0.0564551 (RTOE)
+[2022-05-27 05:38:59.921] [info] Frame 198 (t = 0.99):	 total squared error = 0.0250448, marker error: RMS = 0.0238579, max = 0.0570212 (RTOE)
+[2022-05-27 05:38:59.957] [info] Frame 199 (t = 0.995):	 total squared error = 0.025158, marker error: RMS = 0.0239118, max = 0.0576415 (RTOE)
+[2022-05-27 05:39:00.000] [info] Frame 200 (t = 1.0):	 total squared error = 0.0251041, marker error: RMS = 0.0238861, max = 0.0579618 (RTOE)
+[2022-05-27 05:39:00.041] [info] Frame 201 (t = 1.00500):	 total squared error = 0.0251227, marker error: RMS = 0.023895, max = 0.0583127 (RTOE)
+[2022-05-27 05:39:00.097] [info] Frame 202 (t = 1.01):	 total squared error = 0.0252228, marker error: RMS = 0.0239426, max = 0.0588522 (RTOE)
+[2022-05-27 05:39:00.150] [info] Frame 203 (t = 1.015):	 total squared error = 0.0252774, marker error: RMS = 0.0239684, max = 0.0593197 (RTOE)
+[2022-05-27 05:39:00.212] [info] Frame 204 (t = 1.02):	 total squared error = 0.0254249, marker error: RMS = 0.0240383, max = 0.0603298 (RTOE)
+[2022-05-27 05:39:00.261] [info] Frame 205 (t = 1.025):	 total squared error = 0.0254195, marker error: RMS = 0.0240357, max = 0.0600688 (RTOE)
+[2022-05-27 05:39:00.317] [info] Frame 206 (t = 1.03):	 total squared error = 0.0255779, marker error: RMS = 0.0241105, max = 0.0601612 (RTOE)
+[2022-05-27 05:39:00.361] [info] Frame 207 (t = 1.035):	 total squared error = 0.02567, marker error: RMS = 0.0241539, max = 0.0607793 (RTOE)
+[2022-05-27 05:39:00.407] [info] Frame 208 (t = 1.04):	 total squared error = 0.0259609, marker error: RMS = 0.0242903, max = 0.0618195 (RTOE)
+[2022-05-27 05:39:00.451] [info] Frame 209 (t = 1.045):	 total squared error = 0.0262243, marker error: RMS = 0.0244132, max = 0.0624876 (RTOE)
+[2022-05-27 05:39:00.504] [info] Frame 210 (t = 1.05):	 total squared error = 0.0265524, marker error: RMS = 0.0245655, max = 0.0633404 (RTOE)
+[2022-05-27 05:39:00.537] [info] Frame 211 (t = 1.055):	 total squared error = 0.0270408, marker error: RMS = 0.0247904, max = 0.0644384 (RTOE)
+[2022-05-27 05:39:00.578] [info] Frame 212 (t = 1.06):	 total squared error = 0.0274649, marker error: RMS = 0.024984, max = 0.0658047 (RTOE)
+[2022-05-27 05:39:00.620] [info] Frame 213 (t = 1.065):	 total squared error = 0.0281183, marker error: RMS = 0.0252795, max = 0.0675428 (RTOE)
+[2022-05-27 05:39:00.663] [info] Frame 214 (t = 1.07):	 total squared error = 0.028435, marker error: RMS = 0.0254215, max = 0.0688645 (RTOE)
+[2022-05-27 05:39:00.708] [info] Frame 215 (t = 1.075):	 total squared error = 0.0287316, marker error: RMS = 0.0255537, max = 0.0698107 (RTOE)
+[2022-05-27 05:39:00.746] [info] Frame 216 (t = 1.08):	 total squared error = 0.0287135, marker error: RMS = 0.0255456, max = 0.0702774 (RTOE)
+[2022-05-27 05:39:00.788] [info] Frame 217 (t = 1.085):	 total squared error = 0.0285358, marker error: RMS = 0.0254665, max = 0.0703233 (RTOE)
+[2022-05-27 05:39:00.838] [info] Frame 218 (t = 1.09):	 total squared error = 0.0280939, marker error: RMS = 0.0252685, max = 0.0695157 (RTOE)
+[2022-05-27 05:39:00.886] [info] Frame 219 (t = 1.095):	 total squared error = 0.0272418, marker error: RMS = 0.0248824, max = 0.0680369 (RTOE)
+[2022-05-27 05:39:00.942] [info] Frame 220 (t = 1.1):	 total squared error = 0.0260218, marker error: RMS = 0.0243188, max = 0.0657396 (RTOE)
+[2022-05-27 05:39:00.992] [info] Frame 221 (t = 1.10500):	 total squared error = 0.0246556, marker error: RMS = 0.0236718, max = 0.0625241 (RTOE)
+[2022-05-27 05:39:01.040] [info] Frame 222 (t = 1.11):	 total squared error = 0.0230961, marker error: RMS = 0.0229109, max = 0.0587872 (RTOE)
+[2022-05-27 05:39:01.083] [info] Frame 223 (t = 1.115):	 total squared error = 0.0214939, marker error: RMS = 0.0221020, max = 0.0546034 (RTOE)
+[2022-05-27 05:39:01.109] [info] Frame 224 (t = 1.12):	 total squared error = 0.0199487, marker error: RMS = 0.0212927, max = 0.0500700 (RTOE)
+[2022-05-27 05:39:01.158] [info] Frame 225 (t = 1.125):	 total squared error = 0.0183889, marker error: RMS = 0.0204433, max = 0.0454038 (RTOE)
+[2022-05-27 05:39:01.200] [info] Frame 226 (t = 1.13):	 total squared error = 0.0170710, marker error: RMS = 0.0196972, max = 0.0406491 (RTOE)
+[2022-05-27 05:39:01.251] [info] Frame 227 (t = 1.135):	 total squared error = 0.0158411, marker error: RMS = 0.0189744, max = 0.0383793 (RELB)
+[2022-05-27 05:39:01.302] [info] Frame 228 (t = 1.14):	 total squared error = 0.0148809, marker error: RMS = 0.0183903, max = 0.038199 (RELB)
+[2022-05-27 05:39:01.373] [info] Frame 229 (t = 1.145):	 total squared error = 0.0141006, marker error: RMS = 0.0179016, max = 0.0381523 (RELB)
+[2022-05-27 05:39:01.416] [info] Frame 230 (t = 1.15):	 total squared error = 0.0134861, marker error: RMS = 0.0175072, max = 0.0376555 (RELB)
+[2022-05-27 05:39:01.453] [info] Frame 231 (t = 1.155):	 total squared error = 0.0130550, marker error: RMS = 0.0172251, max = 0.0379269 (RELB)
+[2022-05-27 05:39:01.493] [info] Frame 232 (t = 1.16):	 total squared error = 0.0129293, marker error: RMS = 0.017142, max = 0.0383414 (RELB)
+[2022-05-27 05:39:01.536] [info] Frame 233 (t = 1.165):	 total squared error = 0.0128052, marker error: RMS = 0.0170595, max = 0.0378208 (RELB)
+[2022-05-27 05:39:01.587] [info] Frame 234 (t = 1.17):	 total squared error = 0.0129764, marker error: RMS = 0.0171732, max = 0.0383313 (RELB)
+[2022-05-27 05:39:01.630] [info] Frame 235 (t = 1.175):	 total squared error = 0.0132928, marker error: RMS = 0.0173813, max = 0.0382020 (RELB)
+[2022-05-27 05:39:01.675] [info] Frame 236 (t = 1.18):	 total squared error = 0.0138304, marker error: RMS = 0.0177293, max = 0.0384289 (RELB)
+[2022-05-27 05:39:01.706] [info] Frame 237 (t = 1.185):	 total squared error = 0.0145443, marker error: RMS = 0.0181811, max = 0.0382483 (RELB)
+[2022-05-27 05:39:01.745] [info] Frame 238 (t = 1.19):	 total squared error = 0.0151149, marker error: RMS = 0.0185343, max = 0.0384558 (RELB)
+[2022-05-27 05:39:01.775] [info] Frame 239 (t = 1.195):	 total squared error = 0.0159341, marker error: RMS = 0.0190299, max = 0.0383575 (RELB)
+[2022-05-27 05:39:01.804] [info] Frame 240 (t = 1.2):	 total squared error = 0.01678, marker error: RMS = 0.0195285, max = 0.0384743 (RELB)
+[2022-05-27 05:39:01.851] [info] Frame 241 (t = 1.20500):	 total squared error = 0.0177799, marker error: RMS = 0.0201020, max = 0.041746 (LTOE)
+[2022-05-27 05:39:01.891] [info] Frame 242 (t = 1.21):	 total squared error = 0.0186278, marker error: RMS = 0.0205757, max = 0.0447947 (LTOE)
+[2022-05-27 05:39:01.932] [info] Frame 243 (t = 1.215):	 total squared error = 0.0194652, marker error: RMS = 0.0210331, max = 0.0476063 (LTOE)
+[2022-05-27 05:39:01.980] [info] Frame 244 (t = 1.22):	 total squared error = 0.0203132, marker error: RMS = 0.0214864, max = 0.0503446 (LTOE)
+[2022-05-27 05:39:02.017] [info] Frame 245 (t = 1.225):	 total squared error = 0.0209738, marker error: RMS = 0.0218329, max = 0.0526556 (LTOE)
+[2022-05-27 05:39:02.060] [info] Frame 246 (t = 1.23):	 total squared error = 0.021526, marker error: RMS = 0.0221185, max = 0.0545736 (LTOE)
+[2022-05-27 05:39:02.110] [info] Frame 247 (t = 1.235):	 total squared error = 0.0220029, marker error: RMS = 0.0223621, max = 0.0562529 (LTOE)
+[2022-05-27 05:39:02.164] [info] Frame 248 (t = 1.24):	 total squared error = 0.0222359, marker error: RMS = 0.0224803, max = 0.0574339 (LTOE)
+[2022-05-27 05:39:02.199] [info] Frame 249 (t = 1.245):	 total squared error = 0.0225819, marker error: RMS = 0.0226545, max = 0.0583656 (LTOE)
+[2022-05-27 05:39:02.253] [info] Frame 250 (t = 1.25):	 total squared error = 0.0228812, marker error: RMS = 0.0228041, max = 0.0589382 (LTOE)
+[2022-05-27 05:39:02.292] [info] Frame 251 (t = 1.255):	 total squared error = 0.0230995, marker error: RMS = 0.0229126, max = 0.0591961 (LTOE)
+[2022-05-27 05:39:02.354] [info] Frame 252 (t = 1.26):	 total squared error = 0.0232684, marker error: RMS = 0.0229962, max = 0.0587691 (LTOE)
+[2022-05-27 05:39:02.396] [info] Frame 253 (t = 1.265):	 total squared error = 0.0235631, marker error: RMS = 0.0231414, max = 0.0578076 (LTOE)
+[2022-05-27 05:39:02.446] [info] Frame 254 (t = 1.27):	 total squared error = 0.0236673, marker error: RMS = 0.0231925, max = 0.0567356 (LTOE)
+[2022-05-27 05:39:02.492] [info] Frame 255 (t = 1.275):	 total squared error = 0.023987, marker error: RMS = 0.0233486, max = 0.0555677 (LTOE)
+[2022-05-27 05:39:02.500] [info] InverseKinematicsTool completed 237 frames in 11 second(s).
+[2022-05-27 05:39:02.604] [info] Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071.osim
+[2022-05-27 05:39:02.604] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-05-27 05:39:02.605] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-05-27 05:39:02.606] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-05-27 05:39:02.607] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-05-27 05:39:02.608] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-05-27 05:39:02.609] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-05-27 05:39:02.610] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-05-27 05:39:02.611] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-05-27 05:39:02.611] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-05-27 05:39:02.611] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-05-27 05:39:02.611] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-05-27 05:39:02.611] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-05-27 05:46:58.254] [info] Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071.osim
+[2022-05-27 05:46:58.256] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-05-27 05:46:58.256] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-05-27 05:46:58.256] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-05-27 05:46:58.256] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-05-27 05:46:58.256] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-05-27 05:46:58.256] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-05-27 05:46:58.256] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-05-27 05:46:58.256] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-05-27 05:46:58.257] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-05-27 05:46:58.258] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-05-27 05:46:58.259] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-05-27 05:46:58.260] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-05-27 05:46:58.261] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-05-27 05:46:58.262] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-05-27 05:46:58.262] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-05-27 05:46:58.493] [cout] [info] 
+               MODEL: TRAIL_071
+         coordinates: 39
+              forces: 80
+           actuators: 80
+             muscles: 80
+            analyses: 0
+              probes: 0
+              bodies: 22
+              joints: 22
+         constraints: 2
+             markers: 48
+         controllers: 0
+  contact geometries: 0
+misc modelcomponents: 0
+[2022-05-27 05:46:58.493] [info] Running tool .
+[2022-05-27 05:46:58.877] [info] Frame 19 (t = 0.095):	 total squared error = 0.0207412, marker error: RMS = 0.0217115, max = 0.0565103 (RTOE)
+[2022-05-27 05:46:58.937] [info] Frame 20 (t = 0.1):	 total squared error = 0.0217409, marker error: RMS = 0.0222286, max = 0.0594591 (RTOE)
+[2022-05-27 05:46:58.980] [info] Frame 21 (t = 0.105000):	 total squared error = 0.0226367, marker error: RMS = 0.022682, max = 0.061739 (RTOE)
+[2022-05-27 05:46:59.022] [info] Frame 22 (t = 0.11):	 total squared error = 0.0231906, marker error: RMS = 0.0229578, max = 0.0644448 (RTOE)
+[2022-05-27 05:46:59.060] [info] Frame 23 (t = 0.115):	 total squared error = 0.0235597, marker error: RMS = 0.0231398, max = 0.0653876 (RTOE)
+[2022-05-27 05:46:59.103] [info] Frame 24 (t = 0.12):	 total squared error = 0.0236037, marker error: RMS = 0.0231614, max = 0.0666336 (RTOE)
+[2022-05-27 05:46:59.131] [info] Frame 25 (t = 0.125):	 total squared error = 0.0237014, marker error: RMS = 0.0232092, max = 0.0674245 (RTOE)
+[2022-05-27 05:46:59.174] [info] Frame 26 (t = 0.13):	 total squared error = 0.0236291, marker error: RMS = 0.0231738, max = 0.0671103 (RTOE)
+[2022-05-27 05:46:59.212] [info] Frame 27 (t = 0.135):	 total squared error = 0.0236812, marker error: RMS = 0.0231994, max = 0.0674473 (RTOE)
+[2022-05-27 05:46:59.247] [info] Frame 28 (t = 0.14):	 total squared error = 0.0237276, marker error: RMS = 0.0232221, max = 0.0660302 (RTOE)
+[2022-05-27 05:46:59.291] [info] Frame 29 (t = 0.145):	 total squared error = 0.023776, marker error: RMS = 0.0232457, max = 0.0655413 (RTOE)
+[2022-05-27 05:46:59.327] [info] Frame 30 (t = 0.15):	 total squared error = 0.0239536, marker error: RMS = 0.0233324, max = 0.0635865 (RTOE)
+[2022-05-27 05:46:59.367] [info] Frame 31 (t = 0.155):	 total squared error = 0.0242188, marker error: RMS = 0.0234612, max = 0.0614363 (RTOE)
+[2022-05-27 05:46:59.416] [info] Frame 32 (t = 0.16):	 total squared error = 0.0247756, marker error: RMS = 0.0237294, max = 0.0609957 (RTOE)
+[2022-05-27 05:46:59.462] [info] Frame 33 (t = 0.165):	 total squared error = 0.0249193, marker error: RMS = 0.0237981, max = 0.0587489 (RTOE)
+[2022-05-27 05:46:59.503] [info] Frame 34 (t = 0.17):	 total squared error = 0.0250513, marker error: RMS = 0.023861, max = 0.0562044 (RTOE)
+[2022-05-27 05:46:59.555] [info] Frame 35 (t = 0.175):	 total squared error = 0.0252936, marker error: RMS = 0.0239761, max = 0.0537404 (RTOE)
+[2022-05-27 05:46:59.601] [info] Frame 36 (t = 0.18):	 total squared error = 0.0255147, marker error: RMS = 0.0240807, max = 0.0515581 (RTOE)
+[2022-05-27 05:46:59.643] [info] Frame 37 (t = 0.185):	 total squared error = 0.0257166, marker error: RMS = 0.0241758, max = 0.0501269 (RTOE)
+[2022-05-27 05:46:59.700] [info] Frame 38 (t = 0.19):	 total squared error = 0.0256376, marker error: RMS = 0.0241386, max = 0.0495485 (RTOE)
+[2022-05-27 05:46:59.743] [info] Frame 39 (t = 0.195):	 total squared error = 0.0254072, marker error: RMS = 0.0240299, max = 0.0485165 (RTOE)
+[2022-05-27 05:46:59.788] [info] Frame 40 (t = 0.2):	 total squared error = 0.0250045, marker error: RMS = 0.0238387, max = 0.0480260 (RELB)
+[2022-05-27 05:46:59.815] [info] Frame 41 (t = 0.205000):	 total squared error = 0.0247070, marker error: RMS = 0.0236965, max = 0.0481025 (RTOE)
+[2022-05-27 05:46:59.858] [info] Frame 42 (t = 0.21):	 total squared error = 0.0243878, marker error: RMS = 0.0235429, max = 0.0483703 (RTOE)
+[2022-05-27 05:46:59.903] [info] Frame 43 (t = 0.215):	 total squared error = 0.0240601, marker error: RMS = 0.0233842, max = 0.0488302 (RTOE)
+[2022-05-27 05:46:59.939] [info] Frame 44 (t = 0.22):	 total squared error = 0.0241010, marker error: RMS = 0.0234041, max = 0.0495278 (RTOE)
+[2022-05-27 05:46:59.965] [info] Frame 45 (t = 0.225):	 total squared error = 0.0242957, marker error: RMS = 0.0234984, max = 0.0505006 (RTOE)
+[2022-05-27 05:47:00.006] [info] Frame 46 (t = 0.23):	 total squared error = 0.0244049, marker error: RMS = 0.0235512, max = 0.0512956 (RTOE)
+[2022-05-27 05:47:00.040] [info] Frame 47 (t = 0.235):	 total squared error = 0.0246046, marker error: RMS = 0.0236473, max = 0.0521541 (RTOE)
+[2022-05-27 05:47:00.064] [info] Frame 48 (t = 0.24):	 total squared error = 0.0246937, marker error: RMS = 0.0236901, max = 0.0530594 (RTOE)
+[2022-05-27 05:47:00.102] [info] Frame 49 (t = 0.245):	 total squared error = 0.0248079, marker error: RMS = 0.0237448, max = 0.0533352 (RTOE)
+[2022-05-27 05:47:00.147] [info] Frame 50 (t = 0.25):	 total squared error = 0.024642, marker error: RMS = 0.0236653, max = 0.0535831 (RTOE)
+[2022-05-27 05:47:00.178] [info] Frame 51 (t = 0.255):	 total squared error = 0.0245745, marker error: RMS = 0.0236329, max = 0.0538824 (RTOE)
+[2022-05-27 05:47:00.202] [info] Frame 52 (t = 0.26):	 total squared error = 0.0245455, marker error: RMS = 0.0236189, max = 0.0542611 (RTOE)
+[2022-05-27 05:47:00.246] [info] Frame 53 (t = 0.265):	 total squared error = 0.0244937, marker error: RMS = 0.0235939, max = 0.0545549 (RTOE)
+[2022-05-27 05:47:00.284] [info] Frame 54 (t = 0.27):	 total squared error = 0.024444, marker error: RMS = 0.02357, max = 0.0553334 (RTOE)
+[2022-05-27 05:47:00.328] [info] Frame 55 (t = 0.275):	 total squared error = 0.0245852, marker error: RMS = 0.023638, max = 0.0552218 (RTOE)
+[2022-05-27 05:47:00.394] [info] Frame 56 (t = 0.28):	 total squared error = 0.0245729, marker error: RMS = 0.0236321, max = 0.0556809 (RTOE)
+[2022-05-27 05:47:00.441] [info] Frame 57 (t = 0.285):	 total squared error = 0.0246901, marker error: RMS = 0.0236884, max = 0.0561013 (RTOE)
+[2022-05-27 05:47:00.478] [info] Frame 58 (t = 0.29):	 total squared error = 0.0249576, marker error: RMS = 0.0238163, max = 0.0565551 (RTOE)
+[2022-05-27 05:47:00.532] [info] Frame 59 (t = 0.295):	 total squared error = 0.0250564, marker error: RMS = 0.0238634, max = 0.0572444 (RTOE)
+[2022-05-27 05:47:00.581] [info] Frame 60 (t = 0.3):	 total squared error = 0.0251682, marker error: RMS = 0.0239166, max = 0.0578125 (RTOE)
+[2022-05-27 05:47:00.626] [info] Frame 61 (t = 0.305000):	 total squared error = 0.0252416, marker error: RMS = 0.0239515, max = 0.0580766 (RTOE)
+[2022-05-27 05:47:00.671] [info] Frame 62 (t = 0.31):	 total squared error = 0.0253477, marker error: RMS = 0.0240017, max = 0.0584496 (RTOE)
+[2022-05-27 05:47:00.728] [info] Frame 63 (t = 0.315):	 total squared error = 0.0254005, marker error: RMS = 0.0240267, max = 0.0587089 (RTOE)
+[2022-05-27 05:47:00.790] [info] Frame 64 (t = 0.32):	 total squared error = 0.0253551, marker error: RMS = 0.0240053, max = 0.0586993 (RTOE)
+[2022-05-27 05:47:00.834] [info] Frame 65 (t = 0.325):	 total squared error = 0.0250580, marker error: RMS = 0.0238642, max = 0.058314 (RTOE)
+[2022-05-27 05:47:00.877] [info] Frame 66 (t = 0.33):	 total squared error = 0.0247388, marker error: RMS = 0.0237117, max = 0.057997 (RTOE)
+[2022-05-27 05:47:00.925] [info] Frame 67 (t = 0.335):	 total squared error = 0.0242298, marker error: RMS = 0.0234665, max = 0.0572234 (RTOE)
+[2022-05-27 05:47:00.957] [info] Frame 68 (t = 0.34):	 total squared error = 0.0235312, marker error: RMS = 0.0231257, max = 0.0556905 (RTOE)
+[2022-05-27 05:47:00.991] [info] Frame 69 (t = 0.345):	 total squared error = 0.0225621, marker error: RMS = 0.0226446, max = 0.0540186 (RTOE)
+[2022-05-27 05:47:01.026] [info] Frame 70 (t = 0.35):	 total squared error = 0.0216573, marker error: RMS = 0.0221859, max = 0.0522716 (RTOE)
+[2022-05-27 05:47:01.062] [info] Frame 71 (t = 0.355):	 total squared error = 0.0207136, marker error: RMS = 0.0216971, max = 0.0497572 (RTOE)
+[2022-05-27 05:47:01.102] [info] Frame 72 (t = 0.36):	 total squared error = 0.0195732, marker error: RMS = 0.0210913, max = 0.0469654 (RTOE)
+[2022-05-27 05:47:01.139] [info] Frame 73 (t = 0.365):	 total squared error = 0.0185070, marker error: RMS = 0.0205089, max = 0.0438345 (RTOE)
+[2022-05-27 05:47:01.183] [info] Frame 74 (t = 0.37):	 total squared error = 0.017492, marker error: RMS = 0.0199386, max = 0.0413486 (RELB)
+[2022-05-27 05:47:01.214] [info] Frame 75 (t = 0.375):	 total squared error = 0.0166097, marker error: RMS = 0.0194292, max = 0.0410980 (RELB)
+[2022-05-27 05:47:01.252] [info] Frame 76 (t = 0.38):	 total squared error = 0.01567, marker error: RMS = 0.0188716, max = 0.0408359 (RELB)
+[2022-05-27 05:47:01.288] [info] Frame 77 (t = 0.385):	 total squared error = 0.0148677, marker error: RMS = 0.0183821, max = 0.0404133 (RELB)
+[2022-05-27 05:47:01.325] [info] Frame 78 (t = 0.39):	 total squared error = 0.0142569, marker error: RMS = 0.0180006, max = 0.0401152 (RELB)
+[2022-05-27 05:47:01.364] [info] Frame 79 (t = 0.395):	 total squared error = 0.0136887, marker error: RMS = 0.0176382, max = 0.039749 (RELB)
+[2022-05-27 05:47:01.398] [info] Frame 80 (t = 0.4):	 total squared error = 0.0132906, marker error: RMS = 0.0173798, max = 0.0395612 (RELB)
+[2022-05-27 05:47:01.434] [info] Frame 81 (t = 0.405000):	 total squared error = 0.0129761, marker error: RMS = 0.017173, max = 0.0393305 (RELB)
+[2022-05-27 05:47:01.483] [info] Frame 82 (t = 0.41):	 total squared error = 0.012777, marker error: RMS = 0.0170407, max = 0.0389975 (RELB)
+[2022-05-27 05:47:01.523] [info] Frame 83 (t = 0.415):	 total squared error = 0.012722, marker error: RMS = 0.0170040, max = 0.0388146 (RELB)
+[2022-05-27 05:47:01.559] [info] Frame 84 (t = 0.42):	 total squared error = 0.0127907, marker error: RMS = 0.0170499, max = 0.0385954 (RELB)
+[2022-05-27 05:47:01.611] [info] Frame 85 (t = 0.425):	 total squared error = 0.0130446, marker error: RMS = 0.0172183, max = 0.0383148 (RELB)
+[2022-05-27 05:47:01.656] [info] Frame 86 (t = 0.43):	 total squared error = 0.0134695, marker error: RMS = 0.0174965, max = 0.0382424 (RELB)
+[2022-05-27 05:47:01.698] [info] Frame 87 (t = 0.435):	 total squared error = 0.0140211, marker error: RMS = 0.0178511, max = 0.0381316 (RELB)
+[2022-05-27 05:47:01.732] [info] Frame 88 (t = 0.44):	 total squared error = 0.0146632, marker error: RMS = 0.0182553, max = 0.0380002 (RELB)
+[2022-05-27 05:47:01.781] [info] Frame 89 (t = 0.445):	 total squared error = 0.0154677, marker error: RMS = 0.0187494, max = 0.0380248 (RELB)
+[2022-05-27 05:47:01.824] [info] Frame 90 (t = 0.45):	 total squared error = 0.0163268, marker error: RMS = 0.019263, max = 0.0380842 (RELB)
+[2022-05-27 05:47:01.856] [info] Frame 91 (t = 0.455):	 total squared error = 0.0171525, marker error: RMS = 0.0197441, max = 0.0384528 (LTOE)
+[2022-05-27 05:47:01.906] [info] Frame 92 (t = 0.46):	 total squared error = 0.0180745, marker error: RMS = 0.0202678, max = 0.0414124 (LTOE)
+[2022-05-27 05:47:01.943] [info] Frame 93 (t = 0.465):	 total squared error = 0.0187689, marker error: RMS = 0.0206535, max = 0.0440099 (LTOE)
+[2022-05-27 05:47:01.976] [info] Frame 94 (t = 0.47):	 total squared error = 0.0193198, marker error: RMS = 0.0209544, max = 0.0462799 (LTOE)
+[2022-05-27 05:47:02.025] [info] Frame 95 (t = 0.475):	 total squared error = 0.0199491, marker error: RMS = 0.0212929, max = 0.0487173 (LTOE)
+[2022-05-27 05:47:02.054] [info] Frame 96 (t = 0.48):	 total squared error = 0.0203262, marker error: RMS = 0.0214932, max = 0.0506018 (LTOE)
+[2022-05-27 05:47:02.098] [info] Frame 97 (t = 0.485):	 total squared error = 0.0207290, marker error: RMS = 0.0217051, max = 0.0523545 (LTOE)
+[2022-05-27 05:47:02.149] [info] Frame 98 (t = 0.49):	 total squared error = 0.0212385, marker error: RMS = 0.0219703, max = 0.0539911 (LTOE)
+[2022-05-27 05:47:02.191] [info] Frame 99 (t = 0.495):	 total squared error = 0.0218161, marker error: RMS = 0.022267, max = 0.0553216 (LTOE)
+[2022-05-27 05:47:02.233] [info] Frame 100 (t = 0.5):	 total squared error = 0.0223023, marker error: RMS = 0.0225138, max = 0.0560857 (LTOE)
+[2022-05-27 05:47:02.269] [info] Frame 101 (t = 0.505000):	 total squared error = 0.022923, marker error: RMS = 0.022825, max = 0.056521 (LTOE)
+[2022-05-27 05:47:02.308] [info] Frame 102 (t = 0.51):	 total squared error = 0.0234877, marker error: RMS = 0.0231044, max = 0.0569279 (LTOE)
+[2022-05-27 05:47:02.364] [info] Frame 103 (t = 0.515):	 total squared error = 0.0242112, marker error: RMS = 0.0234575, max = 0.0573254 (LTOE)
+[2022-05-27 05:47:02.402] [info] Frame 104 (t = 0.52):	 total squared error = 0.025243, marker error: RMS = 0.0239521, max = 0.0572178 (LTOE)
+[2022-05-27 05:47:02.446] [info] Frame 105 (t = 0.525):	 total squared error = 0.0262944, marker error: RMS = 0.0244458, max = 0.0569923 (LTOE)
+[2022-05-27 05:47:02.486] [info] Frame 106 (t = 0.53):	 total squared error = 0.0271378, marker error: RMS = 0.0248348, max = 0.0562448 (LTOE)
+[2022-05-27 05:47:02.524] [info] Frame 107 (t = 0.535):	 total squared error = 0.0276599, marker error: RMS = 0.0250726, max = 0.0552576 (LTOE)
+[2022-05-27 05:47:02.574] [info] Frame 108 (t = 0.54):	 total squared error = 0.0278763, marker error: RMS = 0.0251705, max = 0.0540923 (LTOE)
+[2022-05-27 05:47:02.621] [info] Frame 109 (t = 0.545):	 total squared error = 0.0280984, marker error: RMS = 0.0252705, max = 0.0534819 (LTOE)
+[2022-05-27 05:47:02.661] [info] Frame 110 (t = 0.55):	 total squared error = 0.0279825, marker error: RMS = 0.0252184, max = 0.0517316 (LTOE)
+[2022-05-27 05:47:02.709] [info] Frame 111 (t = 0.555):	 total squared error = 0.0277206, marker error: RMS = 0.0251001, max = 0.0502565 (LTOE)
+[2022-05-27 05:47:02.751] [info] Frame 112 (t = 0.56):	 total squared error = 0.027138, marker error: RMS = 0.0248349, max = 0.0491891 (LTOE)
+[2022-05-27 05:47:02.788] [info] Frame 113 (t = 0.565):	 total squared error = 0.0263805, marker error: RMS = 0.0244858, max = 0.0481628 (LTOE)
+[2022-05-27 05:47:02.824] [info] Frame 114 (t = 0.57):	 total squared error = 0.0257665, marker error: RMS = 0.0241992, max = 0.047371 (LTOE)
+[2022-05-27 05:47:02.868] [info] Frame 115 (t = 0.575):	 total squared error = 0.0252863, marker error: RMS = 0.0239726, max = 0.0469545 (LTOE)
+[2022-05-27 05:47:02.902] [info] Frame 116 (t = 0.58):	 total squared error = 0.0249906, marker error: RMS = 0.0238321, max = 0.0470644 (LTOE)
+[2022-05-27 05:47:02.951] [info] Frame 117 (t = 0.585):	 total squared error = 0.0248235, marker error: RMS = 0.0237523, max = 0.0471362 (LTOE)
+[2022-05-27 05:47:02.989] [info] Frame 118 (t = 0.59):	 total squared error = 0.0248617, marker error: RMS = 0.0237706, max = 0.0475216 (LTOE)
+[2022-05-27 05:47:03.026] [info] Frame 119 (t = 0.595):	 total squared error = 0.0250099, marker error: RMS = 0.0238413, max = 0.0476221 (LTOE)
+[2022-05-27 05:47:03.068] [info] Frame 120 (t = 0.6):	 total squared error = 0.0252455, marker error: RMS = 0.0239533, max = 0.0481653 (LTOE)
+[2022-05-27 05:47:03.100] [info] Frame 121 (t = 0.605000):	 total squared error = 0.0253739, marker error: RMS = 0.0240142, max = 0.0482753 (LTOE)
+[2022-05-27 05:47:03.127] [info] Frame 122 (t = 0.61):	 total squared error = 0.025479, marker error: RMS = 0.0240638, max = 0.0489232 (LTOE)
+[2022-05-27 05:47:03.186] [info] Frame 123 (t = 0.615):	 total squared error = 0.0254222, marker error: RMS = 0.0240370, max = 0.0492225 (LTOE)
+[2022-05-27 05:47:03.216] [info] Frame 124 (t = 0.62):	 total squared error = 0.0252831, marker error: RMS = 0.0239712, max = 0.0492405 (LTOE)
+[2022-05-27 05:47:03.259] [info] Frame 125 (t = 0.625):	 total squared error = 0.0251038, marker error: RMS = 0.023886, max = 0.0496902 (LTOE)
+[2022-05-27 05:47:03.291] [info] Frame 126 (t = 0.63):	 total squared error = 0.0248898, marker error: RMS = 0.023784, max = 0.0498444 (LTOE)
+[2022-05-27 05:47:03.319] [info] Frame 127 (t = 0.635):	 total squared error = 0.0246011, marker error: RMS = 0.0236456, max = 0.0498369 (LTOE)
+[2022-05-27 05:47:03.362] [info] Frame 128 (t = 0.64):	 total squared error = 0.0243353, marker error: RMS = 0.0235175, max = 0.0500871 (LTOE)
+[2022-05-27 05:47:03.402] [info] Frame 129 (t = 0.645):	 total squared error = 0.0239882, marker error: RMS = 0.0233492, max = 0.0501200 (LTOE)
+[2022-05-27 05:47:03.440] [info] Frame 130 (t = 0.65):	 total squared error = 0.0236583, marker error: RMS = 0.0231881, max = 0.0501528 (LTOE)
+[2022-05-27 05:47:03.467] [info] Frame 131 (t = 0.655):	 total squared error = 0.0233025, marker error: RMS = 0.0230131, max = 0.0499524 (LTOE)
+[2022-05-27 05:47:03.513] [info] Frame 132 (t = 0.66):	 total squared error = 0.0229267, marker error: RMS = 0.0228268, max = 0.0497394 (LTOE)
+[2022-05-27 05:47:03.555] [info] Frame 133 (t = 0.665):	 total squared error = 0.0227629, marker error: RMS = 0.0227451, max = 0.0494614 (LTOE)
+[2022-05-27 05:47:03.606] [info] Frame 134 (t = 0.67):	 total squared error = 0.0223165, marker error: RMS = 0.022521, max = 0.0489447 (LTOE)
+[2022-05-27 05:47:03.660] [info] Frame 135 (t = 0.675):	 total squared error = 0.0217009, marker error: RMS = 0.0222081, max = 0.0482005 (LTOE)
+[2022-05-27 05:47:03.709] [info] Frame 136 (t = 0.68):	 total squared error = 0.0211593, marker error: RMS = 0.0219293, max = 0.0470621 (LTOE)
+[2022-05-27 05:47:03.758] [info] Frame 137 (t = 0.685):	 total squared error = 0.0205627, marker error: RMS = 0.0216179, max = 0.0458882 (LTOE)
+[2022-05-27 05:47:03.802] [info] Frame 138 (t = 0.69):	 total squared error = 0.0198213, marker error: RMS = 0.0212246, max = 0.0442394 (LTOE)
+[2022-05-27 05:47:03.845] [info] Frame 139 (t = 0.695):	 total squared error = 0.0189084, marker error: RMS = 0.0207301, max = 0.0421598 (LTOE)
+[2022-05-27 05:47:03.893] [info] Frame 140 (t = 0.7):	 total squared error = 0.0179024, marker error: RMS = 0.0201711, max = 0.0401877 (LPAT)
+[2022-05-27 05:47:03.940] [info] Frame 141 (t = 0.705000):	 total squared error = 0.0169896, marker error: RMS = 0.0196501, max = 0.0396351 (RELB)
+[2022-05-27 05:47:03.987] [info] Frame 142 (t = 0.71):	 total squared error = 0.0161732, marker error: RMS = 0.0191722, max = 0.0392474 (RELB)
+[2022-05-27 05:47:04.029] [info] Frame 143 (t = 0.715):	 total squared error = 0.0152717, marker error: RMS = 0.0186302, max = 0.0388522 (RELB)
+[2022-05-27 05:47:04.077] [info] Frame 144 (t = 0.72):	 total squared error = 0.0144955, marker error: RMS = 0.0181506, max = 0.0384526 (RELB)
+[2022-05-27 05:47:04.120] [info] Frame 145 (t = 0.725):	 total squared error = 0.0137686, marker error: RMS = 0.0176896, max = 0.0381816 (RELB)
+[2022-05-27 05:47:04.169] [info] Frame 146 (t = 0.73):	 total squared error = 0.0131314, marker error: RMS = 0.0172755, max = 0.0379068 (RELB)
+[2022-05-27 05:47:04.216] [info] Frame 147 (t = 0.735):	 total squared error = 0.0126513, marker error: RMS = 0.0169567, max = 0.0375075 (RELB)
+[2022-05-27 05:47:04.257] [info] Frame 148 (t = 0.74):	 total squared error = 0.012256, marker error: RMS = 0.0166897, max = 0.0370232 (RELB)
+[2022-05-27 05:47:04.301] [info] Frame 149 (t = 0.745):	 total squared error = 0.0119791, marker error: RMS = 0.0165001, max = 0.0365998 (RELB)
+[2022-05-27 05:47:04.336] [info] Frame 150 (t = 0.75):	 total squared error = 0.011872, marker error: RMS = 0.0164261, max = 0.0361942 (RELB)
+[2022-05-27 05:47:04.371] [info] Frame 151 (t = 0.755):	 total squared error = 0.0116821, marker error: RMS = 0.0162942, max = 0.0358676 (RELB)
+[2022-05-27 05:47:04.425] [info] Frame 152 (t = 0.76):	 total squared error = 0.0116218, marker error: RMS = 0.0162522, max = 0.0356961 (RELB)
+[2022-05-27 05:47:04.474] [info] Frame 153 (t = 0.765):	 total squared error = 0.0115823, marker error: RMS = 0.0162245, max = 0.0354087 (C7)
+[2022-05-27 05:47:04.507] [info] Frame 154 (t = 0.77):	 total squared error = 0.0116363, marker error: RMS = 0.0162623, max = 0.0351579 (C7)
+[2022-05-27 05:47:04.549] [info] Frame 155 (t = 0.775):	 total squared error = 0.0117662, marker error: RMS = 0.0163528, max = 0.0350198 (C7)
+[2022-05-27 05:47:04.588] [info] Frame 156 (t = 0.78):	 total squared error = 0.0120184, marker error: RMS = 0.0165271, max = 0.0347715 (C7)
+[2022-05-27 05:47:04.628] [info] Frame 157 (t = 0.785):	 total squared error = 0.0124702, marker error: RMS = 0.0168349, max = 0.0347066 (RELB)
+[2022-05-27 05:47:04.663] [info] Frame 158 (t = 0.79):	 total squared error = 0.0130743, marker error: RMS = 0.0172378, max = 0.0344908 (RELB)
+[2022-05-27 05:47:04.695] [info] Frame 159 (t = 0.795):	 total squared error = 0.0137611, marker error: RMS = 0.0176848, max = 0.0342068 (RELB)
+[2022-05-27 05:47:04.733] [info] Frame 160 (t = 0.8):	 total squared error = 0.0146564, marker error: RMS = 0.018251, max = 0.0371769 (RTOE)
+[2022-05-27 05:47:04.789] [info] Frame 161 (t = 0.805000):	 total squared error = 0.0156777, marker error: RMS = 0.0188762, max = 0.0413646 (RTOE)
+[2022-05-27 05:47:04.821] [info] Frame 162 (t = 0.81):	 total squared error = 0.0169172, marker error: RMS = 0.0196082, max = 0.045991 (RTOE)
+[2022-05-27 05:47:04.863] [info] Frame 163 (t = 0.815):	 total squared error = 0.0181691, marker error: RMS = 0.0203208, max = 0.0499227 (RTOE)
+[2022-05-27 05:47:04.903] [info] Frame 164 (t = 0.82):	 total squared error = 0.0195715, marker error: RMS = 0.0210905, max = 0.0539197 (RTOE)
+[2022-05-27 05:47:04.933] [info] Frame 165 (t = 0.825):	 total squared error = 0.0209172, marker error: RMS = 0.0218034, max = 0.0577211 (RTOE)
+[2022-05-27 05:47:04.983] [info] Frame 166 (t = 0.83):	 total squared error = 0.0223438, marker error: RMS = 0.0225347, max = 0.0612363 (RTOE)
+[2022-05-27 05:47:05.015] [info] Frame 167 (t = 0.835):	 total squared error = 0.0236953, marker error: RMS = 0.0232062, max = 0.0647142 (RTOE)
+[2022-05-27 05:47:05.053] [info] Frame 168 (t = 0.84):	 total squared error = 0.0247536, marker error: RMS = 0.0237188, max = 0.0676302 (RTOE)
+[2022-05-27 05:47:05.104] [info] Frame 169 (t = 0.845):	 total squared error = 0.0259050, marker error: RMS = 0.0242642, max = 0.0703188 (RTOE)
+[2022-05-27 05:47:05.136] [info] Frame 170 (t = 0.85):	 total squared error = 0.0267116, marker error: RMS = 0.024639, max = 0.0725375 (RTOE)
+[2022-05-27 05:47:05.189] [info] Frame 171 (t = 0.855):	 total squared error = 0.0271516, marker error: RMS = 0.0248411, max = 0.0738948 (RTOE)
+[2022-05-27 05:47:05.219] [info] Frame 172 (t = 0.86):	 total squared error = 0.0273456, marker error: RMS = 0.0249297, max = 0.0749217 (RTOE)
+[2022-05-27 05:47:05.265] [info] Frame 173 (t = 0.865):	 total squared error = 0.0272117, marker error: RMS = 0.0248686, max = 0.0753011 (RTOE)
+[2022-05-27 05:47:05.298] [info] Frame 174 (t = 0.87):	 total squared error = 0.0269568, marker error: RMS = 0.0247519, max = 0.0752207 (RTOE)
+[2022-05-27 05:47:05.339] [info] Frame 175 (t = 0.875):	 total squared error = 0.0266498, marker error: RMS = 0.0246105, max = 0.0741537 (RTOE)
+[2022-05-27 05:47:05.385] [info] Frame 176 (t = 0.88):	 total squared error = 0.0264149, marker error: RMS = 0.0245018, max = 0.0728195 (RTOE)
+[2022-05-27 05:47:05.437] [info] Frame 177 (t = 0.885):	 total squared error = 0.0261693, marker error: RMS = 0.0243876, max = 0.0714884 (RTOE)
+[2022-05-27 05:47:05.475] [info] Frame 178 (t = 0.89):	 total squared error = 0.0263030, marker error: RMS = 0.0244498, max = 0.0698856 (RTOE)
+[2022-05-27 05:47:05.516] [info] Frame 179 (t = 0.895):	 total squared error = 0.0268026, marker error: RMS = 0.024681, max = 0.0681598 (RTOE)
+[2022-05-27 05:47:05.562] [info] Frame 180 (t = 0.9):	 total squared error = 0.0273768, marker error: RMS = 0.024944, max = 0.0667574 (RTOE)
+[2022-05-27 05:47:05.601] [info] Frame 181 (t = 0.905000):	 total squared error = 0.0276374, marker error: RMS = 0.0250624, max = 0.0651864 (RTOE)
+[2022-05-27 05:47:05.645] [info] Frame 182 (t = 0.91):	 total squared error = 0.0278228, marker error: RMS = 0.0251463, max = 0.0634429 (RTOE)
+[2022-05-27 05:47:05.677] [info] Frame 183 (t = 0.915):	 total squared error = 0.0280308, marker error: RMS = 0.0252401, max = 0.0614714 (RTOE)
+[2022-05-27 05:47:05.719] [info] Frame 184 (t = 0.92):	 total squared error = 0.0281182, marker error: RMS = 0.0252794, max = 0.0596312 (RTOE)
+[2022-05-27 05:47:05.756] [info] Frame 185 (t = 0.925):	 total squared error = 0.0281974, marker error: RMS = 0.025315, max = 0.057991 (RTOE)
+[2022-05-27 05:47:05.808] [info] Frame 186 (t = 0.93):	 total squared error = 0.0278787, marker error: RMS = 0.0251715, max = 0.0564349 (RTOE)
+[2022-05-27 05:47:05.863] [info] Frame 187 (t = 0.935):	 total squared error = 0.0273807, marker error: RMS = 0.0249457, max = 0.0552791 (RTOE)
+[2022-05-27 05:47:05.914] [info] Frame 188 (t = 0.94):	 total squared error = 0.0267429, marker error: RMS = 0.0246534, max = 0.0545571 (RTOE)
+[2022-05-27 05:47:05.945] [info] Frame 189 (t = 0.945):	 total squared error = 0.0260602, marker error: RMS = 0.0243367, max = 0.0539409 (RTOE)
+[2022-05-27 05:47:06.002] [info] Frame 190 (t = 0.95):	 total squared error = 0.0254996, marker error: RMS = 0.0240736, max = 0.0537829 (RTOE)
+[2022-05-27 05:47:06.043] [info] Frame 191 (t = 0.955):	 total squared error = 0.0250691, marker error: RMS = 0.0238695, max = 0.0538874 (RTOE)
+[2022-05-27 05:47:06.092] [info] Frame 192 (t = 0.96):	 total squared error = 0.0247228, marker error: RMS = 0.0237040, max = 0.0540165 (RTOE)
+[2022-05-27 05:47:06.129] [info] Frame 193 (t = 0.965):	 total squared error = 0.0246831, marker error: RMS = 0.023685, max = 0.054565 (RTOE)
+[2022-05-27 05:47:06.173] [info] Frame 194 (t = 0.97):	 total squared error = 0.0246165, marker error: RMS = 0.023653, max = 0.0546433 (RTOE)
+[2022-05-27 05:47:06.223] [info] Frame 195 (t = 0.975):	 total squared error = 0.0247448, marker error: RMS = 0.0237146, max = 0.0553355 (RTOE)
+[2022-05-27 05:47:06.254] [info] Frame 196 (t = 0.98):	 total squared error = 0.0248844, marker error: RMS = 0.0237814, max = 0.0558464 (RTOE)
+[2022-05-27 05:47:06.286] [info] Frame 197 (t = 0.985):	 total squared error = 0.0250020, marker error: RMS = 0.0238375, max = 0.0564551 (RTOE)
+[2022-05-27 05:47:06.315] [info] Frame 198 (t = 0.99):	 total squared error = 0.0250448, marker error: RMS = 0.0238579, max = 0.0570212 (RTOE)
+[2022-05-27 05:47:06.355] [info] Frame 199 (t = 0.995):	 total squared error = 0.025158, marker error: RMS = 0.0239118, max = 0.0576415 (RTOE)
+[2022-05-27 05:47:06.395] [info] Frame 200 (t = 1.0):	 total squared error = 0.0251041, marker error: RMS = 0.0238861, max = 0.0579618 (RTOE)
+[2022-05-27 05:47:06.425] [info] Frame 201 (t = 1.00500):	 total squared error = 0.0251227, marker error: RMS = 0.023895, max = 0.0583127 (RTOE)
+[2022-05-27 05:47:06.466] [info] Frame 202 (t = 1.01):	 total squared error = 0.0252228, marker error: RMS = 0.0239426, max = 0.0588522 (RTOE)
+[2022-05-27 05:47:06.506] [info] Frame 203 (t = 1.015):	 total squared error = 0.0252774, marker error: RMS = 0.0239684, max = 0.0593197 (RTOE)
+[2022-05-27 05:47:06.546] [info] Frame 204 (t = 1.02):	 total squared error = 0.0254249, marker error: RMS = 0.0240383, max = 0.0603298 (RTOE)
+[2022-05-27 05:47:06.584] [info] Frame 205 (t = 1.025):	 total squared error = 0.0254195, marker error: RMS = 0.0240357, max = 0.0600688 (RTOE)
+[2022-05-27 05:47:06.626] [info] Frame 206 (t = 1.03):	 total squared error = 0.0255779, marker error: RMS = 0.0241105, max = 0.0601612 (RTOE)
+[2022-05-27 05:47:06.666] [info] Frame 207 (t = 1.035):	 total squared error = 0.02567, marker error: RMS = 0.0241539, max = 0.0607793 (RTOE)
+[2022-05-27 05:47:06.704] [info] Frame 208 (t = 1.04):	 total squared error = 0.0259609, marker error: RMS = 0.0242903, max = 0.0618195 (RTOE)
+[2022-05-27 05:47:06.744] [info] Frame 209 (t = 1.045):	 total squared error = 0.0262243, marker error: RMS = 0.0244132, max = 0.0624876 (RTOE)
+[2022-05-27 05:47:06.803] [info] Frame 210 (t = 1.05):	 total squared error = 0.0265524, marker error: RMS = 0.0245655, max = 0.0633404 (RTOE)
+[2022-05-27 05:47:06.847] [info] Frame 211 (t = 1.055):	 total squared error = 0.0270408, marker error: RMS = 0.0247904, max = 0.0644384 (RTOE)
+[2022-05-27 05:47:06.893] [info] Frame 212 (t = 1.06):	 total squared error = 0.0274649, marker error: RMS = 0.024984, max = 0.0658047 (RTOE)
+[2022-05-27 05:47:06.938] [info] Frame 213 (t = 1.065):	 total squared error = 0.0281183, marker error: RMS = 0.0252795, max = 0.0675428 (RTOE)
+[2022-05-27 05:47:06.987] [info] Frame 214 (t = 1.07):	 total squared error = 0.028435, marker error: RMS = 0.0254215, max = 0.0688645 (RTOE)
+[2022-05-27 05:47:07.040] [info] Frame 215 (t = 1.075):	 total squared error = 0.0287316, marker error: RMS = 0.0255537, max = 0.0698107 (RTOE)
+[2022-05-27 05:47:07.086] [info] Frame 216 (t = 1.08):	 total squared error = 0.0287135, marker error: RMS = 0.0255456, max = 0.0702774 (RTOE)
+[2022-05-27 05:47:07.137] [info] Frame 217 (t = 1.085):	 total squared error = 0.0285358, marker error: RMS = 0.0254665, max = 0.0703233 (RTOE)
+[2022-05-27 05:47:07.185] [info] Frame 218 (t = 1.09):	 total squared error = 0.0280939, marker error: RMS = 0.0252685, max = 0.0695157 (RTOE)
+[2022-05-27 05:47:07.237] [info] Frame 219 (t = 1.095):	 total squared error = 0.0272418, marker error: RMS = 0.0248824, max = 0.0680369 (RTOE)
+[2022-05-27 05:47:07.284] [info] Frame 220 (t = 1.1):	 total squared error = 0.0260218, marker error: RMS = 0.0243188, max = 0.0657396 (RTOE)
+[2022-05-27 05:47:07.326] [info] Frame 221 (t = 1.10500):	 total squared error = 0.0246556, marker error: RMS = 0.0236718, max = 0.0625241 (RTOE)
+[2022-05-27 05:47:07.371] [info] Frame 222 (t = 1.11):	 total squared error = 0.0230961, marker error: RMS = 0.0229109, max = 0.0587872 (RTOE)
+[2022-05-27 05:47:07.418] [info] Frame 223 (t = 1.115):	 total squared error = 0.0214939, marker error: RMS = 0.0221020, max = 0.0546034 (RTOE)
+[2022-05-27 05:47:07.447] [info] Frame 224 (t = 1.12):	 total squared error = 0.0199487, marker error: RMS = 0.0212927, max = 0.0500700 (RTOE)
+[2022-05-27 05:47:07.486] [info] Frame 225 (t = 1.125):	 total squared error = 0.0183889, marker error: RMS = 0.0204433, max = 0.0454038 (RTOE)
+[2022-05-27 05:47:07.517] [info] Frame 226 (t = 1.13):	 total squared error = 0.0170710, marker error: RMS = 0.0196972, max = 0.0406491 (RTOE)
+[2022-05-27 05:47:07.557] [info] Frame 227 (t = 1.135):	 total squared error = 0.0158411, marker error: RMS = 0.0189744, max = 0.0383793 (RELB)
+[2022-05-27 05:47:07.599] [info] Frame 228 (t = 1.14):	 total squared error = 0.0148809, marker error: RMS = 0.0183903, max = 0.038199 (RELB)
+[2022-05-27 05:47:07.641] [info] Frame 229 (t = 1.145):	 total squared error = 0.0141006, marker error: RMS = 0.0179016, max = 0.0381523 (RELB)
+[2022-05-27 05:47:07.678] [info] Frame 230 (t = 1.15):	 total squared error = 0.0134861, marker error: RMS = 0.0175072, max = 0.0376555 (RELB)
+[2022-05-27 05:47:07.713] [info] Frame 231 (t = 1.155):	 total squared error = 0.0130550, marker error: RMS = 0.0172251, max = 0.0379269 (RELB)
+[2022-05-27 05:47:07.754] [info] Frame 232 (t = 1.16):	 total squared error = 0.0129293, marker error: RMS = 0.017142, max = 0.0383414 (RELB)
+[2022-05-27 05:47:07.799] [info] Frame 233 (t = 1.165):	 total squared error = 0.0128052, marker error: RMS = 0.0170595, max = 0.0378208 (RELB)
+[2022-05-27 05:47:07.854] [info] Frame 234 (t = 1.17):	 total squared error = 0.0129764, marker error: RMS = 0.0171732, max = 0.0383313 (RELB)
+[2022-05-27 05:47:07.900] [info] Frame 235 (t = 1.175):	 total squared error = 0.0132928, marker error: RMS = 0.0173813, max = 0.0382020 (RELB)
+[2022-05-27 05:47:07.965] [info] Frame 236 (t = 1.18):	 total squared error = 0.0138304, marker error: RMS = 0.0177293, max = 0.0384289 (RELB)
+[2022-05-27 05:47:08.005] [info] Frame 237 (t = 1.185):	 total squared error = 0.0145443, marker error: RMS = 0.0181811, max = 0.0382483 (RELB)
+[2022-05-27 05:47:08.047] [info] Frame 238 (t = 1.19):	 total squared error = 0.0151149, marker error: RMS = 0.0185343, max = 0.0384558 (RELB)
+[2022-05-27 05:47:08.082] [info] Frame 239 (t = 1.195):	 total squared error = 0.0159341, marker error: RMS = 0.0190299, max = 0.0383575 (RELB)
+[2022-05-27 05:47:08.124] [info] Frame 240 (t = 1.2):	 total squared error = 0.01678, marker error: RMS = 0.0195285, max = 0.0384743 (RELB)
+[2022-05-27 05:47:08.179] [info] Frame 241 (t = 1.20500):	 total squared error = 0.0177799, marker error: RMS = 0.0201020, max = 0.041746 (LTOE)
+[2022-05-27 05:47:08.221] [info] Frame 242 (t = 1.21):	 total squared error = 0.0186278, marker error: RMS = 0.0205757, max = 0.0447947 (LTOE)
+[2022-05-27 05:47:08.261] [info] Frame 243 (t = 1.215):	 total squared error = 0.0194652, marker error: RMS = 0.0210331, max = 0.0476063 (LTOE)
+[2022-05-27 05:47:08.310] [info] Frame 244 (t = 1.22):	 total squared error = 0.0203132, marker error: RMS = 0.0214864, max = 0.0503446 (LTOE)
+[2022-05-27 05:47:08.345] [info] Frame 245 (t = 1.225):	 total squared error = 0.0209738, marker error: RMS = 0.0218329, max = 0.0526556 (LTOE)
+[2022-05-27 05:47:08.376] [info] Frame 246 (t = 1.23):	 total squared error = 0.021526, marker error: RMS = 0.0221185, max = 0.0545736 (LTOE)
+[2022-05-27 05:47:08.421] [info] Frame 247 (t = 1.235):	 total squared error = 0.0220029, marker error: RMS = 0.0223621, max = 0.0562529 (LTOE)
+[2022-05-27 05:47:08.467] [info] Frame 248 (t = 1.24):	 total squared error = 0.0222359, marker error: RMS = 0.0224803, max = 0.0574339 (LTOE)
+[2022-05-27 05:47:08.501] [info] Frame 249 (t = 1.245):	 total squared error = 0.0225819, marker error: RMS = 0.0226545, max = 0.0583656 (LTOE)
+[2022-05-27 05:47:08.535] [info] Frame 250 (t = 1.25):	 total squared error = 0.0228812, marker error: RMS = 0.0228041, max = 0.0589382 (LTOE)
+[2022-05-27 05:47:08.563] [info] Frame 251 (t = 1.255):	 total squared error = 0.0230995, marker error: RMS = 0.0229126, max = 0.0591961 (LTOE)
+[2022-05-27 05:47:08.603] [info] Frame 252 (t = 1.26):	 total squared error = 0.0232684, marker error: RMS = 0.0229962, max = 0.0587691 (LTOE)
+[2022-05-27 05:47:08.634] [info] Frame 253 (t = 1.265):	 total squared error = 0.0235631, marker error: RMS = 0.0231414, max = 0.0578076 (LTOE)
+[2022-05-27 05:47:08.672] [info] Frame 254 (t = 1.27):	 total squared error = 0.0236673, marker error: RMS = 0.0231925, max = 0.0567356 (LTOE)
+[2022-05-27 05:47:08.706] [info] Frame 255 (t = 1.275):	 total squared error = 0.023987, marker error: RMS = 0.0233486, max = 0.0555677 (LTOE)
+[2022-05-27 05:47:08.712] [info] InverseKinematicsTool completed 237 frames in 10 second(s).
+[2022-05-27 05:47:08.798] [info] Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071.osim
+[2022-05-27 05:47:08.798] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-05-27 05:47:08.799] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-05-27 05:47:08.800] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-05-27 05:47:08.801] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-05-27 05:47:08.802] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-05-27 05:47:08.803] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-05-27 05:47:08.804] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-05-27 05:47:08.804] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-05-27 05:47:08.804] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-05-27 05:47:08.804] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-05-27 05:47:08.804] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-05-27 05:47:08.804] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-05-27 05:47:08.804] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-05-27 05:47:08.804] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-05-27 05:47:08.804] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-05-27 05:47:08.804] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-05-27 05:47:08.804] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-05-27 05:47:09.026] [cout] [info] 
+               MODEL: TRAIL_071
+         coordinates: 39
+              forces: 80
+           actuators: 80
+             muscles: 80
+            analyses: 0
+              probes: 0
+              bodies: 22
+              joints: 22
+         constraints: 2
+             markers: 48
+         controllers: 0
+  contact geometries: 0
+misc modelcomponents: 0
+[2022-05-27 05:47:09.027] [info] Running tool InverseDynamics...
+[2022-05-27 05:47:09.063] [warning] ExternalLoades: external_loads_model_kinematics_file option is not supported anymore. Results may change.
+[2022-05-27 05:47:09.070] [info] ExternalLoads 'ExternalLoads' was renamed and is being reset to 'externalloads'.
+[2022-05-27 05:47:09.229] [info] Storage: read data file = C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071_EP_01_grf.mot (nr=1620 nc=19)
+[2022-05-27 05:47:09.257] [info] ExternalForce::Right Data source being set to TRAIL_071_EP_01_grf.mot
+[2022-05-27 05:47:09.257] [info] ExternalForce::Left Data source being set to TRAIL_071_EP_01_grf.mot
+[2022-05-27 05:47:09.286] [info] Storage: read data file = C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\ik\TRAIL_071_EP_01_ik.mot (nr=237 nc=40)
+[2022-05-27 05:47:09.293] [info] Low-pass filtering coordinates data with a cutoff frequency of 6.0...
+[2022-05-27 05:47:10.020] [info] InverseDynamicsTool: 149 time frames in 310 millisecond(s).
+[2022-05-27 05:47:10.127] [info] Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071.osim
+[2022-05-27 05:47:10.128] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-05-27 05:47:10.128] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-05-27 05:47:10.128] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-05-27 05:47:10.128] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-05-27 05:47:10.128] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-05-27 05:47:10.128] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-05-27 05:47:10.128] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-05-27 05:47:10.128] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-05-27 05:47:10.128] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-05-27 05:47:10.128] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-05-27 05:47:10.128] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-05-27 05:47:10.129] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-05-27 05:47:10.130] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-05-27 05:47:10.131] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-05-27 05:47:10.131] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-05-27 05:47:10.131] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-05-27 05:47:10.131] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-05-27 05:47:10.131] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-05-27 05:47:10.131] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-05-27 05:47:10.131] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-05-27 05:47:10.131] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-05-27 05:47:10.131] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-05-27 05:47:10.131] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-05-27 05:47:10.131] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-05-27 05:47:10.132] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-05-27 05:47:10.133] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-05-27 05:47:10.134] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-05-27 05:47:10.134] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-05-27 05:47:10.134] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-05-27 05:47:10.134] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-05-27 05:47:10.134] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-05-27 05:47:10.134] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-05-27 05:47:10.237] [info] AbstractTool TRAIL_071_EP_01 loading model C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071.osim
+[2022-05-27 05:47:10.314] [info] Loaded model TRAIL_071 from file C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071.osim
+[2022-05-27 05:47:10.315] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2022-05-27 05:47:10.315] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2022-05-27 05:47:10.315] [warning] Couldn't find file 'sacrum.vtp'.
+[2022-05-27 05:47:10.315] [warning] Couldn't find file 'r_femur.vtp'.
+[2022-05-27 05:47:10.315] [warning] Couldn't find file 'r_tibia.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'r_fibula.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'r_patella.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'r_talus.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'r_foot.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'l_femur.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'l_tibia.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'l_fibula.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'l_pat.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'l_talus.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'l_foot.vtp'.
+[2022-05-27 05:47:10.316] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'hat_spine.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'hat_skull.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'radius_rv.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2022-05-27 05:47:10.317] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2022-05-27 05:47:10.318] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2022-05-27 05:47:10.319] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2022-05-27 05:47:10.319] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2022-05-27 05:47:10.319] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2022-05-27 05:47:10.319] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2022-05-27 05:47:10.319] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2022-05-27 05:47:10.319] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2022-05-27 05:47:10.319] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2022-05-27 05:47:10.319] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2022-05-27 05:47:10.320] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2022-05-27 05:47:10.320] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2022-05-27 05:47:10.320] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2022-05-27 05:47:10.320] [warning] Couldn't find file 'radius_lv.vtp'.
+[2022-05-27 05:47:10.320] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2022-05-27 05:47:10.320] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2022-05-27 05:47:10.320] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2022-05-27 05:47:10.320] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2022-05-27 05:47:10.320] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2022-05-27 05:47:10.321] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2022-05-27 05:47:10.321] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2022-05-27 05:47:10.321] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2022-05-27 05:47:10.321] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2022-05-27 05:47:10.321] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2022-05-27 05:47:10.321] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2022-05-27 05:47:10.321] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2022-05-27 05:47:10.321] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2022-05-27 05:47:10.321] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2022-05-27 05:47:10.322] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2022-05-27 05:47:10.322] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2022-05-27 05:47:10.322] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2022-05-27 05:47:10.322] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2022-05-27 05:47:10.322] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2022-05-27 05:47:10.322] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2022-05-27 05:47:10.322] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2022-05-27 05:47:10.322] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2022-05-27 05:47:10.322] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2022-05-27 05:47:10.323] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2022-05-27 05:47:10.323] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2022-05-27 05:47:10.323] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2022-05-27 05:47:10.323] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2022-05-27 05:47:10.474] [info] Adding force object set from TRAIL_071_EP_01_Reserve_Actuators.xml
+[2022-05-27 05:47:10.511] [warning] ExternalLoades: external_loads_model_kinematics_file option is not supported anymore. Results may change.
+[2022-05-27 05:47:10.520] [info] ExternalLoads 'ExternalLoads' was renamed and is being reset to 'externalloads'.
+[2022-05-27 05:47:10.666] [info] Storage: read data file = C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071_EP_01_grf.mot (nr=1620 nc=19)
+[2022-05-27 05:47:10.687] [info] ExternalForce::Right Data source being set to TRAIL_071_EP_01_grf.mot
+[2022-05-27 05:47:10.687] [info] ExternalForce::Left Data source being set to TRAIL_071_EP_01_grf.mot
+[2022-05-27 05:47:10.697] [info] Loading coordinates from file 'C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\ik\TRAIL_071_EP_01_ik.mot'.
+[2022-05-27 05:47:10.698] [info] Storage: read data file = C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\ik\TRAIL_071_EP_01_ik.mot (nr=237 nc=40)
+[2022-05-27 05:47:10.705] [info] Low-pass filtering coordinates data with a cutoff frequency of 6.0...
+[2022-05-27 05:47:14.688] [info] Found 473 state vectors with time stamps ranging from -0.495 to 1.865.
+[2022-05-27 05:47:14.688] [info] Executing the analyses from 0.124999 to 0.864997...
+[2022-05-27 05:47:14.863] [info] Storage: read data file = C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071_EP_01_grf.mot (nr=1620 nc=19)
+[2022-05-27 05:47:14.884] [info] ExternalForce::Right Data source being set to TRAIL_071_EP_01_grf.mot
+[2022-05-27 05:47:14.885] [info] ExternalForce::Left Data source being set to TRAIL_071_EP_01_grf.mot
+[2022-05-27 05:47:14.972] [info] Storage: read data file = C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\TRAIL_071_EP_01_grf.mot (nr=1620 nc=19)
+[2022-05-27 05:47:14.994] [info] ExternalForce::Right Data source being set to TRAIL_071_EP_01_grf.mot
+[2022-05-27 05:47:14.994] [info] ExternalForce::Left Data source being set to TRAIL_071_EP_01_grf.mot
+[2022-05-27 05:47:16.007] [cout] [info] time = 0.124999 Performance = 4640.02 Constraint violation = 1.74697e-10
+[2022-05-27 05:47:16.010] [info] Bounds for 'addbrev_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'addlong_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'addmagDist_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'addmagIsch_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'addmagMid_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'addmagProx_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'bflh140_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'bfsh140_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'edl_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'ehl_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'fdl_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'fhl_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'gaslat140_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'gasmed_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmax1_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmax2_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmax3_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmed1_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmed2_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmed3_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmin1_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmin2_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmin3_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'grac_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'iliacus_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'perbrev_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'perlong_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'piri_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'psoas_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'recfem_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'sart_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'semimem_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'semiten_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'soleus_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'tfl_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'tibant_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'tibpost_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'vasint_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'vaslat140_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'vasmed_r': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'addbrev_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'addlong_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'addmagDist_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'addmagIsch_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'addmagMid_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'addmagProx_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'bflh140_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'bfsh140_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'edl_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'ehl_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'fdl_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'fhl_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'gaslat140_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'gasmed_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmax1_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmax2_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmax3_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmed1_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmed2_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmed3_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmin1_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmin2_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'glmin3_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'grac_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'iliacus_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'perbrev_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'perlong_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'piri_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'psoas_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'recfem_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'sart_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'semimem_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'semiten_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'soleus_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'tfl_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'tibant_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'tibpost_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'vasint_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'vaslat140_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'vasmed_l': 0.01 to 1.0.
+[2022-05-27 05:47:16.010] [info] Bounds for 'FX': -inf to inf.
+[2022-05-27 05:47:16.010] [info] Bounds for 'FY': -inf to inf.
+[2022-05-27 05:47:16.010] [info] Bounds for 'FZ': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'MX': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'MY': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'MZ': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_hip_flexion_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_hip_adduction_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_hip_rotation_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_knee_angle_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_subtalar_angle_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_ankle_angle_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_hip_flexion_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_hip_adduction_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_hip_rotation_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_knee_angle_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_subtalar_angle_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'reserve_ankle_angle_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'lumbar_ext': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'lumbar_bend': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'lumbar_rot': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'shoulder_flex_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'shoulder_add_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'shoulder_rot_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'elbow_flex_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'pro_sup_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'wrist_flex_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'wrist_dev_r': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'shoulder_flex_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'shoulder_add_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'shoulder_rot_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'elbow_flex_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'pro_sup_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'wrist_flex_l': -inf to inf.
+[2022-05-27 05:47:16.011] [info] Bounds for 'wrist_dev_l': -inf to inf.
+[2022-05-27 05:47:16.363] [cout] [info] time = 0.129999 Performance = 3562.58 Constraint violation = 2.18026e-09
+[2022-05-27 05:47:16.717] [cout] [info] time = 0.134999 Performance = 2486.31 Constraint violation = 1.98469e-09
+[2022-05-27 05:47:17.053] [cout] [info] time = 0.139999 Performance = 1581.25 Constraint violation = 5.40406e-10
+[2022-05-27 05:47:17.434] [cout] [info] time = 0.144999 Performance = 935.432 Constraint violation = 2.59882e-10
+[2022-05-27 05:47:17.797] [cout] [info] time = 0.149999 Performance = 544.576 Constraint violation = 4.69619e-10
+[2022-05-27 05:47:18.165] [cout] [info] time = 0.154999 Performance = 349.101 Constraint violation = 4.93826e-11
+[2022-05-27 05:47:18.528] [cout] [info] time = 0.159999 Performance = 286.007 Constraint violation = 9.30875e-10
+[2022-05-27 05:47:18.868] [cout] [info] time = 0.164999 Performance = 308.225 Constraint violation = 7.13807e-11
+[2022-05-27 05:47:19.182] [cout] [info] time = 0.169999 Performance = 396.32 Constraint violation = 1.45915e-10
+[2022-05-27 05:47:19.576] [cout] [info] time = 0.174999 Performance = 533.123 Constraint violation = 4.61476e-10
+[2022-05-27 05:47:19.959] [cout] [info] time = 0.179999 Performance = 679.619 Constraint violation = 4.10185e-10
+[2022-05-27 05:47:20.328] [cout] [info] time = 0.184999 Performance = 786.313 Constraint violation = 2.79169e-10
+[2022-05-27 05:47:20.722] [cout] [info] time = 0.189999 Performance = 810.371 Constraint violation = 1.46644e-09
+[2022-05-27 05:47:21.066] [cout] [info] time = 0.194999 Performance = 746.784 Constraint violation = 8.59835e-10
+[2022-05-27 05:47:21.453] [cout] [info] time = 0.199999 Performance = 622.53 Constraint violation = 1.66336e-09
+[2022-05-27 05:47:21.859] [cout] [info] time = 0.204999 Performance = 483.303 Constraint violation = 2.66652e-09
+[2022-05-27 05:47:22.191] [cout] [info] time = 0.209999 Performance = 367.123 Constraint violation = 2.78702e-10
+[2022-05-27 05:47:22.571] [cout] [info] time = 0.214999 Performance = 293.417 Constraint violation = 2.32814e-10
+[2022-05-27 05:47:22.912] [cout] [info] time = 0.219999 Performance = 260.225 Constraint violation = 2.94059e-11
+[2022-05-27 05:47:23.286] [cout] [info] time = 0.224999 Performance = 251.941 Constraint violation = 1.8372e-10
+[2022-05-27 05:47:23.704] [cout] [info] time = 0.229999 Performance = 252.338 Constraint violation = 2.18719e-10
+[2022-05-27 05:47:24.035] [cout] [info] time = 0.234999 Performance = 251.477 Constraint violation = 7.1713e-11
+[2022-05-27 05:47:24.418] [cout] [info] time = 0.239999 Performance = 248.28 Constraint violation = 2.91533e-11
+[2022-05-27 05:47:24.786] [cout] [info] time = 0.244999 Performance = 248.3 Constraint violation = 8.37078e-11
+[2022-05-27 05:47:25.087] [cout] [info] time = 0.249999 Performance = 257.508 Constraint violation = 1.70926e-11
+[2022-05-27 05:47:25.465] [cout] [info] time = 0.254998 Performance = 283.892 Constraint violation = 2.56914e-10
+[2022-05-27 05:47:25.851] [cout] [info] time = 0.259998 Performance = 333.936 Constraint violation = 7.94698e-12
+[2022-05-27 05:47:26.159] [cout] [info] time = 0.264998 Performance = 413.742 Constraint violation = 2.95215e-10
+[2022-05-27 05:47:26.548] [cout] [info] time = 0.269998 Performance = 527.97 Constraint violation = 3.31406e-10
+[2022-05-27 05:47:26.919] [cout] [info] time = 0.274998 Performance = 670.958 Constraint violation = 1.36513e-10
+[2022-05-27 05:47:27.222] [cout] [info] time = 0.279998 Performance = 835.081 Constraint violation = 3.04214e-10
+[2022-05-27 05:47:27.597] [cout] [info] time = 0.284998 Performance = 1005.33 Constraint violation = 1.36773e-10
+[2022-05-27 05:47:27.944] [cout] [info] time = 0.289998 Performance = 1159.18 Constraint violation = 1.48313e-10
+[2022-05-27 05:47:28.272] [cout] [info] time = 0.294998 Performance = 1274.32 Constraint violation = 9.89077e-10
+[2022-05-27 05:47:28.680] [cout] [info] time = 0.299998 Performance = 1330.45 Constraint violation = 3.99383e-10
+[2022-05-27 05:47:29.028] [cout] [info] time = 0.304998 Performance = 1315.05 Constraint violation = 4.16356e-09
+[2022-05-27 05:47:29.384] [cout] [info] time = 0.309998 Performance = 1229.02 Constraint violation = 2.47776e-10
+[2022-05-27 05:47:29.811] [cout] [info] time = 0.314998 Performance = 1082.38 Constraint violation = 2.46701e-09
+[2022-05-27 05:47:30.135] [cout] [info] time = 0.319998 Performance = 897.041 Constraint violation = 7.2695e-10
+[2022-05-27 05:47:30.504] [cout] [info] time = 0.324998 Performance = 699.421 Constraint violation = 7.17661e-12
+[2022-05-27 05:47:30.904] [cout] [info] time = 0.329998 Performance = 514.917 Constraint violation = 7.95169e-10
+[2022-05-27 05:47:31.215] [cout] [info] time = 0.334998 Performance = 362.494 Constraint violation = 2.86886e-10
+[2022-05-27 05:47:31.607] [cout] [info] time = 0.339998 Performance = 251.051 Constraint violation = 9.53782e-10
+[2022-05-27 05:47:32.004] [cout] [info] time = 0.344998 Performance = 179.336 Constraint violation = 3.55489e-10
+[2022-05-27 05:47:32.316] [cout] [info] time = 0.349998 Performance = 140.28 Constraint violation = 1.99040e-11
+[2022-05-27 05:47:32.754] [cout] [info] time = 0.354998 Performance = 124.112 Constraint violation = 5.50520e-11
+[2022-05-27 05:47:33.131] [cout] [info] time = 0.359998 Performance = 122.4 Constraint violation = 6.59811e-11
+[2022-05-27 05:47:33.463] [cout] [info] time = 0.364998 Performance = 130.65 Constraint violation = 4.99494e-12
+[2022-05-27 05:47:33.936] [cout] [info] time = 0.369998 Performance = 113.583 Constraint violation = 2.29441e-11
+[2022-05-27 05:47:34.269] [cout] [info] time = 0.374998 Performance = 161.314 Constraint violation = 4.47059e-11
+[2022-05-27 05:47:34.637] [cout] [info] time = 0.379998 Performance = 207.944 Constraint violation = 2.15098e-11
+[2022-05-27 05:47:35.070] [cout] [info] time = 0.384998 Performance = 246.315 Constraint violation = 2.26792e-10
+[2022-05-27 05:47:35.400] [cout] [info] time = 0.389998 Performance = 271.289 Constraint violation = 1.72516e-09
+[2022-05-27 05:47:35.813] [cout] [info] time = 0.394998 Performance = 283.021 Constraint violation = 2.38208e-10
+[2022-05-27 05:47:36.227] [cout] [info] time = 0.399998 Performance = 282.395 Constraint violation = 2.2521e-10
+[2022-05-27 05:47:36.591] [cout] [info] time = 0.404998 Performance = 271.508 Constraint violation = 1.12408e-10
+[2022-05-27 05:47:37.030] [cout] [info] time = 0.409998 Performance = 252.838 Constraint violation = 1.00489e-10
+[2022-05-27 05:47:37.372] [cout] [info] time = 0.414998 Performance = 229.489 Constraint violation = 2.61566e-10
+[2022-05-27 05:47:37.775] [cout] [info] time = 0.419998 Performance = 203.359 Constraint violation = 1.25336e-10
+[2022-05-27 05:47:38.183] [cout] [info] time = 0.424998 Performance = 175.912 Constraint violation = 4.84046e-11
+[2022-05-27 05:47:38.525] [cout] [info] time = 0.429998 Performance = 148.574 Constraint violation = 2.68245e-11
+[2022-05-27 05:47:38.967] [cout] [info] time = 0.434998 Performance = 123.323 Constraint violation = 2.83839e-11
+[2022-05-27 05:47:39.347] [cout] [info] time = 0.439998 Performance = 103.504 Constraint violation = 7.37687e-13
+[2022-05-27 05:47:39.726] [cout] [info] time = 0.444998 Performance = 94.4546 Constraint violation = 1.01845e-12
+[2022-05-27 05:47:40.163] [cout] [info] time = 0.449998 Performance = 105.012 Constraint violation = 2.9512e-11
+[2022-05-27 05:47:40.500] [cout] [info] time = 0.454998 Performance = 148.011 Constraint violation = 1.09124e-11
+[2022-05-27 05:47:40.888] [cout] [info] time = 0.459998 Performance = 240.678 Constraint violation = 5.54366e-11
+[2022-05-27 05:47:41.291] [cout] [info] time = 0.464998 Performance = 403.874 Constraint violation = 2.51044e-11
+[2022-05-27 05:47:41.643] [cout] [info] time = 0.469998 Performance = 663.821 Constraint violation = 4.24623e-10
+[2022-05-27 05:47:42.024] [cout] [info] time = 0.474998 Performance = 1049.91 Constraint violation = 2.02928e-10
+[2022-05-27 05:47:42.405] [cout] [info] time = 0.479998 Performance = 1592.61 Constraint violation = 4.98947e-09
+[2022-05-27 05:47:42.762] [cout] [info] time = 0.484998 Performance = 2320.93 Constraint violation = 2.09827e-10
+[2022-05-27 05:47:43.171] [cout] [info] time = 0.489998 Performance = 2465.72 Constraint violation = 9.66167e-10
+[2022-05-27 05:47:43.534] [cout] [info] time = 0.494998 Performance = 2301.85 Constraint violation = 1.01851e-08
+[2022-05-27 05:47:44.041] [cout] [info] time = 0.499998 Performance = 1878.42 Constraint violation = 2.08015e-10
+[2022-05-27 05:47:44.549] [cout] [info] time = 0.504998 Performance = 1358.93 Constraint violation = 3.94113e-09
+[2022-05-27 05:47:45.021] [cout] [info] time = 0.509998 Performance = 890.36 Constraint violation = 1.63253e-10
+[2022-05-27 05:47:45.530] [cout] [info] time = 0.514998 Performance = 559.7 Constraint violation = 1.15025e-10
+[2022-05-27 05:47:45.994] [cout] [info] time = 0.519998 Performance = 379.064 Constraint violation = 1.50600e-10
+[2022-05-27 05:47:46.483] [cout] [info] time = 0.524998 Performance = 320.013 Constraint violation = 1.13928e-09
+[2022-05-27 05:47:46.893] [cout] [info] time = 0.529998 Performance = 348.362 Constraint violation = 8.67475e-10
+[2022-05-27 05:47:47.353] [cout] [info] time = 0.534998 Performance = 446.211 Constraint violation = 2.0328e-09
+[2022-05-27 05:47:47.751] [cout] [info] time = 0.539998 Performance = 616.15 Constraint violation = 2.78055e-09
+[2022-05-27 05:47:48.219] [cout] [info] time = 0.544998 Performance = 827.519 Constraint violation = 1.82461e-09
+[2022-05-27 05:47:48.639] [cout] [info] time = 0.549998 Performance = 1018.95 Constraint violation = 4.9497e-10
+[2022-05-27 05:47:49.088] [cout] [info] time = 0.554998 Performance = 1127.76 Constraint violation = 9.14967e-10
+[2022-05-27 05:47:49.605] [cout] [info] time = 0.559998 Performance = 1118.93 Constraint violation = 7.40304e-09
+[2022-05-27 05:47:50.046] [cout] [info] time = 0.564998 Performance = 997.687 Constraint violation = 4.84111e-10
+[2022-05-27 05:47:50.570] [cout] [info] time = 0.569998 Performance = 807.191 Constraint violation = 8.14644e-09
+[2022-05-27 05:47:51.062] [cout] [info] time = 0.574998 Performance = 602.435 Constraint violation = 6.14099e-10
+[2022-05-27 05:47:51.628] [cout] [info] time = 0.579998 Performance = 426.161 Constraint violation = 4.64907e-10
+[2022-05-27 05:47:52.077] [cout] [info] time = 0.584998 Performance = 301.277 Constraint violation = 1.00387e-09
+[2022-05-27 05:47:52.538] [cout] [info] time = 0.589998 Performance = 232.716 Constraint violation = 5.74329e-10
+[2022-05-27 05:47:52.997] [cout] [info] time = 0.594998 Performance = 208.778 Constraint violation = 5.90733e-11
+[2022-05-27 05:47:53.427] [cout] [info] time = 0.599998 Performance = 215.77 Constraint violation = 1.85246e-11
+[2022-05-27 05:47:53.945] [cout] [info] time = 0.604998 Performance = 243.765 Constraint violation = 2.40629e-10
+[2022-05-27 05:47:54.418] [cout] [info] time = 0.609998 Performance = 288.394 Constraint violation = 5.01367e-10
+[2022-05-27 05:47:54.886] [cout] [info] time = 0.614998 Performance = 350.594 Constraint violation = 4.88517e-10
+[2022-05-27 05:47:55.329] [cout] [info] time = 0.619998 Performance = 433.57 Constraint violation = 1.63138e-10
+[2022-05-27 05:47:55.800] [cout] [info] time = 0.624998 Performance = 541.903 Constraint violation = 3.00597e-10
+[2022-05-27 05:47:56.166] [cout] [info] time = 0.629998 Performance = 678.069 Constraint violation = 2.44932e-10
+[2022-05-27 05:47:56.530] [cout] [info] time = 0.634998 Performance = 840.832 Constraint violation = 6.28785e-10
+[2022-05-27 05:47:56.915] [cout] [info] time = 0.639998 Performance = 1019.67 Constraint violation = 6.94518e-11
+[2022-05-27 05:47:57.234] [cout] [info] time = 0.644998 Performance = 1199.74 Constraint violation = 1.01523e-10
+[2022-05-27 05:47:57.608] [cout] [info] time = 0.649998 Performance = 1357.82 Constraint violation = 5.33335e-10
+[2022-05-27 05:47:58.044] [cout] [info] time = 0.654998 Performance = 1468.07 Constraint violation = 9.72871e-10
+[2022-05-27 05:47:58.403] [cout] [info] time = 0.659998 Performance = 1509.19 Constraint violation = 8.43998e-11
+[2022-05-27 05:47:58.819] [cout] [info] time = 0.664998 Performance = 1469.52 Constraint violation = 1.20500e-09
+[2022-05-27 05:47:59.168] [cout] [info] time = 0.669998 Performance = 1352.29 Constraint violation = 1.35246e-10
+[2022-05-27 05:47:59.532] [cout] [info] time = 0.674998 Performance = 1173.59 Constraint violation = 8.26964e-10
+[2022-05-27 05:47:59.913] [cout] [info] time = 0.679998 Performance = 959.328 Constraint violation = 2.42892e-10
+[2022-05-27 05:48:00.250] [cout] [info] time = 0.684998 Performance = 739.416 Constraint violation = 7.40055e-10
+[2022-05-27 05:48:00.635] [cout] [info] time = 0.689998 Performance = 539.747 Constraint violation = 2.70194e-11
+[2022-05-27 05:48:01.024] [cout] [info] time = 0.694998 Performance = 377.346 Constraint violation = 2.88732e-10
+[2022-05-27 05:48:01.343] [cout] [info] time = 0.699998 Performance = 258.422 Constraint violation = 1.25638e-12
+[2022-05-27 05:48:01.736] [cout] [info] time = 0.704998 Performance = 179.919 Constraint violation = 4.70414e-10
+[2022-05-27 05:48:02.096] [cout] [info] time = 0.709998 Performance = 134.359 Constraint violation = 1.65204e-10
+[2022-05-27 05:48:02.440] [cout] [info] time = 0.714998 Performance = 113.546 Constraint violation = 2.27333e-11
+[2022-05-27 05:48:02.868] [cout] [info] time = 0.719998 Performance = 109.739 Constraint violation = 2.71369e-12
+[2022-05-27 05:48:03.223] [cout] [info] time = 0.724998 Performance = 119.43 Constraint violation = 1.03199e-11
+[2022-05-27 05:48:03.592] [cout] [info] time = 0.729998 Performance = 116.846 Constraint violation = 2.59525e-11
+[2022-05-27 05:48:04.000] [cout] [info] time = 0.734998 Performance = 168.292 Constraint violation = 7.92697e-11
+[2022-05-27 05:48:04.333] [cout] [info] time = 0.739998 Performance = 214.196 Constraint violation = 7.67914e-11
+[2022-05-27 05:48:04.739] [cout] [info] time = 0.744998 Performance = 249.267 Constraint violation = 2.25242e-10
+[2022-05-27 05:48:05.133] [cout] [info] time = 0.749998 Performance = 270.011 Constraint violation = 1.61286e-10
+[2022-05-27 05:48:05.476] [cout] [info] time = 0.754997 Performance = 276.839 Constraint violation = 7.12755e-11
+[2022-05-27 05:48:05.917] [cout] [info] time = 0.759997 Performance = 271.43 Constraint violation = 7.85791e-11
+[2022-05-27 05:48:06.285] [cout] [info] time = 0.764997 Performance = 256.081 Constraint violation = 2.88667e-11
+[2022-05-27 05:48:06.673] [cout] [info] time = 0.769997 Performance = 232.991 Constraint violation = 3.76173e-10
+[2022-05-27 05:48:07.135] [cout] [info] time = 0.774997 Performance = 205.528 Constraint violation = 2.26373e-10
+[2022-05-27 05:48:07.468] [cout] [info] time = 0.779997 Performance = 175.998 Constraint violation = 5.46003e-11
+[2022-05-27 05:48:07.902] [cout] [info] time = 0.784997 Performance = 146.17 Constraint violation = 1.66922e-11
+[2022-05-27 05:48:08.273] [cout] [info] time = 0.789997 Performance = 117.515 Constraint violation = 4.09592e-12
+[2022-05-27 05:48:08.636] [cout] [info] time = 0.794997 Performance = 91.4218 Constraint violation = 2.73156e-11
+[2022-05-27 05:48:09.073] [cout] [info] time = 0.799997 Performance = 69.5011 Constraint violation = 8.43053e-13
+[2022-05-27 05:48:09.429] [cout] [info] time = 0.804997 Performance = 53.7743 Constraint violation = 3.00554e-12
+[2022-05-27 05:48:09.815] [cout] [info] time = 0.809997 Performance = 47.2884 Constraint violation = 2.19729e-12
+[2022-05-27 05:48:10.231] [cout] [info] time = 0.814997 Performance = 54.3271 Constraint violation = 3.07423e-12
+[2022-05-27 05:48:10.561] [cout] [info] time = 0.819997 Performance = 80.7567 Constraint violation = 7.51861e-12
+[2022-05-27 05:48:10.958] [cout] [info] time = 0.824997 Performance = 134.07 Constraint violation = 3.62096e-11
+[2022-05-27 05:48:11.333] [cout] [info] time = 0.829997 Performance = 224.074 Constraint violation = 3.1577e-12
+[2022-05-27 05:48:11.674] [cout] [info] time = 0.834997 Performance = 363.701 Constraint violation = 5.43535e-11
+[2022-05-27 05:48:12.097] [cout] [info] time = 0.839997 Performance = 568.561 Constraint violation = 5.82933e-10
+[2022-05-27 05:48:12.439] [cout] [info] time = 0.844997 Performance = 856.682 Constraint violation = 4.68256e-12
+[2022-05-27 05:48:12.781] [cout] [info] time = 0.849997 Performance = 1249.37 Constraint violation = 9.96397e-10
+[2022-05-27 05:48:13.218] [cout] [info] time = 0.854997 Performance = 1770.36 Constraint violation = 3.04461e-10
+[2022-05-27 05:48:13.542] [cout] [info] time = 0.859997 Performance = 2443.3 Constraint violation = 1.05114e-10
+[2022-05-27 05:48:13.942] [cout] [info] time = 0.864997 Performance = 3288.24 Constraint violation = 8.0853e-10
+[2022-05-27 05:48:13.945] [info] Printing results of investigation TRAIL_071_EP_01 to C:\Users\Owner\Documents\data\TRAIL Test Data\outputDatabase\TRAIL_071\Baseline\TRAIL_071_EP_01\so

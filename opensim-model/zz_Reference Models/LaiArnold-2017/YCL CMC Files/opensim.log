@@ -1,0 +1,181 @@
+[2022-06-18 04:09:30.885] [info] Updating Model file from 30000 to latest format...
+[2022-06-18 04:09:30.969] [info] Loaded model AS_SCALED_ModelZ7c_1xFom from file C:\Users\Owner\Documents\projects\lasem-trail-running\opensim-model\zz_Reference Models\LaiArnold-2017\YCL CMC Files\AS_SCALED_ModelZ7c_1xFom.osim
+[2022-06-18 04:09:30.970] [warning] Couldn't find file 'r_pelvis_Adrian.vtp'.
+[2022-06-18 04:09:30.970] [warning] Couldn't find file 'l_pelvis_Adrian.vtp'.
+[2022-06-18 04:09:30.972] [warning] Couldn't find file 'sacrum_Adrian.vtp'.
+[2022-06-18 04:09:30.972] [warning] Couldn't find file 'r_femur_Adrian.vtp'.
+[2022-06-18 04:09:30.972] [warning] Couldn't find file 'r_tibia_Adrian.vtp'.
+[2022-06-18 04:09:30.972] [warning] Couldn't find file 'r_fibula_Adrian.vtp'.
+[2022-06-18 04:09:30.973] [warning] Couldn't find file 'r_patella_Adrian.vtp'.
+[2022-06-18 04:09:30.973] [warning] Couldn't find file 'r_talus_Adrian.vtp'.
+[2022-06-18 04:09:30.973] [warning] Couldn't find file 'r_foot_Adrian.vtp'.
+[2022-06-18 04:09:30.973] [warning] Couldn't find file 'r_bofoot_Adrian.vtp'.
+[2022-06-18 04:09:30.973] [warning] Couldn't find file 'l_femur_Adrian.vtp'.
+[2022-06-18 04:09:30.973] [warning] Couldn't find file 'l_tibia_Adrian.vtp'.
+[2022-06-18 04:09:30.974] [warning] Couldn't find file 'l_fibula_Adrian.vtp'.
+[2022-06-18 04:09:30.974] [warning] Couldn't find file 'l_patella_Adrian.vtp'.
+[2022-06-18 04:09:30.974] [warning] Couldn't find file 'l_talus_Adrian.vtp'.
+[2022-06-18 04:09:30.974] [warning] Couldn't find file 'l_foot_Adrian.vtp'.
+[2022-06-18 04:09:30.974] [warning] Couldn't find file 'l_bofoot_Adrian.vtp'.
+[2022-06-18 04:09:30.974] [warning] Couldn't find file 'hat_spine_Adrian.vtp'.
+[2022-06-18 04:09:30.974] [warning] Couldn't find file 'hat_jaw_Adrian.vtp'.
+[2022-06-18 04:09:30.974] [warning] Couldn't find file 'hat_skull_Adrian.vtp'.
+[2022-06-18 04:09:30.975] [warning] Couldn't find file 'hat_ribs_scap_Adrian.vtp'.
+[2022-06-18 04:09:30.975] [warning] Couldn't find file 'humerus_rv_Adrian.vtp'.
+[2022-06-18 04:09:30.975] [warning] Couldn't find file 'ulna_rv_Adrian.vtp'.
+[2022-06-18 04:09:30.975] [warning] Couldn't find file 'radius_rv_Adrian.vtp'.
+[2022-06-18 04:09:30.975] [warning] Couldn't find file 'pisiform_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.976] [warning] Couldn't find file 'lunate_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.976] [warning] Couldn't find file 'scaphoid_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.976] [warning] Couldn't find file 'triquetrum_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.976] [warning] Couldn't find file 'hamate_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.976] [warning] Couldn't find file 'capitate_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.977] [warning] Couldn't find file 'trapezoid_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.977] [warning] Couldn't find file 'trapezium_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.977] [warning] Couldn't find file 'metacarpal2_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.978] [warning] Couldn't find file 'index_proximal_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.978] [warning] Couldn't find file 'index_medial_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.978] [warning] Couldn't find file 'index_distal_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.978] [warning] Couldn't find file 'metacarpal3_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.978] [warning] Couldn't find file 'middle_proximal_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.978] [warning] Couldn't find file 'middle_medial_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.979] [warning] Couldn't find file 'middle_distal_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.979] [warning] Couldn't find file 'metacarpal4_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.979] [warning] Couldn't find file 'ring_proximal_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.979] [warning] Couldn't find file 'ring_medial_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.979] [warning] Couldn't find file 'ring_distal_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.979] [warning] Couldn't find file 'metacarpal5_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.979] [warning] Couldn't find file 'little_proximal_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.979] [warning] Couldn't find file 'little_medial_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.979] [warning] Couldn't find file 'little_distal_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.980] [warning] Couldn't find file 'metacarpal1_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.980] [warning] Couldn't find file 'thumb_proximal_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.980] [warning] Couldn't find file 'thumb_distal_rvs_Adrian.vtp'.
+[2022-06-18 04:09:30.980] [warning] Couldn't find file 'humerus_lv_Adrian.vtp'.
+[2022-06-18 04:09:30.980] [warning] Couldn't find file 'ulna_lv_Adrian.vtp'.
+[2022-06-18 04:09:30.980] [warning] Couldn't find file 'radius_lv_Adrian.vtp'.
+[2022-06-18 04:09:30.981] [warning] Couldn't find file 'pisiform_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.981] [warning] Couldn't find file 'lunate_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.981] [warning] Couldn't find file 'scaphoid_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.981] [warning] Couldn't find file 'triquetrum_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.981] [warning] Couldn't find file 'hamate_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.981] [warning] Couldn't find file 'capitate_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.981] [warning] Couldn't find file 'trapezoid_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.981] [warning] Couldn't find file 'trapezium_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.981] [warning] Couldn't find file 'metacarpal2_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.982] [warning] Couldn't find file 'index_proximal_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.982] [warning] Couldn't find file 'index_medial_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.982] [warning] Couldn't find file 'index_distal_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.982] [warning] Couldn't find file 'metacarpal3_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.982] [warning] Couldn't find file 'middle_proximal_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.982] [warning] Couldn't find file 'middle_medial_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.982] [warning] Couldn't find file 'middle_distal_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.982] [warning] Couldn't find file 'metacarpal4_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.982] [warning] Couldn't find file 'ring_proximal_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.983] [warning] Couldn't find file 'ring_medial_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.983] [warning] Couldn't find file 'ring_distal_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.983] [warning] Couldn't find file 'metacarpal5_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.983] [warning] Couldn't find file 'little_proximal_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.983] [warning] Couldn't find file 'little_medial_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.983] [warning] Couldn't find file 'little_distal_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.983] [warning] Couldn't find file 'metacarpal1_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.983] [warning] Couldn't find file 'thumb_proximal_lvs_Adrian.vtp'.
+[2022-06-18 04:09:30.983] [warning] Couldn't find file 'thumb_distal_lvs_Adrian.vtp'.
+[2022-06-18 04:09:31.003] [warning] GeometryPath 'geometrypath' has subcomponents with duplicate name 'pathwrap'. The duplicate is being renamed to 'pathwrap_0'.
+[2022-06-18 04:09:31.004] [warning] GeometryPath 'geometrypath' has subcomponents with duplicate name 'pathwrap'. The duplicate is being renamed to 'pathwrap_0'.
+[2022-06-18 04:09:31.005] [warning] GeometryPath 'geometrypath' has subcomponents with duplicate name 'pathwrap'. The duplicate is being renamed to 'pathwrap_0'.
+[2022-06-18 04:09:31.006] [warning] GeometryPath 'geometrypath' has subcomponents with duplicate name 'pathwrap'. The duplicate is being renamed to 'pathwrap_0'.
+[2022-07-07 02:58:13.191] [info] Updating Model file from 30000 to latest format...
+[2022-07-07 02:58:13.434] [info] Loaded model AS_SCALED_ModelZ7c_1xFom from file C:\Users\Owner\Documents\projects\lasem-trail-running\opensim-model\zz_Reference Models\LaiArnold-2017\YCL CMC Files\AS_SCALED_ModelZ7c_1xFom.osim
+[2022-07-07 02:58:13.437] [warning] Couldn't find file 'r_pelvis_Adrian.vtp'.
+[2022-07-07 02:58:13.438] [warning] Couldn't find file 'l_pelvis_Adrian.vtp'.
+[2022-07-07 02:58:13.438] [warning] Couldn't find file 'sacrum_Adrian.vtp'.
+[2022-07-07 02:58:13.440] [warning] Couldn't find file 'r_femur_Adrian.vtp'.
+[2022-07-07 02:58:13.440] [warning] Couldn't find file 'r_tibia_Adrian.vtp'.
+[2022-07-07 02:58:13.441] [warning] Couldn't find file 'r_fibula_Adrian.vtp'.
+[2022-07-07 02:58:13.441] [warning] Couldn't find file 'r_patella_Adrian.vtp'.
+[2022-07-07 02:58:13.441] [warning] Couldn't find file 'r_talus_Adrian.vtp'.
+[2022-07-07 02:58:13.441] [warning] Couldn't find file 'r_foot_Adrian.vtp'.
+[2022-07-07 02:58:13.441] [warning] Couldn't find file 'r_bofoot_Adrian.vtp'.
+[2022-07-07 02:58:13.442] [warning] Couldn't find file 'l_femur_Adrian.vtp'.
+[2022-07-07 02:58:13.442] [warning] Couldn't find file 'l_tibia_Adrian.vtp'.
+[2022-07-07 02:58:13.442] [warning] Couldn't find file 'l_fibula_Adrian.vtp'.
+[2022-07-07 02:58:13.442] [warning] Couldn't find file 'l_patella_Adrian.vtp'.
+[2022-07-07 02:58:13.442] [warning] Couldn't find file 'l_talus_Adrian.vtp'.
+[2022-07-07 02:58:13.443] [warning] Couldn't find file 'l_foot_Adrian.vtp'.
+[2022-07-07 02:58:13.443] [warning] Couldn't find file 'l_bofoot_Adrian.vtp'.
+[2022-07-07 02:58:13.443] [warning] Couldn't find file 'hat_spine_Adrian.vtp'.
+[2022-07-07 02:58:13.444] [warning] Couldn't find file 'hat_jaw_Adrian.vtp'.
+[2022-07-07 02:58:13.444] [warning] Couldn't find file 'hat_skull_Adrian.vtp'.
+[2022-07-07 02:58:13.444] [warning] Couldn't find file 'hat_ribs_scap_Adrian.vtp'.
+[2022-07-07 02:58:13.444] [warning] Couldn't find file 'humerus_rv_Adrian.vtp'.
+[2022-07-07 02:58:13.445] [warning] Couldn't find file 'ulna_rv_Adrian.vtp'.
+[2022-07-07 02:58:13.445] [warning] Couldn't find file 'radius_rv_Adrian.vtp'.
+[2022-07-07 02:58:13.445] [warning] Couldn't find file 'pisiform_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.446] [warning] Couldn't find file 'lunate_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.446] [warning] Couldn't find file 'scaphoid_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.446] [warning] Couldn't find file 'triquetrum_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.446] [warning] Couldn't find file 'hamate_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.447] [warning] Couldn't find file 'capitate_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.447] [warning] Couldn't find file 'trapezoid_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.448] [warning] Couldn't find file 'trapezium_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.448] [warning] Couldn't find file 'metacarpal2_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.449] [warning] Couldn't find file 'index_proximal_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.449] [warning] Couldn't find file 'index_medial_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.449] [warning] Couldn't find file 'index_distal_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.449] [warning] Couldn't find file 'metacarpal3_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.450] [warning] Couldn't find file 'middle_proximal_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.450] [warning] Couldn't find file 'middle_medial_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.450] [warning] Couldn't find file 'middle_distal_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.451] [warning] Couldn't find file 'metacarpal4_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.451] [warning] Couldn't find file 'ring_proximal_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.451] [warning] Couldn't find file 'ring_medial_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.451] [warning] Couldn't find file 'ring_distal_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.452] [warning] Couldn't find file 'metacarpal5_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.452] [warning] Couldn't find file 'little_proximal_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.452] [warning] Couldn't find file 'little_medial_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.452] [warning] Couldn't find file 'little_distal_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.452] [warning] Couldn't find file 'metacarpal1_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.453] [warning] Couldn't find file 'thumb_proximal_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.453] [warning] Couldn't find file 'thumb_distal_rvs_Adrian.vtp'.
+[2022-07-07 02:58:13.453] [warning] Couldn't find file 'humerus_lv_Adrian.vtp'.
+[2022-07-07 02:58:13.454] [warning] Couldn't find file 'ulna_lv_Adrian.vtp'.
+[2022-07-07 02:58:13.454] [warning] Couldn't find file 'radius_lv_Adrian.vtp'.
+[2022-07-07 02:58:13.454] [warning] Couldn't find file 'pisiform_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.454] [warning] Couldn't find file 'lunate_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.455] [warning] Couldn't find file 'scaphoid_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.455] [warning] Couldn't find file 'triquetrum_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.455] [warning] Couldn't find file 'hamate_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.455] [warning] Couldn't find file 'capitate_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.455] [warning] Couldn't find file 'trapezoid_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.455] [warning] Couldn't find file 'trapezium_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.456] [warning] Couldn't find file 'metacarpal2_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.456] [warning] Couldn't find file 'index_proximal_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.456] [warning] Couldn't find file 'index_medial_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.456] [warning] Couldn't find file 'index_distal_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.456] [warning] Couldn't find file 'metacarpal3_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.456] [warning] Couldn't find file 'middle_proximal_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.457] [warning] Couldn't find file 'middle_medial_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.457] [warning] Couldn't find file 'middle_distal_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.457] [warning] Couldn't find file 'metacarpal4_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.457] [warning] Couldn't find file 'ring_proximal_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.458] [warning] Couldn't find file 'ring_medial_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.458] [warning] Couldn't find file 'ring_distal_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.458] [warning] Couldn't find file 'metacarpal5_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.458] [warning] Couldn't find file 'little_proximal_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.459] [warning] Couldn't find file 'little_medial_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.459] [warning] Couldn't find file 'little_distal_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.459] [warning] Couldn't find file 'metacarpal1_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.459] [warning] Couldn't find file 'thumb_proximal_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.460] [warning] Couldn't find file 'thumb_distal_lvs_Adrian.vtp'.
+[2022-07-07 02:58:13.492] [warning] GeometryPath 'geometrypath' has subcomponents with duplicate name 'pathwrap'. The duplicate is being renamed to 'pathwrap_0'.
+[2022-07-07 02:58:13.494] [warning] GeometryPath 'geometrypath' has subcomponents with duplicate name 'pathwrap'. The duplicate is being renamed to 'pathwrap_0'.
+[2022-07-07 02:58:13.495] [warning] GeometryPath 'geometrypath' has subcomponents with duplicate name 'pathwrap'. The duplicate is being renamed to 'pathwrap_0'.
+[2022-07-07 02:58:13.497] [warning] GeometryPath 'geometrypath' has subcomponents with duplicate name 'pathwrap'. The duplicate is being renamed to 'pathwrap_0'.
+[2022-07-07 06:02:23.510] [info] Loaded model model from file C:\Users\Owner\Documents\projects\force-moco\moco\force_stepdown_2d\plate.osim
+[2022-07-07 06:05:33.655] [info] Loaded model model from file C:\Users\Owner\Documents\projects\force-moco\moco\force_stepdown_2d\plate.osim
+[2022-07-07 06:07:59.307] [info] Loaded model model from file C:\Users\Owner\Documents\projects\force-moco\moco\force_stepdown_2d\plate.osim
+[2022-07-07 06:13:19.797] [info] Loaded model model from file C:\Users\Owner\Documents\projects\force-moco\moco\force_stepdown_2d\plate.osim
+[2022-07-07 06:14:15.493] [info] Loaded model model from file C:\Users\Owner\Documents\projects\force-moco\moco\force_stepdown_2d\plate.osim
+[2022-07-07 06:28:08.031] [info] Loaded model model from file C:\Users\Owner\Documents\projects\force-moco\moco\force_stepdown_2d\plate.osim
+[2022-07-07 06:29:19.799] [info] Loaded model 2D_gait from file C:\Users\Owner\Documents\projects\force-moco\moco\force_stepdown_2d\2D_gait.osim
