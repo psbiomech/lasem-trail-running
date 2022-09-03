@@ -47,84 +47,110 @@ def opensim_pipeline(meta, user, analyses):
     analyses = [a.casefold() for a in analyses]
     
     # run OpenSim for all valid trials
+    failedfiles = []
     for subj in meta:
+        
         for group in meta[subj]["trials"]:
             
-            # find the static trial for model scaling
-            modelfullpath = ""
-            modelfile = ""
-            for trial in meta[subj]["trials"][group]:
-                if meta[subj]["trials"][group][trial]["usedstatic"]:
-                    
-                    # load the OsimKey
-                    pklpath = meta[subj]["trials"][group][trial]["outpath"]
-                    pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
-                    with open(os.path.join(pklpath, pklfile),"rb") as fid: 
-                        osimkey = pk.load(fid)
-                        
-                    # create an OpenSim log folder
-                    logfolder = os.path.join(pklpath, user.triallogfolder)
-                    if not os.path.isdir(logfolder):
-                        os.makedirs(logfolder)
-                    
-                    # run the scale tool if requested
-                    if "scale" in analyses:
-                        run_opensim_scale(osimkey, user)
-                        analyses.remove("scale")
-                    
-                    # get the full model path
-                    modelfile = meta[subj]["trials"][group][trial]["osim"]
-                    modelfullpath = os.path.join(pklpath, modelfile)
-                    
+            # copy analyses list for subject
+            analyses0 = analyses.copy() #[ans.casefold() for ans in analyses]
             
-            # find dynamic trials and run requested analyses
+            # find the static trial for model scaling
             for trial in meta[subj]["trials"][group]:
+
+                # run the scale tool if the static trial is the trial to be
+                # used for scaling
+                if "scale" in analyses0:
+                    if meta[subj]["trials"][group][trial]["usedstatic"]:
+    
+                        try:
+                        
+                            # load the OsimKey
+                            pklpath = meta[subj]["trials"][group][trial]["outpath"]
+                            pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
+                            with open(os.path.join(pklpath, pklfile),"rb") as fid: 
+                                osimkey = pk.load(fid)
+                                
+                            # create an OpenSim log folder
+                            logfolder = os.path.join(pklpath, user.triallogfolder)
+                            if not os.path.isdir(logfolder):
+                                os.makedirs(logfolder)
+                            
+                            # run the scale tool
+                            run_opensim_scale(osimkey, user)
+                            
+                            # get the full model path
+                            modelfile = meta[subj]["trials"][group][trial]["osim"]
+                            modelfullpathfile = os.path.join(pklpath, modelfile)
+                            
+                            # copy the model into the subject root folder
+                            subjrootpath = os.path.join(user.rootpath, user.outfolder, subj)
+                            shutil.copy(modelfullpathfile, subjrootpath)                            
+                            
+                            # once a model is created we can stop finding valid
+                            # static trials
+                            analyses0.remove("scale")
+                            break
                 
-                
-                #****** FOR TESTING ONLY ******
-                trialre = re.compile("TRAIL_071_EP_01")
-                if not trialre.match(trial):
-                    print("%s ---> SKIP" % trial)
-                    continue
-                #******************************
+                        except:
+                            print("%s ---> ***FAILED***" % trial)
+                            failedfiles.append(trial) 
+            
+            # if scale was the only analysis, then go to next group
+            if not analyses0: continue
+            
+            # find dynamic trials, always copy model into folder and run the
+            # requested analyses
+            for trial in meta[subj]["trials"][group]:
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
 
-                    # load the OsimKey
-                    pklpath = meta[subj]["trials"][group][trial]["outpath"]
-                    pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
-                    with open(os.path.join(pklpath, pklfile),"rb") as fid: 
-                        osimkey = pk.load(fid)
-
-                    # create an OpenSim log folder
-                    logfolder = os.path.join(pklpath, user.triallogfolder)
-                    if not os.path.isdir(logfolder):
-                        os.makedirs(logfolder)
-                    
-                    # copy the model into the trial folder
-                    shutil.copy(modelfullpath, pklpath)
-                    
-                    # run the required analyses
-                    for ans in analyses:
+                    try:
                         
-                        # create output folder
-                        if not os.path.exists(os.path.join(pklpath, ans)): os.makedirs(os.path.join(pklpath, ans))
+                        # load the OsimKey
+                        pklpath = meta[subj]["trials"][group][trial]["outpath"]
+                        pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
+                        with open(os.path.join(pklpath, pklfile),"rb") as fid: 
+                            osimkey = pk.load(fid)
+    
+                        # create an OpenSim log folder
+                        logfolder = os.path.join(pklpath, user.triallogfolder)
+                        if not os.path.isdir(logfolder):
+                            os.makedirs(logfolder)
                         
-                        # analyses
-                        if ans == "ik":
-                            run_opensim_ik(osimkey, user)
-                        elif ans == "id":
-                            run_opensim_id(osimkey, user)
-                        elif ans == "so":
-                            run_opensim_so(osimkey, user)
-                        elif ans == "rra":
-                            run_opensim_rra(osimkey, user)
-                        elif ans == "cmc":
-                            run_opensim_cmc(osimkey, user)
-                        elif ans == "jr":
-                            run_opensim_jr(osimkey, user)
+                        # copy the model into the trial folder
+                        modelfile = meta[subj]["trials"][group][trial]["osim"]
+                        subjrootpathfile = os.path.join(user.rootpath, user.outfolder, subj, modelfile)
+                        shutil.copy(subjrootpathfile, pklpath)
+                        
+                        # run the required analyses
+                        for ans in analyses0:
                             
-    return None
+                            # skip scale
+                            if ans == "scale": continue
+                            
+                            # create output folder
+                            if not os.path.exists(os.path.join(pklpath, ans)): os.makedirs(os.path.join(pklpath, ans))
+                            
+                            # analyses
+                            if ans == "ik":
+                                run_opensim_ik(osimkey, user)
+                            elif ans == "id":
+                                run_opensim_id(osimkey, user)
+                            elif ans == "so":
+                                run_opensim_so(osimkey, user)
+                            elif ans == "rra":
+                                run_opensim_rra(osimkey, user)
+                            elif ans == "cmc":
+                                run_opensim_cmc(osimkey, user)
+                            elif ans == "jr":
+                                run_opensim_jr(osimkey, user)
+                                
+                    except:
+                        print("%s ---> ***FAILED***" % trial)
+                        failedfiles.append(trial)
+                            
+    return failedfiles
 
 
 
@@ -143,7 +169,7 @@ def run_opensim_scale(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
 
     print("\nCreating scaled model: %s" % subject)
     print("------------------------------------------------")
@@ -183,10 +209,12 @@ def run_opensim_scale(osimkey, user):
     modelscaler = tool.getModelScaler()
     modelscaler.setMarkerFileName(os.path.join(fpath, trial + "_markers.trc"))
     
-    # set time window
+    # set time window for scaling to 45%-55% of trial time
+    t0 = osimkey.events["time"][0] + (osimkey.events["time"][1] - osimkey.events["time"][0]) * 0.45
+    t1 = osimkey.events["time"][0] + (osimkey.events["time"][1] - osimkey.events["time"][0]) * 0.55
     twindow = opensim.ArrayDouble(0, 2)
-    twindow.set(0, 0.50)
-    twindow.set(1, 0.55)
+    twindow.set(0, t0)
+    twindow.set(1, t1)
     modelscaler.setTimeRange(twindow)
     
     # set output model file name
@@ -281,7 +309,7 @@ def run_opensim_scale(osimkey, user):
     except:
         print("---> ERROR: Scale failed. Skipping Scale for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_SCALE.log"))
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_SCALE.log"))
         print("------------------------------------------------\n")
     
     # ******************************    
@@ -304,9 +332,9 @@ def run_opensim_ik(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
 
-    print("Performing IK on trial: %s" % trial)
+    print("\nPerforming IK on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create an IK Tool from a generic setup file
@@ -357,7 +385,7 @@ def run_opensim_ik(osimkey, user):
     except:
         print("---> ERROR: IK failed. Skipping IK for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_IK.log")) 
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_IK.log")) 
         print("------------------------------------------------\n")
     
     # ******************************
@@ -380,9 +408,9 @@ def run_opensim_id(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
     
-    print("Performing ID on trial: %s" % trial)
+    print("\nPerforming ID on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create an ID Tool from a generic setup file
@@ -454,7 +482,7 @@ def run_opensim_id(osimkey, user):
     except:
         print("---> ERROR: ID failed. Skipping ID for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_ID.log")) 
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_ID.log")) 
         print("------------------------------------------------\n")
 
     # ******************************
@@ -477,9 +505,9 @@ def run_opensim_so(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
     
-    print("Performing SO on trial: %s" % trial)
+    print("\nPerforming SO on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create an generic AnalyzeTool from the template setup file (set the flag
@@ -608,7 +636,7 @@ def run_opensim_so(osimkey, user):
     except:
         print("---> ERROR: SO failed. Skipping SO for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_SO.log")) 
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_SO.log")) 
         print("------------------------------------------------\n")
 
     # ******************************
@@ -631,9 +659,9 @@ def run_opensim_rra(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
     
-    print("Performing RRA on trial: %s" % trial)
+    print("\nPerforming RRA on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create an RRA Tool from a generic setup file
@@ -755,7 +783,7 @@ def run_opensim_rra(osimkey, user):
         for i in range(user.rraiter):
             
             # clear log file
-            open("out.log", "w").close()
+            open(user.logfile, "w").close()
             
             # set tool name based on current iteration
             rraiter = "RRA_" + str(i + 1)
@@ -798,7 +826,7 @@ def run_opensim_rra(osimkey, user):
             except:
                 print("---> ERROR: RRA iteration %d failed. Skipping RRA for %s." % (i + 1, trial))
             else:
-                shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_" + rraiter + ".log"))                     
+                shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_" + rraiter + ".log"))                     
 
  
             # update the RRA model segment masses, print the new model and
@@ -837,9 +865,9 @@ def run_opensim_cmc(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
     
-    print("Performing CMC on trial: %s" % trial)
+    print("\nPerforming CMC on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create a CMC Tool from a generic setup file
@@ -1020,7 +1048,7 @@ def run_opensim_cmc(osimkey, user):
     except:
         print("---> ERROR: CMC failed. Skipping CMC for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_CMC.log"))
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_CMC.log"))
         print("------------------------------------------------\n")
     
     # ******************************
@@ -1043,9 +1071,9 @@ def run_opensim_jr(osimkey, user):
     trial = osimkey.trial
 
     # clear log file
-    open("out.log", "w").close()
+    open(user.logfile, "w").close()
     
-    print("Performing JR on trial: %s" % trial)
+    print("\nPerforming JR on trial: %s" % trial)
     print("------------------------------------------------")
     
     # create an generic AnalyzeTool from the template setup file (set the flag
@@ -1214,7 +1242,7 @@ def run_opensim_jr(osimkey, user):
     except:
         print("---> ERROR: JR failed. Skipping JR for %s." % trial)
     finally:
-        shutil.copyfile("out.log", os.path.join(fpath, user.triallogfolder, "out_JR.log")) 
+        shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_JR.log")) 
         print("------------------------------------------------\n")
 
     # ******************************

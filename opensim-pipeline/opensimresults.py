@@ -19,13 +19,14 @@ from scipy.interpolate import interp1d
 '''
 
 
+
 '''
 OsimResultsKey:
     Data storage class containing all OpenSim output data, raw and normalised
     to both BW and %BW*HT. Data is resample to the desired number of samples.
 '''
 class OsimResultsKey():
-    def __init__(self, osimkey, analyses, nsamp):
+    def __init__(self, osimkey, analyses, user, nsamp):
         self.subject = osimkey.subject
         self.trial = osimkey.trial
         self.age = osimkey.age
@@ -37,7 +38,7 @@ class OsimResultsKey():
         self.events = osimkey.events
         self.outpath = osimkey.outpath
         self.__get_results_raw(osimkey, analyses, nsamp)
-        self.__get_results_split(analyses, nsamp)
+        self.__get_results_split(osimkey, analyses, user, nsamp)
         return None
         
     def __get_results_raw(self, osimkey, analyses, nsamp):
@@ -52,7 +53,7 @@ class OsimResultsKey():
         filext["so"] = "_so_force.sto"
         filext["rra"] = []
         filext["cmc"] = []
-        filext["jr"] = []
+        filext["jr"] = "_jr_ReactionLoads.sto"
         
         # header rows
         # note: may differ from actual number of header rows as pandas skips
@@ -63,7 +64,7 @@ class OsimResultsKey():
         headnum["so"] = 10
         headnum["rra"] = []
         headnum["cmc"] = []
-        headnum["jr"] = []
+        headnum["jr"] = 9
        
         # get OpenSim data
         for ans in analyses:
@@ -90,40 +91,15 @@ class OsimResultsKey():
             
         return None
     
-    def __get_results_split(self, analyses, nsamp):
+    def __get_results_split(self, osimkey, analyses, user, nsamp):
         
         # initialise dict
         results = {}
         
-        # left leg flip columns (incl. time): R, L
-        flip = {}
-        flip["ik"] = [3, 4, 7, 25, 26]
-        flip["id"] = [3, 4, 7, 15, 16]
-        flip["so"] = []
-        flip["rra"] = []
-        flip["cmc"] = []
-        flip["jr"] = []  
-        
-        # foot columns (incl. time): R, L
-        columns = {}
-        columns["ik"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32], 
-                         [0, 1, 2, 3, 4, 5, 6, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 33, 34, 35, 36, 37, 38, 39]]
-        columns["id"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 14, 15, 16, 17, 20, 21, 22, 26, 28, 30, 32, 34, 36, 37], 
-                         [0, 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14, 15, 18, 19, 23, 24, 25, 27, 29, 31, 33, 35, 38, 39]]
-        columns["so"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90],
-                         [0, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 91, 92, 93, 94, 95, 96, 97]]
-        columns["rra"] = []
-        columns["cmc"] = []
-        columns["jr"] = []   
-        
-        # headers
-        headers = {}
-        headers["ik"] = ["time", "pelvis_tilt", "pelvis_list", "pelvis_rotation", "pelvis_tx", "pelvis_ty", "pelvis_tz", "hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", "knee_angle_beta", "ankle_angle", "subtalar_angle", "mtp_angle", "lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex", "arm_add", "arm_rot", "elbow_flex", "pro_sup", "wrist_flex", "wrist_dev"]
-        headers["id"] = ["time", "pelvis_tilt_moment", "pelvis_list_moment", "pelvis_rotation_moment", "pelvis_tx_force", "pelvis_ty_force", "pelvis_tz_force", "hip_flexion_moment", "hip_adduction_moment", "hip_rotation_moment", "lumbar_extension_moment", "lumbar_bending_moment", "lumbar_rotation_moment", "knee_angle_moment", "knee_angle_beta_force", "arm_flex_moment", "arm_add_moment", "arm_rot_moment", "ankle_angle_moment", "elbow_flex_moment", "subtalar_angle_moment", "pro_sup_moment", "mtp_angle_moment", "wrist_flex_moment", "wrist_dev_moment"]
-        headers["so"] = ["time", "addbrev", "addlong", "addmagDist", "addmagIsch", "addmagMid", "addmagProx", "bflh", "bfsh", "edl", "ehl", "fdl", "fhl", "gaslat", "gasmed", "glmax1", "glmax2", "glmax3", "glmed1", "glmed2", "glmed3", "glmin1", "glmin2", "glmin3", "grac", "iliacus", "perbrev", "perlong", "piri", "psoas", "recfem", "sart", "semimem", "semiten", "soleus", "tfl", "tibant", "tibpost", "vasint", "vaslat", "vasmed", "lumbar_ext", "lumbar_bend", "lumbar_rot", "shoulder_flex", "shoulder_add", "shoulder_rot", "elbow_flex", "pro_sup", "wrist_flex", "wrist_dev"]
-        headers["rra"] = []
-        headers["cmc"] = []
-        headers["jr"] = []       
+        # results processing parameters
+        flip = user.results_flip
+        columns = user.results_columns
+        headers = user.results_headers
         
         # get OpenSim data
         for ans in analyses:
@@ -138,17 +114,15 @@ class OsimResultsKey():
             for f, foot in enumerate(["r", "l"]):
                                 
                 # copy raw data
-                data0 = self.results["raw"][ans]["data"]
+                data0 = None
+                data0 = self.results["raw"][ans]["data"].copy()                
                 
-                # flip columns for left leg
-                if f == 2:
-                    data0[:, flip[ans]] = -1 * data0[:, flip[ans]]
-                    
-                # trim columns
-                data0 = data0[:, columns[ans][f]]
                 
                 # ###################################
-                # PROCESS EVENTS BASED ON TASK
+                # ADDITIONAL PROCESSING BASED ON TASK
+                #
+                # Includes left leg trial flipping, as the way this is done can
+                # be trial-dependent
                 
                 # match task and find time window for foot
                 
@@ -158,7 +132,11 @@ class OsimResultsKey():
 
                 
                 # run stride cycle on ipsilateral leg, stance on contralateral
-                if self.task.casefold() == "run_stridecycle":
+                elif self.task.casefold() == "run_stridecycle":
+                    
+                    # flip columns for left leg trials
+                    if f == 2:
+                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
                     
                     # time window depends on leg task
                     if self.events["leg_task"][f] == "run_stridecycle":
@@ -175,14 +153,37 @@ class OsimResultsKey():
                 
                 # run stance on both legs
                 elif self.task.casefold() == "run_stance":
+                    
+                    # flip columns for left leg trials
+                    if f == 2:
+                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
+                        
+                    # time window
                     e0 = self.events["labels"].index(foot.upper() + "FS")
                     e1 = self.events["labels"].index(foot.upper() + "FO")
                     t0 = self.events["time"][e0]
                     t1 = self.events["time"][e1]
                     
+                
+                # step down and pivot
+                elif self.task.casefold() == "sdp":
+                    
+                    # flip columns for left-foot-first left-turning trials
+                    if osimkey.events["labels"][0][0].casefold() == "l":
+                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)                   
+                    
+                    # time window
+                    e0 = 0
+                    e1 = 5
+                    t0 = self.events["time"][e0]
+                    t1 = self.events["time"][e1]                    
+
                     
                 #
                 # ###################################
+
+                # trim columns
+                data0 = data0[:, columns[ans][f]].copy()
                 
                 # trim rows (time window)
                 r00 = np.where(data0[:, 0] <= t0)[0]
@@ -206,8 +207,7 @@ class OsimResultsKey():
             
         return None        
         
-
-
+        
 
 '''
 -----------------------------------
@@ -220,16 +220,16 @@ class OsimResultsKey():
 opensim_results_batch_process(meta, analyses, nsamp):
     Batch process OpenSim results text files to OsimResultsKeys.
 '''
-def opensim_results_batch_process(meta, analyses, nsamp):
+def opensim_results_batch_process(meta, analyses, user, nsamp):
     
     # extract OpenSim data
     osimkey = {}
+    failedfiles = []
     for subj in meta:
     
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
-        print("\n")
         
         for group in meta[subj]["trials"]:
             
@@ -242,26 +242,31 @@ def opensim_results_batch_process(meta, analyses, nsamp):
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 if isstatic: continue
-            
-                print("Dynamic trial: %s" % trial)
-            
-                # load the trial OsimKey
-                c3dpath = meta[subj]["trials"][group][trial]["outpath"]
-                pkfile = os.path.join(c3dpath,trial + "_osimkey.pkl")
-                with open(pkfile,"rb") as fid:
-                    osimkey = pk.load(fid)
+
+                try:
+                            
+                    # load the trial OsimKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath, trial + "_osimkey.pkl")
+                    with open(pkfile, "rb") as fid:
+                        osimkey = pk.load(fid)
+                        
+                    # get the OpenSim results
+                    osimresultskey = OsimResultsKey(osimkey, analyses, user, nsamp)
                     
-                # get the OpenSim results
-                osimresultskey = OsimResultsKey(osimkey, analyses, nsamp)
-                
-                # save OsimResultsKey to file
-                with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"),"wb") as f:
-                    pk.dump(osimresultskey, f)
-                    
-    
+                    # save OsimResultsKey to file
+                    with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"), "wb") as f:
+                        pk.dump(osimresultskey, f)
+                                    
+                except:
+                    print("Dynamic trial: %s *** FAILED ***" % trial)
+                    failedfiles.append(trial)                    
+                else:
+                    print("Dynamic trial: %s" % trial)
+                          
     print("\n")                
     
-    return None
+    return failedfiles
     
     
 
@@ -278,12 +283,12 @@ def export_opensim_results(meta, user, analyses):
         
     # extract OpenSim data
     print("Collating data into lists...\n")
+    failedfiles = []
     for subj in meta:
     
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
-        print("\n")
                 
         for group in meta[subj]["trials"]:
             
@@ -297,56 +302,60 @@ def export_opensim_results(meta, user, analyses):
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 if isstatic: continue
             
-                print("Dynamic trial: %s" % trial)
-            
-                # load the trial OsimResultsKey
-                c3dpath = meta[subj]["trials"][group][trial]["outpath"]
-                pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
-                with open(pkfile,"rb") as fid:
-                    osimresultskey = pk.load(fid)
-                    
-                # trial task and condition
-                task = osimresultskey.task
-                condition = osimresultskey.condition
+                try:
                 
-                # foot
-                for f, foot in enumerate(["r","l"]):
-                    
-                    # leg task
-                    leg_task = osimresultskey.events["leg_task"][f]
-                    
-                    # analysis
-                    for ans in analyses:
+                    # load the trial OsimResultsKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
+                    with open(pkfile,"rb") as fid:
+                        osimresultskey = pk.load(fid)
                         
-                        # ignore scaling
-                        if ans.casefold() == "scale": continue
+                    # trial task
+                    task = user.results_task_for_output
                     
-                        # data array
-                        data = osimresultskey.results["split"][ans][foot]["data"]
-                        varheader = osimresultskey.results["split"][ans][foot]["headers"]
-                    
-                        # variable
-                        for v, variable in enumerate(varheader):
+                    # condition
+                    condition = osimresultskey.condition
+
+                    # foot
+                    for f, foot in enumerate(["r","l"]):
+                        
+                        # leg data window
+                        window = osimresultskey.events["leg_task"][f]
+                        
+                        # analysis
+                        for ans in analyses:
                             
-                            # ignore time
-                            if v == 0: continue
+                            # ignore scaling
+                            if ans.casefold() == "scale": continue
+                        
+                            # data array
+                            data = osimresultskey.results["split"][ans][foot]["data"]
+                            varheader = osimresultskey.results["split"][ans][foot]["headers"]
+                        
+                            # variable
+                            for v, variable in enumerate(varheader):
+                                
+                                # data for the variable (includes time)
+                                drow = data[:, v]
+    
+                                # create new line of data
+                                csvrow = [subj, trial, task, condition, window, foot, ans, variable] + drow.tolist()
+                                csvdata.append(csvrow)
+                
+                except:
+                    print("Dynamic trial: %s *** FAILED ***" % trial)
+                    failedfiles.append(trial)
+                else:
+                    print("Dynamic trial: %s" % trial)
 
-                            # data for the variable
-                            drow = data[:, v]
-
-                            # create new line of data
-                            csvrow = [subj, group, trial, task, condition, foot, leg_task, ans, variable] + drow.tolist()
-                            csvdata.append(csvrow)
-
-
-    # create empty dataframe
+    # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "group", "trial", "task", "condition", "foot", "leg_task", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "task", "condition", "window", "data_leg", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers
     print("\nWriting to CSV text file...")
-    csvfile = user.csvfileprefix + task + ".csv"
+    csvfile = user.csvfileprefix + ".csv"
     fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
     csvdf.to_csv(os.path.join(fpath,csvfile), index = False)
@@ -354,7 +363,7 @@ def export_opensim_results(meta, user, analyses):
     
     print("\n")
    
-    return csvdf
+    return failedfiles
 
 
 
