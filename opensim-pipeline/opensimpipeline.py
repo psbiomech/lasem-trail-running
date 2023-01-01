@@ -58,6 +58,10 @@ def opensim_pipeline(meta, user, analyses):
             # find the static trial for model scaling
             for trial in meta[subj]["trials"][group]:
 
+                #****** TEMP ******
+                #if not (trial == "TRAIL006_FAST01"): continue;
+                #******************                
+
                 # run the scale tool if the static trial is the trial to be
                 # used for scaling
                 if "scale" in analyses0:
@@ -102,6 +106,10 @@ def opensim_pipeline(meta, user, analyses):
             # find dynamic trials, always copy model into folder and run the
             # requested analyses
             for trial in meta[subj]["trials"][group]:
+
+                #****** TEMP ******
+                #if not (trial == "TRAIL006_FAST01"): continue;
+                #******************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
 

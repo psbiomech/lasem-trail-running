@@ -478,7 +478,7 @@ class TRAILSettings_RUN_ID(UserSettings):
         
         # OpenSim reference model
         self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\opensim-pipeline\opensim-models"
-        self.refmodelfile = "LASEM_TRAIL_ReferenceModel_Unclamped_InverseDynamics.osim"
+        self.refmodelfile = "LASEM_TRAIL_ReferenceModel_InverseDynamics_Clamped.osim"
          
         # OpenSim additional files
         self.additionalfilesfolder = "RUN"

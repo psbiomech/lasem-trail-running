@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Copy C3D files from network drive to inputDatabase
+Copy C3D files from P:/ network drive to local TRAIL/inputDatabase.
+
+Note: must be logged into network drive.
 
 @author: Prasanna Sritharan
 """
@@ -12,7 +14,7 @@ import shutil
 
 
 
-pfolder = r"P:\PROJECT - SHE - ACLKNEE\TRAIL\Gait Lab and Biodex\Data-Biomech\3 FloorEvents_Added"
+pfolder = r"P:\PROJECT - OPV - TRAIL\TRAIL\Gait Lab and Biodex\Data-Biomech\4 Checked and ready_running only"
 cfolder = r"C:\Users\Owner\Documents\data\TRAIL\inputDatabase"
 
 

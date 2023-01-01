@@ -124,84 +124,94 @@ class OsimResultsKey():
                 # Includes left leg trial flipping, as the way this is done can
                 # be trial-dependent
                 
-                # match task and find time window for foot
-                
-                # static trial
-                if self.task.casefold() == "static":
-                    print("Static trial. Nothing to be done.")
-
-                
-                # run stride cycle on ipsilateral leg, stance on contralateral
-                elif self.task.casefold() == "run_stridecycle":
+                # foot not used (i.e. no events and no leg_task assigned)
+                if self.events["leg_task"] == "not_used":
                     
-                    # flip columns for left leg trials
-                    if f == 2:
-                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
+                    # store empty in dict
+                    results[ans][foot] = {}
+                    results[ans][foot]["data"] = []
+                    results[ans][foot]["headers"] = headers[ans]                    
+                
+                # foot is used (i.e. events exist and a leg_task is assigned)
+                # match task and find time window for foot based on leg_task
+                else:
                     
-                    # time window depends on leg task
-                    if self.events["leg_task"][f] == "run_stridecycle":
-                        e0 = self.events["labels"].index(foot.upper() + "FS")
-                        e1 = e0 + 4
-                        t0 = self.events["time"][e0]
-                        t1 = self.events["time"][e1]
-                    else:
+                    # static trial
+                    if self.task.casefold() == "static":
+                        print("Static trial. Nothing to be done.")
+    
+                    
+                    # run stride cycle on ipsilateral leg, stance on contralateral
+                    elif self.task.casefold() == "run_stridecycle":
+                        
+                        # flip columns for left leg trials
+                        if f == 2:
+                            data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
+                        
+                        # time window depends on leg task
+                        if self.events["leg_task"][f] == "run_stridecycle":
+                            e0 = self.events["labels"].index(foot.upper() + "FS")
+                            e1 = e0 + 4
+                            t0 = self.events["time"][e0]
+                            t1 = self.events["time"][e1]
+                        else:
+                            e0 = self.events["labels"].index(foot.upper() + "FS")
+                            e1 = self.events["labels"].index(foot.upper() + "FO")
+                            t0 = self.events["time"][e0]
+                            t1 = self.events["time"][e1]                        
+                    
+                    
+                    # run stance on both legs
+                    elif self.task.casefold() == "run_stance":
+                        
+                        # flip columns for left leg trials
+                        if f == 2:
+                            data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
+                            
+                        # time window
                         e0 = self.events["labels"].index(foot.upper() + "FS")
                         e1 = self.events["labels"].index(foot.upper() + "FO")
                         t0 = self.events["time"][e0]
-                        t1 = self.events["time"][e1]                        
-                
-                
-                # run stance on both legs
-                elif self.task.casefold() == "run_stance":
-                    
-                    # flip columns for left leg trials
-                    if f == 2:
-                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
+                        t1 = self.events["time"][e1]
                         
-                    # time window
-                    e0 = self.events["labels"].index(foot.upper() + "FS")
-                    e1 = self.events["labels"].index(foot.upper() + "FO")
-                    t0 = self.events["time"][e0]
-                    t1 = self.events["time"][e1]
                     
-                
-                # step down and pivot
-                elif self.task.casefold() == "sdp":
+                    # step down and pivot
+                    elif self.task.casefold() == "sdp":
+                        
+                        # flip columns for left-foot-first left-turning trials
+                        if osimkey.events["labels"][0][0].casefold() == "l":
+                            data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)                   
+                        
+                        # time window
+                        e0 = 0
+                        e1 = 5
+                        t0 = self.events["time"][e0]
+                        t1 = self.events["time"][e1]                    
+    
+                        
+                    #
+                    # ###################################
+    
+                    # trim columns
+                    data0 = data0[:, columns[ans][f]].copy()
                     
-                    # flip columns for left-foot-first left-turning trials
-                    if osimkey.events["labels"][0][0].casefold() == "l":
-                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)                   
+                    # trim rows (time window)
+                    r00 = np.where(data0[:, 0] <= t0)[0]
+                    if r00.size == 0:
+                        r0 = 0
+                    else:
+                        r0 = r00[-1]
+                    r1 = np.where(data0[:, 0] <= t1)[0][-1]
+                    data1 = data0[r0:r1 + 1, :]
                     
-                    # time window
-                    e0 = 0
-                    e1 = 5
-                    t0 = self.events["time"][e0]
-                    t1 = self.events["time"][e1]                    
-
-                    
-                #
-                # ###################################
-
-                # trim columns
-                data0 = data0[:, columns[ans][f]].copy()
-                
-                # trim rows (time window)
-                r00 = np.where(data0[:, 0] <= t0)[0]
-                if r00.size == 0:
-                    r0 = 0
-                else:
-                    r0 = r00[-1]
-                r1 = np.where(data0[:, 0] <= t1)[0][-1]
-                data1 = data0[r0:r1 + 1, :]
-                
-                # resample data, currently uses simple 1D interpolation but
-                # need to find a package that emulates Matlab's resample()
-                data = resample1d(data1, nsamp)
-                            
-                # store in dict
-                results[ans][foot] = {}
-                results[ans][foot]["data"] = data
-                results[ans][foot]["headers"] = headers[ans]
+                    # resample data, currently uses simple 1D interpolation but
+                    # need to find a package that emulates Matlab's resample()
+                    data = resample1d(data1, nsamp)
+                                
+                    # store in dict
+                    results[ans][foot] = {}
+                    results[ans][foot]["data"] = data
+                    results[ans][foot]["headers"] = headers[ans]
         
         self.results["split"] = results        
             

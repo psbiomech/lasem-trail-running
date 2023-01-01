@@ -16,6 +16,7 @@ import os
 
 
 
+
 '''
 -----------------------------------
 ------------- CLASSES -------------
@@ -127,7 +128,9 @@ class TrialKey():
             # full stride cycle is available on each leg, less then 7 events
             # assume stance on contralateral leg)
             fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
-            if len(events["labels"]) < 7:
+            if len(events["labels"]) == 3:
+                fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][1]
+            elif len(events["labels"]) < 7:
                 fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][2]
             else:
                 fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][3]                        
@@ -144,7 +147,12 @@ class TrialKey():
             #   col1: right foot
             #   col2: left foot
             events["fp_sequence"] = [[0, 0]]
-            if len(events["labels"]) < 7:
+            if len(events["labels"]) == 3:
+                if events["window_labels"][0][0] == "R":
+                    events["fp_sequence"] = np.array([[4, 0], [0, 0]])
+                else:
+                    events["fp_sequence"] = np.array([[0, 4], [0, 0]])            
+            elif len(events["labels"]) < 7:
                 if events["window_labels"][0][0] == "R":
                     events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3], [0, 0]])
                 else:
@@ -156,7 +164,12 @@ class TrialKey():
                     events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0], [0, 0], [0, 0], [0, 0]])                
 
             # leg task is stride cycle on ipsilateral, stance on contralateral
-            if len(events["labels"]) < 7:
+            if len(events["labels"]) == 3:
+                if events["window_labels"][0][0] == "R":
+                    events["leg_task"] = ["run_stridecycle", "not_used"]
+                else:
+                    events["leg_task"] = ["not_used", "run_stridecycle"]                
+            elif len(events["labels"]) < 7:
                 if events["window_labels"][0][0] == "R":
                     events["leg_task"] = ["run_stridecycle", "run_stance"]
                 else:
@@ -166,7 +179,12 @@ class TrialKey():
             
             # last event index (0-based) for OpenSim analyses that require
             # kinetics (e.g., ID, SO, RRA and CMC)
-            events["opensim_last_event_idx"] = 4
+            if len(events["labels"]) == 3:
+                events["opensim_last_event_idx"] = 2
+            elif len(events["labels"]) < 7:
+                events["opensim_last_event_idx"] = 4
+            else:
+                events["opensim_last_event_idx"] = 6
             
         # run stance phase only, both legs
         elif task.casefold().startswith("run_stance"):
@@ -646,6 +664,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             mass = 0.0
             osimkey = {}
             for trial in meta[subj]["trials"][group]:                
+
+                #****** TEMP ******
+                #if not (trial == "TRAIL006_FAST01"): continue;
+                #******************
                 
                 # ignore dynamic trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
@@ -681,7 +703,11 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
             
             # process dynamic C3D files
             for trial in  meta[subj]["trials"][group]:
-                    
+                
+                #****** TEMP ******
+                #if not (trial == "TRAIL006_FAST01"): continue;
+                #******************
+                
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 if isstatic: continue
@@ -699,7 +725,8 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                     c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass, model)   
                 except:
                     print("*** FAILED ***")    
-                    failedfiles.append(c3dfile)
+                    failedfiles.append(c3dfile)     
+                    raise
 
             #
             # ###################################                    
