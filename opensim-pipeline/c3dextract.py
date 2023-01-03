@@ -117,7 +117,7 @@ class TrialKey():
             # kinetics (e.g., ID, SO, RRA and CMC)
             events["opensim_last_event_idx"] = -1
             
-        # run full stride cycle
+        # run full stride cycle, both legs
         elif task.casefold().startswith("run_stridecycle"):
             
             # some trials will have 2 full stride cycles, some will only have
@@ -635,15 +635,19 @@ class OpenSimKey():
 
 
 '''
-c3d_batch_process(user, meta, lab, xdir, usermass):
+c3d_batch_process(user, meta, lab, xdir, usermass, restart):
     Batch processing for C3D data extract, and OpenSim input file write,
-    obtains mass from used static trial in each group if mass = -1.
+    obtains mass from used static trial in each group if mass = -1. Set restart
+    if process stops for any reason by setting the subject code as string, e.g.
+    "TRAIL_113" otherwise set to -1.
 '''
-def c3d_batch_process(user, meta, lab, xdir, usermass):
+def c3d_batch_process(user, meta, lab, xdir, usermass, restart):
+
 
     # extract C3D data for OpenSim
     print("\n")
     failedfiles = []
+    startflag = 0
     for subj in meta:
         
         print("\n")
@@ -651,6 +655,14 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
         print("\n")
+
+        # skip to restart participant
+        if (startflag == 0) and (type(restart) == str):
+            if subj == restart:
+                startflag = 1;
+            else:
+                print("Skipping...\n")
+                continue
         
         for group in meta[subj]["trials"]:
             
@@ -726,7 +738,6 @@ def c3d_batch_process(user, meta, lab, xdir, usermass):
                 except:
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)     
-                    raise
 
             #
             # ###################################                    
