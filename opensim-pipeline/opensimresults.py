@@ -124,34 +124,37 @@ class OsimResultsKey():
                 # Includes left leg trial flipping, as the way this is done can
                 # be trial-dependent
                 
+                # static trial
+                if self.task.casefold() == "static":
+                    print("Static trial. Nothing to be done.")
+                    continue
+                
                 # foot not used (i.e. no events and no leg_task assigned)
-                if self.events["leg_task"] == "not_used":
+                elif self.events["leg_task"][f] == "not_used":
                     
                     # store empty in dict
                     results[ans][foot] = {}
-                    results[ans][foot]["data"] = []
-                    results[ans][foot]["headers"] = headers[ans]                    
+                    results[ans][foot]["data"] = np.zeros([nsamp, len(headers[ans])])
+                    results[ans][foot]["headers"] = headers[ans]
                 
                 # foot is used (i.e. events exist and a leg_task is assigned)
                 # match task and find time window for foot based on leg_task
                 else:
-                    
-                    # static trial
-                    if self.task.casefold() == "static":
-                        print("Static trial. Nothing to be done.")
-    
-                    
+                
                     # run stride cycle on ipsilateral leg, stance on contralateral
-                    elif self.task.casefold() == "run_stridecycle":
+                    if self.task.casefold() == "run_stridecycle":
                         
                         # flip columns for left leg trials
                         if f == 2:
                             data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
                         
-                        # time window depends on leg task
-                        if self.events["leg_task"][f] == "run_stridecycle":
+                        # time window depends on leg task and number of events   
+                        if self.events["leg_task"][f] == "stridecycle":
                             e0 = self.events["labels"].index(foot.upper() + "FS")
-                            e1 = e0 + 4
+                            if len(self.events["labels"]) == 3:
+                                e1 = e0 + 2
+                            else:
+                                e1 = e0 + 4
                             t0 = self.events["time"][e0]
                             t1 = self.events["time"][e1]
                         else:
@@ -248,6 +251,10 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
             
             # process dynamic trials only
             for trial in  meta[subj]["trials"][group]:                
+
+                #****** TESTING ******
+                #if not (trial == "TRAIL405_FAST04"): continue;
+                #*********************
                 
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
@@ -270,7 +277,8 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
                                     
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
-                    failedfiles.append(trial)                    
+                    failedfiles.append(trial)   
+
                 else:
                     print("Dynamic trial: %s" % trial)
                           
@@ -329,8 +337,8 @@ def export_opensim_results(meta, user, analyses):
                     # foot
                     for f, foot in enumerate(["r","l"]):
                         
-                        # leg data window
-                        window = osimresultskey.events["leg_task"][f]
+                        # leg data window, i.e. leg_task (terrible name)
+                        data_type = osimresultskey.events["leg_task"][f]
                         
                         # analysis
                         for ans in analyses:
@@ -349,7 +357,7 @@ def export_opensim_results(meta, user, analyses):
                                 drow = data[:, v]
     
                                 # create new line of data
-                                csvrow = [subj, trial, task, condition, window, foot, ans, variable] + drow.tolist()
+                                csvrow = [subj, trial, task, condition, data_type, foot, ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -360,7 +368,7 @@ def export_opensim_results(meta, user, analyses):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "task", "condition", "window", "data_leg", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "task", "condition", "data_type", "data_leg", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers

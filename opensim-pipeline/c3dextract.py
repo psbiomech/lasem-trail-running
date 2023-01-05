@@ -166,16 +166,16 @@ class TrialKey():
             # leg task is stride cycle on ipsilateral, stance on contralateral
             if len(events["labels"]) == 3:
                 if events["window_labels"][0][0] == "R":
-                    events["leg_task"] = ["run_stridecycle", "not_used"]
+                    events["leg_task"] = ["stridecycle", "not_used"]
                 else:
-                    events["leg_task"] = ["not_used", "run_stridecycle"]                
+                    events["leg_task"] = ["not_used", "stridecycle"]                
             elif len(events["labels"]) < 7:
                 if events["window_labels"][0][0] == "R":
-                    events["leg_task"] = ["run_stridecycle", "run_stance"]
+                    events["leg_task"] = ["stridecycle", "stance"]
                 else:
-                    events["leg_task"] = ["run_stance", "run_stridecycle"]
+                    events["leg_task"] = ["stance", "stridecycle"]
             else:
-                events["leg_task"] = ["run_stridecycle", "run_stridecycle"]              
+                events["leg_task"] = ["stridecycle", "stridecycle"]              
             
             # last event index (0-based) for OpenSim analyses that require
             # kinetics (e.g., ID, SO, RRA and CMC)
@@ -215,7 +215,7 @@ class TrialKey():
                 events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0]])
                 
             # leg task is same for both legs  (R, L)
-            events["leg_task"] = ["run_stance", "run_stance"]
+            events["leg_task"] = ["stance", "stance"]
             
             # last event index (0-based) for OpenSim analyses that require
             # kinetics (e.g., ID, SO, RRA and CMC)
@@ -677,9 +677,9 @@ def c3d_batch_process(user, meta, lab, xdir, usermass, restart):
             osimkey = {}
             for trial in meta[subj]["trials"][group]:                
 
-                #****** TEMP ******
+                #****** TESTING ******
                 #if not (trial == "TRAIL006_FAST01"): continue;
-                #******************
+                #*********************
                 
                 # ignore dynamic trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
@@ -716,9 +716,9 @@ def c3d_batch_process(user, meta, lab, xdir, usermass, restart):
             # process dynamic C3D files
             for trial in  meta[subj]["trials"][group]:
                 
-                #****** TEMP ******
+                #****** TESTING ******
                 #if not (trial == "TRAIL006_FAST01"): continue;
-                #******************
+                #*********************
                 
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
