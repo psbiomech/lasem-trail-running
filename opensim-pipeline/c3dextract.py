@@ -77,7 +77,7 @@ class TrialKey():
             # build events list and time
             foot = [f[0].upper() for f in c3dkey.meta["EVENT"]["CONTEXTS"]]
             elabels = [foot[i] + "F" + f.split()[1][0] for i, f in enumerate(c3dkey.meta["EVENT"]["LABELS"])]
-            etime = c3dkey.meta["EVENT"]["TIMES"][:,1]
+            etime = c3dkey.meta["EVENT"]["TIMES"][:, 1]
             
             # sort the events list and time as sometimes the C3D stores events
             # and times out of order in its meta data
@@ -85,8 +85,8 @@ class TrialKey():
             events["labels"] = [elabels[e] for e in sortidxs]
             events["time"] = [etime[e] for e in sortidxs]
                     
-        # relative time, normalise to first frame
-        events["time0"] = events["time"] - events["time"][0] #((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
+        # relative time, normalise to first frame in data (NOT the first event)
+        events["time0"] = events["time"] - ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
             
              
         # ###################################
@@ -103,7 +103,7 @@ class TrialKey():
             mass = calculate_subject_mass(c3dkey, static_fp_channel)
             self.mass = mass  # override default
             
-            # time window for model scaling (take 45%-55% of time)
+            # time window for model scaling (take 45%-55% window)
             events["window_time0"] = events["time0"][1] * np.array([0.45, 0.55])
             events["window_labels"] = ["STATIC0","STATIC1"]
            
@@ -678,7 +678,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass, restart):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                #if not (trial == "TRAIL006_FAST01"): continue;
+                if not (trial == "TRAIL296_EP02"): continue;
                 #*********************
                 
                 # ignore dynamic trials
@@ -717,7 +717,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass, restart):
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "TRAIL006_FAST01"): continue;
+                if not (trial == "TRAIL296_EP02"): continue;
                 #*********************
                 
                 # ignore static trials

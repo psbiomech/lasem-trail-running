@@ -30,11 +30,11 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL001_FAST04"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\TRAIL001\BASELINE"
+fprefix = "TRAIL296_EP02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\TRAIL296\BASELINE\TRAIL296_EP02"
 
 # OsimResultsKey
-pkfile = os.path.join(fpath, fprefix, fprefix + "_osimkey.pkl")
+pkfile = os.path.join(fpath, fprefix + "_osimkey.pkl")
 with open(pkfile, "rb") as fid: 
     osimkey1 = pk.load(fid)
  
@@ -45,11 +45,11 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL022_EP03"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\TRAIL022\BASELINE"
+fprefix = "TRAIL296_EP02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\TRAIL296\BASELINE\TRAIL296_EP02"
 
 # OsimResultsKey
-pkfile = os.path.join(fpath, fprefix, fprefix + "_trialkey.pkl")
+pkfile = os.path.join(fpath, fprefix + "_trialkey.pkl")
 with open(pkfile, "rb") as fid: 
     trialkey1 = pk.load(fid)    
     
@@ -59,8 +59,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL022_STATIC02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\TRAIL006\BASELINE\TRAIL006_STATIC02"
+fprefix = "TRAIL296_EP02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\TRAIL296\BASELINE\TRAIL296_EP02"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_c3dkey.pkl")
@@ -76,8 +76,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL405_FAST04"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\TRAIL405\BASELINE\TRAIL405_FAST04"
+fprefix = "TRAIL296_EP02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\TRAIL296\BASELINE\TRAIL296_EP02"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_opensim_results.pkl")
