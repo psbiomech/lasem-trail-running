@@ -253,7 +253,7 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                if not (trial == "TRAIL296_EP02"): continue;
+                #if not (trial == "TRAIL296_EP02"): continue;
                 #*********************
                 
                 # ignore static trials
@@ -314,7 +314,7 @@ def export_opensim_results(meta, user, analyses):
             print("%s" % "=" * 30)                      
             
             # process dynamic trials only
-            for trial in  meta[subj]["trials"][group]:                
+            for trial in meta[subj]["trials"][group]:                
                 
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]

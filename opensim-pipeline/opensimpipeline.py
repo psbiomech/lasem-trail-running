@@ -59,7 +59,7 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                if not (trial == "TRAIL296_EP02"): continue;
+                #if not (trial == "TRAIL296_EP02"): continue;
                 #*********************                
 
                 # run the scale tool if the static trial is the trial to be
@@ -108,7 +108,7 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                if not (trial == "TRAIL296_EP02"): continue;
+                #if not (trial == "TRAIL296_EP02"): continue;
                 #*********************
                 
                 if not meta[subj]["trials"][group][trial]["isstatic"]:

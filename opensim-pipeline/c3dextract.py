@@ -639,7 +639,7 @@ c3d_batch_process(user, meta, lab, xdir, usermass, restart):
     Batch processing for C3D data extract, and OpenSim input file write,
     obtains mass from used static trial in each group if mass = -1. Set restart
     if process stops for any reason by setting the subject code as string, e.g.
-    "TRAIL_113" otherwise set to -1.
+    "TRAIL113" otherwise set to -1.
 '''
 def c3d_batch_process(user, meta, lab, xdir, usermass, restart):
 
@@ -678,7 +678,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass, restart):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                if not (trial == "TRAIL296_EP02"): continue;
+                #if not (trial == "TRAIL296_EP02"): continue;
                 #*********************
                 
                 # ignore dynamic trials
@@ -717,7 +717,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass, restart):
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                if not (trial == "TRAIL296_EP02"): continue;
+                #if not (trial == "TRAIL296_EP02"): continue;
                 #*********************
                 
                 # ignore static trials
