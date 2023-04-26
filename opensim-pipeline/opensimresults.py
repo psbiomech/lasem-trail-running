@@ -289,10 +289,10 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
     
 
 '''
-export_opensim_results(meta, user, analyses):
+export_opensim_results(meta, user, analyses, csvfilesuffix):
     Collate OpenSim results into dataframes and export to text for Rstats.
 '''
-def export_opensim_results(meta, user, analyses):
+def export_opensim_results(meta, user, analyses, csvfilesuffix):
     
     # empty output list of lists
     # (create the output table as a list of lists, then convert to dataframe
@@ -373,7 +373,7 @@ def export_opensim_results(meta, user, analyses):
 
     # write data to file with headers
     print("\nWriting to CSV text file...")
-    csvfile = user.csvfileprefix + ".csv"
+    csvfile = user.csvfileprefix + csvfilesuffix + ".csv"
     fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
     csvdf.to_csv(os.path.join(fpath,csvfile), index = False)

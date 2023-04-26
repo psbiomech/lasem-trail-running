@@ -45,6 +45,9 @@ df = df0[(df0["variable"] == "knee_angle") | (df0["variable"] == "knee_angle_mom
 
 print("Generating plots for data check...")
 
+# task: run_stridecycle, run_stance
+task = "run_stance"
+
 # data leg: r (ignore left leg)
 leg = "r"
 
@@ -58,7 +61,7 @@ for c in ["ep", "fast"]:
         for v in ["knee_angle", "knee_angle_moment"]:
             
             print("\n----------------------------------------")
-            print("PARAMETERS: %s, %s, %s" % (c.upper(), d.upper(), v.upper()))
+            print("PARAMETERS: %s, %s, %s, %s" % (task.upper(), c.upper(), d.upper(), v.upper()))
             print("----------------------------------------")            
             
             # subjects
@@ -67,7 +70,7 @@ for c in ["ep", "fast"]:
                 print("%s" % subj, end = "")
                 
                 # output folder
-                figpath = os.path.join(outpath, subj)
+                figpath = os.path.join(outpath, task, subj)
                 if not os.path.isdir(figpath): os.makedirs(figpath)
                 
                 # get the participant data for the given parameter combination

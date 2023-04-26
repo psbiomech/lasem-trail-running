@@ -105,7 +105,7 @@ osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 101)
 print("\nOpenSim results converted to Pickle.\n")
 
 print("Exporting OpenSim results to CSV...\n")
-failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"])
+failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], "stridecycle")
 print("CSV export complete.\n")
 
 print("Plotting subject data for data checking...\n")

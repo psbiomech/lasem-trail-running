@@ -242,7 +242,7 @@ class TRAILSettings_RUN(UserSettings):
 
         # export data
         self.csvfolder = "csvfolder"
-        self.csvfileprefix = "trail_run_opensim_results_ikid"
+        self.csvfileprefix = "trail_opensim_results_ikid_"
         
         # meta data file
         self.metadatafile = self.project + ".pkl"        
