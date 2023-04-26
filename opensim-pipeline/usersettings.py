@@ -477,6 +477,8 @@ class TRAILSettings_RUN_ID(UserSettings):
         self.refsetupcmc = "LASEM_TRAIL_Setup_CMC.xml"
         
         # OpenSim reference model
+        #   LASEM_TRAIL_ReferenceModel_InverseDynamics_Final: 
+        #       knee/ankle rotations and adductions clamped, others unclamped
         self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\opensim-pipeline\opensim-models"
         self.refmodelfile = "LASEM_TRAIL_ReferenceModel_InverseDynamics_Final.osim"
          
