@@ -15,7 +15,7 @@ import shutil
 
 
 pfolder = r"P:\PROJECT - OPV - TRAIL\TRAIL\Gait Lab and Biodex\Data-Biomech\4 Checked and ready_running only"
-cfolder = r"C:\Users\Owner\Documents\data\TRAIL\inputDatabase"
+cfolder = r"C:\Users\Owner\Documents\data\TRAIL\inputdatabase"
 
 
 

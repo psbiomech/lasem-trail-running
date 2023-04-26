@@ -233,22 +233,22 @@ class TRAILSettings_RUN(UserSettings):
         # GENERAL SETTINGS
         
         self.rootpath = r"C:\Users\Owner\Documents\data\TRAIL"
-        self.infolder = ["inputdatabase"]
-        self.outfolder = "outputdatabase"
-        self.trialgroupfolders = [""]  
+        self.infolder = ["inputDatabase"]
+        self.outfolder = "outputDatabase"
+        self.trialgroupfolders = ["BASELINE"]  
         
         # project
         self.project = "TRAIL_RUN"
 
         # export data
         self.csvfolder = "csvfolder"
-        self.csvfileprefix = "trail_run_opensim_results_all_"
+        self.csvfileprefix = "trail_run_opensim_results_ikid"
         
         # meta data file
         self.metadatafile = self.project + ".pkl"        
         
         # file prefixes
-        self.subjprefix = "TRAIL_"
+        self.subjprefix = "TRAIL"
         
         # static trial info
         self.staticprefix = "STATIC"
@@ -266,7 +266,7 @@ class TRAILSettings_RUN(UserSettings):
                         
         # file name format regex pattern:
         #   (subjprefix)_(num code)_(trialprefix)_(alphanum code)
-        self.fnpat = "TRAIL_\d+_(\w+)_\w+"
+        self.fnpat = "TRAIL\d+_(EP|FAST|STATIC)\d+"
         self.tasktoknum = 1   # the token + 1 that represents the task name/type
         
         # output samples
@@ -275,7 +275,7 @@ class TRAILSettings_RUN(UserSettings):
         
         # ******************************
         # C3D DATA PROCESSING     
-       
+              
         # marker data filter (set cutoff to -1 if not required)
         self.marker_filter_butter_order = 4
         self.marker_filter_cutoff = -1
@@ -283,9 +283,9 @@ class TRAILSettings_RUN(UserSettings):
         # force plate data filter (set cutoff to -1 if not required)
         self.fp_filter_butter_order = 4
         self.fp_filter_cutoff = 15
-        self.fp_filter_threshold = 15
-        self.fp_smooth_transitions = True
-        self.fp_smooth_cop_fixed_offset = 25   # required but not currently used
+        self.fp_smooth_transitions = False
+        self.fp_filter_threshold = -1
+        self.fp_smooth_cop_fixed_offset = 0   # required but not currently used
         self.fp_expand_window = 20
         
         
@@ -513,7 +513,7 @@ class TRAILSettings_RUN_ID(UserSettings):
         self.use_rra_kinematics = True
         self.use_fast_target = True
         self.cmc_start_time_offset = -0.03  # to enable CMC initalisation
-        self.cmc_end_time_offset = 0.0
+        self.cmc_end_time_offset = 0.03
         
         # OpenSim JR parameters
         self.jr_joints = {}
