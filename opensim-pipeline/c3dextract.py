@@ -707,7 +707,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                if not (trial == "TRAIL004_FAST01"): continue;
+                #if not (trial == "TRAIL004_FAST01"): continue;
                 #*********************
                 
                 # ignore dynamic trials
@@ -747,7 +747,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                if not (trial == "TRAIL004_FAST01"): continue;
+                #if not (trial == "TRAIL004_FAST01"): continue;
                 #*********************
                 
                 # ignore static trials
