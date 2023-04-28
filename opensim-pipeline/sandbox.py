@@ -10,7 +10,7 @@ Sandbox
 
 import usersettings as uset
 
-user = uset.TRAILSettings_RUN_ID()
+user = uset.TRAILSettings_RUN()
 
 
 
@@ -30,8 +30,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL296_EP02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\TRAIL296\BASELINE\TRAIL296_EP02"
+fprefix = "TRAIL004_FAST01"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL004\BASELINE\TRAIL004_FAST01"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_osimkey.pkl")
@@ -45,8 +45,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL296_EP02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\TRAIL296\BASELINE\TRAIL296_EP02"
+fprefix = "TRAIL004_FAST01"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL004\BASELINE\TRAIL004_FAST01"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_trialkey.pkl")

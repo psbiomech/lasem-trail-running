@@ -127,9 +127,11 @@ class TrialKey():
                 # one, so in the latter case the contralateral leg will report
                 # stance only
                 
-                # calculate the time window of interest (assume 7 events means a 
-                # full stride cycle is available on each leg, less then 7 events
-                # assume stance on contralateral leg)
+                # Calculate the time window of interest based on number of 
+                # events in the C3D file:
+                #   =7 events: full stride cycle available on each leg
+                #   >3 & <7 events: assume stance on contralateral leg
+                #   =3 events: no data on contralateral leg
                 fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
                 if len(events["labels"]) == 3:
                     fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][1]
@@ -192,13 +194,20 @@ class TrialKey():
             # run stance phase only, both legs
             elif dataset.casefold().startswith("run_stance"):
                                             
-                # assume first pair of stance phases (IFS ---> CFO) is the required 
-                # window, thus will have one stance phase per leg.
+                # Assume first pair of stance phases (IFS ---> CFO) is the required 
+                # window, thus will have one stance phase per leg. However, if
+                # number of events is 3, then report stance for the ipsilateral
+                # leg only.
                 
-                # calculate the time window of interest (assume first FS is start
-                # of the trial time window, second FO is end of window)
+                # Calculate the time window of interest based on number of
+                # events in the C3D file:
+                #   >3 events: assume one stance phase available for each leg
+                #   =3 events: only ipsilateral leg
                 fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
-                foidx1 = np.where(np.char.find(events["labels"],"FO")>=0)[0][1]
+                if len(events["labels"]) == 3:
+                    foidx1 = np.where(np.char.find(events["labels"],"FO")>=0)[0][0]
+                else:
+                    foidx1 = np.where(np.char.find(events["labels"],"FO")>=0)[0][1]
                 events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
                 events["window_labels"] = events["labels"][fsidx0:foidx1 + 1]
                 
@@ -212,17 +221,33 @@ class TrialKey():
                 #   col1: right foot
                 #   col2: left foot
                 events["fp_sequence"] = [[0, 0]]
-                if events["window_labels"][0][0] == "R":
-                    events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3]])
+                if len(events["labels"]) == 3:
+                    if events["window_labels"][0][0] == "R":
+                        events["fp_sequence"] = np.array([[4, 0], [0, 0]])
+                    else:
+                        events["fp_sequence"] = np.array([[0, 4], [0, 0]]) 
                 else:
-                    events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0]])
+                    if events["window_labels"][0][0] == "R":
+                        events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3]])
+                    else:
+                        events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0]])
                     
-                # leg task is same for both legs  (R, L)
-                events["leg_task"] = ["stance", "stance"]
+                # Leg task is same for both legs  (R, L) unless only single
+                # leg data available
+                if len(events["labels"]) == 3:
+                    if events["window_labels"][0][0] == "R":
+                        events["leg_task"] = ["stance", "not_used"]
+                    else:
+                        events["leg_task"] = ["not_used", "stance"]  
+                else:
+                    events["leg_task"] = ["stance", "stance"]
                 
                 # last event index (0-based) for OpenSim analyses that require
                 # kinetics (e.g., ID, SO, RRA and CMC)
-                events["opensim_last_event_idx"] = 3
+                if len(events["labels"]) == 3:
+                    events["opensim_last_event_idx"] = 1
+                else:
+                    events["opensim_last_event_idx"] = 3
     
             # step down and pivot
             elif dataset.casefold().startswith("sdp"):
@@ -682,7 +707,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                #if not (trial == "TRAIL296_EP02"): continue;
+                if not (trial == "TRAIL004_FAST01"): continue;
                 #*********************
                 
                 # ignore dynamic trials
@@ -722,7 +747,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "TRAIL296_EP02"): continue;
+                if not (trial == "TRAIL004_FAST01"): continue;
                 #*********************
                 
                 # ignore static trials
@@ -743,7 +768,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)   
                 except:
                     print("*** FAILED ***")    
-                    failedfiles.append(c3dfile)   
+                    failedfiles.append(c3dfile)  
 
             #
             # ###################################                    

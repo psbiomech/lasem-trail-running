@@ -343,6 +343,9 @@ def export_opensim_results(meta, user, analyses, csvfilesuffix):
                         # leg data window, i.e. leg_task (terrible name)
                         data_type = osimresultskey.events["leg_task"][f]
                         
+                        # if the leg has no data, then ignore
+                        if data_type.casefold() == "not_used": continue
+                        
                         # analysis
                         for ans in analyses:
                             

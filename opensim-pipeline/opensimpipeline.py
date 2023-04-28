@@ -63,7 +63,7 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                #if not (trial == "TRAIL296_EP02"): continue;
+                if not (trial == "TRAIL004_STATIC05"): continue;
                 #*********************                
 
                 # Pickle file info
@@ -108,7 +108,6 @@ def opensim_pipeline(meta, user, analyses):
                         except:
                             print("%s ---> ***FAILED***" % trial)
                             failedfiles.append(trial) 
-                            raise
             
             # if scale was the only analysis, then go to next group
             if not analyses0: continue
@@ -122,7 +121,7 @@ def opensim_pipeline(meta, user, analyses):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                #if not (trial == "TRAIL296_EP02"): continue;
+                if not (trial == "TRAIL004_FAST01"): continue;
                 #*********************
                 
                 # Pickle file info
@@ -176,7 +175,6 @@ def opensim_pipeline(meta, user, analyses):
                     except:
                         print("%s ---> ***FAILED***" % trial)
                         failedfiles.append(trial)
-                        raise
                             
     return failedfiles
 
