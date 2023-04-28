@@ -31,10 +31,10 @@ import pickle as pk
 
 
 '''
-build_database(user, task):
+build_database(user, task, dataset):
     Build OpenSim output database from user, return metadata dict.
 '''
-def build_database(user, task):
+def build_database(user, task, dataset):
  
     # meta dict
     meta = {}
@@ -48,7 +48,7 @@ def build_database(user, task):
         subjlist = [os.path.split(f)[1] for f in folderlist]
         
         # build metadata dict
-        outpath = os.path.join(user.rootpath, user.outfolder)
+        outpath = os.path.join(user.rootpath, user.outfolder, task, dataset)
         fnpatobj = re.compile(user.fnpat) 
         for n, subj in enumerate(subjlist):        
             
@@ -71,10 +71,10 @@ def build_database(user, task):
                 # skip groups that don't have a least one static trial and at
                 # least one required dynamic file
                 hasstatic = any([user.staticprefix.casefold() in t.casefold() for t in triallist])
-                hasdynamic = any([any([c.casefold() in t.casefold() for c in user.trialprefixes[task]]) for t in triallist])
+                hasdynamic = any([any([c.casefold() in t.casefold() for c in user.trialprefixes[task][dataset]]) for t in triallist])
                 if not(hasstatic) or not(hasdynamic): continue
                 
-                # trials (for selected task only)
+                # trials (for selected dataset only)
                 for m, trial in enumerate(triallist):            
                     
                     trial = trial.upper()
@@ -85,19 +85,20 @@ def build_database(user, task):
                     
                     # build meta data dict
                     trialprefix = trialtoks.group(user.tasktoknum)                    
-                    if (trialprefix.casefold() == user.staticprefix.casefold()) or (trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()]]):                                   
+                    if (trialprefix.casefold() == user.staticprefix.casefold()) or (trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()][dataset.casefold()]]):                                   
                         meta[subj]["trials"][group][trial] = {}                    
                         meta[subj]["trials"][group][trial]["trial"] = trial
                         meta[subj]["trials"][group][trial]["c3dfile"] = trial + ".c3d"
                         meta[subj]["trials"][group][trial]["osim"] = subj.upper() + ".osim"
                         meta[subj]["trials"][group][trial]["inpath"] = os.path.split(groupfolderlist[m])[0]
                         meta[subj]["trials"][group][trial]["outpath"] = os.path.join(outpath, subj, group, trial)
-                        meta[subj]["trials"][group][trial]["task"] = task
+                        meta[subj]["trials"][group][trial]["task"] = task                        
+                        meta[subj]["trials"][group][trial]["dataset"] = dataset
                         meta[subj]["trials"][group][trial]["condition"] = trialprefix.casefold()
                         meta[subj]["trials"][group][trial]["isstatic"] = False
                         meta[subj]["trials"][group][trial]["usedstatic"] = False
                         if trialprefix.casefold() == user.staticprefix.casefold():
-                            meta[subj]["trials"][group][trial]["task"] = "static"
+                            meta[subj]["trials"][group][trial]["dataset"] = "static"
                             meta[subj]["trials"][group][trial]["condition"] = "static"
                             meta[subj]["trials"][group][trial]["isstatic"] = True
                                                    

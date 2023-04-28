@@ -34,6 +34,7 @@ class OsimResultsKey():
         self.model = osimkey.model
         self.lab = osimkey.lab
         self.task = osimkey.task
+        self.dataset = osimkey.dataset
         self.condition = osimkey.condition
         self.events = osimkey.events
         self.outpath = osimkey.outpath
@@ -119,77 +120,80 @@ class OsimResultsKey():
                 
                 
                 # ###################################
-                # ADDITIONAL PROCESSING BASED ON TASK
+                # ADDITIONAL PROCESSING BASED ON TASK AND DATASET
                 #
                 # Includes left leg trial flipping, as the way this is done can
                 # be trial-dependent
                 
-                # static trial
-                if self.task.casefold() == "static":
-                    print("Static trial. Nothing to be done.")
-                    continue
+                # Task: RUN
+                if self.task.casefold() == "run":
                 
-                # foot not used (i.e. no events and no leg_task assigned)
-                elif self.events["leg_task"][f] == "not_used":
+                    # static trial
+                    if self.dataset.casefold() == "static":
+                        print("Static trial. Nothing to be done.")
+                        continue
                     
-                    # store empty in dict
-                    results[ans][foot] = {}
-                    results[ans][foot]["data"] = np.zeros([nsamp, len(headers[ans])])
-                    results[ans][foot]["headers"] = headers[ans]
-                
-                # foot is used (i.e. events exist and a leg_task is assigned)
-                # match task and find time window for foot based on leg_task
-                else:
-                
-                    # run stride cycle on ipsilateral leg, stance on contralateral
-                    if self.task.casefold() == "run_stridecycle":
+                    # foot not used (i.e. no events and no leg_task assigned)
+                    elif self.events["leg_task"][f] == "not_used":
                         
-                        # flip columns for left leg trials
-                        if f == 2:
-                            data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
-                        
-                        # time window depends on leg task and number of events   
-                        if self.events["leg_task"][f] == "stridecycle":
-                            e0 = self.events["labels"].index(foot.upper() + "FS")
-                            if len(self.events["labels"]) == 3:
-                                e1 = e0 + 2
+                        # store empty in dict
+                        results[ans][foot] = {}
+                        results[ans][foot]["data"] = np.zeros([nsamp, len(headers[ans])])
+                        results[ans][foot]["headers"] = headers[ans]
+                    
+                    # foot is used (i.e. events exist and a leg_task is assigned)
+                    # match dataset and find time window for foot based on leg_task
+                    else:
+                    
+                        # run stride cycle on ipsilateral leg, stance on contralateral
+                        if self.dataset.casefold() == "run_stridecycle":
+                            
+                            # flip columns for left leg trials
+                            if f == 2:
+                                data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
+                            
+                            # time window depends on leg task and number of events   
+                            if self.events["leg_task"][f] == "stridecycle":
+                                e0 = self.events["labels"].index(foot.upper() + "FS")
+                                if len(self.events["labels"]) == 3:
+                                    e1 = e0 + 2
+                                else:
+                                    e1 = e0 + 4
+                                t0 = self.events["time"][e0]
+                                t1 = self.events["time"][e1]
                             else:
-                                e1 = e0 + 4
-                            t0 = self.events["time"][e0]
-                            t1 = self.events["time"][e1]
-                        else:
+                                e0 = self.events["labels"].index(foot.upper() + "FS")
+                                e1 = self.events["labels"].index(foot.upper() + "FO")
+                                t0 = self.events["time"][e0]
+                                t1 = self.events["time"][e1]                        
+                        
+                        
+                        # run stance on both legs
+                        elif self.dataset.casefold() == "run_stance":
+                            
+                            # flip columns for left leg trials
+                            if f == 2:
+                                data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
+                                
+                            # time window
                             e0 = self.events["labels"].index(foot.upper() + "FS")
                             e1 = self.events["labels"].index(foot.upper() + "FO")
                             t0 = self.events["time"][e0]
-                            t1 = self.events["time"][e1]                        
-                    
-                    
-                    # run stance on both legs
-                    elif self.task.casefold() == "run_stance":
-                        
-                        # flip columns for left leg trials
-                        if f == 2:
-                            data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
+                            t1 = self.events["time"][e1]
                             
-                        # time window
-                        e0 = self.events["labels"].index(foot.upper() + "FS")
-                        e1 = self.events["labels"].index(foot.upper() + "FO")
-                        t0 = self.events["time"][e0]
-                        t1 = self.events["time"][e1]
                         
-                    
-                    # step down and pivot
-                    elif self.task.casefold() == "sdp":
-                        
-                        # flip columns for left-foot-first left-turning trials
-                        if osimkey.events["labels"][0][0].casefold() == "l":
-                            data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)                   
-                        
-                        # time window
-                        e0 = 0
-                        e1 = 5
-                        t0 = self.events["time"][e0]
-                        t1 = self.events["time"][e1]                    
+                        # step down and pivot
+                        elif self.dataset.casefold() == "sdp":
+                            
+                            # flip columns for left-foot-first left-turning trials
+                            if osimkey.events["labels"][0][0].casefold() == "l":
+                                data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)                   
+                            
+                            # time window
+                            e0 = 0
+                            e1 = 5
+                            t0 = self.events["time"][e0]
+                            t1 = self.events["time"][e1]                    
     
                         
                     #
@@ -328,10 +332,9 @@ def export_opensim_results(meta, user, analyses, csvfilesuffix):
                     with open(pkfile,"rb") as fid:
                         osimresultskey = pk.load(fid)
                         
-                    # trial task
-                    task = user.results_task_for_output
-                    
-                    # condition
+                    # trial info
+                    task = osimresultskey.task
+                    dataset = osimresultskey.dataset
                     condition = osimresultskey.condition
 
                     # foot
@@ -357,7 +360,7 @@ def export_opensim_results(meta, user, analyses, csvfilesuffix):
                                 drow = data[:, v]
     
                                 # create new line of data
-                                csvrow = [subj, trial, task, condition, data_type, foot, ans, variable] + drow.tolist()
+                                csvrow = [subj, trial, task, dataset, condition, data_type, foot, ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -368,7 +371,7 @@ def export_opensim_results(meta, user, analyses, csvfilesuffix):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "task", "condition", "data_type", "data_leg", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "task", "dataset", "condition", "data_type", "data_leg", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers

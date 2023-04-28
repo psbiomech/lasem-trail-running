@@ -44,20 +44,21 @@ TrialKey:
     laboratory and force plate frames.
 '''
 class TrialKey():
-    def __init__(self, lab, user, task, condition, c3dkey, xdir, mass):       
+    def __init__(self, lab, user, task, dataset, condition, c3dkey, xdir, mass):       
         self.subject_name = str(c3dkey.subject_name)
         self.trial_name = str(c3dkey.trial_name)
         self.lab_name = lab.lab_name
         self.task = task
+        self.dataset = dataset
         self.condition = condition
         self.mass = mass
-        self.__set_events(c3dkey, task, user.staticfpchannel)
+        self.__set_events(c3dkey, task, dataset, user.staticfpchannel)
         self.__set_markers(lab, c3dkey, xdir)        
         self.__set_force_plates(lab, c3dkey, xdir, user.staticprefix) 
         self.__set_forces(lab, c3dkey, user.staticprefix)
         return None
 
-    def __set_events(self, c3dkey, task, static_fp_channel):
+    def __set_events(self, c3dkey, task, dataset, static_fp_channel):
 
         # initialise dict        
         events = {}
@@ -90,170 +91,172 @@ class TrialKey():
             
              
         # ###################################
-        # PROCESS EVENTS BASED ON TASK
+        # PROCESS EVENTS BASED ON TASK AND DATASET
         
-        # match task and perform required computations
+        # Match task + dataset, and perform required computations
         # (unfortunately we cannot use match-case before Python 3.10)
  
+        # Task: RUN
+        if task.casefold() == "run":
         
-        # static trials
-        if task.casefold() == "static":
-            
-            # calculate subject mass, return end frames for 25%-75% window
-            mass = calculate_subject_mass(c3dkey, static_fp_channel)
-            self.mass = mass  # override default
-            
-            # time window for model scaling (take 45%-55% window)
-            events["window_time0"] = events["time0"][1] * np.array([0.45, 0.55])
-            events["window_labels"] = ["STATIC0","STATIC1"]
-           
-            # no force plate sequence
-            events["fp_sequence"] = [[0, 0]]
-            
-            # leg task is static (R, L)
-            events["leg_task"] = ["static", "static"]
-
-            # last event index (0-based) for OpenSim analyses that require
-            # kinetics (e.g., ID, SO, RRA and CMC)
-            events["opensim_last_event_idx"] = -1
-            
-        # run full stride cycle, both legs
-        elif task.casefold().startswith("run_stridecycle"):
-            
-            # some trials will have 2 full stride cycles, some will only have
-            # one, so in the latter case the contralateral leg will report
-            # stance only
-            
-            # calculate the time window of interest (assume 7 events means a 
-            # full stride cycle is available on each leg, less then 7 events
-            # assume stance on contralateral leg)
-            fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
-            if len(events["labels"]) == 3:
-                fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][1]
-            elif len(events["labels"]) < 7:
-                fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][2]
-            else:
-                fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][3]                        
-            events["window_time0"] = events["time0"][fsidx0:fsidx1 + 1]
-            events["window_labels"] = events["labels"][fsidx0:fsidx1 + 1]
-            
-            # list the individual intervals
-            events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
-            
-            # find force plate sequence for each interval (row) defined in the
-            # array window_intervals0
-            # note: sequences defined as per GaitExtract using a 2D array:
-            #   rows: event intervals
-            #   col1: right foot
-            #   col2: left foot
-            events["fp_sequence"] = [[0, 0]]
-            if len(events["labels"]) == 3:
-                if events["window_labels"][0][0] == "R":
-                    events["fp_sequence"] = np.array([[4, 0], [0, 0]])
-                else:
-                    events["fp_sequence"] = np.array([[0, 4], [0, 0]])            
-            elif len(events["labels"]) < 7:
-                if events["window_labels"][0][0] == "R":
-                    events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3], [0, 0]])
-                else:
-                    events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0], [0, 0]])
-            else:
-                if events["window_labels"][0][0] == "R":
-                    events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3], [0, 0], [0, 0], [0, 0]])
-                else:
-                    events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0], [0, 0], [0, 0], [0, 0]])                
-
-            # leg task is stride cycle on ipsilateral, stance on contralateral
-            if len(events["labels"]) == 3:
-                if events["window_labels"][0][0] == "R":
-                    events["leg_task"] = ["stridecycle", "not_used"]
-                else:
-                    events["leg_task"] = ["not_used", "stridecycle"]                
-            elif len(events["labels"]) < 7:
-                if events["window_labels"][0][0] == "R":
-                    events["leg_task"] = ["stridecycle", "stance"]
-                else:
-                    events["leg_task"] = ["stance", "stridecycle"]
-            else:
-                events["leg_task"] = ["stridecycle", "stridecycle"]              
-            
-            # last event index (0-based) for OpenSim analyses that require
-            # kinetics (e.g., ID, SO, RRA and CMC)
-            if len(events["labels"]) == 3:
-                events["opensim_last_event_idx"] = 2
-            elif len(events["labels"]) < 7:
-                events["opensim_last_event_idx"] = 4
-            else:
-                events["opensim_last_event_idx"] = 6
-            
-        # run stance phase only, both legs
-        elif task.casefold().startswith("run_stance"):
-                                        
-            # assume first pair of stance phases (IFS ---> CFO) is the required 
-            # window, thus will have one stance phase per leg.
-            
-            # calculate the time window of interest (assume first FS is start
-            # of the trial time window, second FO is end of window)
-            fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
-            foidx1 = np.where(np.char.find(events["labels"],"FO")>=0)[0][1]
-            events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
-            events["window_labels"] = events["labels"][fsidx0:foidx1 + 1]
-            
-            # list the individual intervals
-            events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
-            
-            # find force plate sequence for each interval (row) defined in the
-            # array window_intervals0
-            # note: sequences defined as per GaitExtract using a 2D array:
-            #   rows: event intervals
-            #   col1: right foot
-            #   col2: left foot
-            events["fp_sequence"] = [[0, 0]]
-            if events["window_labels"][0][0] == "R":
-                events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3]])
-            else:
-                events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0]])
+            # static trials
+            if dataset.casefold() == "static":
                 
-            # leg task is same for both legs  (R, L)
-            events["leg_task"] = ["stance", "stance"]
-            
-            # last event index (0-based) for OpenSim analyses that require
-            # kinetics (e.g., ID, SO, RRA and CMC)
-            events["opensim_last_event_idx"] = 3
-
-        # step down and pivot
-        elif task.casefold().startswith("sdp"):
-            
-            # ipsilateral FO to ipsilateral FS after pivot
-            
-            # calculate the time window of interest (assume first FO is start
-            # of the trial time window, second FS is end of window)
-            fsidx0 = np.where(np.char.find(events["labels"],"FO")>=0)[0][0]
-            foidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][-1]
-            events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
-            events["window_labels"] = events["labels"][fsidx0:foidx1 + 1] 
-            
-            # list the individual intervals
-            events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
-             
-            # find force plate sequence for each interval (row) defined in the
-            # array window_intervals0
-            # note: sequences defined as per GaitExtract using a 2D array:
-            #   rows: event intervals
-            #   col1: right foot
-            #   col2: left foot
-            events["fp_sequence"] = [[0, 0]]
-            if events["window_labels"][0][0] == "R":
-                events["fp_sequence"] = np.array([[0, 3], [1, 3], [1, 0], [1, 2], [0, 2]])
-            else:
-                events["fp_sequence"] = np.array([[3, 0], [3, 2], [0, 2], [1, 2], [1, 0]])            
-            
-            # leg task is same for both legs  (R, L)
-            events["leg_task"] = ["sdp", "sdp"]   
-            
-            # last event index (0-based) for OpenSim analyses that require
-            # kinetics (e.g., ID, SO, RRA and CMC)
-            events["opensim_last_event_idx"] = 5            
+                # calculate subject mass, return end frames for 25%-75% window
+                mass = calculate_subject_mass(c3dkey, static_fp_channel)
+                self.mass = mass  # override default
+                
+                # time window for model scaling (take 45%-55% window)
+                events["window_time0"] = events["time0"][1] * np.array([0.45, 0.55])
+                events["window_labels"] = ["STATIC0","STATIC1"]
+               
+                # no force plate sequence
+                events["fp_sequence"] = [[0, 0]]
+                
+                # leg task is static (R, L)
+                events["leg_task"] = ["static", "static"]
+    
+                # last event index (0-based) for OpenSim analyses that require
+                # kinetics (e.g., ID, SO, RRA and CMC)
+                events["opensim_last_event_idx"] = -1
+                
+            # run full stride cycle, both legs
+            elif dataset.casefold().startswith("run_stridecycle"):
+                
+                # some trials will have 2 full stride cycles, some will only have
+                # one, so in the latter case the contralateral leg will report
+                # stance only
+                
+                # calculate the time window of interest (assume 7 events means a 
+                # full stride cycle is available on each leg, less then 7 events
+                # assume stance on contralateral leg)
+                fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
+                if len(events["labels"]) == 3:
+                    fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][1]
+                elif len(events["labels"]) < 7:
+                    fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][2]
+                else:
+                    fsidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][3]                        
+                events["window_time0"] = events["time0"][fsidx0:fsidx1 + 1]
+                events["window_labels"] = events["labels"][fsidx0:fsidx1 + 1]
+                
+                # list the individual intervals
+                events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
+                
+                # find force plate sequence for each interval (row) defined in the
+                # array window_intervals0
+                # note: sequences defined as per GaitExtract using a 2D array:
+                #   rows: event intervals
+                #   col1: right foot
+                #   col2: left foot
+                events["fp_sequence"] = [[0, 0]]
+                if len(events["labels"]) == 3:
+                    if events["window_labels"][0][0] == "R":
+                        events["fp_sequence"] = np.array([[4, 0], [0, 0]])
+                    else:
+                        events["fp_sequence"] = np.array([[0, 4], [0, 0]])            
+                elif len(events["labels"]) < 7:
+                    if events["window_labels"][0][0] == "R":
+                        events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3], [0, 0]])
+                    else:
+                        events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0], [0, 0]])
+                else:
+                    if events["window_labels"][0][0] == "R":
+                        events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3], [0, 0], [0, 0], [0, 0]])
+                    else:
+                        events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0], [0, 0], [0, 0], [0, 0]])                
+    
+                # leg task is stride cycle on ipsilateral, stance on contralateral
+                if len(events["labels"]) == 3:
+                    if events["window_labels"][0][0] == "R":
+                        events["leg_task"] = ["stridecycle", "not_used"]
+                    else:
+                        events["leg_task"] = ["not_used", "stridecycle"]                
+                elif len(events["labels"]) < 7:
+                    if events["window_labels"][0][0] == "R":
+                        events["leg_task"] = ["stridecycle", "stance"]
+                    else:
+                        events["leg_task"] = ["stance", "stridecycle"]
+                else:
+                    events["leg_task"] = ["stridecycle", "stridecycle"]              
+                
+                # last event index (0-based) for OpenSim analyses that require
+                # kinetics (e.g., ID, SO, RRA and CMC)
+                if len(events["labels"]) == 3:
+                    events["opensim_last_event_idx"] = 2
+                elif len(events["labels"]) < 7:
+                    events["opensim_last_event_idx"] = 4
+                else:
+                    events["opensim_last_event_idx"] = 6
+                
+            # run stance phase only, both legs
+            elif dataset.casefold().startswith("run_stance"):
+                                            
+                # assume first pair of stance phases (IFS ---> CFO) is the required 
+                # window, thus will have one stance phase per leg.
+                
+                # calculate the time window of interest (assume first FS is start
+                # of the trial time window, second FO is end of window)
+                fsidx0 = np.where(np.char.find(events["labels"],"FS")>=0)[0][0]
+                foidx1 = np.where(np.char.find(events["labels"],"FO")>=0)[0][1]
+                events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
+                events["window_labels"] = events["labels"][fsidx0:foidx1 + 1]
+                
+                # list the individual intervals
+                events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
+                
+                # find force plate sequence for each interval (row) defined in the
+                # array window_intervals0
+                # note: sequences defined as per GaitExtract using a 2D array:
+                #   rows: event intervals
+                #   col1: right foot
+                #   col2: left foot
+                events["fp_sequence"] = [[0, 0]]
+                if events["window_labels"][0][0] == "R":
+                    events["fp_sequence"] = np.array([[4, 0], [0, 0], [0, 3]])
+                else:
+                    events["fp_sequence"] = np.array([[0, 4], [0, 0], [3, 0]])
+                    
+                # leg task is same for both legs  (R, L)
+                events["leg_task"] = ["stance", "stance"]
+                
+                # last event index (0-based) for OpenSim analyses that require
+                # kinetics (e.g., ID, SO, RRA and CMC)
+                events["opensim_last_event_idx"] = 3
+    
+            # step down and pivot
+            elif dataset.casefold().startswith("sdp"):
+                
+                # ipsilateral FO to ipsilateral FS after pivot
+                
+                # calculate the time window of interest (assume first FO is start
+                # of the trial time window, second FS is end of window)
+                fsidx0 = np.where(np.char.find(events["labels"],"FO")>=0)[0][0]
+                foidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][-1]
+                events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
+                events["window_labels"] = events["labels"][fsidx0:foidx1 + 1] 
+                
+                # list the individual intervals
+                events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
+                 
+                # find force plate sequence for each interval (row) defined in the
+                # array window_intervals0
+                # note: sequences defined as per GaitExtract using a 2D array:
+                #   rows: event intervals
+                #   col1: right foot
+                #   col2: left foot
+                events["fp_sequence"] = [[0, 0]]
+                if events["window_labels"][0][0] == "R":
+                    events["fp_sequence"] = np.array([[0, 3], [1, 3], [1, 0], [1, 2], [0, 2]])
+                else:
+                    events["fp_sequence"] = np.array([[3, 0], [3, 2], [0, 2], [1, 2], [1, 0]])            
+                
+                # leg task is same for both legs  (R, L)
+                events["leg_task"] = ["sdp", "sdp"]   
+                
+                # last event index (0-based) for OpenSim analyses that require
+                # kinetics (e.g., ID, SO, RRA and CMC)
+                events["opensim_last_event_idx"] = 5            
             
         #
         # ###################################
@@ -465,6 +468,7 @@ class OpenSimKey():
         self.lab = trialkey.lab_name
         self.model = model
         self.task = trialkey.task
+        self.dataset = trialkey.dataset
         self.condition = trialkey.condition
         self.outpath = c3dpath
         self.__set_events(trialkey)
@@ -537,7 +541,7 @@ class OpenSimKey():
         forces = {}   
 
         # if static trial and no force plates, return empty field
-        if (trialkey.task.casefold() == user.staticprefix.casefold()) and not trialkey.forces:
+        if (trialkey.dataset.casefold() == user.staticprefix.casefold()) and not trialkey.forces:
             self.forces = None
             return None
 
@@ -557,7 +561,7 @@ class OpenSimKey():
         forces["rate"] = trialkey.forces["rate"]
 
         # get forces for only used force plates (dynamic trials only)
-        if trialkey.task != "static":
+        if trialkey.dataset != "static":
             forces["data"] = {}
             for i, fp in enumerate(trialkey.force_plates["fp_used"]):
                 
@@ -694,9 +698,10 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
                     c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                     task = meta[subj]["trials"][group][trial]["task"]
+                    dataset = meta[subj]["trials"][group][trial]["dataset"]                    
                     condition = meta[subj]["trials"][group][trial]["condition"]
                     model = meta[subj]["trials"][group][trial]["osim"]
-                    osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass, model)                           
+                    osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)                           
                     if usedstatic: mass = osimkey.mass
                 except:
                     print("*** FAILED ***")    
@@ -732,12 +737,13 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
                     c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                     task = meta[subj]["trials"][group][trial]["task"]
+                    dataset = meta[subj]["trials"][group][trial]["dataset"]
                     condition = meta[subj]["trials"][group][trial]["condition"]
                     model = meta[subj]["trials"][group][trial]["osim"]
-                    c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass, model)   
+                    c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)   
                 except:
                     print("*** FAILED ***")    
-                    failedfiles.append(c3dfile)     
+                    failedfiles.append(c3dfile)   
 
             #
             # ###################################                    
@@ -747,12 +753,12 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
 
 
 '''
-c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, 
+c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, 
             mass, model):
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass, model):    
+def c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model):    
     
     # load C3D file
     itf = c3d.c3dserver()
@@ -772,7 +778,7 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, user, task, condition, xdir, mass,
     c3dkey = C3DKey(sname, tname, fmeta, fforces, fmarkers)
 
     # trial data only from C3D key
-    trialkey = TrialKey(lab, user, task, condition, c3dkey, xdir, mass)
+    trialkey = TrialKey(lab, user, task, dataset, condition, c3dkey, xdir, mass)
     
     # opensim input data
     osimkey = OpenSimKey(trialkey, user, c3dpath, model)   

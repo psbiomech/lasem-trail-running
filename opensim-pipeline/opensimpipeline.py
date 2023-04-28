@@ -54,6 +54,10 @@ def opensim_pipeline(meta, user, analyses):
             
             # copy analyses list for subject
             analyses0 = analyses.copy() #[ans.casefold() for ans in analyses]
+
+
+            # ###################################
+            # MODEL SCALING ONLY
             
             # find the static trial for model scaling
             for trial in meta[subj]["trials"][group]:
@@ -61,6 +65,12 @@ def opensim_pipeline(meta, user, analyses):
                 #****** TESTING ******
                 #if not (trial == "TRAIL296_EP02"): continue;
                 #*********************                
+
+                # Pickle file info
+                task = meta[subj]["trials"][group][trial]["task"]
+                dataset = meta[subj]["trials"][group][trial]["dataset"]
+                pklpath = meta[subj]["trials"][group][trial]["outpath"]
+                pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
 
                 # run the scale tool if the static trial is the trial to be
                 # used for scaling
@@ -70,8 +80,6 @@ def opensim_pipeline(meta, user, analyses):
                         try:
                         
                             # load the OsimKey
-                            pklpath = meta[subj]["trials"][group][trial]["outpath"]
-                            pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
                             with open(os.path.join(pklpath, pklfile),"rb") as fid: 
                                 osimkey = pk.load(fid)
                                 
@@ -87,8 +95,9 @@ def opensim_pipeline(meta, user, analyses):
                             modelfile = meta[subj]["trials"][group][trial]["osim"]
                             modelfullpathfile = os.path.join(pklpath, modelfile)
                             
-                            # copy the model into the subject root folder
-                            subjrootpath = os.path.join(user.rootpath, user.outfolder, subj)
+                            # Copy the model into the subject root folder 
+                            # Note: currently this is two levels up
+                            subjrootpath = os.path.abspath(os.path.join(pklpath, "..", ".."))
                             shutil.copy(modelfullpathfile, subjrootpath)                            
                             
                             # once a model is created we can stop finding valid
@@ -99,9 +108,14 @@ def opensim_pipeline(meta, user, analyses):
                         except:
                             print("%s ---> ***FAILED***" % trial)
                             failedfiles.append(trial) 
+                            raise
             
             # if scale was the only analysis, then go to next group
             if not analyses0: continue
+
+
+            # ###################################
+            # ANALYSES
             
             # find dynamic trials, always copy model into folder and run the
             # requested analyses
@@ -111,13 +125,18 @@ def opensim_pipeline(meta, user, analyses):
                 #if not (trial == "TRAIL296_EP02"): continue;
                 #*********************
                 
+                # Pickle file info
+                task = meta[subj]["trials"][group][trial]["task"]
+                dataset = meta[subj]["trials"][group][trial]["dataset"]
+                pklpath = meta[subj]["trials"][group][trial]["outpath"]
+                pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"                
+                
+                # run the analyses
                 if not meta[subj]["trials"][group][trial]["isstatic"]:
 
                     try:
                         
                         # load the OsimKey
-                        pklpath = meta[subj]["trials"][group][trial]["outpath"]
-                        pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"
                         with open(os.path.join(pklpath, pklfile),"rb") as fid: 
                             osimkey = pk.load(fid)
     
@@ -128,7 +147,7 @@ def opensim_pipeline(meta, user, analyses):
                         
                         # copy the model into the trial folder
                         modelfile = meta[subj]["trials"][group][trial]["osim"]
-                        subjrootpathfile = os.path.join(user.rootpath, user.outfolder, subj, modelfile)
+                        subjrootpathfile = os.path.join(user.rootpath, user.outfolder, task, dataset, subj, modelfile)
                         shutil.copy(subjrootpathfile, pklpath)
                         
                         # run the required analyses
@@ -157,6 +176,7 @@ def opensim_pipeline(meta, user, analyses):
                     except:
                         print("%s ---> ***FAILED***" % trial)
                         failedfiles.append(trial)
+                        raise
                             
     return failedfiles
 
