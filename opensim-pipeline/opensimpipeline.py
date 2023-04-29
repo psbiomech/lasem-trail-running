@@ -34,10 +34,15 @@ import re
 
 
 '''
-opensim_pipeline(meta, user):
-    Run OpenSim tools pipeline
+opensim_pipeline(meta, user, restart):
+    Run OpenSim tools pipeline. All data in meta is processed unless specified
+    by the restart flag which may have types:
+        string: Start from this participant and process until the end
+        2-tuple: Process between the first and last participant. To process
+                only one participant, set the tuple elements to be the same,
+                e.g. ("TRAIL004", "TRAIL004")
 '''
-def opensim_pipeline(meta, user, analyses):
+def opensim_pipeline(meta, user, analyses, restart = -1):
 
     # note: I haven't worked out how to run OpenSim in a local folder, simply 
     # changing the pwd doesn't work. So need to clear the log file before each
@@ -48,8 +53,29 @@ def opensim_pipeline(meta, user, analyses):
     
     # run OpenSim for all valid trials
     failedfiles = []
+    startflag = 0
     for subj in meta:
         
+        # skip the study info
+        if subj.casefold() == "study": continue        
+        
+ 
+        # Skip to restart participant, process until last restart participant.
+        # Python uses lazy evaluation so combined expressions are efficient.
+        if restart != -1:
+            if startflag == 1:
+                if (type(restart) == tuple) and (subj == restart[1]):
+                    startflag = 0            
+            elif startflag == 0:
+                if (type(restart) == str) and (subj == restart):
+                    startflag = 1
+                elif (type(restart) == tuple) and (subj == restart[0]):
+                    if restart[0] != restart[1]:
+                        startflag = 1
+                else:
+                    continue
+
+       
         for group in meta[subj]["trials"]:
             
             # copy analyses list for subject
@@ -108,6 +134,7 @@ def opensim_pipeline(meta, user, analyses):
                         except:
                             print("%s ---> ***FAILED***" % trial)
                             failedfiles.append(trial) 
+                            raise
             
             # if scale was the only analysis, then go to next group
             if not analyses0: continue

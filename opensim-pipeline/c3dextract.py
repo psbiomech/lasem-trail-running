@@ -63,7 +63,8 @@ class TrialKey():
         # initialise dict        
         events = {}
               
-        # process events, or if no events, add general events
+        # Process events.
+        # If no events, add general events
         if c3dkey.meta["EVENT"]["USED"] == 0:            
             events["labels"] = ["GEN", "GEN"]
             events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]            
@@ -86,9 +87,16 @@ class TrialKey():
             events["labels"] = [elabels[e] for e in sortidxs]
             events["time"] = [etime[e] for e in sortidxs]
                     
-        # relative time, normalise to first frame in data (NOT the first event)
+        # Relative time, normalise to first frame in data (NOT first event).
+        # It should be done using the ACTUAL_START_FIELD but this is 
+        # problematic for some static trials for some reason (needs 
+        # further investigation) and you end up with negative time values. For
+        # these, use the first marker time step.
         events["time0"] = events["time"] - ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
-            
+        if events["time0"][0] < 0.0:
+            events["time0"] = events["time"] - c3dkey.markers["TIME"][0]
+            print("$$$$$$$$$$$$$$$$ ALTERNATIVE TIME $$$$$$$$$$$$$$$$$$$")
+        
              
         # ###################################
         # PROCESS EVENTS BASED ON TASK AND DATASET
@@ -107,8 +115,8 @@ class TrialKey():
                 self.mass = mass  # override default
                 
                 # time window for model scaling (take 45%-55% window)
-                events["window_time0"] = events["time0"][1] * np.array([0.45, 0.55])
-                events["window_labels"] = ["STATIC0","STATIC1"]
+                events["window_time0"] = np.array([events["time0"][0], events["time0"][-1]])
+                events["window_labels"] = ["STATIC0", "STATIC1"]
                
                 # no force plate sequence
                 events["fp_sequence"] = [[0, 0]]
@@ -666,9 +674,12 @@ class OpenSimKey():
 '''
 c3d_batch_process(user, meta, lab, xdir, usermass, restart):
     Batch processing for C3D data extract, and OpenSim input file write,
-    obtains mass from used static trial in each group if mass = -1. Set restart
-    if process stops for any reason by setting the subject code as string, e.g.
-    "TRAIL113" otherwise set to -1 (default).
+    obtains mass from used static trial in each group if mass = -1. All data 
+    in meta is processed unless specified by restart flag which may have types:
+        string: Start from this participant and process until the end
+        2-tuple: Process between the first and last participant. To process
+                only one participant, set the tuple elements to be the same,
+                e.g. ("TRAIL004", "TRAIL004")
 '''
 def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
 
@@ -679,20 +690,31 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
     startflag = 0
     for subj in meta:
         
+        # skip the study info
+        if subj.casefold() == "study": continue
+
+        # Skip to restart participant, process until last restart participant.
+        # Python uses lazy evaluation so combined expressions are efficient.
+        if restart != -1:
+            if startflag == 1:
+                if (type(restart) == tuple) and (subj == restart[1]):
+                    startflag = 0            
+            elif startflag == 0:
+                if (type(restart) == str) and (subj == restart):
+                    startflag = 1
+                elif (type(restart) == tuple) and (subj == restart[0]):
+                    if restart[0] != restart[1]:
+                        startflag = 1
+                else:
+                    continue
+                
         print("\n")
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
         print("\n")
-
-        # skip to restart participant
-        if (startflag == 0) and (type(restart) == str):
-            if subj == restart:
-                startflag = 1;
-            else:
-                print("Skipping...\n")
-                continue
         
+        # parse meta struct and extract C3D
         for group in meta[subj]["trials"]:
             
             print("Group: %s" % group)
@@ -707,7 +729,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                #if not (trial == "TRAIL004_FAST01"): continue;
+                #if not (trial == "TRAIL007_STATIC02"): continue;
                 #*********************
                 
                 # ignore dynamic trials
@@ -747,7 +769,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "TRAIL004_FAST01"): continue;
+                #if not (trial == "TRAIL007_STATIC02"): continue;
                 #*********************
                 
                 # ignore static trials
@@ -769,6 +791,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                 except:
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)  
+                    raise
 
             #
             # ###################################                    

@@ -13,14 +13,14 @@ import pickle as pk
 import usersettings as uset
 
 # user settings
-user = uset.TRAILSettings_RUN_ID()
+user = uset.TRAILSettings_RUN()
 
 # data file
-srcpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\csvfolder"
-srcfile = "trail_opensim_results_ikid_stridecycle.csv"
+srcpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\csvfolder"
+srcfile = "trail_opensim_results_ikid_run_run_stance.csv"
 
 # output file
-outpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\datacheck"
+outpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\\run\run_stance\datacheck"
 if not os.path.isdir(outpath): os.makedirs(outpath)
 
 
@@ -28,7 +28,7 @@ if not os.path.isdir(outpath): os.makedirs(outpath)
 # %% PREPARE DATA
 
 # load meta data
-dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
+dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stance", user.metadatafile)
 with open(dbfilepath, "rb") as fid:
     meta = pk.load(fid)
 
@@ -45,8 +45,11 @@ df = df0[(df0["variable"] == "knee_angle") | (df0["variable"] == "knee_angle_mom
 
 print("Generating plots for data check...")
 
-# task: run_stridecycle, run_stance
-task = "run_stridecycle"
+# task: run
+task = "run"
+
+# dataset: run_stridecycle, run_stance
+dataset = "run_stance"
 
 # data leg: r (ignore left leg)
 leg = "r"
@@ -67,6 +70,9 @@ for c in ["ep", "fast"]:
             # subjects
             for subj in meta:
                 
+                # skip the study info
+                if subj.casefold() == "study": continue                
+                
                 print("%s" % subj, end = "")
                 
                 # output folder
@@ -78,7 +84,7 @@ for c in ["ep", "fast"]:
                 
                 # drop info columns except trial name, transpose
                 dnames = data.loc[:, "trial"]
-                data = data.drop(columns = ["subject", "trial", "task", "condition", "data_type", "data_leg", "analysis", "variable"])
+                data = data.drop(columns = ["subject", "trial", "task", "dataset", "condition", "data_type", "data_leg", "analysis", "variable"])
                 data = data.T
                 data.columns = dnames
                       

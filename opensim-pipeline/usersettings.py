@@ -77,7 +77,7 @@ class TRAILSettings_RUN(UserSettings):
 
         # export data
         self.csvfolder = "csvfolder"
-        self.csvfileprefix = "trail_opensim_results_ikid_"
+        self.csvfileprefix = "trail_opensim_results_ikid"
         
         # meta data file
         self.metadatafile = self.project + ".pkl"        
@@ -90,7 +90,7 @@ class TRAILSettings_RUN(UserSettings):
         self.staticused = "Static_01"
         self.staticfpchannel = "Force.Fz3"
         
-        # C3D file suffixes for datasets based on task "run"
+        # C3D file suffixes for datasets based on task: RUN
         self.trialprefixes = {}
         self.trialprefixes["run"] = {}
         self.trialprefixes["run"]["run_stance"] = ["EP", "FAST"]

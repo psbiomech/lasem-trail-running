@@ -38,6 +38,9 @@ def build_database(user, task, dataset):
  
     # meta dict
     meta = {}
+    meta["study"] = {}
+    meta["study"]["task"] = task
+    meta["study"]["dataset"] = dataset
  
     # input folders
     for infolder in user.infolder:
@@ -118,6 +121,7 @@ def build_database(user, task, dataset):
         # clean up, remove empty subject meta dict keys or those without at
         # least one static and one dynamic trial
         for subj in subjlist:
+            if subj.casefold() == "study": continue
             for group in user.trialgroupfolders:
                 hasstatic = any([meta[subj]["trials"][group][t]["isstatic"] for t in meta[subj]["trials"][group].keys()])
                 hasdynamic = any([not meta[subj]["trials"][group][t]["isstatic"] for t in meta[subj]["trials"][group].keys()])
@@ -130,6 +134,7 @@ def build_database(user, task, dataset):
         if not os.path.exists(outpath):
             os.makedirs(outpath)
         for subj in meta:
+            if subj.casefold() == "study": continue
             for group in meta[subj]["trials"]:                
                 for trial in meta[subj]["trials"][group]:
                     trialoutpath = meta[subj]["trials"][group][trial]["outpath"]

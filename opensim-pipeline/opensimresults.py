@@ -140,12 +140,13 @@ class OsimResultsKey():
                         results[ans][foot] = {}
                         results[ans][foot]["data"] = np.zeros([nsamp, len(headers[ans])])
                         results[ans][foot]["headers"] = headers[ans]
+                        continue
                     
                     # foot is used (i.e. events exist and a leg_task is assigned)
                     # match dataset and find time window for foot based on leg_task
                     else:
                     
-                        # run stride cycle on ipsilateral leg, stance on contralateral
+                        # run stridecycle
                         if self.dataset.casefold() == "run_stridecycle":
                             
                             # flip columns for left leg trials
@@ -168,19 +169,20 @@ class OsimResultsKey():
                                 t1 = self.events["time"][e1]                        
                         
                         
-                        # run stance on both legs
+                        # run stance
                         elif self.dataset.casefold() == "run_stance":
                             
                             # flip columns for left leg trials
                             if f == 2:
                                 data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
                                 
-                            # time window
-                            e0 = self.events["labels"].index(foot.upper() + "FS")
-                            e1 = self.events["labels"].index(foot.upper() + "FO")
-                            t0 = self.events["time"][e0]
-                            t1 = self.events["time"][e1]
-                            
+                            # time window depends on leg task and number of events 
+                            if self.events["leg_task"][f] == "stance":
+                                e0 = self.events["labels"].index(foot.upper() + "FS")
+                                e1 = self.events["labels"].index(foot.upper() + "FO")
+                                t0 = self.events["time"][e0]
+                                t1 = self.events["time"][e1]     
+                                
                         
                         # step down and pivot
                         elif self.dataset.casefold() == "sdp":
@@ -234,7 +236,7 @@ class OsimResultsKey():
 
 
 '''
-opensim_results_batch_process(meta, analyses, nsamp):
+opensim_results_batch_process(meta, analyses, user, nsamp):
     Batch process OpenSim results text files to OsimResultsKeys.
 '''
 def opensim_results_batch_process(meta, analyses, user, nsamp):
@@ -243,6 +245,9 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
     osimkey = {}
     failedfiles = []
     for subj in meta:
+        
+        # skip the study info
+        if subj.casefold() == "study": continue
     
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
@@ -282,7 +287,6 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
                     failedfiles.append(trial)   
-
                 else:
                     print("Dynamic trial: %s" % trial)
                           
@@ -293,10 +297,10 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
     
 
 '''
-export_opensim_results(meta, user, analyses, csvfilesuffix):
+export_opensim_results(meta, user, analyses):
     Collate OpenSim results into dataframes and export to text for Rstats.
 '''
-def export_opensim_results(meta, user, analyses, csvfilesuffix):
+def export_opensim_results(meta, user, analyses):
     
     # empty output list of lists
     # (create the output table as a list of lists, then convert to dataframe
@@ -307,6 +311,9 @@ def export_opensim_results(meta, user, analyses, csvfilesuffix):
     print("Collating data into lists...\n")
     failedfiles = []
     for subj in meta:
+    
+        # skip the study info
+        if subj.casefold() == "study": continue        
     
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
@@ -379,8 +386,8 @@ def export_opensim_results(meta, user, analyses, csvfilesuffix):
 
     # write data to file with headers
     print("\nWriting to CSV text file...")
-    csvfile = user.csvfileprefix + csvfilesuffix + ".csv"
-    fpath = os.path.join(user.rootpath, user.outfolder, user.csvfolder)
+    csvfile = user.csvfileprefix + "_" + meta["study"]["task"] + "_" + meta["study"]["dataset"] + ".csv"
+    fpath = os.path.join(user.rootpath, user.outfolder, meta["study"]["task"], meta["study"]["dataset"], user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
     csvdf.to_csv(os.path.join(fpath,csvfile), index = False)
     
