@@ -95,7 +95,6 @@ class TrialKey():
         events["time0"] = events["time"] - ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
         if events["time0"][0] < 0.0:
             events["time0"] = events["time"] - c3dkey.markers["TIME"][0]
-            print("$$$$$$$$$$$$$$$$ ALTERNATIVE TIME $$$$$$$$$$$$$$$$$$$")
         
              
         # ###################################
