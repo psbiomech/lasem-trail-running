@@ -790,7 +790,6 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                 except:
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)  
-                    raise
 
             #
             # ###################################                    

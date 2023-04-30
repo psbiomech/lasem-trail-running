@@ -42,32 +42,32 @@ print("Done.\n")
 
 # %% BUILD META DATABASE (BUILD NEW OR LOAD EXISTING)...
 
-import builddatabase as bd
+# import builddatabase as bd
 
-print("Building new output database... ", end="")
-traildb = bd.build_database(user, "run", "run_stance")
-print("Done.\n")
+# print("Building new output database... ", end="")
+# traildb = bd.build_database(user, "run", "run_stance")
+# print("Done.\n")
 
 
 # %% ...OR LOAD EXISTING META DATABASE
 
-# import pickle as pk
-# import os
+import pickle as pk
+import os
 
-# print("Loading existing output database... ", end="")
-# dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stance", user.metadatafile)
-# with open(dbfilepath, "rb") as fid:
-#     traildb = pk.load(fid)
-# print("Done.\n")
+print("Loading existing output database... ", end="")
+dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stance", user.metadatafile)
+with open(dbfilepath, "rb") as fid:
+    traildb = pk.load(fid)
+print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-import c3dextract as c3dex
+# import c3dextract as c3dex
 
-print("Extracting C3D data, creating OpenSim files...\n")
-failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, -1)
-print("\nC3D data extract done.\n")
+# print("Extracting C3D data, creating OpenSim files...\n")
+# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2)
+# print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
@@ -75,11 +75,11 @@ print("\nC3D data extract done.\n")
 import opensimpipeline as osp
 
 print("Running OpenSim model scaling: SCALE...\n")
-osp.opensim_pipeline(traildb, user, ["scale"], ("TRAIL007", "TRAIL007"))
+osp.opensim_pipeline(traildb, user, ["scale"])
 print("\nOpenSim model scaling (SCALE) completed.\n")
 
 print("Running OpenSim analyses: IK, ID...\n")
-osp.opensim_pipeline(traildb, user, ["ik", "id"], ("TRAIL001", "TRAIL001"))
+osp.opensim_pipeline(traildb, user, ["ik", "id"])
 print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: SO...\n")
