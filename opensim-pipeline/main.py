@@ -72,15 +72,15 @@ print("Done.\n")
 
 # %% RUN OPENSIM PIPELINE
 
-import opensimpipeline as osp
+# import opensimpipeline as osp
 
-print("Running OpenSim model scaling: SCALE...\n")
-osp.opensim_pipeline(traildb, user, ["scale"])
-print("\nOpenSim model scaling (SCALE) completed.\n")
+# print("Running OpenSim model scaling: SCALE...\n")
+# osp.opensim_pipeline(traildb, user, ["scale"])
+# print("\nOpenSim model scaling (SCALE) completed.\n")
 
-print("Running OpenSim analyses: IK, ID...\n")
-osp.opensim_pipeline(traildb, user, ["ik", "id"])
-print("\nOpenSim analyses (IK, ID) completed.\n")
+# print("Running OpenSim analyses: IK, ID...\n")
+# osp.opensim_pipeline(traildb, user, ["ik", "id"])
+# print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: SO...\n")
 # osp.opensim_pipeline(forcedb, user, ["so"])

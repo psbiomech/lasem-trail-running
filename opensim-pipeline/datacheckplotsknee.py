@@ -76,7 +76,7 @@ for c in ["ep", "fast"]:
                 print("%s" % subj, end = "")
                 
                 # output folder
-                figpath = os.path.join(outpath, task, subj)
+                figpath = os.path.join(outpath, subj)
                 if not os.path.isdir(figpath): os.makedirs(figpath)
                 
                 # get the participant data for the given parameter combination
