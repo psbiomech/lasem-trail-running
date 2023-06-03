@@ -45,7 +45,7 @@ print("Done.\n")
 # import builddatabase as bd
 
 # print("Building new output database... ", end="")
-# traildb = bd.build_database(user, "run", "run_stance")
+# traildb = bd.build_database(user, "run", "run_stridecycle")
 # print("Done.\n")
 
 
@@ -55,7 +55,7 @@ import pickle as pk
 import os
 
 print("Loading existing output database... ", end="")
-dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stance", user.metadatafile)
+dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stridecycle", user.metadatafile)
 with open(dbfilepath, "rb") as fid:
     traildb = pk.load(fid)
 print("Done.\n")

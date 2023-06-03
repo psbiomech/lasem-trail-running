@@ -16,11 +16,11 @@ import usersettings as uset
 user = uset.TRAILSettings_RUN()
 
 # data file
-srcpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\csvfolder"
-srcfile = "trail_opensim_results_ikid_run_run_stance.csv"
+srcpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle\csvfolder"
+srcfile = "trail_opensim_results_ikid_run_run_stridecycle.csv"
 
 # output file
-outpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\\run\run_stance\datacheck"
+outpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle\datacheck"
 if not os.path.isdir(outpath): os.makedirs(outpath)
 
 
@@ -28,7 +28,7 @@ if not os.path.isdir(outpath): os.makedirs(outpath)
 # %% PREPARE DATA
 
 # load meta data
-dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stance", user.metadatafile)
+dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stridecycle", user.metadatafile)
 with open(dbfilepath, "rb") as fid:
     meta = pk.load(fid)
 
@@ -48,8 +48,8 @@ print("Generating plots for data check...")
 # task: run
 task = "run"
 
-# dataset: run_stridecycle, run_stance
-dataset = "run_stance"
+# dataset: run_stridecycle, run_stridecycle
+dataset = "run_stridecycle"
 
 # data leg: r (ignore left leg)
 leg = "r"

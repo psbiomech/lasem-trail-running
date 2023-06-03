@@ -15,7 +15,7 @@ import shutil
 
 
 pfolder = r"P:\PROJECT - OPV - TRAIL\TRAIL\Gait Lab and Biodex\Data-Biomech\4 Checked and ready_running only"
-cfolder = r"C:\Users\Owner\Documents\data\TRAIL\inputdatabase"
+cfolder = r"C:\Users\Owner\Documents\data\TRAIL\inputdatabase2"
 
 
 
@@ -24,8 +24,8 @@ inpath = os.path.join(pfolder, "**", "*.c3d")
 folderlist = glob.glob(inpath, recursive=True)
 
 # file name expression
-fstr = "TRAIL_(\d+)_(EP|FAST|STATIC|Static)_?(\d+)"
-fregx = re.compile(fstr)
+fstr = "TRAIL(?:_?)(\d+)_(EP|FAST|STATIC)_?(\d+)"
+fregx = re.compile(fstr, re.IGNORECASE)
 
 # get the file name and parse with regex
 if not(os.path.isdir(cfolder)): os.makedirs(cfolder)
