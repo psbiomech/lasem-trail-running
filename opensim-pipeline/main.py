@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Process and run LASEM FORCE project data through OpenSim
+Process and run LASEM TRAIL project data through OpenSim
 
 @author: Prasanna Sritharan
 """
@@ -11,7 +11,7 @@ import datetime
 
 print("\n\n\n")
 print("----------------------------------------")
-print("FORCE: DATA PROCESSING & OPENSIM")
+print("TRAIL: DATA PROCESSING & OPENSIM")
 print("----------------------------------------")
 
 # start time stamp
@@ -40,34 +40,37 @@ user = uset.TRAILSettings_RUN()
 print("Done.\n")
 
 
-# %% BUILD META DATABASE (BUILD NEW OR LOAD EXISTING)...
-
-# import builddatabase as bd
-
-# print("Building new output database... ", end="")
-# traildb = bd.build_database(user, "run", "run_stridecycle")
-# print("Done.\n")
+# %% GET META DATABASE (BUILD NEW OR LOAD EXISTING)...
 
 
-# %% ...OR LOAD EXISTING META DATABASE
+# OPTION 1: Build new database
 
-import pickle as pk
-import os
+import builddatabase as bd
 
-print("Loading existing output database... ", end="")
-dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stridecycle", user.metadatafile)
-with open(dbfilepath, "rb") as fid:
-    traildb = pk.load(fid)
+print("Building new output database... ", end="")
+traildb = bd.build_database(user, "run", "run_stridecycle")
 print("Done.\n")
+
+
+# OPTION 2: Load existing database
+
+# import pickle as pk
+# import os
+
+# print("Loading existing output database... ", end="")
+# dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stridecycle", user.metadatafile)
+# with open(dbfilepath, "rb") as fid:
+#     traildb = pk.load(fid)
+# print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-# import c3dextract as c3dex
+import c3dextract as c3dex
 
-# print("Extracting C3D data, creating OpenSim files...\n")
-# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2)
-# print("\nC3D data extract done.\n")
+print("Extracting C3D data, creating OpenSim files...\n")
+failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2)
+print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
