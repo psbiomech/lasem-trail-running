@@ -48,7 +48,7 @@ print("Done.\n")
 # import builddatabase as bd
 
 # print("Building new output database... ", end="")
-# traildb = bd.build_database(user, "run", "run_stridecycle")
+# traildb = bd.build_database(user, "run", "run_stance")
 # print("Done.\n")
 
 
@@ -58,7 +58,7 @@ import pickle as pk
 import os
 
 print("Loading existing output database... ", end="")
-dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stridecycle", user.metadatafile)
+dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stance", user.metadatafile)
 with open(dbfilepath, "rb") as fid:
     traildb = pk.load(fid)
 print("Done.\n")
@@ -66,11 +66,11 @@ print("Done.\n")
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-# import c3dextract as c3dex
+import c3dextract as c3dex
 
-# print("Extracting C3D data, creating OpenSim files...\n")
-# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, -1, "TRAIL373")
-# print("\nC3D data extract done.\n")
+print("Extracting C3D data, creating OpenSim files...\n")
+failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2)
+print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
