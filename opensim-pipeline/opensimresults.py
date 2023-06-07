@@ -318,7 +318,11 @@ def export_opensim_results(meta, user, analyses):
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
-                
+        
+        # Rectify subject name format for consistency with TRAIL baseline
+        # Current: TRAIL123, Required: TRAIL_123
+        subjcorrected = subj[0:5] + "_" + subj[5:8]
+        
         for group in meta[subj]["trials"]:
             
             print("Group: %s" % group)
@@ -330,6 +334,10 @@ def export_opensim_results(meta, user, analyses):
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 if isstatic: continue
+            
+                # Rectify trial name format for consistency with TRAIL baseline
+                # Current: TRAIL123_FAST08, Required: TRAIL_123_FAST08
+                trialcorrected = trial[0:5] + "_" + trial[5:]
             
                 try:
                 
@@ -370,7 +378,7 @@ def export_opensim_results(meta, user, analyses):
                                 drow = data[:, v]
     
                                 # create new line of data
-                                csvrow = [subj, trial, task, dataset, condition, data_type, foot, ans, variable] + drow.tolist()
+                                csvrow = [subjcorrected, trialcorrected, task, dataset, condition, data_type, foot, ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:

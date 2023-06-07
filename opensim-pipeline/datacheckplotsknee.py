@@ -15,20 +15,23 @@ import usersettings as uset
 # user settings
 user = uset.TRAILSettings_RUN()
 
+# task and dataset
+task = "run"
+dataset = "run_stance"
+
 # data file
-srcpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle\csvfolder"
-srcfile = "trail_opensim_results_ikid_run_run_stridecycle.csv"
+srcpath = os.path.join(r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase", task, dataset, "csvfolder")
+srcfile = "trail_opensim_results_ikid_" + task + "_" + dataset + ".csv"
 
 # output file
-outpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle\datacheck"
+outpath = os.path.join(r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase", task, dataset, "datacheck")
 if not os.path.isdir(outpath): os.makedirs(outpath)
-
 
 
 # %% PREPARE DATA
 
 # load meta data
-dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stridecycle", user.metadatafile)
+dbfilepath = os.path.join(user.rootpath, user.outfolder, task, dataset, user.metadatafile)
 with open(dbfilepath, "rb") as fid:
     meta = pk.load(fid)
 
@@ -44,12 +47,6 @@ df = df0[(df0["variable"] == "knee_angle") | (df0["variable"] == "knee_angle_mom
 
 
 print("Generating plots for data check...")
-
-# task: run
-task = "run"
-
-# dataset: run_stridecycle, run_stridecycle
-dataset = "run_stridecycle"
 
 # data leg: r (ignore left leg)
 leg = "r"
@@ -74,13 +71,17 @@ for c in ["ep", "fast"]:
                 if subj.casefold() == "study": continue                
                 
                 print("%s" % subj, end = "")
+
+                # Rectify subject name format for consistency with TRAIL baseline
+                # Current: TRAIL123, Required: TRAIL_123
+                subjcorrected = subj[0:5] + "_" + subj[5:8]
                 
                 # output folder
                 figpath = os.path.join(outpath, subj)
                 if not os.path.isdir(figpath): os.makedirs(figpath)
                 
                 # get the participant data for the given parameter combination
-                data = df[(df["data_leg"] == leg) & (df["condition"] == c) & (df["data_type"] == d) & (df["variable"] == v) & (df["subject"] == subj)]
+                data = df[(df["data_leg"] == leg) & (df["condition"] == c) & (df["data_type"] == d) & (df["variable"] == v) & (df["subject"] == subjcorrected)]
                 
                 # drop info columns except trial name, transpose
                 dnames = data.loc[:, "trial"]

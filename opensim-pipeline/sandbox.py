@@ -45,8 +45,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL004_STATIC05"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL004\BASELINE\TRAIL004_STATIC05"
+fprefix = "TRAIL369_FAST01"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL369\BASELINE\TRAIL369_FAST01"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_trialkey.pkl")

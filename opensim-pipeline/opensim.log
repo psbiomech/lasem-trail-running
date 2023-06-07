@@ -1,87 +1,87 @@
-[2023-06-06 12:50:20.510] [info] Loaded model TRAIL_406 from file C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle\TRAIL406\BASELINE\TRAIL406_FAST08\TRAIL406.osim
-[2023-06-06 12:50:20.511] [warning] Couldn't find file 'r_pelvis.vtp'.
-[2023-06-06 12:50:20.511] [warning] Couldn't find file 'l_pelvis.vtp'.
-[2023-06-06 12:50:20.511] [warning] Couldn't find file 'sacrum.vtp'.
-[2023-06-06 12:50:20.512] [warning] Couldn't find file 'r_femur.vtp'.
-[2023-06-06 12:50:20.512] [warning] Couldn't find file 'r_tibia.vtp'.
-[2023-06-06 12:50:20.512] [warning] Couldn't find file 'r_fibula.vtp'.
-[2023-06-06 12:50:20.512] [warning] Couldn't find file 'r_patella.vtp'.
-[2023-06-06 12:50:20.512] [warning] Couldn't find file 'r_talus.vtp'.
-[2023-06-06 12:50:20.512] [warning] Couldn't find file 'r_foot.vtp'.
-[2023-06-06 12:50:20.512] [warning] Couldn't find file 'r_bofoot.vtp'.
-[2023-06-06 12:50:20.512] [warning] Couldn't find file 'l_femur.vtp'.
-[2023-06-06 12:50:20.512] [warning] Couldn't find file 'l_tibia.vtp'.
-[2023-06-06 12:50:20.512] [warning] Couldn't find file 'l_fibula.vtp'.
-[2023-06-06 12:50:20.512] [warning] Couldn't find file 'l_pat.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'l_talus.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'l_foot.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'l_bofoot.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'hat_spine.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'hat_jaw.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'hat_skull.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'humerus_rv.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'ulna_rv.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'radius_rv.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'pisiform_rvs.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'lunate_rvs.vtp'.
-[2023-06-06 12:50:20.513] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'hamate_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'capitate_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'trapezium_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'index_medial_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'index_distal_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
-[2023-06-06 12:50:20.514] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'little_medial_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'little_distal_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
-[2023-06-06 12:50:20.515] [warning] Couldn't find file 'humerus_lv.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'ulna_lv.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'radius_lv.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'pisiform_lvs.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'lunate_lvs.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'hamate_lvs.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'capitate_lvs.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'trapezium_lvs.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
-[2023-06-06 12:50:20.516] [warning] Couldn't find file 'index_medial_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'index_distal_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'little_medial_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'little_distal_lvs.vtp'.
-[2023-06-06 12:50:20.517] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
-[2023-06-06 12:50:20.518] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
-[2023-06-06 12:50:20.518] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
-[2023-06-06 12:50:20.656] [warning] ExternalLoades: external_loads_model_kinematics_file option is not supported anymore. Results may change.
-[2023-06-06 12:50:20.720] [cout] [info] 
+[2023-06-07 17:43:04.018] [info] Loaded model TRAIL_406 from file C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL406\BASELINE\TRAIL406_FAST08\TRAIL406.osim
+[2023-06-07 17:43:04.019] [warning] Couldn't find file 'r_pelvis.vtp'.
+[2023-06-07 17:43:04.019] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2023-06-07 17:43:04.020] [warning] Couldn't find file 'sacrum.vtp'.
+[2023-06-07 17:43:04.020] [warning] Couldn't find file 'r_femur.vtp'.
+[2023-06-07 17:43:04.020] [warning] Couldn't find file 'r_tibia.vtp'.
+[2023-06-07 17:43:04.020] [warning] Couldn't find file 'r_fibula.vtp'.
+[2023-06-07 17:43:04.020] [warning] Couldn't find file 'r_patella.vtp'.
+[2023-06-07 17:43:04.020] [warning] Couldn't find file 'r_talus.vtp'.
+[2023-06-07 17:43:04.020] [warning] Couldn't find file 'r_foot.vtp'.
+[2023-06-07 17:43:04.020] [warning] Couldn't find file 'r_bofoot.vtp'.
+[2023-06-07 17:43:04.020] [warning] Couldn't find file 'l_femur.vtp'.
+[2023-06-07 17:43:04.020] [warning] Couldn't find file 'l_tibia.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'l_fibula.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'l_pat.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'l_talus.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'l_foot.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'hat_spine.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'hat_skull.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'hat_ribs_scap.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'humerus_rv.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'ulna_rv.vtp'.
+[2023-06-07 17:43:04.021] [warning] Couldn't find file 'radius_rv.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'pisiform_rvs.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'lunate_rvs.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'scaphoid_rvs.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'triquetrum_rvs.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'hamate_rvs.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'capitate_rvs.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'trapezoid_rvs.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'trapezium_rvs.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'metacarpal2_rvs.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'index_proximal_rvs.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'index_medial_rvs.vtp'.
+[2023-06-07 17:43:04.022] [warning] Couldn't find file 'index_distal_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'metacarpal3_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'middle_proximal_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'middle_medial_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'middle_distal_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'metacarpal4_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'ring_proximal_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'ring_medial_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'ring_distal_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'metacarpal5_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'little_proximal_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'little_medial_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'little_distal_rvs.vtp'.
+[2023-06-07 17:43:04.023] [warning] Couldn't find file 'metacarpal1_rvs.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'thumb_proximal_rvs.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'thumb_distal_rvs.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'humerus_lv.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'ulna_lv.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'radius_lv.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'pisiform_lvs.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'lunate_lvs.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'scaphoid_lvs.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'triquetrum_lvs.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'hamate_lvs.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'capitate_lvs.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'trapezoid_lvs.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'trapezium_lvs.vtp'.
+[2023-06-07 17:43:04.024] [warning] Couldn't find file 'metacarpal2_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'index_proximal_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'index_medial_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'index_distal_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'metacarpal3_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'middle_proximal_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'middle_medial_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'middle_distal_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'metacarpal4_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'ring_proximal_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'ring_medial_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'ring_distal_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'metacarpal5_lvs.vtp'.
+[2023-06-07 17:43:04.025] [warning] Couldn't find file 'little_proximal_lvs.vtp'.
+[2023-06-07 17:43:04.026] [warning] Couldn't find file 'little_medial_lvs.vtp'.
+[2023-06-07 17:43:04.026] [warning] Couldn't find file 'little_distal_lvs.vtp'.
+[2023-06-07 17:43:04.026] [warning] Couldn't find file 'metacarpal1_lvs.vtp'.
+[2023-06-07 17:43:04.026] [warning] Couldn't find file 'thumb_proximal_lvs.vtp'.
+[2023-06-07 17:43:04.026] [warning] Couldn't find file 'thumb_distal_lvs.vtp'.
+[2023-06-07 17:43:04.169] [warning] ExternalLoades: external_loads_model_kinematics_file option is not supported anymore. Results may change.
+[2023-06-07 17:43:04.233] [cout] [info] 
                MODEL: TRAIL_406
          coordinates: 39
               forces: 97
@@ -96,11 +96,11 @@
          controllers: 0
   contact geometries: 0
 misc modelcomponents: 0
-[2023-06-06 12:50:20.720] [info] Running tool InverseDynamics...
-[2023-06-06 12:50:20.754] [info] ExternalLoads 'ExternalLoads' was renamed and is being reset to 'externalloads'.
-[2023-06-06 12:50:20.895] [info] Storage: read data file = C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle\TRAIL406\BASELINE\TRAIL406_FAST08\TRAIL406_FAST08_grf.mot (nr=828 nc=19)
-[2023-06-06 12:50:20.906] [info] ExternalForce::Right Data source being set to TRAIL406_FAST08_grf.mot
-[2023-06-06 12:50:20.906] [info] ExternalForce::Left Data source being set to TRAIL406_FAST08_grf.mot
-[2023-06-06 12:50:20.931] [info] Storage: read data file = C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle\TRAIL406\BASELINE\TRAIL406_FAST08\ik\TRAIL406_FAST08_ik.mot (nr=135 nc=40)
-[2023-06-06 12:50:20.935] [info] Low-pass filtering coordinates data with a cutoff frequency of 6.0...
-[2023-06-06 12:50:21.276] [info] InverseDynamicsTool: 123 time frames in 150 millisecond(s).
+[2023-06-07 17:43:04.233] [info] Running tool InverseDynamics...
+[2023-06-07 17:43:04.265] [info] ExternalLoads 'ExternalLoads' was renamed and is being reset to 'externalloads'.
+[2023-06-07 17:43:04.404] [info] Storage: read data file = C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL406\BASELINE\TRAIL406_FAST08\TRAIL406_FAST08_grf.mot (nr=828 nc=19)
+[2023-06-07 17:43:04.415] [info] ExternalForce::Right Data source being set to TRAIL406_FAST08_grf.mot
+[2023-06-07 17:43:04.415] [info] ExternalForce::Left Data source being set to TRAIL406_FAST08_grf.mot
+[2023-06-07 17:43:04.441] [info] Storage: read data file = C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL406\BASELINE\TRAIL406_FAST08\ik\TRAIL406_FAST08_ik.mot (nr=109 nc=40)
+[2023-06-07 17:43:04.444] [info] Low-pass filtering coordinates data with a cutoff frequency of 6.0...
+[2023-06-07 17:43:04.744] [info] InverseDynamicsTool: 97 time frames in 137 millisecond(s).
