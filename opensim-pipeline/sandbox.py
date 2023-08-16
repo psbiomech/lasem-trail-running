@@ -45,8 +45,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL369_FAST01"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL369\BASELINE\TRAIL369_FAST01"
+fprefix = "TRAIL001_EP02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL001\BASELINE\TRAIL001_EP02"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_trialkey.pkl")
@@ -59,8 +59,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL007_EP01"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL007\BASELINE\TRAIL007_EP01"
+fprefix = "TRAIL001_EP02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL001\BASELINE\TRAIL001_EP02"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_c3dkey.pkl")

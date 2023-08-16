@@ -69,17 +69,71 @@ class TrialKey():
             events["labels"] = ["GEN", "GEN"]
             events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]            
         
-        # if general events exist, rename to GEN
-        elif (c3dkey.meta["EVENT"]["USED"] == 2) and ([g == 1 for g in c3dkey.meta["EVENT"]["GENERIC_FLAGS"]]):
+        # if only general events exist, rename to GEN
+        elif (c3dkey.meta["EVENT"]["USED"] == 2) and all([g == 1 for g in c3dkey.meta["EVENT"]["GENERIC_FLAGS"]]):
             events["labels"] = ["GEN", "GEN"]
             events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]            
                                 
         else:
             
-            # build events list and time
+            # Event info
             foot = [f[0].upper() for f in c3dkey.meta["EVENT"]["CONTEXTS"]]
-            elabels = [foot[i] + "F" + f.split()[1][0] for i, f in enumerate(c3dkey.meta["EVENT"]["LABELS"])]
-            etime = c3dkey.meta["EVENT"]["TIMES"][:, 1]
+            labels = c3dkey.meta["EVENT"]["LABELS"]
+            times = c3dkey.meta["EVENT"]["TIMES"][:, 1]
+            
+            # New event offset: pyc3dserver doesn't consider the ACTUAL_START_FRAME
+            # field when extracting time vectors for FORCE and POINT data. Thus
+            # these time vectors are relative time vectors beginning at t=0.00.
+            # However, pyc3dserver extracts event times verbatim from the C3D
+            # file, which is inclusive of the ACTUAL_START_FRAME. Thus any manual
+            # events added need to add the ACTUAL_START_FRAME offset. These are
+            # then removed again when calculating relative event times, events0.
+            new_event_offset = ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
+            
+            # Build events list and time
+            #
+            # Most trials should not have generic events. If no generic events 
+            # then continue.
+            #
+            # However, generic events are required for hop for distance. If only
+            # one generic event is provided, create a new event at the start or
+            # end of the trial. If no generic events are provided, add events 
+            # to the start and end of the trial.
+            
+            # No generic events but hop-for-distance trial
+            if (foot[0] != "G") and (foot[-1] != "G") and (task.casefold() == "hfd"):
+                labels = np.insert(labels, 0, "Gen Off")
+                labels = np.append(labels, "Gen Strike")
+                foot.insert(0, "G")
+                foot.append("G")
+                times = np.insert(times, 0, c3dkey.markers["TIME"][0] + new_event_offset)
+                times = np.append(times, c3dkey.markers["TIME"][-1] + new_event_offset)
+                
+            # Two generic events
+            elif (foot[0] == "G") and (foot[-1] == "G"):
+                labels[0] = "Gen Off"
+                labels[-1] = "Gen Strike"
+            
+            # One generic event at start, add new one to end
+            elif foot[0] == "G":            
+                labels[0] = "Gen Off"
+                labels = np.append(labels, "Gen Strike")
+                foot.append("G")
+                times = np.append(times, c3dkey.markers["TIME"][-1] + new_event_offset)
+                
+            # One generic event at end, add new one to start
+            elif foot[-1] == "G":
+                labels = np.insert(labels, 0, "Gen Off")
+                labels[-1] = "Gen Strike"
+                foot.insert(0, "G")
+                times = np.insert(times, 0, c3dkey.markers["TIME"][0] + new_event_offset)               
+                
+                
+                
+                
+            # Build list of events and associated labels
+            elabels = [foot[i] + "F" + f.split()[1][0] for i, f in enumerate(labels)]
+            etime = times
             
             # sort the events list and time as sometimes the C3D stores events
             # and times out of order in its meta data
@@ -93,8 +147,16 @@ class TrialKey():
         # further investigation) and you end up with negative time values. For
         # these, use the first marker time step.
         events["time0"] = events["time"] - ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
-        if events["time0"][0] < 0.0:
+        
+        # Correct first event relative time if required due to mismatch between 
+        # recorded frames and ACTUAL_START_FIELD in C3D, allow for a tolerance.
+        if 0.0 - events["time0"][0] > 1e-3:
             events["time0"] = events["time"] - c3dkey.markers["TIME"][0]
+        
+        # If first event is the first frame, event time should be 0.0 sec, but 
+        # sampling can cause small discrepancies. Correct these to be 0.0 sec.
+        else:
+            events["time0"][0] = 0.0
         
              
         # ###################################
@@ -256,39 +318,81 @@ class TrialKey():
                 else:
                     events["opensim_last_event_idx"] = 3
     
-            # step down and pivot
-            elif dataset.casefold().startswith("sdp"):
+    
+    
+        # Task: STEP DOWN AND PIVOT
+        elif task.casefold() == "sdp":
+            
+            # ipsilateral FO to ipsilateral FS after pivot
+            
+            # calculate the time window of interest (assume first FO is start
+            # of the trial time window, second FS is end of window)
+            fsidx0 = np.where(np.char.find(events["labels"],"FO")>=0)[0][0]
+            foidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][-1]
+            events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
+            events["window_labels"] = events["labels"][fsidx0:foidx1 + 1] 
+            
+            # list the individual intervals
+            events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
+             
+            # find force plate sequence for each interval (row) defined in the
+            # array window_intervals0
+            # note: sequences defined as per GaitExtract using a 2D array:
+            #   rows: event intervals
+            #   col1: right foot
+            #   col2: left foot
+            events["fp_sequence"] = [[0, 0]]
+            if events["window_labels"][0][0] == "R":
+                events["fp_sequence"] = np.array([[0, 3], [1, 3], [1, 0], [1, 2], [0, 2]])
+            else:
+                events["fp_sequence"] = np.array([[3, 0], [3, 2], [0, 2], [1, 2], [1, 0]])            
+            
+            # leg task is same for both legs  (R, L)
+            events["leg_task"] = ["sdp", "sdp"]   
+            
+            # last event index (0-based) for OpenSim analyses that require
+            # kinetics (e.g., ID, SO, RRA and CMC)
+            events["opensim_last_event_idx"] = 5            
+
+
+
+        # Task: HOP FOR DISTANCE
+        elif task.casefold() == "hfd":
+            
+            # Extend time window 1 sec before and after first and last
+            # events respectively.
+            
+            # calculate the time window of interest (assume first FO is start
+            # of the trial time window, second FS is end of window)
+            fsidx0 = np.where(np.char.find(events["labels"],"FO")>=0)[0][0]
+            foidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][-1]
+            events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
+            events["window_labels"] = events["labels"][fsidx0:foidx1 + 1] 
+            
+            # list the individual intervals
+            events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
+             
+            # find force plate sequence for each interval (row) defined in the
+            # array window_intervals0
+            # note: sequences defined as per GaitExtract using a 2D array:
+            #   rows: event intervals
+            #   col1: right foot
+            #   col2: left foot
+            events["fp_sequence"] = [[0, 0]]
+            if events["window_labels"][1][0] == "R":
+                events["fp_sequence"] = np.array([[4, 0], [0, 0], [3, 0]])
+            else:
+                events["fp_sequence"] = np.array([[0, 4], [0, 0], [0, 3]])            
+            
+            # leg task is same for both legs  (R, L)
+            if events["window_labels"][1][0] == "R":
+                events["leg_task"] = ["hfd", "not_used"]
+            else:
+                events["leg_task"] = ["not_used", "hfd"]
                 
-                # ipsilateral FO to ipsilateral FS after pivot
-                
-                # calculate the time window of interest (assume first FO is start
-                # of the trial time window, second FS is end of window)
-                fsidx0 = np.where(np.char.find(events["labels"],"FO")>=0)[0][0]
-                foidx1 = np.where(np.char.find(events["labels"],"FS")>=0)[0][-1]
-                events["window_time0"] = events["time0"][fsidx0:foidx1 + 1]
-                events["window_labels"] = events["labels"][fsidx0:foidx1 + 1] 
-                
-                # list the individual intervals
-                events["window_intervals0"] = np.array([[t0, t1] for t0, t1 in zip(events["window_time0"][0:-1], events["window_time0"][1:])])
-                 
-                # find force plate sequence for each interval (row) defined in the
-                # array window_intervals0
-                # note: sequences defined as per GaitExtract using a 2D array:
-                #   rows: event intervals
-                #   col1: right foot
-                #   col2: left foot
-                events["fp_sequence"] = [[0, 0]]
-                if events["window_labels"][0][0] == "R":
-                    events["fp_sequence"] = np.array([[0, 3], [1, 3], [1, 0], [1, 2], [0, 2]])
-                else:
-                    events["fp_sequence"] = np.array([[3, 0], [3, 2], [0, 2], [1, 2], [1, 0]])            
-                
-                # leg task is same for both legs  (R, L)
-                events["leg_task"] = ["sdp", "sdp"]   
-                
-                # last event index (0-based) for OpenSim analyses that require
-                # kinetics (e.g., ID, SO, RRA and CMC)
-                events["opensim_last_event_idx"] = 5            
+            # last event index (0-based) for OpenSim analyses that require
+            # kinetics (e.g., ID, SO, RRA and CMC)
+            events["opensim_last_event_idx"] = 3   
             
         #
         # ###################################
@@ -728,7 +832,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                #if not (trial == "TRAIL007_STATIC02"): continue;
+                if not (trial == "SKIP_ME"): continue;
                 #*********************
                 
                 # ignore dynamic trials
@@ -750,6 +854,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)                           
                     if usedstatic: mass = osimkey.mass
                 except:
+                    raise
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)
             
@@ -768,7 +873,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "TRAIL007_STATIC02"): continue;
+                if not (trial == "TRAIL001_HFD_LEFT02"): continue;
                 #*********************
                 
                 # ignore static trials
@@ -788,6 +893,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     model = meta[subj]["trials"][group][trial]["osim"]
                     c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)   
                 except:
+                    raise
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)  
 
