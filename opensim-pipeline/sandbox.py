@@ -30,8 +30,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL007_EP01"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL007\BASELINE\TRAIL007_EP01"
+fprefix = "TRAIL001_HFD_LEFT02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\hfd\hfd\TRAIL001\BASELINE\TRAIL001_HFD_LEFT02"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_osimkey.pkl")
@@ -76,8 +76,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL296_EP02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\TRAIL296\BASELINE\TRAIL296_EP02"
+fprefix = "TRAIL006_HFD_LEFT03"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\hfd\hfd\TRAIL006\BASELINE\TRAIL006_HFD_LEFT03"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_opensim_results.pkl")

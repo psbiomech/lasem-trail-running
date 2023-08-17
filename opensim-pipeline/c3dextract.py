@@ -128,9 +128,7 @@ class TrialKey():
                 foot.insert(0, "G")
                 times = np.insert(times, 0, c3dkey.markers["TIME"][0] + new_event_offset)               
                 
-                
-                
-                
+            
             # Build list of events and associated labels
             elabels = [foot[i] + "F" + f.split()[1][0] for i, f in enumerate(labels)]
             etime = times
@@ -164,33 +162,34 @@ class TrialKey():
         
         # Match task + dataset, and perform required computations
         # (unfortunately we cannot use match-case before Python 3.10)
- 
-        # Task: RUN
-        if task.casefold() == "run":
-        
-            # static trials
-            if dataset.casefold() == "static":
-                
-                # calculate subject mass, return end frames for 25%-75% window
-                mass = calculate_subject_mass(c3dkey, static_fp_channel)
-                self.mass = mass  # override default
-                
-                # time window for model scaling (take 45%-55% window)
-                events["window_time0"] = np.array([events["time0"][0], events["time0"][-1]])
-                events["window_labels"] = ["STATIC0", "STATIC1"]
-               
-                # no force plate sequence
-                events["fp_sequence"] = [[0, 0]]
-                
-                # leg task is static (R, L)
-                events["leg_task"] = ["static", "static"]
+
     
-                # last event index (0-based) for OpenSim analyses that require
-                # kinetics (e.g., ID, SO, RRA and CMC)
-                events["opensim_last_event_idx"] = -1
+        # Static trial
+        if dataset.casefold() == "static":
+            
+            # calculate subject mass, return end frames for 25%-75% window
+            mass = calculate_subject_mass(c3dkey, static_fp_channel)
+            self.mass = mass  # override default
+            
+            # time window for model scaling (take 45%-55% window)
+            events["window_time0"] = np.array([events["time0"][0], events["time0"][-1]])
+            events["window_labels"] = ["STATIC0", "STATIC1"]
+           
+            # no force plate sequence
+            events["fp_sequence"] = [[0, 0]]
+            
+            # leg task is static (R, L)
+            events["leg_task"] = ["static", "static"]
+
+            # last event index (0-based) for OpenSim analyses that require
+            # kinetics (e.g., ID, SO, RRA and CMC)
+            events["opensim_last_event_idx"] = -1
+
+        # Task: RUN
+        elif task.casefold() == "run":
                 
             # run full stride cycle, both legs
-            elif dataset.casefold().startswith("run_stridecycle"):
+            if dataset.casefold().startswith("run_stridecycle"):
                 
                 # some trials will have 2 full stride cycles, some will only have
                 # one, so in the latter case the contralateral leg will report
@@ -832,7 +831,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                if not (trial == "SKIP_ME"): continue;
+                #if not (trial == "SKIP_ME"): continue;
                 #*********************
                 
                 # ignore dynamic trials
@@ -854,7 +853,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)                           
                     if usedstatic: mass = osimkey.mass
                 except:
-                    raise
+                    #raise
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)
             
@@ -873,7 +872,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                if not (trial == "TRAIL001_HFD_LEFT02"): continue;
+                #if not (trial == "TRAIL001_HFD_LEFT02"): continue;
                 #*********************
                 
                 # ignore static trials
@@ -893,7 +892,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     model = meta[subj]["trials"][group][trial]["osim"]
                     c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)   
                 except:
-                    raise
+                    #raise
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)  
 

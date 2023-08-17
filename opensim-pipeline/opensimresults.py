@@ -38,6 +38,7 @@ class OsimResultsKey():
         self.condition = osimkey.condition
         self.events = osimkey.events
         self.outpath = osimkey.outpath
+        self.nsamp = nsamp
         self.__get_results_raw(osimkey, analyses, nsamp)
         self.__get_results_split(osimkey, analyses, user, nsamp)
         return None
@@ -124,17 +125,17 @@ class OsimResultsKey():
                 #
                 # Includes left leg trial flipping, as the way this is done can
                 # be trial-dependent
-                
+                                
+                # Static trial
+                if self.dataset.casefold() == "static":
+                    print("Static trial. Nothing to be done.")
+                    continue
+                    
                 # Task: RUN
-                if self.task.casefold() == "run":
-                
-                    # static trial
-                    if self.dataset.casefold() == "static":
-                        print("Static trial. Nothing to be done.")
-                        continue
+                elif self.task.casefold() == "run":
                     
                     # foot not used (i.e. no events and no leg_task assigned)
-                    elif self.events["leg_task"][f] == "not_used":
+                    if self.events["leg_task"][f] == "not_used":
                         
                         # store empty in dict
                         results[ans][foot] = {}
@@ -184,43 +185,70 @@ class OsimResultsKey():
                                 t1 = self.events["time"][e1]     
                                 
                         
-                        # step down and pivot
-                        elif self.dataset.casefold() == "sdp":
-                            
-                            # flip columns for left-foot-first left-turning trials
-                            if osimkey.events["labels"][0][0].casefold() == "l":
+                # Task: STEP DOWN AND PIVOT
+                elif self.task.casefold() == "sdp":
+                    
+                    # flip columns for left-foot-first left-turning trials
+                    if osimkey.events["labels"][0][0].casefold() == "l":
+                        data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)                   
+                    
+                    # time window
+                    e0 = 0
+                    e1 = 5
+                    t0 = self.events["time"][e0]
+                    t1 = self.events["time"][e1]    
+
+                    
+                # Task: HOP FOR DISTANCE
+                elif self.task.casefold() == "hfd":
+                    
+                    # foot not used (i.e. no events and no leg_task assigned)
+                    if self.events["leg_task"][f] == "not_used":
+                        
+                        # store empty in dict
+                        results[ans][foot] = {}
+                        results[ans][foot]["data"] = np.zeros([nsamp, len(headers[ans])])
+                        results[ans][foot]["headers"] = headers[ans]
+                        continue                    
+                                        
+                    # Foot is used
+                    elif self.events["leg_task"][f] == "hfd":
+                        
+                            # flip columns for left foot trials
+                            if osimkey.events["labels"][1][0].casefold() == "l":
                                 data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)                   
                             
                             # time window
+                            # Note: for hop for distance extract from first generic
+                            # event to last generic event.
                             e0 = 0
-                            e1 = 5
+                            e1 = 3
                             t0 = self.events["time"][e0]
-                            t1 = self.events["time"][e1]                    
-    
-                        
-                    #
-                    # ###################################
-    
-                    # trim columns
-                    data0 = data0[:, columns[ans][f]].copy()
-                    
-                    # trim rows (time window)
-                    r00 = np.where(data0[:, 0] <= t0)[0]
-                    if r00.size == 0:
-                        r0 = 0
-                    else:
-                        r0 = r00[-1]
-                    r1 = np.where(data0[:, 0] <= t1)[0][-1]
-                    data1 = data0[r0:r1 + 1, :]
-                    
-                    # resample data, currently uses simple 1D interpolation but
-                    # need to find a package that emulates Matlab's resample()
-                    data = resample1d(data1, nsamp)
+                            t1 = self.events["time"][e1]  
                                 
-                    # store in dict
-                    results[ans][foot] = {}
-                    results[ans][foot]["data"] = data
-                    results[ans][foot]["headers"] = headers[ans]
+                #
+                # ###################################
+
+                # trim columns
+                data0 = data0[:, columns[ans][f]].copy()
+                
+                # trim rows (time window)
+                r00 = np.where(data0[:, 0] <= t0)[0]
+                if r00.size == 0:
+                    r0 = 0
+                else:
+                    r0 = r00[-1]
+                r1 = np.where(data0[:, 0] <= t1)[0][-1]
+                data1 = data0[r0:r1 + 1, :]
+                
+                # resample data, currently uses simple 1D interpolation but
+                # need to find a package that emulates Matlab's resample()
+                data = resample1d(data1, nsamp)
+                            
+                # store in dict
+                results[ans][foot] = {}
+                results[ans][foot]["data"] = data
+                results[ans][foot]["headers"] = headers[ans]
         
         self.results["split"] = results        
             
@@ -297,10 +325,12 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
     
 
 '''
-export_opensim_results(meta, user, analyses):
+export_opensim_results(meta, user, analyses, nsamp):
     Collate OpenSim results into dataframes and export to text for Rstats.
+    Note: nsamp should be the same as that used for OsimResultsKey
+    otherwise the trial is skipped.
 '''
-def export_opensim_results(meta, user, analyses):
+def export_opensim_results(meta, user, analyses, nsamp):
     
     # empty output list of lists
     # (create the output table as a list of lists, then convert to dataframe
@@ -371,6 +401,10 @@ def export_opensim_results(meta, user, analyses):
                             data = osimresultskey.results["split"][ans][foot]["data"]
                             varheader = osimresultskey.results["split"][ans][foot]["headers"]
                         
+                            # resample data if necessary
+                            if nsamp != osimresultskey.nsamp:
+                                data = resample1d(data, nsamp)
+                        
                             # variable
                             for v, variable in enumerate(varheader):
                                 
@@ -389,7 +423,7 @@ def export_opensim_results(meta, user, analyses):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "task", "dataset", "condition", "data_type", "data_leg", "analysis", "variable"] + ["t" + str(n) for n in range(1,102)]
+    headers = ["subject", "trial", "task", "dataset", "condition", "data_type", "data_leg", "analysis", "variable"] + ["t" + str(n) for n in range(1, nsamp + 1)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers
