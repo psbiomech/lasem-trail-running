@@ -872,7 +872,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "TRAIL001_HFD_LEFT02"): continue;
+                #if not (trial == "TRAIL019_HFD_LEFT01"): continue;
                 #*********************
                 
                 # ignore static trials
@@ -892,7 +892,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     model = meta[subj]["trials"][group][trial]["osim"]
                     c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)   
                 except:
-                    #raise
+                    raise
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)  
 
