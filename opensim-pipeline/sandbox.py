@@ -69,15 +69,14 @@ with open(pkfile, "rb") as fid:
     
     
 
-
 # %% LOAD AN OSIMRESULTSKEY
 
 import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL006_HFD_LEFT03"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\hfd\hfd\TRAIL006\BASELINE\TRAIL006_HFD_LEFT03"
+fprefix = "TRAIL001_EP02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL001\BASELINE\TRAIL001_EP02"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_opensim_results.pkl")
@@ -86,8 +85,16 @@ with open(pkfile, "rb") as fid:
     
     
 
-# %% CALCULATE JOINT ANGULAR IMPULSE
+# %% TEST ANALYSES
 
+import usersettings as uset
 import analyses as an
 
-impl = an.calculate_joint_angular_impulse(osimkey1, user)
+user = uset.TRAILSettings_RUN()
+
+jap = an.calculate_joint_angular_power(osimresultskey1, user)
+jaw = an.calculate_joint_angular_work(osimresultskey1, user)
+
+
+
+

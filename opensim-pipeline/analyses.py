@@ -11,6 +11,8 @@ import os
 import numpy as np
 import pickle as pk
 import pandas as pd
+from scipy import interpolate
+from scipy import integrate
 
 
 
@@ -36,7 +38,7 @@ import pandas as pd
 analyses_batch_process(meta, user):
     Batch process post-hoc analyses.
 '''
-def analyses_batch_process(meta, user):
+def analyses_batch_process(meta, user, analyses):
     
     # extract OpenSim data
     failedfiles = []
@@ -61,32 +63,49 @@ def analyses_batch_process(meta, user):
 
                 try:
 
-                    # load results key
+                    # Load OsimResultsKey
                     pklpath = meta[subj]["trials"][group][trial]["outpath"]
                     with open(os.path.join(pklpath, trial + "_opensim_results.pkl"), "rb") as fid0:
                         osimresultskey = pk.load(fid0)
                             
-                    # create analyses dict key if it does not exist
-                    if "analyses" not in osimresultskey.results:
-                        osimresultskey.results["analyses"] = {}
-                                    
+                    # Output analysis dict
+                    analyses = {}
+                    analyses["subj"] = subj
+                    analyses["group"] = group
+                    analyses["trial"] = trial
+                    analyses["outpath"] = pklpath
+                                  
                     print("Dynamic trial: %s" % trial)
                     
                     
                     
                     # ******************************
-                    # ANALSYES
+                    # ANALYSES
     
-                    # joint angular impulse, incl. pelvis
-                    print("---> Joint angular impulse")
-                    osimresultskey = calculate_joint_angular_impulse(osimresultskey, user)                
-    
+                    for ans in analyses:
+                        
+                        # Joint angular impulse
+                        if ans == "jai":
+                            print("---> Joint angular impulse")
+                            analyses["joint_angular_impulse"] = calculate_joint_angular_impulse(osimresultskey, user)     
+                            
+                        # Joint angular power
+                        elif ans == "jap":
+                            print("---> Joint angular power")
+                            analyses["joint_angular_power"] = calculate_joint_angular_power(osimresultskey, user)
+                            
+                        # Joint angular work
+                        elif ans == "jaw":
+                            print("---> Joint angular work")
+                            analyses["joint_angular_work"] = calculate_joint_angular_work(osimresultskey, user)                            
+                            
+        
     
                     #                
                     # ******************************
      
-                    # pickle updated results key
-                    with open(os.path.join(pklpath, trial + "_opensim_results.pkl"), "wb") as fid1:
+                    # pickle analysis dict
+                    with open(os.path.join(pklpath, trial + "_analyses_results.pkl"), "wb") as fid1:
                         pk.dump(osimresultskey, fid1)   
 
                 except:
@@ -163,14 +182,129 @@ def calculate_joint_angular_impulse(osimresultskey, user):
             # net window negative
             Twinneg = Tneg[idx0:idx1, :]
             impl[leg]["windows"][wlabel]["neg"] = np.trapz(Twinneg, timewin, axis = 0)
-           
     
-    # append to results key
-    osimresultskey.results["analyses"]["joint_angular_impulse"] = impl
+    return impl
     
-    return osimresultskey
+
     
-  
+'''
+calculate_joint_angular_power(osimresultskey, user):
+    Calculate the joint angular power for all available joints using joint angles
+    from inverse kinematics and joint moments from inverse dynamics.
+'''
+def calculate_joint_angular_power(osimresultskey, user):
+    
+    # Get event times
+    events = osimresultskey.events["time"]
+    
+    # Get ID data
+    Tdata = osimresultskey.results["split"][user.idcode].copy()
+    
+    # Get IK data
+    Qdata = osimresultskey.results["split"][user.ikcode].copy()
+    
+    # Calculate joint angular power on each leg
+    jap = {}
+    for leg in user.leg:
+        
+        # Leg joint moments (Nm), remove pelvis forces
+        timeT = Tdata[leg]["data"][:, 0]
+        Torig = Tdata[leg]["data"][:, 1:]
+        headersT = Tdata[leg]["headers"][1:]
+        delidxT = headersT.index("pelvis_tx_force")
+        del headersT[delidxT:delidxT+3]
+        Torig = np.delete(Torig, range(delidxT, delidxT + 3), axis = 1)       
+               
+        # Leg joint angles (rad), remove pelvis translations
+        timeQ = Qdata[leg]["data"][:, 0]
+        Q = np.deg2rad(Qdata[leg]["data"][:, 1:])
+        headersQ = Qdata[leg]["headers"][1:]
+        delidxQ = headersQ.index("pelvis_tx")
+        del headersQ[delidxQ:delidxQ+3]
+        Q = np.delete(Q, range(delidxQ, delidxQ + 3), axis = 1)
+        
+        # Calculate joint velocities (rad/s)
+        Qdot = np.gradient(Q, timeQ, axis = 0)
+        
+        # Adjust moments using interpolation so that time vector matches
+        # the velocity data. OpenSim can cause small shifts in the time
+        # vectors that need to be corrected.
+        Tinterpfun = interpolate.interp1d(timeT, Torig, kind = "cubic", axis = 0, fill_value = "extrapolate")
+        T = Tinterpfun(timeQ)
+        
+        # Calculate joint angular power for each coordinate
+        P = np.zeros(np.shape(Q))
+        for idxQ, qcoord in enumerate(headersQ):
+            
+            # Find moment column index of current coordinate as moments and
+            # velocities may be out of order
+            idxT = [1 if qcoord in head else 0 for i, head in enumerate(headersT)].index(1)
+            
+            # Get the data for the current coordinate
+            qdot = Qdot[:, idxQ]
+            t = T[:, idxT]
+
+            # Calculate joint angular power: P = Tw (Nm/s)
+            P[:, idxQ] = np.multiply(t, qdot)
+            
+        # Add time column
+        P = np.concatenate((np.reshape(timeQ, (-1, 1)), P), axis = 1)
+        
+        # Results dict
+        jap[leg] = {}
+        jap[leg]["data"] = P
+        jap[leg]["headers"] = ["time"] + headersQ
+    
+    return jap
+
+
+
+'''
+calculate_joint_angular_work(osimresultskey, user):
+    Calculate work from power. Output positive and negative work. Waveform
+    numerical integration undertaken using Simpson's rule.
+'''
+def calculate_joint_angular_work(osimresultskey, user):
+    
+    # Calculate joint angular power
+    jap = calculate_joint_angular_power(osimresultskey, user)
+    
+    # Calculate the joint angular work
+    jaw = {}
+    for leg in user.leg:
+        
+        # Split time column and data columns
+        t = jap[leg]["data"][:, 0]
+        P = jap[leg]["data"][:, 1:]
+        
+        # NOTE: Numerical integration undertaken using Simpson's rule
+        
+        # Net work (Nm)
+        W = integrate.simpson(P, t, axis = 0)
+        
+        # Positive work (Nm)
+        Ppos = P.copy()
+        Ppos[Ppos < 0.0] = 0.0
+        Wpos = integrate.simpson(Ppos, t, axis = 0)
+        
+        # Negative work (Nm)
+        Pneg = P.copy()
+        Pneg[Pneg > 0.0] = 0.0
+        Wneg = integrate.simpson(Pneg, t, axis = 0)
+               
+        # Results dict
+        jaw[leg] = {}
+        jaw[leg]["net"] = W
+        jaw[leg]["pos"] = Wpos
+        jaw[leg]["neg"] = Wneg
+        jaw[leg]["headers"] = jap[leg]["headers"][1:]
+    
+    return jaw
+
+
+
+
+
   
   
 '''

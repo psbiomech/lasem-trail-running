@@ -222,8 +222,7 @@ class TRAILSettings_RUN(UserSettings):
         self.results_headers["rra"] = []
         self.results_headers["cmc"] = []
         self.results_headers["jr"] = []   
-        
-        
+
         
         
 '''
