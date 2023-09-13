@@ -223,6 +223,14 @@ class TRAILSettings_RUN(UserSettings):
         self.results_headers["cmc"] = []
         self.results_headers["jr"] = []   
 
+
+
+        # ******************************
+        # ADDITIONAL ANALYSES
+        
+        # outfile file prefixes
+        self.csvfileprefix_analyses_jap = "trail_analyses_results_jap"
+        self.csvfileprefix_analyses_jaw = "trail_analyses_results_jaw"
         
         
 '''

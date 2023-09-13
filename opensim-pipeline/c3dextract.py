@@ -28,9 +28,10 @@ C3DKey:
     C3D data storage class containing all C3D file data.
 '''
 class C3DKey():
-    def __init__(self, sname, tname, fmeta, fforces, fmarkers):
-        self.subject_name = sname
-        self.trial_name = tname
+    def __init__(self, subj, group, trial, fmeta, fforces, fmarkers):
+        self.subject_name = subj
+        self.group_name = group
+        self.trial_name = trial
         self.meta = fmeta
         self.forces = fforces
         self.markers = fmarkers
@@ -45,8 +46,9 @@ TrialKey:
 '''
 class TrialKey():
     def __init__(self, lab, user, task, dataset, condition, c3dkey, xdir, mass):       
-        self.subject_name = str(c3dkey.subject_name)
-        self.trial_name = str(c3dkey.trial_name)
+        self.subject_name = c3dkey.subject_name
+        self.group_name = c3dkey.group_name
+        self.trial_name = c3dkey.trial_name
         self.lab_name = lab.lab_name
         self.task = task
         self.dataset = dataset
@@ -597,6 +599,7 @@ OpenSimKey:
 class OpenSimKey():
     def __init__(self, trialkey, user, c3dpath, model):
         self.subject = trialkey.subject_name
+        self.group = trialkey.group_name
         self.trial = trialkey.trial_name
         self.mass = trialkey.mass
         self.age = 0.0
@@ -850,7 +853,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     dataset = meta[subj]["trials"][group][trial]["dataset"]                    
                     condition = meta[subj]["trials"][group][trial]["condition"]
                     model = meta[subj]["trials"][group][trial]["osim"]
-                    osimkey = c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)                           
+                    osimkey = c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)                           
                     if usedstatic: mass = osimkey.mass
                 except:
                     #raise
@@ -890,9 +893,9 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     dataset = meta[subj]["trials"][group][trial]["dataset"]
                     condition = meta[subj]["trials"][group][trial]["condition"]
                     model = meta[subj]["trials"][group][trial]["osim"]
-                    c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)   
+                    c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)   
                 except:
-                    raise
+                    #raise
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)  
 
@@ -904,12 +907,12 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
 
 
 '''
-c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, 
-            mass, model):
+c3d_extract(subj, group trial, c3dfile, c3dpath, lab, user, task, dataset, 
+            condition, xdir, mass, model):
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model):    
+def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model):    
     
     # load C3D file
     itf = c3d.c3dserver()
@@ -920,13 +923,8 @@ def c3d_extract(trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xd
     fforces = c3d.get_dict_forces(itf, frame=True, time=True)
     fmarkers = c3d.get_dict_markers(itf, frame=True, time=True)
     
-    # subject and trial name
-    sname= fmeta["SUBJECTS"]["NAMES"][0]
-    if not sname: sname = "NoName"
-    tname = trial
-    
     # C3D key with all data from C3D file
-    c3dkey = C3DKey(sname, tname, fmeta, fforces, fmarkers)
+    c3dkey = C3DKey(subj, group, trial, fmeta, fforces, fmarkers)
 
     # trial data only from C3D key
     trialkey = TrialKey(lab, user, task, dataset, condition, c3dkey, xdir, mass)

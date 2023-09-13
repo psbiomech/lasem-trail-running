@@ -134,7 +134,7 @@ def opensim_pipeline(meta, user, analyses, restart = -1):
                         except:
                             print("%s ---> ***FAILED***" % trial)
                             failedfiles.append(trial) 
-                            raise
+                            #raise
             
             # if scale was the only analysis, then go to next group
             if not analyses0: continue
@@ -202,6 +202,7 @@ def opensim_pipeline(meta, user, analyses, restart = -1):
                     except:
                         print("%s ---> ***FAILED***" % trial)
                         failedfiles.append(trial)
+                        #raise
                             
     return failedfiles
 

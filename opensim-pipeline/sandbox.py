@@ -19,7 +19,7 @@ user = uset.TRAILSettings_RUN()
 import pickle as pk
 import os
 
-dbfilepath = os.path.join(user.rootpath, user.outfolder, user.metadatafile)
+dbfilepath = os.path.join(user.rootpath, user.outfolder,"run", "run_stridecycle", user.metadatafile)
 with open(dbfilepath, "rb") as fid:
     traildb = pk.load(fid)
 
@@ -30,8 +30,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL001_HFD_LEFT02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\hfd\hfd\TRAIL001\BASELINE\TRAIL001_HFD_LEFT02"
+fprefix = "TRAIL001_EP02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL001\BASELINE\TRAIL001_EP02"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_osimkey.pkl")

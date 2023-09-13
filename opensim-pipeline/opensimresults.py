@@ -22,8 +22,8 @@ from scipy.interpolate import interp1d
 
 '''
 OsimResultsKey:
-    Data storage class containing all OpenSim output data, raw and normalised
-    to both BW and %BW*HT. Data is resample to the desired number of samples.
+    Data storage class containing all OpenSim output data. Data is resampled to
+    the desired number of samples.
 '''
 class OsimResultsKey():
     def __init__(self, osimkey, analyses, user, nsamp):

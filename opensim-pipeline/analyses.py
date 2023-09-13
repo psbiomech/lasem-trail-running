@@ -13,6 +13,7 @@ import pickle as pk
 import pandas as pd
 from scipy import interpolate
 from scipy import integrate
+from scipy.interpolate import interp1d
 
 
 
@@ -35,15 +36,35 @@ from scipy import integrate
 
 
 '''
-analyses_batch_process(meta, user):
+analyses_batch_process(meta, user, analyses):
     Batch process post-hoc analyses.
 '''
-def analyses_batch_process(meta, user, analyses):
+def analyses_batch_process(meta, user, analyses, restart = -1):
     
     # extract OpenSim data
     failedfiles = []
+    startflag = 0
     for subj in meta:
-    
+
+        # skip the study info
+        if subj.casefold() == "study": continue   
+        
+        # Skip to restart participant, process until last restart participant.
+        # Python uses lazy evaluation so combined expressions are efficient.
+        if restart != -1:
+            if startflag == 1:
+                if (type(restart) == tuple) and (subj == restart[1]):
+                    startflag = 0            
+            elif startflag == 0:
+                if (type(restart) == str) and (subj == restart):
+                    startflag = 1
+                elif (type(restart) == tuple) and (subj == restart[0]):
+                    if restart[0] != restart[1]:
+                        startflag = 1
+                else:
+                    continue
+
+
         print("\n")
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
@@ -57,6 +78,10 @@ def analyses_batch_process(meta, user, analyses):
             # process dynamic trials only
             for trial in  meta[subj]["trials"][group]:                
                 
+                #****** TESTING ******
+                #if not (trial == "TRAIL001_EP02"): continue;
+                #*********************                  
+                
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 if isstatic: continue
@@ -69,48 +94,41 @@ def analyses_batch_process(meta, user, analyses):
                         osimresultskey = pk.load(fid0)
                             
                     # Output analysis dict
-                    analyses = {}
-                    analyses["subj"] = subj
-                    analyses["group"] = group
-                    analyses["trial"] = trial
-                    analyses["outpath"] = pklpath
+                    analysesdict = {}
+                    analysesdict["subject"] = subj
+                    analysesdict["group"] = group
+                    analysesdict["trial"] = trial
+                    analysesdict["outpath"] = pklpath
                                   
                     print("Dynamic trial: %s" % trial)
+
                     
-                    
-                    
-                    # ******************************
-                    # ANALYSES
-    
                     for ans in analyses:
                         
                         # Joint angular impulse
                         if ans == "jai":
                             print("---> Joint angular impulse")
-                            analyses["joint_angular_impulse"] = calculate_joint_angular_impulse(osimresultskey, user)     
+                            analysesdict["joint_angular_impulse"] = calculate_joint_angular_impulse(osimresultskey, user)     
                             
                         # Joint angular power
                         elif ans == "jap":
                             print("---> Joint angular power")
-                            analyses["joint_angular_power"] = calculate_joint_angular_power(osimresultskey, user)
+                            analysesdict["joint_angular_power"] = calculate_joint_angular_power(osimresultskey, user)
                             
                         # Joint angular work
                         elif ans == "jaw":
                             print("---> Joint angular work")
-                            analyses["joint_angular_work"] = calculate_joint_angular_work(osimresultskey, user)                            
+                            analysesdict["joint_angular_work"] = calculate_joint_angular_work(osimresultskey, user)                            
                             
-        
-    
-                    #                
-                    # ******************************
-     
-                    # pickle analysis dict
+
+                    # Pickle analysis dict
                     with open(os.path.join(pklpath, trial + "_analyses_results.pkl"), "wb") as fid1:
-                        pk.dump(osimresultskey, fid1)   
+                        pk.dump(analysesdict, fid1)   
 
                 except:
                     print("*** FAILED ***")
-                    failedfiles.append(trial)                    
+                    failedfiles.append(trial)   
+                    #raise
                         
                           
     print("\n")                
@@ -194,9 +212,6 @@ calculate_joint_angular_power(osimresultskey, user):
 '''
 def calculate_joint_angular_power(osimresultskey, user):
     
-    # Get event times
-    events = osimresultskey.events["time"]
-    
     # Get ID data
     Tdata = osimresultskey.results["split"][user.idcode].copy()
     
@@ -209,11 +224,11 @@ def calculate_joint_angular_power(osimresultskey, user):
         
         # Leg joint moments (Nm), remove pelvis forces
         timeT = Tdata[leg]["data"][:, 0]
-        Torig = Tdata[leg]["data"][:, 1:]
+        T = Tdata[leg]["data"][:, 1:]
         headersT = Tdata[leg]["headers"][1:]
         delidxT = headersT.index("pelvis_tx_force")
         del headersT[delidxT:delidxT+3]
-        Torig = np.delete(Torig, range(delidxT, delidxT + 3), axis = 1)       
+        T = np.delete(T, range(delidxT, delidxT + 3), axis = 1)       
                
         # Leg joint angles (rad), remove pelvis translations
         timeQ = Qdata[leg]["data"][:, 0]
@@ -224,16 +239,16 @@ def calculate_joint_angular_power(osimresultskey, user):
         Q = np.delete(Q, range(delidxQ, delidxQ + 3), axis = 1)
         
         # Calculate joint velocities (rad/s)
-        Qdot = np.gradient(Q, timeQ, axis = 0)
+        Qdot0 = np.gradient(Q, timeQ, axis = 0)
         
-        # Adjust moments using interpolation so that time vector matches
-        # the velocity data. OpenSim can cause small shifts in the time
-        # vectors that need to be corrected.
-        Tinterpfun = interpolate.interp1d(timeT, Torig, kind = "cubic", axis = 0, fill_value = "extrapolate")
-        T = Tinterpfun(timeQ)
+        # Interpolation for joint velocities to match time stamps with moments.
+        # Typically the IK time window is expanded to cater for RRA but the ID
+        # window is not, so the time stamps do not automatically match.
+        Qdot_interpfun = interpolate.interp1d(timeQ, Qdot0, kind = "cubic", axis = 0, fill_value = "extrapolate")
+        Qdot = Qdot_interpfun(timeT)
         
         # Calculate joint angular power for each coordinate
-        P = np.zeros(np.shape(Q))
+        P = np.zeros(np.shape(T))
         for idxQ, qcoord in enumerate(headersQ):
             
             # Find moment column index of current coordinate as moments and
@@ -269,7 +284,7 @@ def calculate_joint_angular_work(osimresultskey, user):
     # Calculate joint angular power
     jap = calculate_joint_angular_power(osimresultskey, user)
     
-    # Calculate the joint angular work
+    # Calculate the joint angular work by integrating waveforms wrt time
     jaw = {}
     for leg in user.leg:
         
@@ -312,6 +327,247 @@ def calculate_joint_angular_work(osimresultskey, user):
 -------- FUNCTIONS: EXPORT --------
 -----------------------------------
 '''
+
+
+
+
+'''
+export_joint_angular_work(meta, user):
+    Write joint angular power to Excel.
+'''
+def export_joint_angular_work(meta, user):
+        
+    # Empty output list of lists
+    # (create the output table as a list of lists, then convert to dataframe
+    # as iteratively appending new dataframe rows is computationally expensive)
+    csvdata = []
+        
+    # Extract OpenSim data
+    print("Collating data into lists...\n")
+    failedfiles = []
+    for subj in meta:
+    
+        # Skip the study info
+        if subj.casefold() == "study": continue        
+    
+        print("%s" % "*" * 30)
+        print("SUBJECT: %s" % subj)
+        print("%s" % "*" * 30)
+        
+        # Rectify subject name format for consistency with TRAIL baseline
+        # Current: TRAIL123, Required: TRAIL_123
+        subjcorrected = subj[0:5] + "_" + subj[5:8]
+        
+        for group in meta[subj]["trials"]:
+            
+            print("Group: %s" % group)
+            print("%s" % "=" * 30)                      
+            
+            # Process dynamic trials only
+            for trial in meta[subj]["trials"][group]:                
+ 
+                #****** TESTING ******
+                #if not (trial == "TRAIL001_EP02"): continue;
+                #*********************     
+                
+                # Ignore static trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                if isstatic: continue
+            
+                # Rectify trial name format for consistency with TRAIL baseline
+                # Current: TRAIL123_FAST08, Required: TRAIL_123_FAST08
+                trialcorrected = trial[0:5] + "_" + trial[5:]
+            
+                try:
+                
+                    # Load the trial OsimResultsKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
+                    with open(pkfile,"rb") as fid:
+                        osimresultskey = pk.load(fid)
+ 
+                    # Load the trial analyses dict
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_analyses_results.pkl")
+                    with open(pkfile,"rb") as fid:
+                        analysesdict = pk.load(fid)                       
+ 
+                    # Trial info
+                    task = osimresultskey.task
+                    dataset = osimresultskey.dataset
+                    condition = osimresultskey.condition
+
+                    # Foot
+                    for f, foot in enumerate(["r","l"]):
+                        
+                        # Leg data window, i.e. leg_task (terrible name)
+                        data_type = osimresultskey.events["leg_task"][f]
+                        
+                        # If the leg has no data, then ignore
+                        if data_type.casefold() == "not_used": continue
+                    
+                        # Data array
+                        net = analysesdict["joint_angular_work"][foot]["net"]
+                        pos = analysesdict["joint_angular_work"][foot]["pos"]
+                        neg = analysesdict["joint_angular_work"][foot]["neg"]
+                        varheader = analysesdict["joint_angular_work"][foot]["headers"]
+                    
+                        # Variable
+                        for v, variable in enumerate(varheader):
+                            
+                            # Data for the variable (includes time)
+                            drow = [net[v], pos[v], neg[v]]
+
+                            # Create new line of data
+                            csvrow = [subjcorrected, trialcorrected, task, dataset, condition, data_type, foot, variable] + drow
+                            csvdata.append(csvrow)
+                
+                except:
+                    print("Dynamic trial: %s *** FAILED ***" % trial)
+                    failedfiles.append(trial)
+                    #raise
+                else:
+                    print("Dynamic trial: %s" % trial)
+
+    # create dataframe
+    print("\nCreating dataframe...")
+    headers = ["subject", "trial", "task", "dataset", "condition", "data_type", "data_leg", "variable", "net", "positive", "negative"]
+    csvdf = pd.DataFrame(csvdata, columns = headers)
+
+    # write data to file with headers
+    print("\nWriting to CSV text file...")
+    csvfile = user.csvfileprefix_analyses_jaw + "_" + meta["study"]["task"] + "_" + meta["study"]["dataset"] + ".csv"
+    fpath = os.path.join(user.rootpath, user.outfolder, meta["study"]["task"], meta["study"]["dataset"], user.csvfolder)
+    if not os.path.exists(fpath): os.makedirs(fpath)
+    csvdf.to_csv(os.path.join(fpath,csvfile), index = False)
+    
+    
+    print("\n")
+   
+    return failedfiles  
+
+
+
+
+'''
+export_joint_angular_power(meta, user, nsamp):
+    Write joint angular power to Excel.
+'''
+def export_joint_angular_power(meta, user, nsamp):
+        
+    # Empty output list of lists
+    # (create the output table as a list of lists, then convert to dataframe
+    # as iteratively appending new dataframe rows is computationally expensive)
+    csvdata = []
+        
+    # Extract OpenSim data
+    print("Collating data into lists...\n")
+    failedfiles = []
+    for subj in meta:
+    
+        # Skip the study info
+        if subj.casefold() == "study": continue        
+    
+        print("%s" % "*" * 30)
+        print("SUBJECT: %s" % subj)
+        print("%s" % "*" * 30)
+        
+        # Rectify subject name format for consistency with TRAIL baseline
+        # Current: TRAIL123, Required: TRAIL_123
+        subjcorrected = subj[0:5] + "_" + subj[5:8]
+        
+        for group in meta[subj]["trials"]:
+            
+            print("Group: %s" % group)
+            print("%s" % "=" * 30)                      
+            
+            # Process dynamic trials only
+            for trial in meta[subj]["trials"][group]:                
+ 
+                #****** TESTING ******
+                #if not (trial == "TRAIL001_EP02"): continue;
+                #*********************     
+                
+                # Ignore static trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                if isstatic: continue
+            
+                # Rectify trial name format for consistency with TRAIL baseline
+                # Current: TRAIL123_FAST08, Required: TRAIL_123_FAST08
+                trialcorrected = trial[0:5] + "_" + trial[5:]
+            
+                try:
+                
+                    # Load the trial OsimResultsKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
+                    with open(pkfile,"rb") as fid:
+                        osimresultskey = pk.load(fid)
+ 
+                    # Load the trial analyses dict
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_analyses_results.pkl")
+                    with open(pkfile,"rb") as fid:
+                        analysesdict = pk.load(fid)                       
+ 
+                    # Trial info
+                    task = osimresultskey.task
+                    dataset = osimresultskey.dataset
+                    condition = osimresultskey.condition
+
+                    # Foot
+                    for f, foot in enumerate(["r","l"]):
+                        
+                        # Leg data window, i.e. leg_task (terrible name)
+                        data_type = osimresultskey.events["leg_task"][f]
+                        
+                        # If the leg has no data, then ignore
+                        if data_type.casefold() == "not_used": continue
+                    
+                        # Data array
+                        data = analysesdict["joint_angular_power"][foot]["data"]
+                        varheader = analysesdict["joint_angular_power"][foot]["headers"]
+                    
+                        # Resample data if necessary
+                        # Temporary: disable for run data as results key does not
+                        # yet contain nsamp field. Needs to be re-run.
+                        # if nsamp != osimresultskey.nsamp:
+                        #     data = resample1d(data, nsamp)
+                    
+                        # Variable
+                        for v, variable in enumerate(varheader):
+                            
+                            # Data for the variable (includes time)
+                            drow = data[:, v]
+
+                            # Create new line of data
+                            csvrow = [subjcorrected, trialcorrected, task, dataset, condition, data_type, foot, variable] + drow.tolist()
+                            csvdata.append(csvrow)
+                
+                except:
+                    print("Dynamic trial: %s *** FAILED ***" % trial)
+                    failedfiles.append(trial)
+                else:
+                    print("Dynamic trial: %s" % trial)
+
+    # create dataframe
+    print("\nCreating dataframe...")
+    headers = ["subject", "trial", "task", "dataset", "condition", "data_type", "data_leg", "variable"] + ["t" + str(n) for n in range(1, nsamp + 1)]
+    csvdf = pd.DataFrame(csvdata, columns = headers)
+
+    # write data to file with headers
+    print("\nWriting to CSV text file...")
+    csvfile = user.csvfileprefix_analyses_jap + "_" + meta["study"]["task"] + "_" + meta["study"]["dataset"] + ".csv"
+    fpath = os.path.join(user.rootpath, user.outfolder, meta["study"]["task"], meta["study"]["dataset"], user.csvfolder)
+    if not os.path.exists(fpath): os.makedirs(fpath)
+    csvdf.to_csv(os.path.join(fpath,csvfile), index = False)
+    
+    
+    print("\n")
+   
+    return failedfiles  
+
+
 
 
 '''
@@ -440,4 +696,54 @@ def export_joint_angular_impulse(meta, user):
 
 
 
+
+
+
+'''
+-----------------------------------
+---- FUNCTIONS: MISCELLANEOUS -----
+-----------------------------------
+'''
+
+
     
+'''
+resample1d(data, nsamp):
+    Simple resampling by 1-D interpolation (rows = samples, cols = variable).
+    Data can be a 1-D or multiple variables in a 2D array-like object.
+'''
+def resample1d(data, nsamp):
+
+    # convert list to array
+    if isinstance(data, list):
+        data = np.array([data]).transpose()
+        ny = 1        
+
+    # data dimensions
+    nx = data.shape[0]
+    ny = data.shape[1]
+
+    # old sample points
+    x = np.linspace(0, nx - 1, nx)
+        
+    # new sample points
+    xnew = np.linspace(0, nx - 1, nsamp)
+    
+    # parse columns
+    datanew = np.zeros([nsamp, ny])
+    for col in range(0, ny):
+        
+        # old data points
+        y = data[:, col]
+        
+        # convert to cubic spline function
+        fy = interp1d(x, y, kind = "cubic", fill_value = "extrapolate")
+    
+        # new data points
+        ynew = fy(xnew)
+    
+        # store column
+        datanew[:, col] = ynew
+        
+    
+    return datanew
