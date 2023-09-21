@@ -89,7 +89,7 @@ def opensim_pipeline(meta, user, analyses, restart = -1):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                #if not (trial == "TRAIL004_STATIC05"): continue;
+                #if not (trial == "SKIP_ME"): continue;
                 #*********************                
 
                 # Pickle file info
@@ -148,7 +148,7 @@ def opensim_pipeline(meta, user, analyses, restart = -1):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                #if not (trial == "TRAIL004_FAST01"): continue;
+                #if not (trial == "TRAIL225_EP08"): continue;
                 #*********************
                 
                 # Pickle file info

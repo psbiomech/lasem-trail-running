@@ -69,7 +69,7 @@ print("Done.\n")
 # import c3dextract as c3dex
 
 # print("Extracting C3D data, creating OpenSim files...\n")
-# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, restart = "TRAIL483")
+# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2)
 # print("\nC3D data extract done.\n")
 
 
@@ -116,7 +116,7 @@ print("CSV export complete.\n")
 import analyses as an
 
 print("Running additional analyses...\n")
-failedanalyses = an.analyses_batch_process(traildb, user, ["jap", "jaw"], restart="TRAIL466")
+failedanalyses = an.analyses_batch_process(traildb, user, ["jap", "jaw"], True, 4, 6)
 print("Analyses complete.\n")
 
 print("Exporting analysis results...\n")

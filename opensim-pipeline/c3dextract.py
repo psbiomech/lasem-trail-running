@@ -90,7 +90,8 @@ class TrialKey():
             # file, which is inclusive of the ACTUAL_START_FRAME. Thus any manual
             # events added need to add the ACTUAL_START_FRAME offset. These are
             # then removed again when calculating relative event times, events0.
-            new_event_offset = ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
+            #new_event_offset = ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
+            new_event_offset = 0.0
             
             # Build events list and time
             #
@@ -142,21 +143,18 @@ class TrialKey():
             events["time"] = [etime[e] for e in sortidxs]
                     
         # Relative time, normalise to first frame in data (NOT first event).
-        # It should be done using the ACTUAL_START_FIELD but this is 
-        # problematic for some static trials for some reason (needs 
-        # further investigation) and you end up with negative time values. For
-        # these, use the first marker time step.
-        events["time0"] = events["time"] - ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
+        #events["time0"] = events["time"] - ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
+        events["time0"] = events["time"] - c3dkey.markers["TIME"][0]
         
         # Correct first event relative time if required due to mismatch between 
         # recorded frames and ACTUAL_START_FIELD in C3D, allow for a tolerance.
-        if 0.0 - events["time0"][0] > 1e-3:
-            events["time0"] = events["time"] - c3dkey.markers["TIME"][0]
+        #if 0.0 - events["time0"][0] > 1e-3:
+        #    events["time0"] = events["time"] - c3dkey.markers["TIME"][0]
         
         # If first event is the first frame, event time should be 0.0 sec, but 
         # sampling can cause small discrepancies. Correct these to be 0.0 sec.
-        else:
-            events["time0"][0] = 0.0
+        #else:
+        #    events["time0"][0] = 0.0
         
              
         # ###################################
@@ -875,7 +873,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "TRAIL019_HFD_LEFT01"): continue;
+                #if not (trial == "TRAIL225_EP08"): continue;
                 #*********************
                 
                 # ignore static trials
@@ -923,6 +921,11 @@ def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, 
     fforces = c3d.get_dict_forces(itf, frame=True, time=True)
     fmarkers = c3d.get_dict_markers(itf, frame=True, time=True)
     
+    # Need to adjust time vector because pyc3dserver doesn't consider the
+    # ACTUAL_START_FIELD parameter when extracting the time vector
+    fforces["TIME"] = fforces["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
+    fmarkers["TIME"] = fmarkers["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
+        
     # C3D key with all data from C3D file
     c3dkey = C3DKey(subj, group, trial, fmeta, fforces, fmarkers)
 

@@ -30,11 +30,12 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL001_EP02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL001\BASELINE\TRAIL001_EP02"
+subj = "TRAIL225"
+trial = "EP08"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle"
 
 # OsimResultsKey
-pkfile = os.path.join(fpath, fprefix + "_osimkey.pkl")
+pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_osimkey.pkl")
 with open(pkfile, "rb") as fid: 
     osimkey1 = pk.load(fid)
  

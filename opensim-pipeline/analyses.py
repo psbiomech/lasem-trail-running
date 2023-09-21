@@ -14,6 +14,7 @@ import pandas as pd
 from scipy import interpolate
 from scipy import integrate
 from scipy.interpolate import interp1d
+from scipy import signal
 
 
 
@@ -36,10 +37,10 @@ from scipy.interpolate import interp1d
 
 
 '''
-analyses_batch_process(meta, user, analyses):
+analyses_batch_process(meta, user, analyses, filterqs, filter_order, filter_cutoff, restart):
     Batch process post-hoc analyses.
 '''
-def analyses_batch_process(meta, user, analyses, restart = -1):
+def analyses_batch_process(meta, user, analyses, filterqs = False, filter_order = -1, filter_cutoff = -1, restart = -1):
     
     # extract OpenSim data
     failedfiles = []
@@ -79,7 +80,7 @@ def analyses_batch_process(meta, user, analyses, restart = -1):
             for trial in  meta[subj]["trials"][group]:                
                 
                 #****** TESTING ******
-                #if not (trial == "TRAIL001_EP02"): continue;
+                #if not (trial == "TRAIL449_FAST05"): continue;
                 #*********************                  
                 
                 # ignore static trials
@@ -113,7 +114,7 @@ def analyses_batch_process(meta, user, analyses, restart = -1):
                         # Joint angular power
                         elif ans == "jap":
                             print("---> Joint angular power")
-                            analysesdict["joint_angular_power"] = calculate_joint_angular_power(osimresultskey, user)
+                            analysesdict["joint_angular_power"] = calculate_joint_angular_power(osimresultskey, user, filterqs, filter_order, filter_cutoff)
                             
                         # Joint angular work
                         elif ans == "jaw":
@@ -206,11 +207,12 @@ def calculate_joint_angular_impulse(osimresultskey, user):
 
     
 '''
-calculate_joint_angular_power(osimresultskey, user):
+calculate_joint_angular_power(osimresultskey, user, filterqs, filter_order, filter_cutoff):
     Calculate the joint angular power for all available joints using joint angles
-    from inverse kinematics and joint moments from inverse dynamics.
+    from inverse kinematics and joint moments from inverse dynamics. Filter the
+    kinematics if required.
 '''
-def calculate_joint_angular_power(osimresultskey, user):
+def calculate_joint_angular_power(osimresultskey, user, filterqs = False, filter_order = -1, filter_cutoff = -1):
     
     # Get ID data
     Tdata = osimresultskey.results["split"][user.idcode].copy()
@@ -220,7 +222,7 @@ def calculate_joint_angular_power(osimresultskey, user):
     
     # Calculate joint angular power on each leg
     jap = {}
-    for leg in user.leg:
+    for f, leg in enumerate(user.leg):
         
         # Leg joint moments (Nm), remove pelvis forces
         timeT = Tdata[leg]["data"][:, 0]
@@ -229,38 +231,55 @@ def calculate_joint_angular_power(osimresultskey, user):
         delidxT = headersT.index("pelvis_tx_force")
         del headersT[delidxT:delidxT+3]
         T = np.delete(T, range(delidxT, delidxT + 3), axis = 1)       
-               
-        # Leg joint angles (rad), remove pelvis translations
-        timeQ = Qdata[leg]["data"][:, 0]
-        Q = np.deg2rad(Qdata[leg]["data"][:, 1:])
-        headersQ = Qdata[leg]["headers"][1:]
-        delidxQ = headersQ.index("pelvis_tx")
-        del headersQ[delidxQ:delidxQ+3]
-        Q = np.delete(Q, range(delidxQ, delidxQ + 3), axis = 1)
-        
-        # Calculate joint velocities (rad/s)
-        Qdot0 = np.gradient(Q, timeQ, axis = 0)
-        
-        # Interpolation for joint velocities to match time stamps with moments.
-        # Typically the IK time window is expanded to cater for RRA but the ID
-        # window is not, so the time stamps do not automatically match.
-        Qdot_interpfun = interpolate.interp1d(timeQ, Qdot0, kind = "cubic", axis = 0, fill_value = "extrapolate")
-        Qdot = Qdot_interpfun(timeT)
-        
-        # Calculate joint angular power for each coordinate
+ 
+        # Initialise output power matrix
         P = np.zeros(np.shape(T))
-        for idxQ, qcoord in enumerate(headersQ):
+              
+        # Calculate power if the leg is used
+        if not osimresultskey.events["leg_task"][f].casefold() == "not_used":
+        
+            # Leg joint angles (rad), remove pelvis translations
+            timeQ = Qdata[leg]["data"][:, 0]
+            Q = np.deg2rad(Qdata[leg]["data"][:, 1:])
+            headersQ = Qdata[leg]["headers"][1:]
+            delidxQ = headersQ.index("pelvis_tx")
+            del headersQ[delidxQ:delidxQ+3]
+            Q = np.delete(Q, range(delidxQ, delidxQ + 3), axis = 1)
             
-            # Find moment column index of current coordinate as moments and
-            # velocities may be out of order
-            idxT = [1 if qcoord in head else 0 for i, head in enumerate(headersT)].index(1)
+            # Filter the joint angles
+            Qfilt = Q
+            if filterqs:
+                sample_rate = 1 / (timeQ[1] - timeQ[0])
+                Qfilt = filter_timeseries(Q, sample_rate, filter_order, filter_cutoff)
             
-            # Get the data for the current coordinate
-            qdot = Qdot[:, idxQ]
-            t = T[:, idxT]
+            # Calculate joint velocities (rad/s)
+            Qdot0 = np.gradient(Qfilt, timeQ, axis = 0)
 
-            # Calculate joint angular power: P = Tw (Nm/s)
-            P[:, idxQ] = np.multiply(t, qdot)
+            # Filter the joint velocities
+            Qdotfilt0 = Qdot0
+            if filterqs:
+                sample_rate = 1 / (timeQ[1] - timeQ[0])
+                Qdotfilt0 = filter_timeseries(Qdot0, sample_rate, filter_order, filter_cutoff)
+            
+            # Interpolation for joint velocities to match time stamps with moments.
+            # Typically the IK time window is expanded to cater for RRA but the ID
+            # window is not, so the time stamps do not automatically match.
+            Qdot_interpfun = interpolate.interp1d(timeQ, Qdotfilt0, kind = "cubic", axis = 0, fill_value = "extrapolate")
+            Qdot = Qdot_interpfun(timeT)
+            
+            # Calculate joint angular power for each coordinate
+            for idxQ, qcoord in enumerate(headersQ):
+                
+                # Find moment column index of current coordinate as moments and
+                # velocities may be out of order
+                idxT = [1 if qcoord in head else 0 for i, head in enumerate(headersT)].index(1)
+                
+                # Get the data for the current coordinate
+                qdot = Qdot[:, idxQ]
+                t = T[:, idxT]
+    
+                # Calculate joint angular power: P = Tw (Nm/s)
+                P[:, idxQ] = np.multiply(t, qdot)
             
         # Add time column
         P = np.concatenate((np.reshape(timeQ, (-1, 1)), P), axis = 1)
@@ -704,6 +723,28 @@ def export_joint_angular_impulse(meta, user):
 ---- FUNCTIONS: MISCELLANEOUS -----
 -----------------------------------
 '''
+
+
+'''
+filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
+    Filter timeseries data. Raw data can be a list, or an array with rows
+    representing time steps and columns as variables. Set cutoff < 0 if
+    filtering not required.
+''' 
+def filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
+    
+    # return if cutoff < 0 (i.e. filtering not required)
+    if cutoff < 0: return data_raw
+    
+    # filter design
+    Wn = sample_rate / 2
+    normalised_cutoff = cutoff / Wn
+    b, a = signal.butter(butter_order, normalised_cutoff, "lowpass")
+    
+    # apply filter
+    data_filtered = signal.filtfilt(b, a, data_raw, axis = 0)
+
+    return data_filtered
 
 
     
