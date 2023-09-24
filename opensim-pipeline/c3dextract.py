@@ -775,7 +775,7 @@ class OpenSimKey():
 
 
 '''
-c3d_batch_process(user, meta, lab, xdir, usermass, restart):
+c3d_batch_process(user, meta, lab, xdir, use_existing, usermass, restart):
     Batch processing for C3D data extract, and OpenSim input file write,
     obtains mass from used static trial in each group if mass = -1. All data 
     in meta is processed unless specified by restart flag which may have types:
@@ -784,7 +784,7 @@ c3d_batch_process(user, meta, lab, xdir, usermass, restart):
                 only one participant, set the tuple elements to be the same,
                 e.g. ("TRAIL004", "TRAIL004")
 '''
-def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
+def c3d_batch_process(user, meta, lab, xdir, use_existing = False, usermass = -1, restart = -1):
 
 
     # extract C3D data for OpenSim
@@ -832,7 +832,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                #if not (trial == "SKIP_ME"): continue;
+                if not (trial == "SKIP_ME"): continue;
                 #*********************
                 
                 # ignore dynamic trials
@@ -851,7 +851,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     dataset = meta[subj]["trials"][group][trial]["dataset"]                    
                     condition = meta[subj]["trials"][group][trial]["condition"]
                     model = meta[subj]["trials"][group][trial]["osim"]
-                    osimkey = c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)                           
+                    osimkey = c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing)                           
                     if usedstatic: mass = osimkey.mass
                 except:
                     #raise
@@ -891,7 +891,7 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
                     dataset = meta[subj]["trials"][group][trial]["dataset"]
                     condition = meta[subj]["trials"][group][trial]["condition"]
                     model = meta[subj]["trials"][group][trial]["osim"]
-                    c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model)   
+                    c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing)   
                 except:
                     #raise
                     print("*** FAILED ***")    
@@ -906,29 +906,39 @@ def c3d_batch_process(user, meta, lab, xdir, usermass = -1, restart = -1):
 
 '''
 c3d_extract(subj, group trial, c3dfile, c3dpath, lab, user, task, dataset, 
-            condition, xdir, mass, model):
+            condition, xdir, mass, model, use_existing):
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model):    
+def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing = False):    
+ 
+    # Extract data from C3D file
+    if not use_existing:
     
-    # load C3D file
-    itf = c3d.c3dserver()
-    c3d.open_c3d(itf, c3dpath + "/" + c3dfile)       
-    
-    # get all file metadata, and all force plate and video C3D data
-    fmeta = c3d.get_dict_groups(itf)
-    fforces = c3d.get_dict_forces(itf, frame=True, time=True)
-    fmarkers = c3d.get_dict_markers(itf, frame=True, time=True)
-    
-    # Need to adjust time vector because pyc3dserver doesn't consider the
-    # ACTUAL_START_FIELD parameter when extracting the time vector
-    fforces["TIME"] = fforces["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
-    fmarkers["TIME"] = fmarkers["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
+        # load C3D file
+        itf = c3d.c3dserver()
+        c3d.open_c3d(itf, c3dpath + "/" + c3dfile)       
         
-    # C3D key with all data from C3D file
-    c3dkey = C3DKey(subj, group, trial, fmeta, fforces, fmarkers)
-
+        # get all file metadata, and all force plate and video C3D data
+        fmeta = c3d.get_dict_groups(itf)
+        fforces = c3d.get_dict_forces(itf, frame=True, time=True)
+        fmarkers = c3d.get_dict_markers(itf, frame=True, time=True)
+        
+        # Need to adjust time vector because pyc3dserver doesn't consider the
+        # ACTUAL_START_FIELD parameter when extracting the time vector
+        fforces["TIME"] = fforces["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
+        fmarkers["TIME"] = fmarkers["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
+            
+        # C3D key with all data from C3D file
+        c3dkey = C3DKey(subj, group, trial, fmeta, fforces, fmarkers)
+   
+    # Otherwise load existing C3DKey:
+    else:
+        pkfile = os.path.join(c3dpath, trial + "_c3dkey.pkl")
+        with open(pkfile, "rb") as fid: 
+            c3dkey = pk.load(fid)
+        
+    
     # trial data only from C3D key
     trialkey = TrialKey(lab, user, task, dataset, condition, c3dkey, xdir, mass)
     
@@ -939,14 +949,14 @@ def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, 
     with open(os.path.join(c3dpath, trial + "_c3dkey.pkl"),"wb") as f: pk.dump(c3dkey, f)
     with open(os.path.join(c3dpath, trial + "_trialkey.pkl"),"wb") as g: pk.dump(trialkey, g)
     with open(os.path.join(c3dpath, trial + "_osimkey.pkl"),"wb") as h: pk.dump(osimkey, h)
-
+    
     # write OpenSim input TRC files
     write_marker_trajctory_trc_file(osimkey) 
     
     # if there are forces, write input MOT file
     if osimkey.forces:
         write_ground_forces_mot_file(osimkey)
-    
+        
     return osimkey
     
 
