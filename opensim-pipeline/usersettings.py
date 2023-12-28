@@ -46,6 +46,7 @@ class UserSettings():
         self.rracode = "rra"
         self.cmccode = "cmc"
         self.jrcode = "jr"
+        self.bkcode = "bk"
         
         # limb code
         self.leg = ["r", "l"]
@@ -184,7 +185,14 @@ class TRAILSettings_RUN(UserSettings):
         # OpenSim JR parameters
         self.jr_joints = {}
         self.jr_joints["all"] = ["child", "child"]
-        self.jr_use_cmc_forces = False        
+        self.jr_use_cmc_forces = False   
+        
+        # OpenSim BK parameters
+        self.bk_bodies = ["all"]
+        self.bk_output_com = True
+        self.bk_output_in_local_frame = False
+        self.bk_use_cmc_results = False
+        
         
         
         # ******************************
@@ -201,6 +209,7 @@ class TRAILSettings_RUN(UserSettings):
         self.results_flip["rra"] = []
         self.results_flip["cmc"] = []
         self.results_flip["jr"] = []  
+        self.results_flip["bk"] = [3, 4, 5, 45, 46, 47, 51, 52, 53, 57, 58, 59, 63, 64, 65, 69, 70, 71, 75, 76, 77, 81, 82, 83, 111, 112, 113, 117, 118, 119, 123, 124, 125, 129, 130, 131, 135]
                 
         # foot columns (incl. time): R, L
         self.results_columns = {}
@@ -213,6 +222,8 @@ class TRAILSettings_RUN(UserSettings):
         self.results_columns["rra"] = []
         self.results_columns["cmc"] = []
         self.results_columns["jr"] = []   
+        self.results_columns["bk"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 79, 80, 81, 82, 83, 84],
+                                      [0, 1, 2, 3, 4, 5, 6, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84]]
         
         # headers
         self.results_headers = {}
@@ -221,7 +232,8 @@ class TRAILSettings_RUN(UserSettings):
         self.results_headers["so"] = ["time", "addbrev", "addlong", "addmagDist", "addmagIsch", "addmagMid", "addmagProx", "bflh", "bfsh", "edl", "ehl", "fdl", "fhl", "gaslat", "gasmed", "glmax1", "glmax2", "glmax3", "glmed1", "glmed2", "glmed3", "glmin1", "glmin2", "glmin3", "grac", "iliacus", "perbrev", "perlong", "piri", "psoas", "recfem", "sart", "semimem", "semiten", "soleus", "tfl", "tibant", "tibpost", "vasint", "vaslat", "vasmed", "lumbar_ext", "lumbar_bend", "lumbar_rot", "shoulder_flex", "shoulder_add", "shoulder_rot", "elbow_flex", "pro_sup", "wrist_flex", "wrist_dev"]
         self.results_headers["rra"] = []
         self.results_headers["cmc"] = []
-        self.results_headers["jr"] = []   
+        self.results_headers["jr"] = []  
+        self.results_headers["bk"] = ["time", "pelvis_X", "pelvis_Y", "pelvis_Z", "pelvis_Ox", "pelvis_Oy", "pelvis_Oz", "femur_X", "femur_Y", "femur_Z", "femur_Ox", "femur_Oy", "femur_Oz", "tibia_X", "tibia_Y", "tibia_Z", "tibia_Ox", "tibia_Oy", "tibia_Oz", "patella_X", "patella_Y", "patella_Z", "patella_Ox", "patella_Oy", "patella_Oz", "talus_X", "talus_Y", "talus_Z", "talus_Ox", "talus_Oy", "talus_Oz", "calcn_X", "calcn_Y", "calcn_Z", "calcn_Ox", "calcn_Oy", "calcn_Oz", "toes_X", "toes_Y", "toes_Z", "toes_Ox", "toes_Oy", "toes_Oz", "torso_X", "torso_Y", "torso_Z", "torso_Ox", "torso_Oy", "torso_Oz"]
 
 
 

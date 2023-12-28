@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-OpenSim post-hoc analyses
+OpenSim post-hoc analyses: Angular work and power
 
 @author: Prasanna Sritharan
 """

@@ -56,6 +56,7 @@ class OsimResultsKey():
         filext["rra"] = []
         filext["cmc"] = []
         filext["jr"] = "_jr_ReactionLoads.sto"
+        filext["bk"] = "_bk_pos_global.sto"     # TBD: add vel and acc
         
         # header rows
         # note: may differ from actual number of header rows as pandas skips
@@ -67,6 +68,7 @@ class OsimResultsKey():
         headnum["rra"] = []
         headnum["cmc"] = []
         headnum["jr"] = 9
+        headnum["bk"] = 13
        
         # get OpenSim data
         for ans in analyses:
@@ -267,16 +269,34 @@ class OsimResultsKey():
 opensim_results_batch_process(meta, analyses, user, nsamp):
     Batch process OpenSim results text files to OsimResultsKeys.
 '''
-def opensim_results_batch_process(meta, analyses, user, nsamp):
+def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
     
     # extract OpenSim data
     osimkey = {}
     failedfiles = []
+    startflag = 0
     for subj in meta:
         
         # skip the study info
         if subj.casefold() == "study": continue
+
     
+        # Skip to restart participant, process until last restart participant.
+        # Python uses lazy evaluation so combined expressions are efficient.
+        if restart != -1:
+            if startflag == 1:
+                if (type(restart) == tuple) and (subj == restart[1]):
+                    startflag = 0            
+            elif startflag == 0:
+                if (type(restart) == str) and (subj == restart):
+                    startflag = 1
+                elif (type(restart) == tuple) and (subj == restart[0]):
+                    if restart[0] != restart[1]:
+                        startflag = 1
+                else:
+                    continue    
+    
+        
         print("%s" % "*" * 30)
         print("SUBJECT: %s" % subj)
         print("%s" % "*" * 30)
@@ -314,7 +334,8 @@ def opensim_results_batch_process(meta, analyses, user, nsamp):
                                     
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
-                    failedfiles.append(trial)   
+                    failedfiles.append(trial) 
+                    raise
                 else:
                     print("Dynamic trial: %s" % trial)
                           

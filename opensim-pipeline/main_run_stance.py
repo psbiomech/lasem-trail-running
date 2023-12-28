@@ -85,6 +85,10 @@ print("Done.\n")
 # osp.opensim_pipeline(traildb, user, ["ik", "id"])
 # print("\nOpenSim analyses (IK, ID) completed.\n")
 
+# print("Running OpenSim analyses: BK...\n")
+# osp.opensim_pipeline(traildb, user, ["bk"])
+# print("\nOpenSim analyses (BK) completed.\n")
+
 # print("Running OpenSim analyses: SO...\n")
 # osp.opensim_pipeline(forcedb, user, ["so"])
 # print("\nOpenSim analyses (SO) completed.\n")
@@ -103,26 +107,26 @@ print("Done.\n")
 import opensimresults as osr
 
 print("Converting OpenSim results to Pickle...\n")
-osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 101)
+osr.opensim_results_batch_process(traildb, ["ik", "id", "bk"], user, 101, restart=("TRAIL001", "TRAIL001"))
 print("\nOpenSim results converted to Pickle.\n")
 
-print("Exporting OpenSim results to CSV...\n")
-failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 101)
-print("CSV export complete.\n")
+# print("Exporting OpenSim results to CSV...\n")
+# failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 101)
+# print("CSV export complete.\n")
 
 
 # %% ADDITIONAL ANALYSES
 
-import analyses as an
+# import analyses as an
 
-print("Running additional analyses...\n")
-failedanalyses = an.analyses_batch_process(traildb, user, ["jap", "jaw"], True, 4, 6)
-print("Analyses complete.\n")
+# print("Running additional analyses...\n")
+# failedanalyses = an.analyses_batch_process(traildb, user, ["jap", "jaw"], True, 4, 6)
+# print("Analyses complete.\n")
 
-print("Exporting analysis results...\n")
-an.export_joint_angular_power(traildb, user, 101)
-an.export_joint_angular_work(traildb, user)
-print("Analyses results export complete.\n")
+# print("Exporting analysis results...\n")
+# an.export_joint_angular_power(traildb, user, 101)
+# an.export_joint_angular_work(traildb, user)
+# print("Analyses results export complete.\n")
 
 
 # %% END
