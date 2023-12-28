@@ -612,7 +612,7 @@ def run_opensim_bk(osimkey, user):
     # CREATE BODY KINEMATICS ANALYSIS   
     
     # create an JR analysis
-    print("Create new BK Analysis to the AnalysisSet...")
+    print("Create new BK Analysis...")
     bk = opensim.BodyKinematics()
     bk.setName("bk")
     bk.setStartTime(t0)
