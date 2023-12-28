@@ -39,8 +39,22 @@ class OsimResultsKey():
         self.events = osimkey.events
         self.outpath = osimkey.outpath
         self.nsamp = nsamp
+        self.__calc_discrete_spatiotemporal(osimkey, user)
         self.__get_results_raw(osimkey, analyses, nsamp)
         self.__get_results_split(osimkey, analyses, user, nsamp)
+        return None        
+
+    def __calc_discrete_spatiotemporal(self, osimkey, user):
+        
+        # estimate average trial speed (this may only be meaningful for some
+        # kinds of tasks, e.g. walking and running)
+        avg_trialspeed = np.linalg.norm(osimkey.markers[user.avg_trialspeed_marker][-1, 0:2] - osimkey.markers[user.avg_trialspeed_marker][0, 0:2]) / (osimkey.markers["time"][-1] - osimkey.markers["time"][0])
+
+        # estimate cadence: TBD
+        
+        
+        self.avg_trialspeed = avg_trialspeed
+        
         return None
         
     def __get_results_raw(self, osimkey, analyses, nsamp):
@@ -91,7 +105,7 @@ class OsimResultsKey():
             results[ans]["headers"] = headers
         
         self.results = {}
-        self.results["raw"] = results        
+        self.results["raw"] = results     
             
         return None
     

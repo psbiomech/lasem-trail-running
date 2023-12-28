@@ -124,6 +124,9 @@ class TRAILSettings_RUN(UserSettings):
         self.fp_filter_threshold = -1
         self.fp_smooth_cop_fixed_offset = 0   # required but not currently used
         self.fp_expand_window = 20
+                        
+        # marker to use for estimating trial speed
+        self.avg_trialspeed_marker = "SACR"
         
         
         # ******************************

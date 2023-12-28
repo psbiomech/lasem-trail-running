@@ -437,7 +437,7 @@ class TrialKey():
         markers["data"] = {}
         for mkr in c3dkey.markers["DATA"]["POS"].keys():
             markers["data"][mkr] = c3dkey.markers["DATA"]["POS"][mkr] * markers["scale"]
-        
+
         self.markers = markers
         
         return None
@@ -666,8 +666,13 @@ class OpenSimKey():
         # filter marker data
         for mkr in data.keys():
             markers[mkr] = filter_timeseries(markers0[mkr], markers["rate"], user.marker_filter_butter_order, user.marker_filter_cutoff)
+
+        # estimate average trial speed (this may only be meaningful for some
+        # kinds of tasks, e.g. walking and running)
+        avg_trialspeed = np.linalg.norm(markers[user.avg_trialspeed_marker][-1, 0:2] - markers[user.avg_trialspeed_marker][0, 0:2]) / (markers["time"][-1] - markers["time"][0])
                 
         self.markers = markers
+        self.avg_trialspeed = avg_trialspeed
         
         return None
                    
