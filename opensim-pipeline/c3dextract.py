@@ -628,12 +628,27 @@ class OpenSimKey():
         # use events from TrialKey to maximise number of foot-strike events
         
         # Task: RUN
-        # Assume no missinge events, i.e., foot-strikes alternate between left 
-        # and right
         if self.task.casefold() == "run":
-            fsidxs = [fn for fn, f in enumerate(events["labels"]) if f.endswith("FS")]
-            timewindow = events["time"][fsidxs[-1]] - events["time"][fsidxs[0]]
-            avgsteptime = timewindow / (len(fsidxs) - 1)
+            
+            # Get the foot-strikes and indices
+            fsidxs = [fn for fn, f in enumerate(trialkey.events["labels"]) if f.endswith("FS")]
+            fsfeet = [trialkey.events["labels"][f][0] for f in fsidxs]
+            
+            # Count foot-strikes not including the first. Ideally this should
+            # just be len(fsidx)-1, however, some fast trials are missing 
+            # events, so need to count manually.
+            nfs = 0
+            for f in range(0, len(fsfeet) - 1):
+                if ((fsfeet[f] == "R") and (fsfeet[f + 1] == "L")):
+                    nfs = nfs + 1
+                elif ((fsfeet[f] == "L") and (fsfeet[f + 1] == "R")):
+                    nfs = nfs + 1
+                elif (fsfeet[f] == fsfeet[f + 1]):      # missing event
+                    nfs = nfs + 2
+                    
+            # Time window between first and last event
+            timewindow = trialkey.events["time"][fsidxs[-1]] - trialkey.events["time"][fsidxs[0]]
+            avgsteptime = timewindow / nfs
             freq = 1 / avgsteptime
             cadence = freq * 60
             
