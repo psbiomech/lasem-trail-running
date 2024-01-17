@@ -622,8 +622,28 @@ class OpenSimKey():
         events["labels"] = trialkey.events["window_labels"]
         events["leg_task"] = trialkey.events["leg_task"]
         events["opensim_last_event_idx"] = trialkey.events["opensim_last_event_idx"]
+
+
+        # Estimate cadence from step time based on task, only if relevant
+        # use events from TrialKey to maximise number of foot-strike events
+        
+        # Task: RUN
+        # Assume no missinge events, i.e., foot-strikes alternate between left 
+        # and right
+        if self.task.casefold() == "run":
+            fsidxs = [fn for fn, f in enumerate(events["labels"]) if f.endswith("FS")]
+            timewindow = events["time"][fsidxs[-1]] - events["time"][fsidxs[0]]
+            avgsteptime = timewindow / (len(fsidxs) - 1)
+            freq = 1 / avgsteptime
+            cadence = freq * 60
+            
+        # Otherwise, set to nominal value
+        else:
+            cadence = -1.0
+
     
         self.events = events
+        self.cadence = cadence
     
         return None
     
@@ -669,10 +689,10 @@ class OpenSimKey():
 
         # estimate average trial speed (this may only be meaningful for some
         # kinds of tasks, e.g. walking and running)
-        avg_trialspeed = np.linalg.norm(markers[user.avg_trialspeed_marker][-1, 0:2] - markers[user.avg_trialspeed_marker][0, 0:2]) / (markers["time"][-1] - markers["time"][0])
+        avgtrialspeed = np.linalg.norm(markers[user.avg_trialspeed_marker][-1, 0:2] - markers[user.avg_trialspeed_marker][0, 0:2]) / (markers["time"][-1] - markers["time"][0])
                 
         self.markers = markers
-        self.avg_trialspeed = avg_trialspeed
+        self.avgtrialspeed = avgtrialspeed
         
         return None
                    

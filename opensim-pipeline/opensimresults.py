@@ -26,7 +26,7 @@ OsimResultsKey:
     the desired number of samples.
 '''
 class OsimResultsKey():
-    def __init__(self, osimkey, analyses, user, nsamp):
+    def __init__(self, osimkey, trialkey, analyses, user, nsamp):
         self.subject = osimkey.subject
         self.trial = osimkey.trial
         self.age = osimkey.age
@@ -39,21 +39,38 @@ class OsimResultsKey():
         self.events = osimkey.events
         self.outpath = osimkey.outpath
         self.nsamp = nsamp
-        self.__calc_discrete_spatiotemporal(osimkey, user)
+        self.__calc_discrete_spatiotemporal(osimkey, trialkey, user)
         self.__get_results_raw(osimkey, analyses, nsamp)
         self.__get_results_split(osimkey, analyses, user, nsamp)
         return None        
 
-    def __calc_discrete_spatiotemporal(self, osimkey, user):
+    def __calc_discrete_spatiotemporal(self, osimkey, trialkey, user):
         
-        # estimate average trial speed (this may only be meaningful for some
+        # Estimate average trial speed (this may only be meaningful for some
         # kinds of tasks, e.g. walking and running)
-        avg_trialspeed = np.linalg.norm(osimkey.markers[user.avg_trialspeed_marker][-1, 0:2] - osimkey.markers[user.avg_trialspeed_marker][0, 0:2]) / (osimkey.markers["time"][-1] - osimkey.markers["time"][0])
+        avgtrialspeed = np.linalg.norm(osimkey.markers[user.avg_trialspeed_marker][-1, 0:2] - osimkey.markers[user.avg_trialspeed_marker][0, 0:2]) / (osimkey.markers["time"][-1] - osimkey.markers["time"][0])
 
-        # estimate cadence: TBD
+
+        # Estimate cadence from step time based on task, only if relevant
+        # use events from TrialKey to maximise number of foot-strike events
         
-        
-        self.avg_trialspeed = avg_trialspeed
+        # Task: RUN
+        # Assume no missinge events, i.e., foot-strikes alternate between left 
+        # and right
+        if self.task.casefold() == "run":
+            fsidxs = [fn for fn, f in enumerate(trialkey.events["labels"]) if f.endswith("FS")]
+            timewindow = trialkey.events["time"][fsidxs[-1]] - trialkey.events["time"][fsidxs[0]]
+            avgsteptime = timewindow / (len(fsidxs) - 1)
+            freq = 1 / avgsteptime
+            cadence = freq * 60
+            
+        # Otherwise, set to nominal value
+        else:
+            cadence = -1.0
+            
+                
+        self.avgtrialspeed = avgtrialspeed
+        self.cadence = cadence
         
         return None
         
@@ -167,7 +184,7 @@ class OsimResultsKey():
                         if self.dataset.casefold() == "run_stridecycle":
                             
                             # flip columns for left leg trials
-                            if f == 2:
+                            if f == 1:
                                 data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
                             
                             # time window depends on leg task and number of events   
@@ -190,7 +207,7 @@ class OsimResultsKey():
                         elif self.dataset.casefold() == "run_stance":
                             
                             # flip columns for left leg trials
-                            if f == 2:
+                            if f == 1:
                                 data0[:, flip[ans]] = np.multiply(data0[:, flip[ans]], -1)
                                 
                             # time window depends on leg task and number of events 
@@ -333,14 +350,19 @@ def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
 
                 try:
                             
-                    # load the trial OsimKey
+                    # Load the trial OsimKey
                     c3dpath = meta[subj]["trials"][group][trial]["outpath"]
                     pkfile = os.path.join(c3dpath, trial + "_osimkey.pkl")
                     with open(pkfile, "rb") as fid:
                         osimkey = pk.load(fid)
+
+                    # Load the TrialKey (for cadence calculation)
+                    pkfile = os.path.join(c3dpath, trial + "_trialkey.pkl")
+                    with open(pkfile, "rb") as fid:
+                        trialkey = pk.load(fid)                    
                         
                     # get the OpenSim results
-                    osimresultskey = OsimResultsKey(osimkey, analyses, user, nsamp)
+                    osimresultskey = OsimResultsKey(osimkey, trialkey, analyses, user, nsamp)
                     
                     # save OsimResultsKey to file
                     with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"), "wb") as f:
@@ -349,7 +371,7 @@ def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
                     failedfiles.append(trial) 
-                    raise
+                    #raise
                 else:
                     print("Dynamic trial: %s" % trial)
                           
@@ -416,6 +438,8 @@ def export_opensim_results(meta, user, analyses, nsamp):
                     task = osimresultskey.task
                     dataset = osimresultskey.dataset
                     condition = osimresultskey.condition
+                    avgtrialspeed = osimresultskey.avgtrialspeed
+                    cadence = osimresultskey.cadence
 
                     # foot
                     for f, foot in enumerate(["r","l"]):
@@ -447,7 +471,7 @@ def export_opensim_results(meta, user, analyses, nsamp):
                                 drow = data[:, v]
     
                                 # create new line of data
-                                csvrow = [subjcorrected, trialcorrected, task, dataset, condition, data_type, foot, ans, variable] + drow.tolist()
+                                csvrow = [subjcorrected, trialcorrected, task, dataset, condition, data_type, foot, avgtrialspeed, cadence, ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -458,12 +482,12 @@ def export_opensim_results(meta, user, analyses, nsamp):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "task", "dataset", "condition", "data_type", "data_leg", "analysis", "variable"] + ["t" + str(n) for n in range(1, nsamp + 1)]
+    headers = ["subject", "trial", "task", "dataset", "condition", "data_type", "data_leg", "avg_speed_m/s", "cadence", "analysis", "variable"] + ["t" + str(n) for n in range(1, nsamp + 1)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers
     print("\nWriting to CSV text file...")
-    csvfile = user.csvfileprefix + "_" + meta["study"]["task"] + "_" + meta["study"]["dataset"] + ".csv"
+    csvfile = user.csvfileprefix + meta["study"]["task"] + "_" + meta["study"]["dataset"] + ".csv"
     fpath = os.path.join(user.rootpath, user.outfolder, meta["study"]["task"], meta["study"]["dataset"], user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
     csvdf.to_csv(os.path.join(fpath,csvfile), index = False)

@@ -31,7 +31,7 @@ import os
 
 # file path and name prefix
 subj = "TRAIL001"
-trial = "FAST02"
+trial = "EP02"
 fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance"
 
 # OsimResultsKey
@@ -40,19 +40,22 @@ with open(pkfile, "rb") as fid:
     osimkey1 = pk.load(fid)
  
     
+    
 # %% LOAD A TRIALKEY
 
 import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL001_EP03"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL001\BASELINE\TRAIL001_EP03"
+fprefix = "TRAIL006_FAST01"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL006\BASELINE\TRAIL006_FAST01"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, fprefix + "_trialkey.pkl")
 with open(pkfile, "rb") as fid: 
     trialkey1 = pk.load(fid)    
+    
+    
     
 # %% LOAD A C3DKEY
 
@@ -76,14 +79,15 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL001_FAST02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL001\BASELINE\TRAIL001_FAST02"
+subj = "TRAIL001"
+trial = "EP02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance"
 
 # OsimResultsKey
-pkfile = os.path.join(fpath, fprefix + "_opensim_results.pkl")
+pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_opensim_results.pkl")
 with open(pkfile, "rb") as fid: 
     osimresultskey1 = pk.load(fid)
-    
+ 
     
 
 # %% TEST ANALYSES
