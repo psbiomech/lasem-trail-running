@@ -14,7 +14,7 @@ import shutil
 
 
 pfolder = r"P:\PROJECT - OPV - TRAIL\TRAIL\Gait Lab and Biodex\Data-Biomech\4a Checked and ready_running and HFD"
-cfolder = r"C:\Users\Owner\Documents\data\TRAIL\inputdatabase"
+cfolder = r"C:\Users\Owner\Documents\data\TRAIL\inputDatabase"
 
 
 # Get list of C3D files
@@ -49,6 +49,8 @@ for fstr in fstrings:
         # Copy C3D file to new folder
         fname1 = "TRAIL" + fcodes[1] + "_" + fcodes[2].upper() + fcodes[3] + ".c3d"
         shutil.copy(f, os.path.join(phasedir, fname1))
+        
+        print(fname1)
         
 
 

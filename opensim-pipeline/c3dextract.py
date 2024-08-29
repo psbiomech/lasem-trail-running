@@ -628,7 +628,7 @@ class OpenSimKey():
         # use events from TrialKey to maximise number of foot-strike events
         
         # Task: RUN
-        if self.task.casefold() == "run":
+        if (self.task.casefold() == "run") and (self.condition.casefold() != "static"):
             
             # Get the foot-strikes and indices
             fsidxs = [fn for fn, f in enumerate(trialkey.events["labels"]) if f.endswith("FS")]
@@ -872,7 +872,7 @@ def c3d_batch_process(user, meta, lab, xdir, use_existing = False, usermass = -1
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                if not (trial == "SKIP_ME"): continue;
+                #if not (trial == "SKIP_ME"): continue;
                 #*********************
                 
                 # ignore dynamic trials
@@ -913,7 +913,7 @@ def c3d_batch_process(user, meta, lab, xdir, use_existing = False, usermass = -1
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "TRAIL225_EP08"): continue;
+                #if not (trial == "SKIP_ME"): continue;
                 #*********************
                 
                 # ignore static trials

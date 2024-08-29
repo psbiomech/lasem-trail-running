@@ -148,7 +148,7 @@ def opensim_pipeline(meta, user, analyses, restart = -1):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                #if not (trial == "TRAIL225_EP08"): continue;
+                #if not (trial == "SKIP_ME"): continue;
                 #*********************
                 
                 # Pickle file info
@@ -230,7 +230,7 @@ def run_opensim_scale(osimkey, user):
     print("\nCreating scaled model: %s" % subject)
     print("------------------------------------------------")
     
-    # create an ScaleTool from a generic setup file
+    # create a ScaleTool from a generic setup file
     print("Create new ScaleTool...")
     refsetuppath = user.refsetuppath
     refsetupfile = user.refsetupscale
