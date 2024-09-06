@@ -104,29 +104,29 @@ print("Done.\n")
 
 # %% LOAD AND FORMAT RESULTS
 
-import opensimresults as osr
+# import opensimresults as osr
 
-print("Converting OpenSim results to Pickle...\n")
-osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 101)
-print("\nOpenSim results converted to Pickle.\n")
+# print("Converting OpenSim results to Pickle...\n")
+# osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 101)
+# print("\nOpenSim results converted to Pickle.\n")
 
-print("Exporting OpenSim results to CSV...\n")
-failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 101)
-print("CSV export complete.\n")
+# print("Exporting OpenSim results to CSV...\n")
+# failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 101)
+# print("CSV export complete.\n")
 
 
 # %% ADDITIONAL ANALYSES
 
-# import analyses_workpower as anwp
+import analyses_workpower as anwp
 
-# print("Running wprk and power analyses...\n")
-# failedanalyses = anwp.analyses_batch_process(traildb, user, ["jap", "jaw"], True, 4, 6)
-# print("Analyses complete.\n")
+print("Running wprk and power analyses...\n")
+failedanalyses = anwp.analyses_batch_process(traildb, user, ["jap", "jaw"], True, 4, 6)
+print("Analyses complete.\n")
 
-# print("Exporting work and power analysis results...\n")
-# anwp.export_joint_angular_power(traildb, user, 101)
-# anwp.export_joint_angular_work(traildb, user)
-# print("Analyses results export complete.\n")
+print("Exporting work and power analysis results...\n")
+anwp.export_joint_angular_power(traildb, user, 101)
+anwp.export_joint_angular_work(traildb, user)
+print("Analyses results export complete.\n")
 
 
 # %% END

@@ -232,19 +232,20 @@ def calculate_joint_angular_power(osimresultskey, user, filterqs = False, filter
         del headersT[delidxT:delidxT+3]
         T = np.delete(T, range(delidxT, delidxT + 3), axis = 1)       
  
+        # Leg joint angles (rad), remove pelvis translations
+        timeQ = Qdata[leg]["data"][:, 0]
+        Q = np.deg2rad(Qdata[leg]["data"][:, 1:])
+        headersQ = Qdata[leg]["headers"][1:]
+        delidxQ = headersQ.index("pelvis_tx")
+        del headersQ[delidxQ:delidxQ+3]
+        Q = np.delete(Q, range(delidxQ, delidxQ + 3), axis = 1)   
+ 
+    
         # Initialise output power matrix
         P = np.zeros(np.shape(T))
               
         # Calculate power if the leg is used
         if not osimresultskey.events["leg_task"][f].casefold() == "not_used":
-        
-            # Leg joint angles (rad), remove pelvis translations
-            timeQ = Qdata[leg]["data"][:, 0]
-            Q = np.deg2rad(Qdata[leg]["data"][:, 1:])
-            headersQ = Qdata[leg]["headers"][1:]
-            delidxQ = headersQ.index("pelvis_tx")
-            del headersQ[delidxQ:delidxQ+3]
-            Q = np.delete(Q, range(delidxQ, delidxQ + 3), axis = 1)
             
             # Filter the joint angles
             Qfilt = Q
@@ -279,9 +280,10 @@ def calculate_joint_angular_power(osimresultskey, user, filterqs = False, filter
                 t = T[:, idxT]
     
                 # Calculate joint angular power: P = Tw (Nm/s)
-                P[:, idxQ] = np.multiply(t, qdot)
-            
-        # Add time column
+                P[:, idxQ] = np.multiply(t, qdot) 
+
+
+        # Add time column to data matrix
         P = np.concatenate((np.reshape(timeQ, (-1, 1)), P), axis = 1)
         
         # Results dict
