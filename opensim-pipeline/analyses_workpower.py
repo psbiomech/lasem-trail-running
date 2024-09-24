@@ -80,7 +80,7 @@ def analyses_batch_process(meta, user, analyses, filterqs = False, filter_order 
             for trial in  meta[subj]["trials"][group]:                
                 
                 #****** TESTING ******
-                #if not (trial == "TRAIL449_FAST05"): continue;
+                #if not (trial == "SKIP_ME"): continue
                 #*********************                  
                 
                 # ignore static trials

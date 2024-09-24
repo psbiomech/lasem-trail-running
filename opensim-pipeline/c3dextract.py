@@ -872,7 +872,7 @@ def c3d_batch_process(user, meta, lab, xdir, use_existing = False, usermass = -1
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                #if not (trial == "SKIP_ME"): continue;
+                #if not (trial == "SKIP_ME"): continue
                 #*********************
                 
                 # ignore dynamic trials
@@ -913,7 +913,7 @@ def c3d_batch_process(user, meta, lab, xdir, use_existing = False, usermass = -1
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "SKIP_ME"): continue;
+                #if not (trial == "SKIP_ME"): continue
                 #*********************
                 
                 # ignore static trials
