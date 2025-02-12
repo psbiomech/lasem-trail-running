@@ -43,6 +43,7 @@ print("Done.\n")
 # %% GET META DATABASE (BUILD NEW OR LOAD EXISTING)...
 
 
+# ***********
 # OPTION 1: Build new database
 
 # import builddatabase as bd
@@ -52,6 +53,7 @@ print("Done.\n")
 # print("Done.\n")
 
 
+# ***********
 # OPTION 2: Load existing database
 
 import pickle as pk
@@ -75,15 +77,15 @@ print("Done.\n")
 
 # %% RUN OPENSIM PIPELINE
 
-# import opensimpipeline as osp
+import opensimpipeline as osp
 
 # print("Running OpenSim model scaling: SCALE...\n")
 # failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
 # print("\nOpenSim model scaling (SCALE) completed.\n")
 
-# print("Running OpenSim analyses: IK, ID...\n")
-# osp.opensim_pipeline(traildb, user, ["ik", "id"])
-# print("\nOpenSim analyses (IK, ID) completed.\n")
+print("Running OpenSim analyses: IK, ID...\n")
+osp.opensim_pipeline(traildb, user, ["ik", "id"])
+print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: BK...\n")
 # osp.opensim_pipeline(traildb, user, ["bk"])
@@ -104,15 +106,15 @@ print("Done.\n")
 
 # %% LOAD AND FORMAT RESULTS
 
-# import opensimresults as osr
+import opensimresults as osr
 
-# print("Converting OpenSim results to Pickle...\n")
-# osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 101)
-# print("\nOpenSim results converted to Pickle.\n")
+print("Converting OpenSim results to Pickle...\n")
+osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 101)
+print("\nOpenSim results converted to Pickle.\n")
 
-# print("Exporting OpenSim results to CSV...\n")
-# failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 101)
-# print("CSV export complete.\n")
+print("Exporting OpenSim results to CSV...\n")
+failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 101)
+print("CSV export complete.\n")
 
 
 # %% ADDITIONAL ANALYSES

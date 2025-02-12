@@ -69,7 +69,7 @@ print("Done.\n")
 # import c3dextract as c3dex
 
 # print("Extracting C3D data, creating OpenSim files...\n")
-# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, -1)
+# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, restart="TRAIL483")
 # print("\nC3D data extract done.\n")
 
 
@@ -82,7 +82,7 @@ print("Done.\n")
 # print("\nOpenSim model scaling (SCALE) completed.\n")
 
 # print("Running OpenSim analyses: IK, ID...\n")
-# osp.opensim_pipeline(traildb, user, ["ik", "id"])
+# osp.opensim_pipeline(traildb, user, ["ik", "id"], restart="TRAIL142")
 # print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: SO...\n")
@@ -100,15 +100,15 @@ print("Done.\n")
 
 # %% LOAD AND FORMAT RESULTS
 
-# import opensimresults as osr
+import opensimresults as osr
 
-# print("Converting OpenSim results to Pickle...\n")
-# failedfiles = osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 2000)
-# print("\nOpenSim results converted to Pickle.\n")
+print("Converting OpenSim results to Pickle...\n")
+failedfiles = osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 2000)
+print("\nOpenSim results converted to Pickle.\n")
 
-# print("Exporting OpenSim results to CSV...\n")
-# failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 2000)
-# print("CSV export complete.\n")
+print("Exporting OpenSim results to CSV...\n")
+failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 2000)
+print("CSV export complete.\n")
 
 
 # %% ADDITIONAL ANALYSES
