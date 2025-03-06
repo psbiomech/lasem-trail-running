@@ -963,6 +963,7 @@ def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, 
         fmeta = c3d.get_dict_groups(itf)
         fforces = c3d.get_dict_forces(itf, frame=True, time=True)
         fmarkers = c3d.get_dict_markers(itf, frame=True, time=True)
+        fanalog = c3d.get_dict_analogs(itf, frame=True, time=True, excl_forces=True)
         
         # Need to adjust time vector because pyc3dserver doesn't consider the
         # ACTUAL_START_FIELD parameter when extracting the time vector
