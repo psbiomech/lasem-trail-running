@@ -10,6 +10,7 @@ import os
 import re
 import shutil
 import pickle as pk
+import pandas as pd
 
 
 
@@ -31,10 +32,10 @@ import pickle as pk
 
 
 '''
-build_database(user, task, dataset):
+build_database(user, task, dataset, emgosubcohort):
     Build OpenSim output database from user, return metadata dict.
 '''
-def build_database(user, task, dataset):
+def build_database(user, task, dataset, emgsubcohort=False):
  
     # meta dict
     meta = {}
@@ -42,13 +43,29 @@ def build_database(user, task, dataset):
     meta["study"]["task"] = task
     meta["study"]["dataset"] = dataset
  
+    # If EMG subcohort only, then load list of subjects
+    if emgsubcohort:
+        print("Using EMG subcohort only...")
+        emglist0 = pd.read_excel(os.path.join(user.rootpath, user.emglistfile), usecols="B")["ID"].dropna()
+        emglist = ["TRAIL" + s[-3:] for s in emglist0]
+ 
+    
     # input folders
     for infolder in user.infolder:
  
         # parse database, get subject list
         inpath = os.path.join(user.rootpath, infolder, user.subjprefix + "*")
-        folderlist = glob.glob(inpath, recursive = True)
-        subjlist = [os.path.split(f)[1] for f in folderlist]
+        folderlist0 = glob.glob(inpath, recursive = True)
+        subjlist0 = [os.path.split(f)[1] for f in folderlist0]
+        
+        # If EMG subcohort then cut down to only required subjects
+        if emgsubcohort:
+            subjidx = [xn for xn, x in enumerate(subjlist0) if x in emglist]
+            subjlist = [subjlist0[x] for x in subjidx]    
+            folderlist = [folderlist0[x] for x in subjidx]  
+        else:
+            subjlist = subjlist0
+            folderlist = folderlist0
         
         # build metadata dict
         outpath = os.path.join(user.rootpath, user.outfolder, task, dataset)

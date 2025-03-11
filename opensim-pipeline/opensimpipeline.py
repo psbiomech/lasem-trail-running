@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Run OpenSim pipeline, write input data files
+RUN OPENSIM PIPELINES
+
+Includes EMG processing. All data is written to OpenSim text files.
 
 @author: Prasanna Sritharan
 """
@@ -15,13 +17,8 @@ import shutil
 import re
 
 
-'''
------------------------------------
-------------- CLASSES -------------
------------------------------------
-'''
 
-# NO CLASSES
+
 
 
 
@@ -199,7 +196,9 @@ def opensim_pipeline(meta, user, analyses, restart = -1):
                             elif ans == "jr":
                                 run_opensim_jr(osimkey, user)
                             elif ans == "bk":
-                                run_opensim_bk(osimkey, user)                                
+                                run_opensim_bk(osimkey, user)
+                            elif ans == "emg":
+                                run_emg_envelopes(osimkey, user)
                                 
                     except:
                         print("%s ---> ***FAILED***" % trial)
@@ -1459,6 +1458,103 @@ def run_opensim_jr(osimkey, user):
     
     
 
+'''
+-----------------------------------
+---- FUNCTIONS: EMG PROCESSING ----
+-----------------------------------
+'''
+
+
+'''
+run_emg_envelopes(osimkey, user):
+    Process EMG to obtain envelopes, in preparation for EMG-informed modelling.
+'''
+def run_emg_envelopes(osimkey, user):
+
+    print("\nExtracting EMG envelopes for trial: %s" % osimkey.trial)
+    print("------------------------------------------------")    
+
+    try:
+
+        # Get the data from the OsimKey
+        print("Extracting EMG data from OsimKey...")
+        emgdata = osimkey.emg["data"]
+        time = osimkey.emg["time"]
+    
+        # Construct the envelopes from the data
+        print("Calculating envelopes using method: %s..." % user.emg_process_envelope)
+        envelopes = {}
+        for emgname in emgdata.keys():
+            emg = osimkey.emg["data"][emgname]
+            emgenv = extract_timeseries_envelope(emg, user.emg_process_envelope, user.emg_process_convolve_window)
+            envelopes[emgname] = emgenv    
+        
+        # Write to storage file
+        print("Writing EMG envelopes to STO file...")
+        outpath = os.path.join(osimkey.outpath, user.emgcode)
+        write_emg_envelopes_sto_file(envelopes, time, osimkey.trial, outpath)
+        
+    except:
+        #raise
+        print("---> ERROR: EMG envelopes failed. Skipping EMG envelopes for %s." % osimkey.trial)
+    finally:
+        print("------------------------------------------------\n")    
+    
+    return None
+
+
+
+
+
+
+
+'''
+write_emg_envelopes_sto_file(envelopes, time, trial, fpath):
+    Write .sto file for EMG envelopes.
+'''
+def write_emg_envelopes_sto_file(envelopes, time, trial, fpath):
+        
+    # output dataframe info
+    ns = len(time)
+    nc = len(envelopes.keys()) + 1
+
+    # write headers
+    fname = trial + "_emg_envelopes.sto"
+    if not os.path.exists(fpath): os.mkdir(fpath)
+    with open(os.path.join(fpath,fname),"w") as f:
+        f.write("%s\n" % fname)
+        f.write("version=1\n")
+        f.write("nRows=%d\n" % ns)
+        f.write("nColumns=%s\n" % nc)
+        f.write("inDegrees=no\n")
+        f.write("endheader\n")
+
+    # build data array
+    datamat = np.zeros([ns, nc])
+    datamat[:,0] = time
+    for xn, x in enumerate(envelopes.keys()):
+        datamat[:,xn+1] = envelopes[x]
+   
+        
+    # convert to dataframe
+    headers = ["time"] + list(envelopes.keys())
+    data = pd.DataFrame(datamat, columns=headers)
+        
+    # write table
+    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=True, index=False, float_format="%20.10f")
+    
+    return None
+
+
+
+
+
+
+
+
+
+
+
 
 
 '''
@@ -1809,6 +1905,9 @@ def write_marker_trajctory_trc_file(osimkey):
 
 
 
+
+
+
 '''
 perform_recommended_mass_change(rra_model, rra_log_file_fullpath):
     Extract the recommended mass changes from the RRA log file and update the
@@ -1892,12 +1991,57 @@ filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
 ''' 
 def filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
       
-      # filter design
-      Wn = sample_rate / 2
-      normalised_cutoff = cutoff / Wn
-      b, a = signal.butter(butter_order, normalised_cutoff, "lowpass")
-      
-      # apply filter
-      data_filtered = signal.filtfilt(b, a, data_raw, axis = 0)
+    # filter design
+    Wn = sample_rate / 2
+    normalised_cutoff = cutoff / Wn
+    b, a = signal.butter(butter_order, normalised_cutoff, "lowpass")
+    
+    # apply filter
+    data_filtered = signal.filtfilt(b, a, data_raw, axis = 0)
+    
+    return data_filtered      
 
-      return data_filtered      
+
+
+
+
+'''
+extract_timeseries_envelope(data, envelope, window):
+    Find the envelopes of a timeseries. Data should be a 1D array.
+        envelope: how to compute envelope ("convolve" (moving average, default), 
+            "hilbert" (not great for non-cyclic data), or "peakspline" (construct
+            splines across peaks, TBD))
+        window: convoution window for moving average (samples, default = 100)
+'''
+def extract_timeseries_envelope(data, envelope="convolve", window=100):
+    
+    # Moving average using convolution
+    if envelope.casefold() == "convolve":
+    
+        # Construct kernel for moving average
+        kernel = np.ones(window)/window
+        
+        # Convolve across array (mode: "same" ensures output array length matches
+        # input but this may not always be desirable)
+        env = signal.convolve(data, kernel, mode="same")
+    
+    # Envelope using Hilbert transform (not recommended for non-cyclic data)
+    elif envelope.casefold() == "hilbert":
+        
+        #TBD
+        env = data
+        
+    # Construct splines across peaks
+    elif envelope.casefold() == "peakspline":
+        
+        #TBD
+        env = data
+        
+
+    return env
+    
+    
+    
+    
+    
+    

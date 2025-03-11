@@ -28,13 +28,14 @@ C3DKey:
     C3D data storage class containing all C3D file data.
 '''
 class C3DKey():
-    def __init__(self, subj, group, trial, fmeta, fforces, fmarkers):
+    def __init__(self, subj, group, trial, fmeta, fforces, fmarkers, fanalog):
         self.subject_name = subj
         self.group_name = group
         self.trial_name = trial
         self.meta = fmeta
         self.forces = fforces
         self.markers = fmarkers
+        self.analog = fanalog
         return None
 
 
@@ -58,6 +59,7 @@ class TrialKey():
         self.__set_markers(lab, c3dkey, xdir)        
         self.__set_force_plates(lab, c3dkey, xdir, user.staticprefix) 
         self.__set_forces(lab, c3dkey, user.staticprefix)
+        self.__set_emg(lab, c3dkey, user.staticprefix, user.analogchannelnames)
         return None
 
     def __set_events(self, c3dkey, task, dataset, static_fp_channel):
@@ -586,6 +588,32 @@ class TrialKey():
         
         return None
 
+    def __set_emg(self, lab, c3dkey, staticprefix, analogchannelnames):
+        
+        # Initialise dict
+        emg = {}
+        
+        # Return empty dict if no analog data
+        if (not c3dkey.analog) or (not analogchannelnames): return emg
+        
+        # force plate time and frames
+        emg["time"] = c3dkey.analog["TIME"]
+        emg["time0"] = c3dkey.analog["TIME"] - c3dkey.forces["TIME"][0]    
+        emg["frames"] = c3dkey.analog["FRAME"]
+        emg["frames0"] = c3dkey.analog["FRAME"] - c3dkey.forces["FRAME"][0]    
+        emg["rate"] = c3dkey.analog["RATE"]       
+        
+        
+        # Get data
+        emg["data"] = {}
+        for c in analogchannelnames.keys():
+            emg["data"][c] = c3dkey.analog["DATA"][analogchannelnames[c]]
+        
+        self.emg = emg
+        
+        return None
+        
+        
 
 
 
@@ -609,7 +637,8 @@ class OpenSimKey():
         self.outpath = c3dpath
         self.__set_events(trialkey)
         self.__set_markers(trialkey, user) 
-        self.__set_forces(trialkey, user)      
+        self.__set_forces(trialkey, user)   
+        self.__set_emg(trialkey, user)
         return None
     
     def __set_events(self, trialkey):
@@ -802,6 +831,49 @@ class OpenSimKey():
         self.forces = forces
         
         return None
+    
+    def __set_emg(self, trialkey, user):
+        
+        # Initialise doct
+        emg = {}
+        
+        # If no EMG data, return empty
+        if not(trialkey.emg): return emg
+        
+        
+        # force plate time and frames
+        emg["time"] = trialkey.emg["time0"]   
+        emg["frames"] = np.arange(1,len(trialkey.emg["time0"]) + 1)   
+        emg["rate"] = trialkey.emg["rate"]           
+        
+        # Process each signal
+        emg["data"] = {}
+        for c in trialkey.emg["data"].keys():
+            
+            emgdata = trialkey.emg["data"][c]
+            
+            # Detrend, rectify and filter
+            # Note: 20 Hz cut off recommended by DeLuca et al. 2010, but this
+            # doesn't look great on paper
+            emgdata = np.abs(signal.detrend(emgdata))
+            if user.emg_filter_cutoff > -1:
+                emgdata = filter_timeseries(emgdata, emg["rate"], user.emg_filter_butter_order, user.emg_filter_cutoff)
+
+            # Normalise to peak value of signal
+            emgdata = emgdata / np.max(emgdata)
+            
+            # Extract envelope using Hilbert transform
+            # (Scipy has no dedicated envelope function)
+            if user.emg_use_hilbert:
+                emgdata = np.abs(signal.hilbert(emgdata))
+            
+            emg["data"][c] = emgdata
+        
+        
+        self.emg = emg
+        
+        return None
+    
 
 
 
@@ -815,7 +887,7 @@ class OpenSimKey():
 
 
 '''
-c3d_batch_process(user, meta, lab, xdir, use_existing, usermass, restart):
+c3d_batch_process(user, meta, lab, xdir, get_analog, use_existing, usermass, restart):
     Batch processing for C3D data extract, and OpenSim input file write,
     obtains mass from used static trial in each group if mass = -1. All data 
     in meta is processed unless specified by restart flag which may have types:
@@ -824,7 +896,7 @@ c3d_batch_process(user, meta, lab, xdir, use_existing, usermass, restart):
                 only one participant, set the tuple elements to be the same,
                 e.g. ("TRAIL004", "TRAIL004")
 '''
-def c3d_batch_process(user, meta, lab, xdir, use_existing = False, usermass = -1, restart = -1):
+def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = False, usermass = -1, restart = -1):
 
 
     # extract C3D data for OpenSim
@@ -891,7 +963,7 @@ def c3d_batch_process(user, meta, lab, xdir, use_existing = False, usermass = -1
                     dataset = meta[subj]["trials"][group][trial]["dataset"]                    
                     condition = meta[subj]["trials"][group][trial]["condition"]
                     model = meta[subj]["trials"][group][trial]["osim"]
-                    osimkey = c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing)                           
+                    osimkey = c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing, get_analog)                           
                     if usedstatic: mass = osimkey.mass
                 except:
                     #raise
@@ -913,7 +985,7 @@ def c3d_batch_process(user, meta, lab, xdir, use_existing = False, usermass = -1
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "SKIP_ME"): continue
+                #if not ("TRAIL473_FAST08" in trial): continue
                 #*********************
                 
                 # ignore static trials
@@ -931,9 +1003,9 @@ def c3d_batch_process(user, meta, lab, xdir, use_existing = False, usermass = -1
                     dataset = meta[subj]["trials"][group][trial]["dataset"]
                     condition = meta[subj]["trials"][group][trial]["condition"]
                     model = meta[subj]["trials"][group][trial]["osim"]
-                    c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing)   
+                    c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing, get_analog)   
                 except:
-                    #raise
+                    raise
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)  
 
@@ -950,7 +1022,7 @@ c3d_extract(subj, group trial, c3dfile, c3dpath, lab, user, task, dataset,
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing = False):    
+def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing = False, get_analog=False):    
  
     # Extract data from C3D file
     if not use_existing:
@@ -963,15 +1035,21 @@ def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, 
         fmeta = c3d.get_dict_groups(itf)
         fforces = c3d.get_dict_forces(itf, frame=True, time=True)
         fmarkers = c3d.get_dict_markers(itf, frame=True, time=True)
-        fanalog = c3d.get_dict_analogs(itf, frame=True, time=True, excl_forces=True)
+        
+        # Get analog data if required
+        fanalog = {}
+        if get_analog:
+            fanalog = c3d.get_dict_analogs(itf, frame=True, time=True, excl_forces=True)
         
         # Need to adjust time vector because pyc3dserver doesn't consider the
         # ACTUAL_START_FIELD parameter when extracting the time vector
         fforces["TIME"] = fforces["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
         fmarkers["TIME"] = fmarkers["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
-            
+        if fanalog:
+            fanalog["TIME"] = fanalog["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
+        
         # C3D key with all data from C3D file
-        c3dkey = C3DKey(subj, group, trial, fmeta, fforces, fmarkers)
+        c3dkey = C3DKey(subj, group, trial, fmeta, fforces, fmarkers, fanalog)
    
     # Otherwise load existing C3DKey:
     else:
@@ -997,6 +1075,10 @@ def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, 
     # if there are forces, write input MOT file
     if osimkey.forces:
         write_ground_forces_mot_file(osimkey)
+        
+    # if there is EMG, write to STO file
+    if osimkey.emg:
+        write_emg_sto_file(osimkey)
         
     return osimkey
     
@@ -1250,6 +1332,57 @@ def smooth_transitions(F, T, cop, vert_col_idx, threshold, cop_fixed_offset, win
         
     return F, T, cop
     
+
+
+
+
+
+'''
+write_emg_sto_file(osimkey):
+    Write .sto file for analog data.
+'''
+def write_emg_sto_file(osimkey):
+
+    # output dataframe info
+    ns = len(osimkey.emg["time"])
+    nc = len(osimkey.emg["data"]) + 1
+
+    # write headers
+    fname = osimkey.trial + "_emg.sto"
+    fpath = osimkey.outpath
+    if not os.path.exists: os.mkdir(fpath)
+    with open(os.path.join(fpath,fname),"w") as f:
+        f.write("%s\n" % fname)
+        f.write("version=1\n")
+        f.write("nRows=%d\n" % ns)
+        f.write("nColumns=%s\n" % nc)
+        f.write("inDegrees=no\n")
+        f.write("endheader\n")
+
+    # build data array
+    datamat = np.zeros([ns, nc])
+    datamat[:,0] = osimkey.emg["time"]
+    for xn, x in enumerate(osimkey.emg["data"].keys()):
+        datamat[:,xn+1] = osimkey.emg["data"][x]
+   
+        
+    # convert to dataframe
+    headers = ["time"] + list(osimkey.emg["data"].keys())
+    data = pd.DataFrame(datamat, columns=headers)
+        
+    # write table
+    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=True, index=False, float_format="%20.10f")
+    
+    return data
+
+
+
+
+
+
+
+
+
 
 
 '''

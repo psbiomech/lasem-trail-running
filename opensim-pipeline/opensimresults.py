@@ -103,6 +103,7 @@ class OsimResultsKey():
         filext["cmc"] = []
         filext["jr"] = "_jr_ReactionLoads.sto"
         filext["bk"] = "_bk_pos_global.sto"     # TBD: add vel and acc
+        filext["emg"] = "_emg.sto"
         
         # header rows
         # note: may differ from actual number of header rows as pandas skips
@@ -115,6 +116,7 @@ class OsimResultsKey():
         headnum["cmc"] = []
         headnum["jr"] = 9
         headnum["bk"] = 13
+        headnum["emg"] = 7
        
         # get OpenSim data
         for ans in analyses:
