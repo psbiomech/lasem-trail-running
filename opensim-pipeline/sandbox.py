@@ -79,7 +79,7 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL426"
+subj = "TRAIL417"
 trial = "EP01"
 fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
 

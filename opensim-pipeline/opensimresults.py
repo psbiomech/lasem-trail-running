@@ -124,9 +124,11 @@ class OsimResultsKey():
             # skip scale
             if ans.casefold() == "scale": continue
             
-            # load data 
+            # Load data into df
             datafile = os.path.join(osimkey.outpath, ans, osimkey.trial + filext[ans])
             datadf = pd.read_csv(datafile, sep="\t", header=headnum[ans])
+            
+            # Split data and headers
             headers = datadf.columns.tolist()
             data = datadf.to_numpy()
             
@@ -163,8 +165,8 @@ class OsimResultsKey():
             results[ans] = {}        
             
             # split by feet
-            for f, foot in enumerate(["r", "l"]):
-                                
+            for f, foot in enumerate(["r", "l"]):                             
+                
                 # copy raw data
                 data0 = None
                 data0 = self.results["raw"][ans]["data"].copy()                
@@ -299,6 +301,9 @@ class OsimResultsKey():
                 results[ans][foot] = {}
                 results[ans][foot]["data"] = data
                 results[ans][foot]["headers"] = headers[ans]
+                results[ans][foot]["events"] = self.events["labels"][e0:e1+1]
+                results[ans][foot]["event_times"] = self.events["time"][e0:e1+1]
+                results[ans][foot]["event_steps"] = np.round(nsamp * (self.events["time"][e0:e1+1] - self.events["time"][e0]) / (self.events["time"][e1] - self.events["time"][e0]))
         
         self.results["split"] = results        
             
@@ -483,7 +488,10 @@ def export_opensim_results(meta, user, analyses, nsamp):
                                 issurgical = 0
                         else:
                             issurgical = -1
-                    
+                        
+                        # Get the events
+                        
+                        
                         # analysis
                         for ans in analyses:
                             
