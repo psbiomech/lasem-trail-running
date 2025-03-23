@@ -103,7 +103,7 @@ class OsimResultsKey():
         filext["cmc"] = []
         filext["jr"] = "_jr_ReactionLoads.sto"
         filext["bk"] = "_bk_pos_global.sto"     # TBD: add vel and acc
-        filext["emg"] = "_emg.sto"
+        filext["emg"] = "_emg_envelopes.sto"
         
         # header rows
         # note: may differ from actual number of header rows as pandas skips
@@ -116,7 +116,7 @@ class OsimResultsKey():
         headnum["cmc"] = []
         headnum["jr"] = 9
         headnum["bk"] = 13
-        headnum["emg"] = 7
+        headnum["emg"] = 6
        
         # get OpenSim data
         for ans in analyses:
@@ -427,6 +427,12 @@ def export_opensim_results(meta, user, analyses, nsamp):
         # Current: TRAIL123, Required: TRAIL_123
         subjcorrected = subj[0:5] + "_" + subj[5:8]
         
+        # Sex, group and knee reference
+        sex = meta[subj]["sex"]
+        gtype = meta[subj]["type"]   # Group type: control or surgical (group already used so needed another var name)
+        knee = meta[subj]["knee"]
+        
+        
         for group in meta[subj]["trials"]:
             
             print("Group: %s" % group)
@@ -467,6 +473,17 @@ def export_opensim_results(meta, user, analyses, nsamp):
                         # if the leg has no data, then ignore
                         if data_type.casefold() == "not_used": continue
                         
+                        # Check if symptomatic surgical limb or not, or control
+                        if gtype=="surgical":
+                            if knee=="bilateral":
+                                issurgical = 1
+                            elif foot==knee[0]:
+                                issurgical = 1
+                            else:
+                                issurgical = 0
+                        else:
+                            issurgical = -1
+                    
                         # analysis
                         for ans in analyses:
                             
@@ -488,7 +505,7 @@ def export_opensim_results(meta, user, analyses, nsamp):
                                 drow = data[:, v]
     
                                 # create new line of data
-                                csvrow = [subjcorrected, trialcorrected, task, dataset, condition, data_type, foot, avgtrialspeed, cadence, ans, variable] + drow.tolist()
+                                csvrow = [subjcorrected, trialcorrected, sex, gtype, task, dataset, condition, data_type, foot, issurgical, avgtrialspeed, cadence, ans, variable] + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -499,7 +516,7 @@ def export_opensim_results(meta, user, analyses, nsamp):
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "task", "dataset", "condition", "data_type", "data_leg", "avg_speed_m/s", "cadence_steps/min", "analysis", "variable"] + ["t" + str(n) for n in range(1, nsamp + 1)]
+    headers = ["subject", "trial", "sex", "group", "task", "dataset", "condition", "data_type", "data_leg", "is_surgical", "avg_speed_m/s", "cadence_steps/min", "analysis", "variable"] + ["t" + str(n) for n in range(1, nsamp + 1)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers

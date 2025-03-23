@@ -43,11 +43,16 @@ def build_database(user, task, dataset, emgsubcohort=False):
     meta["study"]["task"] = task
     meta["study"]["dataset"] = dataset
  
-    # If EMG subcohort only, then load list of subjects
+    # If EMG subcohort only, then load list of subjects, also get group, sex and 
+    # symptomatic limb
     if emgsubcohort:
         print("Using EMG subcohort only...")
-        emglist0 = pd.read_excel(os.path.join(user.rootpath, user.emglistfile), usecols="B")["ID"].dropna()
-        emglist = ["TRAIL" + s[-3:] for s in emglist0]
+        emginfo = pd.read_excel(os.path.join(user.rootpath, user.emglistfile), usecols="B, D, E, G")
+        emglist = ["TRAIL" + s[-3:] for s in emginfo["ID"].dropna()]
+        sexlist = emginfo["Sex"].dropna().to_list()
+        typelist = emginfo["Group"].dropna().to_list()
+        kneelist = emginfo["knee_reference"].dropna().to_list()
+        
  
     
     # input folders
@@ -77,6 +82,9 @@ def build_database(user, task, dataset, emgsubcohort=False):
             meta[subj]["subj"] = subj
             meta[subj]["project"] = user.project
             meta[subj]["outpath"] = os.path.join(outpath, subj)
+            meta[subj]["type"] = typelist[n].lower()
+            meta[subj]["sex"] = sexlist[n].lower()
+            meta[subj]["knee"] = kneelist[n].lower()
             
             # trial subfolders
             meta[subj]["trials"] = {}

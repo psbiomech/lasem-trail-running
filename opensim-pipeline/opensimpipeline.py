@@ -1476,26 +1476,32 @@ def run_emg_envelopes(osimkey, user):
 
     try:
 
-        # Get the data from the OsimKey
-        print("Extracting EMG data from OsimKey...")
-        emgdata = osimkey.emg["data"]
-        time = osimkey.emg["time"]
-    
-        # Construct the envelopes from the data
-        print("Calculating envelopes using method: %s..." % user.emg_process_envelope)
-        envelopes = {}
-        for emgname in emgdata.keys():
-            emg = osimkey.emg["data"][emgname]
-            emgenv = extract_timeseries_envelope(emg, user.emg_process_envelope, user.emg_process_convolve_window)
-            envelopes[emgname] = emgenv    
+        # Skip if no EMG data
+        if not(osimkey.emg):        
+            print("No EMG data found for %s." % osimkey.trial)
+            
+        else:
+
+            # Get the data from the OsimKey
+            print("Extracting EMG data from OsimKey...")
+            emgdata = osimkey.emg["data"]
+            time = osimkey.emg["time"]
         
-        # Write to storage file
-        print("Writing EMG envelopes to STO file...")
-        outpath = os.path.join(osimkey.outpath, user.emgcode)
-        write_emg_envelopes_sto_file(envelopes, time, osimkey.trial, outpath)
+            # Construct the envelopes from the data
+            print("Calculating envelopes using method: %s..." % user.emg_process_envelope)
+            envelopes = {}
+            for emgname in emgdata.keys():
+                emg = osimkey.emg["data"][emgname]
+                emgenv = extract_timeseries_envelope(emg, user.emg_process_envelope, user.emg_process_convolve_window)
+                envelopes[emgname] = emgenv    
+            
+            # Write to storage file
+            print("Writing EMG envelopes to STO file...")
+            outpath = os.path.join(osimkey.outpath, user.emgcode)
+            write_emg_envelopes_sto_file(envelopes, time, osimkey.trial, outpath)
         
     except:
-        #raise
+        raise
         print("---> ERROR: EMG envelopes failed. Skipping EMG envelopes for %s." % osimkey.trial)
     finally:
         print("------------------------------------------------\n")    

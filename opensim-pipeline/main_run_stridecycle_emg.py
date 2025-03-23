@@ -80,12 +80,12 @@ print("Done.\n")
 import opensimpipeline as osp
 
 print("Running OpenSim model scaling: SCALE...\n")
-failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
+failedstatic = osp.opensim_pipeline(traildb, user, ["scale"], restart=("TRAIL426", "TRAIL426"))
 print("\nOpenSim model scaling (SCALE) completed.\n")
 
-# print("Running OpenSim analyses: IK, ID...\n")
-# osp.opensim_pipeline(traildb, user, ["ik", "id"])
-# print("\nOpenSim analyses (IK, ID) completed.\n")
+print("Running OpenSim analyses: IK, ID...\n")
+osp.opensim_pipeline(traildb, user, ["ik", "id"], restart=("TRAIL426", "TRAIL426"))
+print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: BK...\n")
 # osp.opensim_pipeline(traildb, user, ["bk"])
@@ -104,7 +104,7 @@ print("\nOpenSim model scaling (SCALE) completed.\n")
 # print("\nOpenSim analyses (JR) completed.\n")
 
 print("Running EMG processing: Envelopes...\n")
-osp.opensim_pipeline(traildb, user, ["emg"])
+osp.opensim_pipeline(traildb, user, ["emg"], restart=("TRAIL426", "TRAIL426"))
 print("\nEMG processing (Envelopes) completed.\n")
 
 
@@ -115,12 +115,13 @@ print("\nEMG processing (Envelopes) completed.\n")
 import opensimresults as osr
 
 print("Converting OpenSim results to Pickle...\n")
-osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 101)
+osr.opensim_results_batch_process(traildb, ["ik", "id", "emg"], user, 101)
 print("\nOpenSim results converted to Pickle.\n")
 
-print("Exporting OpenSim results to CSV...\n")
-failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 101)
+print("Exporting results to CSV...\n")
+failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "emg"], 101)
 print("CSV export complete.\n")
+
 
 
 # %% ADDITIONAL ANALYSES

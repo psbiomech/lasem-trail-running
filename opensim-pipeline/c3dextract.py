@@ -594,9 +594,11 @@ class TrialKey():
         emg = {}
         
         # Return empty dict if no analog data
-        if (not c3dkey.analog) or (not analogchannelnames): return emg
+        if (not c3dkey.analog) or ("EMG" not in c3dkey.analog.keys()):
+            self.emg = emg
+            return None
         
-        # force plate time and frames
+        # EMG time and frames
         emg["time"] = c3dkey.analog["TIME"]
         emg["time0"] = c3dkey.analog["TIME"] - c3dkey.forces["TIME"][0]    
         emg["frames"] = c3dkey.analog["FRAME"]
@@ -838,7 +840,9 @@ class OpenSimKey():
         emg = {}
         
         # If no EMG data, return empty
-        if not(trialkey.emg): return emg
+        if not(trialkey.emg): 
+            self.emg = emg
+            return None
         
         
         # force plate time and frames
@@ -966,7 +970,7 @@ def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = Fa
                     osimkey = c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing, get_analog)                           
                     if usedstatic: mass = osimkey.mass
                 except:
-                    #raise
+                    raise
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)
             
@@ -985,7 +989,7 @@ def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = Fa
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not ("TRAIL473_FAST08" in trial): continue
+                #if not (trial == "SKIP_ME"): continue
                 #*********************
                 
                 # ignore static trials
@@ -1005,7 +1009,7 @@ def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = Fa
                     model = meta[subj]["trials"][group][trial]["osim"]
                     c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing, get_analog)   
                 except:
-                    raise
+                    #raise
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)  
 
