@@ -124,16 +124,24 @@ class OsimResultsKey():
             # skip scale
             if ans.casefold() == "scale": continue
             
-            # Load data into df
+            # Load data into df, if it exists (e.g. not all participants have EMG)
             datafile = os.path.join(osimkey.outpath, ans, osimkey.trial + filext[ans])
-            datadf = pd.read_csv(datafile, sep="\t", header=headnum[ans])
+            if os.path.isfile(datafile): 
+                
+                # Raw data
+                datadf = pd.read_csv(datafile, sep="\t", header=headnum[ans])
+                            
+                # Split data and headers
+                headers = datadf.columns.tolist()
+                data = datadf.to_numpy()
+                
+                # resample data
+                datanew = resample1d(data, nsamp)
             
-            # Split data and headers
-            headers = datadf.columns.tolist()
-            data = datadf.to_numpy()
-            
-            # resample data
-            datanew = resample1d(data, nsamp)
+            # If no data, just return None type
+            else:
+                datanew = []
+                headers = []
             
             # store in dict
             results[ans] = {}
@@ -160,26 +168,37 @@ class OsimResultsKey():
             
             # skip scale
             if ans.casefold() == "scale": continue
-        
+            
             # initialise dict
             results[ans] = {}        
             
             # split by feet
             for f, foot in enumerate(["r", "l"]):                             
                 
+                results[ans][foot] = {}
+                
                 # copy raw data
                 data0 = None
                 data0 = self.results["raw"][ans]["data"].copy()                
-                
                 
                 # ###################################
                 # ADDITIONAL PROCESSING BASED ON TASK AND DATASET
                 #
                 # Includes left leg trial flipping, as the way this is done can
                 # be trial-dependent
-                                
+                
+                # If no data, then return empty list (e.g. not all participants
+                # have EMG data)
+                if len(data0) == 0:
+                    results[ans][foot]["data"] = []
+                    results[ans][foot]["headers"] = []
+                    results[ans][foot]["events"] = []
+                    results[ans][foot]["event_times"] = []
+                    results[ans][foot]["event_steps"] = []
+                    continue
+                
                 # Static trial
-                if self.dataset.casefold() == "static":
+                elif self.dataset.casefold() == "static":
                     print("Static trial. Nothing to be done.")
                     continue
                     
@@ -193,6 +212,8 @@ class OsimResultsKey():
                         results[ans][foot] = {}
                         results[ans][foot]["data"] = np.zeros([nsamp, len(headers[ans])])
                         results[ans][foot]["headers"] = headers[ans]
+                        results[ans][foot]["event_times"] = -1
+                        results[ans][foot]["event_steps"] = -1
                         continue
                     
                     # foot is used (i.e. events exist and a leg_task is assigned)
@@ -298,7 +319,6 @@ class OsimResultsKey():
                 data = resample1d(data1, nsamp)
                             
                 # store in dict
-                results[ans][foot] = {}
                 results[ans][foot]["data"] = data
                 results[ans][foot]["headers"] = headers[ans]
                 results[ans][foot]["events"] = self.events["labels"][e0:e1+1]
@@ -393,7 +413,7 @@ def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
                     failedfiles.append(trial) 
-                    #raise
+                    raise
                 else:
                     print("Dynamic trial: %s" % trial)
                           
@@ -489,9 +509,6 @@ def export_opensim_results(meta, user, analyses, nsamp):
                         else:
                             issurgical = -1
                         
-                        # Get the events
-                        
-                        
                         # analysis
                         for ans in analyses:
                             
@@ -501,10 +518,25 @@ def export_opensim_results(meta, user, analyses, nsamp):
                             # data array
                             data = osimresultskey.results["split"][ans][foot]["data"]
                             varheader = osimresultskey.results["split"][ans][foot]["headers"]
-                        
+                            
+                            # Skip if no data (e.g. not all participants have
+                            # EMG data)
+                            if len(data) == 0: continue
+                            
                             # resample data if necessary
                             if nsamp != osimresultskey.nsamp:
                                 data = resample1d(data, nsamp)
+                        
+                            # Get the events
+                            event_times = osimresultskey.results["split"][ans][foot]["event_times"]
+                            event_steps = osimresultskey.results["split"][ans][foot]["event_steps"]
+                        
+                            # Pad events list if required
+                            if dataset == "run_stridecycle":
+                                if len(event_times) < 5:
+                                    event_times = np.concatenate([event_times, [-1]*(5-len(event_times))])
+                                    event_steps = np.concatenate([event_steps, [-1]*(5-len(event_steps))])
+                        
                         
                             # variable
                             for v, variable in enumerate(varheader):
@@ -513,18 +545,19 @@ def export_opensim_results(meta, user, analyses, nsamp):
                                 drow = data[:, v]
     
                                 # create new line of data
-                                csvrow = [subjcorrected, trialcorrected, sex, gtype, task, dataset, condition, data_type, foot, issurgical, avgtrialspeed, cadence, ans, variable] + drow.tolist()
+                                csvrow = [subjcorrected, trialcorrected, sex, gtype, task, dataset, condition, data_type, foot, issurgical, avgtrialspeed, cadence, ans, variable] + event_times.tolist() + event_steps.tolist() + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
                     failedfiles.append(trial)
+                    raise
                 else:
                     print("Dynamic trial: %s" % trial)
 
     # create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "sex", "group", "task", "dataset", "condition", "data_type", "data_leg", "is_surgical", "avg_speed_m/s", "cadence_steps/min", "analysis", "variable"] + ["t" + str(n) for n in range(1, nsamp + 1)]
+    headers = ["subject", "trial", "sex", "group", "task", "dataset", "condition", "data_type", "data_leg", "is_surgical", "avg_speed_m/s", "cadence_steps/min", "analysis", "variable"] + ["etime" + str(n) for n in range(0, len(event_times))] + ["esteps" + str(n) for n in range(0, len(event_steps))] + ["t" + str(n) for n in range(1, nsamp + 1)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # write data to file with headers

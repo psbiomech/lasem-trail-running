@@ -47,14 +47,14 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL046_EP02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance\TRAIL046\BASELINE\TRAIL046_EP02"
+subj = "TRAIL029"
+trial = "EP02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
 
 # OsimResultsKey
-pkfile = os.path.join(fpath, fprefix + "_trialkey.pkl")
+pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_trialkey.pkl")
 with open(pkfile, "rb") as fid: 
-    trialkey1 = pk.load(fid)    
-    
+    trialkey1 = pk.load(fid)
     
     
 # %% LOAD A C3DKEY
@@ -63,13 +63,15 @@ import pickle as pk
 import os
 
 # file path and name prefix
-fprefix = "TRAIL123_EP02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle\TRAIL123\BASELINE\TRAIL123_EP02"
+subj = "TRAIL029"
+trial = "EP02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
 
 # OsimResultsKey
-pkfile = os.path.join(fpath, fprefix + "_c3dkey.pkl")
+pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_c3dkey.pkl")
 with open(pkfile, "rb") as fid: 
     c3dkey1 = pk.load(fid)
+    
     
     
 
@@ -79,7 +81,7 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL417"
+subj = "TRAIL087"
 trial = "EP01"
 fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
 

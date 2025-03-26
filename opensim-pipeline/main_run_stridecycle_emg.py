@@ -68,11 +68,11 @@ print("Done.\n")
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-# import c3dextract as c3dex
+import c3dextract as c3dex
 
-# print("Extracting C3D data, creating OpenSim files...\n")
-# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, get_analog=True)
-# print("\nC3D data extract done.\n")
+print("Extracting C3D data, creating OpenSim files...\n")
+failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, get_analog=True)
+print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
@@ -80,11 +80,11 @@ print("Done.\n")
 import opensimpipeline as osp
 
 print("Running OpenSim model scaling: SCALE...\n")
-failedstatic = osp.opensim_pipeline(traildb, user, ["scale"], restart=("TRAIL426", "TRAIL426"))
+failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
 print("\nOpenSim model scaling (SCALE) completed.\n")
 
 print("Running OpenSim analyses: IK, ID...\n")
-osp.opensim_pipeline(traildb, user, ["ik", "id"], restart=("TRAIL426", "TRAIL426"))
+osp.opensim_pipeline(traildb, user, ["ik", "id"])
 print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: BK...\n")
@@ -104,7 +104,7 @@ print("\nOpenSim analyses (IK, ID) completed.\n")
 # print("\nOpenSim analyses (JR) completed.\n")
 
 print("Running EMG processing: Envelopes...\n")
-osp.opensim_pipeline(traildb, user, ["emg"], restart=("TRAIL426", "TRAIL426"))
+osp.opensim_pipeline(traildb, user, ["emg"])
 print("\nEMG processing (Envelopes) completed.\n")
 
 
@@ -114,13 +114,13 @@ print("\nEMG processing (Envelopes) completed.\n")
 
 import opensimresults as osr
 
-print("Converting OpenSim results to Pickle...\n")
-osr.opensim_results_batch_process(traildb, ["ik", "id", "emg"], user, 101)
-print("\nOpenSim results converted to Pickle.\n")
+# print("Converting OpenSim results to Pickle...\n")
+# osr.opensim_results_batch_process(traildb, ["ik", "id", "emg"], user, 101)
+# print("\nOpenSim results converted to Pickle.\n")
 
-# print("Exporting results to CSV...\n")
-# failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "emg"], 101)
-# print("CSV export complete.\n")
+print("Exporting results to CSV...\n")
+failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "emg"], 101)
+print("CSV export complete.\n")
 
 
 

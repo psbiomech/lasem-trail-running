@@ -594,7 +594,7 @@ class TrialKey():
         emg = {}
         
         # Return empty dict if no analog data
-        if (not c3dkey.analog) or ("EMG" not in c3dkey.analog.keys()):
+        if (not c3dkey.analog) or not any(["EMG" in x for x in c3dkey.analog["DATA"].keys()]):
             self.emg = emg
             return None
         
@@ -970,7 +970,7 @@ def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = Fa
                     osimkey = c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing, get_analog)                           
                     if usedstatic: mass = osimkey.mass
                 except:
-                    raise
+                    #raise
                     print("*** FAILED ***")    
                     failedfiles.append(c3dfile)
             
@@ -989,7 +989,7 @@ def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = Fa
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "SKIP_ME"): continue
+                #if not (trial == "TRAIL473_FAST08"): continue
                 #*********************
                 
                 # ignore static trials

@@ -41,7 +41,7 @@ df0 = pd.read_csv(os.path.join(srcpath, srcfile))
 df1 = df0[df0["statistic"] == "mean"]
 
 # Data labels
-analyses = ["ik", "id"]
+analyses = ["ik", "id", "emg"]
 osimvars = {}
 osimvars["emg"] = ["sol", "gaslat", "gasmed", "semiten", "bflh", "vasmed", "vaslat"]
 #osimvars["ik"] = ["hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", "ankle_angle", "lumbar_extension", "lumbar_bending", "lumbar_rotation"]

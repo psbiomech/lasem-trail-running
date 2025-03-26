@@ -2014,15 +2014,26 @@ def filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
 '''
 extract_timeseries_envelope(data, envelope, window):
     Find the envelopes of a timeseries. Data should be a 1D array.
-        envelope: how to compute envelope ("convolve" (moving average, default), 
-            "hilbert" (not great for non-cyclic data), or "peakspline" (construct
-            splines across peaks, TBD))
+        envelope: how to compute envelope (default = 'movingrms')
         window: convoution window for moving average (samples, default = 100)
 '''
-def extract_timeseries_envelope(data, envelope="convolve", window=100):
+def extract_timeseries_envelope(data, envelope="movingrms", window=100):
     
-    # Moving average using convolution
-    if envelope.casefold() == "convolve":
+    # Moving RMS
+    if envelope.casefold() == "movingrms":
+        
+        # Construct kernel for moving RMS
+        kernel = np.ones(window)/window
+        
+        # Square data
+        data2 = data**2
+        
+        # Convolve across array (mode: "same" ensures output array length matches
+        # input but this may not always be desirable)
+        env = np.sqrt(signal.convolve(data2, kernel, mode="same"))       
+    
+    # Moving average
+    elif envelope.casefold() == "movingavg":
     
         # Construct kernel for moving average
         kernel = np.ones(window)/window
@@ -2031,7 +2042,7 @@ def extract_timeseries_envelope(data, envelope="convolve", window=100):
         # input but this may not always be desirable)
         env = signal.convolve(data, kernel, mode="same")
     
-    # Envelope using Hilbert transform (not recommended for non-cyclic data)
+    # Hilbert transform (not recommended for non-cyclic data)
     elif envelope.casefold() == "hilbert":
         
         #TBD

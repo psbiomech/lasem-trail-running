@@ -435,7 +435,7 @@ class TRAILSettings_RUN_EMG(UserSettings):
         
         
         # EMG processing parameters
-        self.emg_process_envelope = "convolve"   # moving average
+        self.emg_process_envelope = "movingrms"   # moving average
         self.emg_process_convolve_window = 150   # samples
         
         
