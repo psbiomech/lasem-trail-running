@@ -574,6 +574,187 @@ def export_opensim_results(meta, user, analyses, nsamp):
 
 
 
+
+
+
+'''
+export_opensim_results_subject_mean(meta, user, analyses, nsamp):
+    Collate OpenSim results into dataframes and export to text for Rstats.
+    Note: nsamp should be the same as that used for OsimResultsKey
+    otherwise the trial is skipped.
+'''
+def export_opensim_results_subject_mean(meta, user, analyses, nsamp, normalise = False):
+    
+    # empty output list of lists
+    # (create the output table as a list of lists, then convert to dataframe
+    # as iteratively appending new dataframe rows is computationally expensive)
+    csvdata = []
+        
+    # extract OpenSim data
+    print("Collating data into lists...\n")
+    failedfiles = []
+    for subj in meta:
+    
+        # skip the study info
+        if subj.casefold() == "study": continue        
+    
+        print("%s" % "*" * 30)
+        print("SUBJECT: %s" % subj)
+        print("%s" % "*" * 30)
+        
+        # Rectify subject name format for consistency with TRAIL baseline
+        # Current: TRAIL123, Required: TRAIL_123
+        subjcorrected = subj[0:5] + "_" + subj[5:8]
+        
+        # Sex, group and knee reference
+        sex = meta[subj]["sex"]
+        gtype = meta[subj]["type"]   # Group type: control or surgical (group already used so needed another var name)
+        knee = meta[subj]["knee"]
+        
+        
+        for group in meta[subj]["trials"]:
+            
+            print("Group: %s" % group)
+            print("%s" % "=" * 30)                      
+            
+            # process dynamic trials only
+            for trial in meta[subj]["trials"][group]:                
+                
+                # ignore static trials
+                isstatic = meta[subj]["trials"][group][trial]["isstatic"]
+                if isstatic: continue
+            
+                # Rectify trial name format for consistency with TRAIL baseline
+                # Current: TRAIL123_FAST08, Required: TRAIL_123_FAST08
+                trialcorrected = trial[0:5] + "_" + trial[5:]
+            
+                try:
+                
+                    # load the trial OsimResultsKey
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
+                    with open(pkfile,"rb") as fid:
+                        osimresultskey = pk.load(fid)
+                        
+                    # trial info
+                    task = osimresultskey.task
+                    dataset = osimresultskey.dataset
+                    condition = osimresultskey.condition
+                    avgtrialspeed = osimresultskey.avgtrialspeed
+                    cadence = osimresultskey.cadence
+
+                    # foot
+                    for f, foot in enumerate(["r","l"]):
+                        
+                        # leg data window, i.e. leg_task (terrible name)
+                        data_type = osimresultskey.events["leg_task"][f]
+                        
+                        # if the leg has no data, then ignore
+                        if data_type.casefold() == "not_used": continue
+                        
+                        # Check if symptomatic surgical limb or not, or control
+                        if gtype=="surgical":
+                            if knee=="bilateral":
+                                issurgical = 1
+                            elif foot==knee[0]:
+                                issurgical = 1
+                            else:
+                                issurgical = 0
+                        else:
+                            issurgical = -1
+                        
+                        # analysis
+                        for ans in analyses:
+                            
+                            # ignore scaling
+                            if ans.casefold() == "scale": continue
+                        
+                            # data array
+                            data = osimresultskey.results["split"][ans][foot]["data"]
+                            varheader = osimresultskey.results["split"][ans][foot]["headers"]
+                            
+                            # Skip if no data (e.g. not all participants have
+                            # EMG data)
+                            if len(data) == 0: continue
+                            
+                            # resample data if necessary
+                            if nsamp != osimresultskey.nsamp:
+                                data = resample1d(data, nsamp)
+                        
+                            # Get the events
+                            event_times = osimresultskey.results["split"][ans][foot]["event_times"]
+                            event_steps = osimresultskey.results["split"][ans][foot]["event_steps"]
+                        
+                            # Pad events list if required
+                            if dataset == "run_stridecycle":
+                                if len(event_times) < 5:
+                                    event_times = np.concatenate([event_times, [-1]*(5-len(event_times))])
+                                    event_steps = np.concatenate([event_steps, [-1]*(5-len(event_steps))])
+                        
+                        
+                            # variable
+                            for v, variable in enumerate(varheader):
+                                
+                                # data for the variable (includes time)
+                                drow = data[:, v]
+    
+                                # create new line of data
+                                csvrow = [subjcorrected, trialcorrected, sex, gtype, task, dataset, condition, data_type, foot, issurgical, avgtrialspeed, cadence, ans, variable] + event_times.tolist() + event_steps.tolist() + drow.tolist()
+                                csvdata.append(csvrow)
+                
+                except:
+                    print("Dynamic trial: %s *** FAILED ***" % trial)
+                    failedfiles.append(trial)
+                    raise
+                else:
+                    print("Dynamic trial: %s" % trial)
+
+    # create dataframe
+    print("\nCreating dataframe...")
+    headers = ["subject", "trial", "sex", "group", "task", "dataset", "condition", "data_type", "data_leg", "is_surgical", "avg_speed_m/s", "cadence_steps/min", "analysis", "variable"] + ["etime" + str(n) for n in range(0, len(event_times))] + ["esteps" + str(n) for n in range(0, len(event_steps))] + ["t" + str(n) for n in range(1, nsamp + 1)]
+    csvdf = pd.DataFrame(csvdata, columns = headers)
+    
+    # Drop non-numeric columns
+    csvdf = csvdf.drop(["trial", "sex", "data_leg"], axis=1)
+    
+    # Group
+    csvdf_grouped = csvdf.groupby(["subject", "group", "task", "dataset", "condition", "data_type", "is_surgical", "analysis", "variable"])
+
+    # Descriptives
+    csvdf_grouped_mean = csvdf_grouped.mean().reset_index()
+    csvdf_grouped_sd = csvdf_grouped.std().reset_index()
+
+    # Rearrange dataframes to interleave mean and sd rows (much easier in dplyr 
+    # with relocate()!)
+    csvdf_grouped_mean["statistic"] = "mean"
+    dfmean = csvdf_grouped_mean.pop("statistic")
+    csvdf_grouped_mean.insert(csvdf_grouped_mean.columns.get_loc("variable") + 1, dfmean.name, dfmean)      
+    csvdf_grouped_sd["statistic"] = "sd"
+    dfsd = csvdf_grouped_sd.pop("statistic")
+    csvdf_grouped_sd.insert(csvdf_grouped_sd.columns.get_loc("variable") + 1, dfsd.name, dfsd)  
+    
+    # Interleave mean and sd rows
+    csvdf_grouped_mean["sortidx"] = range(0, len(csvdf_grouped_mean))
+    csvdf_grouped_sd["sortidx"] = range(0, len(csvdf_grouped_sd))
+    csvdf_descriptives = pd.concat([csvdf_grouped_mean, csvdf_grouped_sd]).sort_values(["sortidx", "statistic"])
+    csvdf_descriptives.drop(columns = "sortidx", inplace = True)
+
+    # write data to file with headers
+    print("\nWriting to CSV text file...")
+    csvfile = user.csvdescfileprefix + meta["study"]["task"] + "_" + meta["study"]["dataset"] + ".csv"
+    fpath = os.path.join(user.rootpath, user.outfolder, meta["study"]["task"], meta["study"]["dataset"], user.csvfolder)
+    if not os.path.exists(fpath): os.makedirs(fpath)
+    csvdf_descriptives.to_csv(os.path.join(fpath,csvfile), index = False)
+    
+    
+    print("\n")
+   
+    return failedfiles
+
+
+
+
+
 '''
 resample1d(data, nsamp):
     Simple resampling by 1-D interpolation (rows = samples, cols = variable).

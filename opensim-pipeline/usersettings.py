@@ -81,6 +81,7 @@ class TRAILSettings_RUN(UserSettings):
         self.csvfolder = "csvfolder"
         self.csvfileprefix = "trail_opensim_results_"
         
+        
         # meta data file
         self.metadatafile = self.project + ".pkl"        
         
@@ -284,6 +285,7 @@ class TRAILSettings_RUN_EMG(UserSettings):
         # export data
         self.csvfolder = "csvfolder"
         self.csvfileprefix = "trail_opensim_results_"
+        self.csvdescfileprefix = "trail_opensim_results_subject_descriptives_"
         
         # meta data file
         self.metadatafile = self.project + ".pkl"        
