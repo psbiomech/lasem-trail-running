@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Process and run LASEM TRAIL project data through OpenSim
+Process and run LASEM TRAIL project data through OpenSim (RUN STRIDECYCLE)
 
 @author: Prasanna Sritharan
 """
@@ -49,7 +49,7 @@ print("Done.\n")
 # import builddatabase as bd
 
 # print("Building new output database... ", end="")
-# traildb = bd.build_database(user, "run", "run_stridecycle")
+# traildb = bd.build_database(user, "run", "run_stridecycle", emgsubcohort=False, tpose="all")
 # print("Done.\n")
 
 
@@ -68,20 +68,20 @@ print("Done.\n")
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-import c3dextract as c3dex
+# import c3dextract as c3dex
 
-print("Extracting C3D data, creating OpenSim files...\n")
-failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2)
-print("\nC3D data extract done.\n")
+# print("Extracting C3D data, creating OpenSim files...\n")
+# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2)
+# print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
 
 import opensimpipeline as osp
 
-# print("Running OpenSim model scaling: SCALE...\n")
-# failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
-# print("\nOpenSim model scaling (SCALE) completed.\n")
+print("Running OpenSim model scaling: SCALE...\n")
+failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
+print("\nOpenSim model scaling (SCALE) completed.\n")
 
 print("Running OpenSim analyses: IK, ID...\n")
 osp.opensim_pipeline(traildb, user, ["ik", "id"])

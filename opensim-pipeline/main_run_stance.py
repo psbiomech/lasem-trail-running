@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Process and run LASEM TRAIL project data through OpenSim
+Process and run LASEM TRAIL project data through OpenSim (RUN STANCE)
 
 @author: Prasanna Sritharan
 """
@@ -49,7 +49,7 @@ print("Done.\n")
 # import builddatabase as bd
 
 # print("Building new output database... ", end="")
-# traildb = bd.build_database(user, "run", "run_stance")
+# traildb = bd.build_database(user, "run", "run_stance", emgsubcohort=False, tpose="all")
 # print("Done.\n")
 
 
@@ -79,9 +79,9 @@ print("\nC3D data extract done.\n")
 
 import opensimpipeline as osp
 
-# print("Running OpenSim model scaling: SCALE...\n")
-# failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
-# print("\nOpenSim model scaling (SCALE) completed.\n")
+print("Running OpenSim model scaling: SCALE...\n")
+failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
+print("\nOpenSim model scaling (SCALE) completed.\n")
 
 print("Running OpenSim analyses: IK, ID...\n")
 osp.opensim_pipeline(traildb, user, ["ik", "id"])
@@ -121,11 +121,11 @@ print("CSV export complete.\n")
 
 import analyses_workpower as anwp
 
-print("Running additional analyses...\n")
+print("Running wprk and power analyses...\n")
 failedanalyses = anwp.analyses_batch_process(traildb, user, ["jap", "jaw"], True, 4, 6)
 print("Analyses complete.\n")
 
-print("Exporting analysis results...\n")
+print("Exporting work and power analysis results...\n")
 anwp.export_joint_angular_power(traildb, user, 101)
 anwp.export_joint_angular_work(traildb, user)
 print("Analyses results export complete.\n")

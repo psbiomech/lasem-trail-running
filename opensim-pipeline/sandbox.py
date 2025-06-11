@@ -30,9 +30,9 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL029"
-trial = "EP02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
+subj = "TRAIL068"
+trial = "STATIC02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_osimkey.pkl")
@@ -47,9 +47,9 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL029"
-trial = "EP02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
+subj = "TRAIL068"
+trial = "STATIC02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_trialkey.pkl")
@@ -63,9 +63,9 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL029"
-trial = "EP02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
+subj = "TRAIL068"
+trial = "STATIC02"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_c3dkey.pkl")

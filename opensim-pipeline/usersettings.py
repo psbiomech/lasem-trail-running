@@ -157,6 +157,8 @@ class TRAILSettings_RUN(UserSettings):
         # OpenSim reference model
         self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\opensim-pipeline\opensim-models"
         self.refmodelfile = "LASEM_TRAIL_ReferenceModel_Unclamped.osim"
+        self.refmodeltposefile = "LASEM_TRAIL_ReferenceModel_Tpose_Unclamped.osim"
+        self.tposestaticlistfile = "TRAIL T-pose static trials.xlsx"
         
         # OpenSim additional files
         self.additionalfilesfolder = "RUN"
@@ -388,6 +390,8 @@ class TRAILSettings_RUN_EMG(UserSettings):
         # OpenSim reference model
         self.refmodelpath = r"C:\Users\Owner\Documents\projects\lasem-trail-running\opensim-pipeline\opensim-models"
         self.refmodelfile = "LASEM_TRAIL_ReferenceModel_Unclamped.osim"
+        self.refmodeltposefile = "LASEM_TRAIL_ReferenceModel_Tpose_Unclamped.osim"
+        self.tposestaticlistfile = "TRAIL T-pose static trials.xlsx"
         
         # OpenSim additional files
         self.additionalfilesfolder = "RUN"

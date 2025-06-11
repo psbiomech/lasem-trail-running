@@ -413,7 +413,7 @@ def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
                     failedfiles.append(trial) 
-                    raise
+                    #raise
                 else:
                     print("Dynamic trial: %s" % trial)
                           
@@ -551,7 +551,7 @@ def export_opensim_results(meta, user, analyses, nsamp):
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
                     failedfiles.append(trial)
-                    raise
+                    #raise
                 else:
                     print("Dynamic trial: %s" % trial)
 
@@ -705,7 +705,7 @@ def export_opensim_results_subject_mean(meta, user, analyses, nsamp, normalise =
                 except:
                     print("Dynamic trial: %s *** FAILED ***" % trial)
                     failedfiles.append(trial)
-                    raise
+                    #raise
                 else:
                     print("Dynamic trial: %s" % trial)
 

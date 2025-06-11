@@ -39,7 +39,7 @@ opensim_pipeline(meta, user, restart):
                 only one participant, set the tuple elements to be the same,
                 e.g. ("TRAIL004", "TRAIL004")
 '''
-def opensim_pipeline(meta, user, analyses, restart = -1):
+def opensim_pipeline(meta, user, analyses, restart=-1):
 
     # note: I haven't worked out how to run OpenSim in a local folder, simply 
     # changing the pwd doesn't work. So need to clear the log file before each
@@ -111,8 +111,11 @@ def opensim_pipeline(meta, user, analyses, restart = -1):
                             if not os.path.isdir(logfolder):
                                 os.makedirs(logfolder)
                             
+                            # Normal or T-pose static
+                            tpose = meta[subj]["trials"][group][trial]["tposestatic"]
+                                
                             # run the scale tool
-                            run_opensim_scale(osimkey, user)
+                            run_opensim_scale(osimkey, user, tpose)
                             
                             # get the full model path
                             modelfile = meta[subj]["trials"][group][trial]["osim"]
@@ -210,12 +213,13 @@ def opensim_pipeline(meta, user, analyses, restart = -1):
 
 
 '''
-run_opensim_scale(osimkey, user):    
+run_opensim_scale(osimkey, user, tpose):    
     Set up and run the Tool using the API. A generic XML setup file is
     initially loaded, and then modified using the API. The Tool is then run 
     via the API. Results are printed to text files in the remote folder.
+        tpose: is static in Tpose (default=False)
 '''
-def run_opensim_scale(osimkey, user):
+def run_opensim_scale(osimkey, user, tpose=False):
     
     # trial folder, model and trial
     fpath = osimkey.outpath
@@ -250,7 +254,10 @@ def run_opensim_scale(osimkey, user):
     
     # set the model file name
     refmodelpath = user.refmodelpath
-    refmodelfile = user.refmodelfile
+    if tpose:
+        refmodelfile = user.refmodeltposefile
+    else:
+        refmodelfile = user.refmodelfile
     modelmaker = tool.getGenericModelMaker()
     modelmaker.setModelFileName(os.path.join(refmodelpath, refmodelfile))
     
@@ -267,6 +274,13 @@ def run_opensim_scale(osimkey, user):
     # set time window for scaling to 45%-55% of trial time
     t0 = osimkey.events["time"][0] + (osimkey.events["time"][1] - osimkey.events["time"][0]) * 0.45
     t1 = osimkey.events["time"][0] + (osimkey.events["time"][1] - osimkey.events["time"][0]) * 0.55
+    
+    # Some static trials have 1 frame which OpenSim doesn't like, so rewrite the
+    # TRC file with duplicated rows and extrapolated time vector
+    if np.size(osimkey.markers["frames"])==1:     
+        t0, t1, _ = rewrite_marker_trajctory_trc_file_single_frame(osimkey)
+        
+    # set time window in tool
     twindow = opensim.ArrayDouble(0, 2)
     twindow.set(0, t0)
     twindow.set(1, t1)
@@ -1908,6 +1922,72 @@ def write_marker_trajctory_trc_file(osimkey):
     data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=False, index=False, float_format="%20.10f")
     
     return data
+
+
+
+
+
+'''
+rewrite_marker_trajctory_trc_file(osimkey):
+    Write .trc file for marker trajectories with a single frame. These need to
+    be duplicated, with the time vector extrapolated. OpenSim does not like
+    single frame data, so just make copies of the frame and extend time. The
+    second frame as a default time stamp of 0.1s.
+'''
+def rewrite_marker_trajctory_trc_file_single_frame(osimkey):
+    
+    # output dataframe info
+    ns = 2
+    nm = len(osimkey.markers) - 5
+    nc = 2 + (nm * 3)
+    rate = osimkey.markers["rate"]
+    units = osimkey.markers["units"]
+
+    # remove non-marker dict keys
+    markernames0 = list(osimkey.markers.keys())
+    markernames0.remove("rate")
+    markernames0.remove("units")
+    markernames0.remove("offset")
+    markernames0.remove("frames")
+    markernames0.remove("time")
+
+    # build marker headers
+    markernames = ""
+    markernames = markernames.join(["Frame#\t","Time\t"] + list(map(lambda x: x + "\t\t\t", markernames0)))
+    dirnums = list(range(1,len(markernames0) + 1))
+    dirnames = ""
+    dirnames = dirnames.join(["\t"] + list(map(lambda n: "\tX%d\tY%d\tZ%d" % (n, n, n), dirnums)))
+
+    # write headers
+    fname = osimkey.trial + "_markers.trc"
+    fpath = osimkey.outpath
+    with open(os.path.join(fpath,fname), "w") as f:
+        f.write("PathFileType\t4\t(X/Y/Z)\t%s\n" % fname)
+        f.write("DataRate\tCameraRate\tNumFrames\tNumMarkers\tUnits\tOrigDataRate\tOrigDataStartFrame\tOrigNumFrames\n")
+        f.write("%d\t%d\t%d\t%d\t%s\t%d\t%d\t%d\n" % (rate, rate, ns, nm, "mm", rate, 1, ns))
+        f.write("%s\n" % markernames)
+        f.write("%s\n" % dirnames)
+        
+    # Build data array
+    datamat = np.zeros([ns, nc])
+    datamat[:,0] = np.array([1, 2])
+    datamat[:,1] = np.array([0.0, 0.1])
+    n = 2
+    for mkr in markernames0:
+        mkrdata = osimkey.markers[mkr]
+        if units.casefold() == "m": mkrdata = mkrdata * 1000
+        datamat[0,n:n+3] = mkrdata   # Assumes only 1 data row, no checking done
+        datamat[1,n:n+3] = mkrdata   # Duplicate row
+        n = n + 3
+    
+    # convert to dataframe
+    data = pd.DataFrame(datamat)
+    data[0] = data[0].astype(int)
+    
+    # write table, no headers
+    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=False, index=False, float_format="%20.10f")
+    
+    return 0.0, 0.1, data
 
 
 

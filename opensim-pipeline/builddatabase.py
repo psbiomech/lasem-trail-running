@@ -32,17 +32,24 @@ import pandas as pd
 
 
 '''
-build_database(user, task, dataset, emgosubcohort):
+build_database(user, task, dataset, emgsubcohort, alltpose):
     Build OpenSim output database from user, return metadata dict.
+        emgsubcohort: is this dataset an EMG subcohort? (bool, default=False)
+        tpose: subjects with t-pose static trials ("all", "none", "xls", default="all") 
 '''
-def build_database(user, task, dataset, emgsubcohort=False):
- 
-    # meta dict
+def build_database(user, task, dataset, emgsubcohort=False, tpose="all"):
+
+    # Meta dict
     meta = {}
     meta["study"] = {}
     meta["study"]["task"] = task
     meta["study"]["dataset"] = dataset
  
+    # Load list of subjects with T-pose static trials
+    tposelist = []
+    if tpose.casefold()=="xls":
+        tposelist = pd.read_excel(os.path.join(user.rootpath, user.tposestaticlistfile), usecols="A")["Subject"].to_list()
+    
     # If EMG subcohort only, then load list of subjects, also get group, sex and 
     # symptomatic limb
     if emgsubcohort:
@@ -55,7 +62,7 @@ def build_database(user, task, dataset, emgsubcohort=False):
         
  
     
-    # input folders
+    # Input folders
     for infolder in user.infolder:
  
         # parse database, get subject list
@@ -72,46 +79,50 @@ def build_database(user, task, dataset, emgsubcohort=False):
             subjlist = subjlist0
             folderlist = folderlist0
         
-        # build metadata dict
+        # Build metadata dict
         outpath = os.path.join(user.rootpath, user.outfolder, task, dataset)
         fnpatobj = re.compile(user.fnpat) 
         for n, subj in enumerate(subjlist):        
             
-            # basic info
+            # Basic info
             meta[subj] = {}
             meta[subj]["subj"] = subj
             meta[subj]["project"] = user.project
             meta[subj]["outpath"] = os.path.join(outpath, subj)
-            meta[subj]["type"] = typelist[n].lower()
-            meta[subj]["sex"] = sexlist[n].lower()
-            meta[subj]["knee"] = kneelist[n].lower()
+            meta[subj]["type"] = "NA"
+            meta[subj]["sex"] = "NA"
+            meta[subj]["knee"] = "NA"
+            if emgsubcohort:
+                meta[subj]["type"] = typelist[n].lower()
+                meta[subj]["sex"] = sexlist[n].lower()
+                meta[subj]["knee"] = kneelist[n].lower()
             
-            # trial subfolders
+            # Trial subfolders
             meta[subj]["trials"] = {}
             for group in user.trialgroupfolders:
                 
-                # parse subfolders
+                # Parse subfolders
                 meta[subj]["trials"][group] = {}
                 groupinpath = os.path.join(folderlist[n], group, "*.c3d")
                 groupfolderlist = glob.glob(groupinpath)
                 triallist = [os.path.splitext(os.path.split(f)[1])[0] for f in groupfolderlist]
                 
-                # skip groups that don't have a least one static trial and at
+                # Skip groups that don't have a least one static trial and at
                 # least one required dynamic file
                 hasstatic = any([user.staticprefix.casefold() in t.casefold() for t in triallist])
                 hasdynamic = any([any([c.casefold() in t.casefold() for c in user.trialprefixes[task][dataset]]) for t in triallist])
                 if not(hasstatic) or not(hasdynamic): continue
                 
-                # trials (for selected dataset only)
+                # Trials (for selected dataset only)
                 for m, trial in enumerate(triallist):            
                     
                     trial = trial.upper()
                     
-                    # file name tokens, skip those that don't match regex
+                    # File name tokens, skip those that don't match regex
                     trialtoks = fnpatobj.fullmatch(trial)
                     if trialtoks is None: continue
                     
-                    # build meta data dict
+                    # Build meta data dict
                     trialprefix = trialtoks.group(user.tasktoknum)                    
                     if (trialprefix.casefold() == user.staticprefix.casefold()) or (trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()][dataset.casefold()]]):                                   
                         meta[subj]["trials"][group][trial] = {}                    
@@ -125,12 +136,17 @@ def build_database(user, task, dataset, emgsubcohort=False):
                         meta[subj]["trials"][group][trial]["condition"] = trialprefix.casefold()
                         meta[subj]["trials"][group][trial]["isstatic"] = False
                         meta[subj]["trials"][group][trial]["usedstatic"] = False
+                        meta[subj]["trials"][group][trial]["tposestatic"] = False
                         if trialprefix.casefold() == user.staticprefix.casefold():
                             meta[subj]["trials"][group][trial]["dataset"] = "static"
                             meta[subj]["trials"][group][trial]["condition"] = "static"
                             meta[subj]["trials"][group][trial]["isstatic"] = True
+                            if tpose.casefold()=="all":
+                                meta[subj]["trials"][group][trial]["tposestatic"] = True                          
+                            elif (tpose.casefold()=="xls") and (subj in tposelist):
+                                meta[subj]["trials"][group][trial]["tposestatic"] = True
                                                    
-                # determine which file to use as static trial in OpenSim, in
+                # Determine which file to use as static trial in OpenSim, in
                 # most cases use the static file set in the user settings, if
                 # not found, then use the first available                        
                 hasusedstatic = any([meta[subj]["trials"][group][t]["usedstatic"] for t in meta[subj]["trials"][group].keys()])
@@ -143,7 +159,7 @@ def build_database(user, task, dataset, emgsubcohort=False):
                             meta[subj]["trials"][group][trial]["usedstatic"] = True
                             break
                     
-        # clean up, remove empty subject meta dict keys or those without at
+        # Clean up, remove empty subject meta dict keys or those without at
         # least one static and one dynamic trial
         for subj in subjlist:
             if subj.casefold() == "study": continue
@@ -155,7 +171,7 @@ def build_database(user, task, dataset, emgsubcohort=False):
             if not meta[subj]["trials"]:
                 meta.pop(subj)
                 
-        # create subdfolders if required, copy C3D files into output database
+        # Create subdfolders if required, copy C3D files into output database
         if not os.path.exists(outpath):
             os.makedirs(outpath)
         for subj in meta:
@@ -171,7 +187,7 @@ def build_database(user, task, dataset, emgsubcohort=False):
                         os.makedirs(trialoutpath)
                     shutil.copy(os.path.join(meta[subj]["trials"][group][trial]["inpath"], meta[subj]["trials"][group][trial]["c3dfile"]), trialoutpath)
                                         
-    # save the metadata dict
+    # Save the metadata dict
     with open(os.path.join(outpath, user.project + ".pkl"), "wb") as fid:
         pk.dump(meta, fid)
     

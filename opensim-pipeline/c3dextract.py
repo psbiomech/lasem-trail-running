@@ -187,6 +187,7 @@ class TrialKey():
             # kinetics (e.g., ID, SO, RRA and CMC)
             events["opensim_last_event_idx"] = -1
 
+
         # Task: RUN
         elif task.casefold() == "run":
                 
@@ -989,7 +990,7 @@ def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = Fa
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "TRAIL473_FAST08"): continue
+                #if not (trial == "SKIP_ME"): continue
                 #*********************
                 
                 # ignore static trials
@@ -1378,11 +1379,6 @@ def write_emg_sto_file(osimkey):
     data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=True, index=False, float_format="%20.10f")
     
     return data
-
-
-
-
-
 
 
 
