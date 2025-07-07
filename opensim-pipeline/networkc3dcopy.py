@@ -23,8 +23,15 @@ folderlist = glob.glob(inpath, recursive=True)
 
 # File name group regular expressions
 fstrings = ["TRAIL(?:_?)(\d+)_(EP|FAST|STATIC)_?(\d+)", 
-        "TRAIL(?:_?)(\d+)_(HFD_LEFT|HFD_RIGHT|STATIC)_?(\d+)"]
+            "TRAIL(?:_?)(\d+)_(HFD_LEFT|HFD_RIGHT|STATIC)_?(\d+)",
+            "TRAIL(?:_?)(\d+)_(MVC)_?(\w+)"]
     
+
+print("----------------------------------------")
+print("COPYING C3D DATA FROM NETWORK DRIVE...")
+print("----------------------------------------")
+
+
 # File string groups
 for fstr in fstrings:
 
@@ -50,7 +57,7 @@ for fstr in fstrings:
         fname1 = "TRAIL" + fcodes[1] + "_" + fcodes[2].upper() + fcodes[3] + ".c3d"
         shutil.copy(f, os.path.join(phasedir, fname1))
         
-        print(fname1)
+        print("%s ---> %s" % (fname0[0]+fname0[1], fname1))
         
 
 

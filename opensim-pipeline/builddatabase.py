@@ -124,7 +124,7 @@ def build_database(user, task, dataset, emgsubcohort=False, tpose="all"):
                     
                     # Build meta data dict
                     trialprefix = trialtoks.group(user.tasktoknum)                    
-                    if (trialprefix.casefold() == user.staticprefix.casefold()) or (trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()][dataset.casefold()]]):                                   
+                    if (trialprefix.casefold() == user.staticprefix.casefold()) or (trialprefix.casefold() == user.mvcprefix.casefold()) or (trialprefix.casefold() in [t.casefold() for t in user.trialprefixes[task.casefold()][dataset.casefold()]]):                                   
                         meta[subj]["trials"][group][trial] = {}                    
                         meta[subj]["trials"][group][trial]["trial"] = trial
                         meta[subj]["trials"][group][trial]["c3dfile"] = trial + ".c3d"
@@ -137,6 +137,7 @@ def build_database(user, task, dataset, emgsubcohort=False, tpose="all"):
                         meta[subj]["trials"][group][trial]["isstatic"] = False
                         meta[subj]["trials"][group][trial]["usedstatic"] = False
                         meta[subj]["trials"][group][trial]["tposestatic"] = False
+                        meta[subj]["trials"][group][trial]["ismvc"] = False
                         if trialprefix.casefold() == user.staticprefix.casefold():
                             meta[subj]["trials"][group][trial]["dataset"] = "static"
                             meta[subj]["trials"][group][trial]["condition"] = "static"
@@ -145,6 +146,10 @@ def build_database(user, task, dataset, emgsubcohort=False, tpose="all"):
                                 meta[subj]["trials"][group][trial]["tposestatic"] = True                          
                             elif (tpose.casefold()=="xls") and (subj in tposelist):
                                 meta[subj]["trials"][group][trial]["tposestatic"] = True
+                        elif trialprefix.casefold() == user.mvcprefix.casefold():
+                            meta[subj]["trials"][group][trial]["dataset"] = "mvc"
+                            meta[subj]["trials"][group][trial]["condition"] = "mvc"
+                            meta[subj]["trials"][group][trial]["ismvc"] = True
                                                    
                 # Determine which file to use as static trial in OpenSim, in
                 # most cases use the static file set in the user settings, if

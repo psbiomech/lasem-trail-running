@@ -300,6 +300,9 @@ class TRAILSettings_RUN_EMG(UserSettings):
         self.staticused = "Static_01"
         self.staticfpchannel = "Force.Fz3"
         
+        # MVC prefix
+        self.mvcprefix = "MVC"
+        
         # C3D file suffixes for datasets based on task: RUN
         self.trialprefixes = {}
         self.trialprefixes["run"] = {}
@@ -312,7 +315,7 @@ class TRAILSettings_RUN_EMG(UserSettings):
                         
         # file name format regex pattern:
         #   (subjprefix)_(num code)_(trialprefix)_(alphanum code)
-        self.fnpat = "TRAIL\d+_(EP|FAST|STATIC)\d+"
+        self.fnpat = "TRAIL\d+_(EP|FAST|STATIC|MVC)\w+"
         self.tasktoknum = 1   # the token + 1 that represents the task name/type
         
         # output samples
