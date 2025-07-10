@@ -71,13 +71,13 @@ print("Done.\n")
 # import c3dextract as c3dex
 
 # print("Extracting C3D data, creating OpenSim files...\n")
-# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, get_analog=True)
+# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, get_analog=True, restart="TRAIL483")
 # print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
 
-# import opensimpipeline as osp
+import opensimpipeline as osp
 
 # print("Running OpenSim model scaling: SCALE...\n")
 # failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
@@ -103,9 +103,9 @@ print("Done.\n")
 # osp.opensim_pipeline(ftraildb, user, ["jr"])
 # print("\nOpenSim analyses (JR) completed.\n")
 
-# print("Running EMG processing: Envelopes...\n")
-# osp.opensim_pipeline(traildb, user, ["emg"])
-# print("\nEMG processing (Envelopes) completed.\n")
+print("Running EMG processing: Envelopes...\n")
+osp.opensim_pipeline(traildb, user, ["emg"])
+print("\nEMG processing (Envelopes) completed.\n")
 
 
 

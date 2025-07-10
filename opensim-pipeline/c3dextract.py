@@ -69,14 +69,24 @@ class TrialKey():
               
         # Process events.
         # If no events, add general events
+        # Note: if no marker data, try the analog data to get the time vector
+        # (e.g. MVC files will not have marker data)
         if c3dkey.meta["EVENT"]["USED"] == 0:            
             events["labels"] = ["GEN", "GEN"]
-            events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]            
+            if c3dkey.markers:
+                events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]
+            else:
+                events["time"] = [c3dkey.analog["TIME"][0], c3dkey.analog["TIME"][-1]]
         
         # if only general events exist, rename to GEN
+        # Note: if no marker data, try the analog data to get the time vector
+        # (e.g. MVC files will not have marker data)
         elif (c3dkey.meta["EVENT"]["USED"] == 2) and all([g == 1 for g in c3dkey.meta["EVENT"]["GENERIC_FLAGS"]]):
             events["labels"] = ["GEN", "GEN"]
-            events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]            
+            if c3dkey.markers:
+                events["time"] = [c3dkey.markers["TIME"][0], c3dkey.markers["TIME"][-1]]
+            else:
+                events["time"] = [c3dkey.analog["TIME"][0], c3dkey.analog["TIME"][-1]]           
                                 
         else:
             
@@ -144,9 +154,14 @@ class TrialKey():
             events["labels"] = [elabels[e] for e in sortidxs]
             events["time"] = [etime[e] for e in sortidxs]
                     
-        # Relative time, normalise to first frame in data (NOT first event).
+        # Relative time, normalise to first frame in data (NOT first event)
+        # Note: if no marker data, try the analog data to get the time vector
+        # (e.g. MVC files will not have marker data)
         #events["time0"] = events["time"] - ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
-        events["time0"] = events["time"] - c3dkey.markers["TIME"][0]
+        if c3dkey.markers:
+            events["time0"] = events["time"] - c3dkey.markers["TIME"][0]
+        else:
+            events["time0"] = events["time"] - c3dkey.analog["TIME"][0]
         
         # Correct first event relative time if required due to mismatch between 
         # recorded frames and ACTUAL_START_FIELD in C3D, allow for a tolerance.
@@ -169,11 +184,11 @@ class TrialKey():
         # Static trial
         if dataset.casefold() == "static":
             
-            # calculate subject mass, return end frames for 25%-75% window
+            # calculate subject mass
             mass = calculate_subject_mass(c3dkey, static_fp_channel)
             self.mass = mass  # override default
             
-            # time window for model scaling (take 45%-55% window)
+            # time window
             events["window_time0"] = np.array([events["time0"][0], events["time0"][-1]])
             events["window_labels"] = ["STATIC0", "STATIC1"]
            
@@ -182,6 +197,27 @@ class TrialKey():
             
             # leg task is static (R, L)
             events["leg_task"] = ["static", "static"]
+
+            # last event index (0-based) for OpenSim analyses that require
+            # kinetics (e.g., ID, SO, RRA and CMC)
+            events["opensim_last_event_idx"] = -1
+
+        # MVC trial
+        elif dataset.casefold() == "mvc":
+            
+            # calculate subject mass
+            mass = 0.0
+            self.mass = mass  # override default
+            
+            # time window
+            events["window_time0"] = np.array([events["time0"][0], events["time0"][-1]])
+            events["window_labels"] = ["MVC0", "MVC1"]
+           
+            # no force plate sequence
+            events["fp_sequence"] = [[0, 0]]
+            
+            # leg task is static (R, L)
+            events["leg_task"] = ["mvc", "mvc"]
 
             # last event index (0-based) for OpenSim analyses that require
             # kinetics (e.g., ID, SO, RRA and CMC)
@@ -406,15 +442,22 @@ class TrialKey():
         
     def __set_markers(self, lab, c3dkey, xdir):
         
-        # initialise dict
+        # Initialise dict
         markers = {}
+        
+        # Return if no marker data
+        if not(c3dkey.markers):
+            self.markers = markers
+            return None
+        
+        # Marker labels
         markers["labels"] = c3dkey.markers["LABELS"]
         
-        # marker rate
+        # Marker rate
         markers["rate"] = c3dkey.markers["RATE"]    
         orig_units = c3dkey.markers["UNITS"]
         
-        # marker scale factor, convert to m
+        # Marker scale factor, convert to m
         markers["units"] = "m"
         if orig_units == "mm":
             markers["scale"] = 0.001
@@ -470,14 +513,26 @@ class TrialKey():
             force_plates["fp_used"].append(f)
             force_plates["fp_used_str"].append(dict_name)          
             
-            # coordinate transforms
+            # Coordinate transforms
             force_plates[dict_name] = {}  
             force_plates[dict_name]["transforms"] = {}
             force_plates[dict_name]["transforms"]["lab_to_opensim"] = lab.transform_mat_lab_to_opensim[[1, -1, 2, -2, 3, -3].index(xdir)]
             force_plates[dict_name]["transforms"]["fp_to_lab"] = lab.transform_mat_fp_to_lab 
         
-            # offsets
-            offset_scale = self.markers["scale"]
+            # Retrieve scale to convert marker units to metres
+            # Note: if no marker data, then get the scale from the generic point
+            # metadata, assumes C3D files has point metadata
+            if self.markers:
+                offset_scale = self.markers["scale"]
+            elif c3dkey.meta["POINT"]["UNITS"]:
+                if c3dkey.meta["POINT"]["UNITS"] == "mm":
+                    offset_scale = 0.001
+                elif c3dkey.meta["POINT"]["UNITS"] == "m":
+                    offset_scale = 1
+                else:
+                    offset_scale = 1   # default             
+        
+            # Offsets
             force_plates[dict_name]["offsets"] = {}
             force_plates[dict_name]["offsets"]["fp_centre_to_fp_origin_fp"] = -1*c3dkey.meta["FORCE_PLATFORM"]["ORIGIN"][f-1] * offset_scale
             force_plates[dict_name]["offsets"]["lab_to_fp_centre_lab"] = find_fp_centre_from_lab_origin(c3dkey.meta["FORCE_PLATFORM"]["CORNERS"][f-1]) * offset_scale
@@ -660,7 +715,7 @@ class OpenSimKey():
         # use events from TrialKey to maximise number of foot-strike events
         
         # Task: RUN
-        if (self.task.casefold() == "run") and (self.condition.casefold() != "static"):
+        if (self.task.casefold() == "run") and (self.condition.casefold() != "static") and (self.condition.casefold() != "mvc"):
             
             # Get the foot-strikes and indices
             fsidxs = [fn for fn, f in enumerate(trialkey.events["labels"]) if f.endswith("FS")]
@@ -698,6 +753,12 @@ class OpenSimKey():
         
         # initialise dict
         markers = {}
+
+        # Return if no marker data
+        if not(trialkey.markers):
+            self.markers = markers
+            self.avgtrialspeed = 0.0
+            return None
         
         # time and frame vectors
         markers["time"] = trialkey.markers["time0"]
@@ -748,8 +809,8 @@ class OpenSimKey():
         # initialise dict
         forces = {}   
 
-        # if static trial and no force plates, return empty field
-        if (trialkey.dataset.casefold() == user.staticprefix.casefold()) and not trialkey.forces:
+        # if static trial and no force plates, or if MVC, return empty field
+        if ((trialkey.dataset.casefold() == "static") and not(trialkey.forces)) or (trialkey.dataset.casefold() == "mvc"):
             self.forces = None
             return None
 
@@ -864,8 +925,13 @@ class OpenSimKey():
             if user.emg_filter_cutoff > -1:
                 emgdata = filter_timeseries(emgdata, emg["rate"], user.emg_filter_butter_order, user.emg_filter_cutoff)
 
-            # Normalise to peak value of signal
-            emgdata = emgdata / np.max(emgdata)
+            # Normalise EMG data
+            # if user.emg_normalise.casefold() == "mvc":
+            #     pass
+            # elif user.emg_normalise.casefold() == "peak":
+            #     emgdata = emgdata / np.max(emgdata)
+            # elif user.emg_normalise.casefold() == "none":
+            #     pass
             
             # Extract envelope using Hilbert transform
             # (Scipy has no dedicated envelope function)
@@ -949,13 +1015,14 @@ def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = Fa
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                #if not (trial == "SKIP_ME"): continue
+                if not (trial == "SKIP_ME"): continue
                 #*********************
                 
-                # ignore dynamic trials
+                # ignore MVC and dynamic trials
+                ismvc = meta[subj]["trials"][group][trial]["ismvc"]
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 usedstatic = meta[subj]["trials"][group][trial]["usedstatic"]
-                if not(isstatic): continue
+                if ismvc or not(isstatic): continue
             
                 print("\nStatic trial: %s" % trial)
                 print("%s" % "-" * 30)
@@ -990,12 +1057,13 @@ def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = Fa
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                #if not (trial == "SKIP_ME"): continue
+                if not (trial == "SKIP_ME"): continue
                 #*********************
                 
-                # ignore static trials
+                # ignore MVC and static trials
+                ismvc = meta[subj]["trials"][group][trial]["ismvc"]
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
-                if isstatic: continue
+                if ismvc or isstatic: continue
             
                 print("\nDynamic trial: %s" % trial)
                 print("%s" % "-" * 30)
@@ -1016,6 +1084,44 @@ def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = Fa
 
             #
             # ###################################                    
+
+
+            # ###################################
+            # PROCESS MVC TRIAL
+            
+            # process MVC C3D files
+            for trial in  meta[subj]["trials"][group]:
+                
+                #****** TESTING ******
+                #if not (trial == "SKIP_ME"): continue
+                #*********************
+                
+                # ignore dynamic and static trials
+                ismvc = meta[subj]["trials"][group][trial]["ismvc"]
+                if not(ismvc): continue
+            
+                print("\nMVC trial: %s" % trial)
+                print("%s" % "-" * 30)
+            
+                # process C3D file and generate OsimKey for trial
+                try:
+                    c3dfile = meta[subj]["trials"][group][trial]["c3dfile"]
+                    c3dpath = meta[subj]["trials"][group][trial]["outpath"]
+                    task = meta[subj]["trials"][group][trial]["task"]
+                    dataset = meta[subj]["trials"][group][trial]["dataset"]
+                    condition = meta[subj]["trials"][group][trial]["condition"]
+                    model = meta[subj]["trials"][group][trial]["osim"]
+                    c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing, get_analog)   
+                except:
+                    #raise
+                    print("*** FAILED ***")    
+                    failedfiles.append(c3dfile)  
+
+            #
+            # ###################################   
+
+
+
 
     return failedfiles
 
@@ -1048,8 +1154,10 @@ def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, 
         
         # Need to adjust time vector because pyc3dserver doesn't consider the
         # ACTUAL_START_FIELD parameter when extracting the time vector
-        fforces["TIME"] = fforces["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
-        fmarkers["TIME"] = fmarkers["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
+        if fforces:
+            fforces["TIME"] = fforces["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
+        if fmarkers:
+            fmarkers["TIME"] = fmarkers["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
         if fanalog:
             fanalog["TIME"] = fanalog["TIME"] + ((fmeta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / fmeta["TRIAL"]["CAMERA_RATE"])
         
@@ -1075,7 +1183,8 @@ def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, 
     with open(os.path.join(c3dpath, trial + "_osimkey.pkl"),"wb") as h: pk.dump(osimkey, h)
     
     # write OpenSim input TRC files
-    write_marker_trajctory_trc_file(osimkey) 
+    if osimkey.markers:
+        write_marker_trajctory_trc_file(osimkey) 
     
     # if there are forces, write input MOT file
     if osimkey.forces:

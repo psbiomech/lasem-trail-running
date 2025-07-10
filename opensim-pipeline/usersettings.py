@@ -351,6 +351,9 @@ class TRAILSettings_RUN_EMG(UserSettings):
         self.emg_filter_butter_order = 4
         self.emg_filter_cutoff = -1
         
+        # Normalise EMG data ("none", "peak", "mvc")
+        self.emg_normalise = "none"
+        
         # EMG use Hilbert transform for envelope
         # Set to False if running EMG processing in OpenSim pipeline
         self.emg_use_hilbert = False
