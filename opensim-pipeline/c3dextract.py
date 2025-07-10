@@ -1015,7 +1015,7 @@ def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = Fa
             for trial in meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                if not (trial == "SKIP_ME"): continue
+                #if not (trial == "SKIP_ME"): continue
                 #*********************
                 
                 # ignore MVC and dynamic trials
@@ -1057,7 +1057,7 @@ def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = Fa
             for trial in  meta[subj]["trials"][group]:
                 
                 #****** TESTING ******
-                if not (trial == "SKIP_ME"): continue
+                #if not (trial == "SKIP_ME"): continue
                 #*********************
                 
                 # ignore MVC and static trials

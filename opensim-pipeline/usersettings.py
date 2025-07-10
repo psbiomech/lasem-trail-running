@@ -342,6 +342,14 @@ class TRAILSettings_RUN_EMG(UserSettings):
                                    "LVASMED": "Sensor 11.EMG11",
                                    "LVASLAT": "Sensor 12.EMG12"}
 
+        # MVC groupings
+        self.mvcgroupings = {"RIGHTCALF": ["RSOL", "RGASMED", "RGASLAT"],
+                             "RIGHTHAMS": ["RSEMITEN", "RBFLH"],
+                             "RIGHTQUAD": ["RVASMED", "RVASLAT"],
+                             "LEFTCALF": ["LSOL", "LGASMED", "LGASLAT"],
+                             "LEFTHAMS": ["LSEMITEN", "LBFLH"],
+                             "LEFTQUAD": ["LVASMED", "LVASLAT"],}
+
                 
         # EMG subcohort list file
         self.emglistfile = "EMG tracking.xlsx"

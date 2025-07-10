@@ -83,6 +83,8 @@ import opensimpipeline as osp
 # failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
 # print("\nOpenSim model scaling (SCALE) completed.\n")
 
+
+
 # print("Running OpenSim analyses: IK, ID...\n")
 # osp.opensim_pipeline(traildb, user, ["ik", "id"])
 # print("\nOpenSim analyses (IK, ID) completed.\n")
@@ -103,8 +105,14 @@ import opensimpipeline as osp
 # osp.opensim_pipeline(ftraildb, user, ["jr"])
 # print("\nOpenSim analyses (JR) completed.\n")
 
-print("Running EMG processing: Envelopes...\n")
-osp.opensim_pipeline(traildb, user, ["emg"])
+
+
+# print("Running EMG processing: Envelopes...\n")
+# osp.opensim_pipeline(traildb, user, ["emg"])
+# print("\nEMG processing (Envelopes) completed.\n")
+
+print("Running EMG MVC processing: Envelopes...\n")
+osp.opensim_pipeline(traildb, user, ["mvc"])
 print("\nEMG processing (Envelopes) completed.\n")
 
 

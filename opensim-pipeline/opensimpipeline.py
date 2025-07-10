@@ -141,7 +141,7 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
 
 
             # ###################################
-            # ANALYSES
+            # ANALYSES FOR DYNAMIC TRIALS
             
             # find dynamic trials, always copy model into folder and run the
             # requested analyses
@@ -158,7 +158,7 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
                 pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"                
                 
                 # run the analyses
-                if not meta[subj]["trials"][group][trial]["isstatic"]:
+                if not(meta[subj]["trials"][group][trial]["isstatic"]) and not(meta[subj]["trials"][group][trial]["ismvc"]):
 
                     try:
                         
@@ -179,8 +179,8 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
                         # run the required analyses
                         for ans in analyses0:
                             
-                            # skip scale
-                            if ans == "scale": continue
+                            # skip scale and mvc
+                            if ans in ["scale", "mvc"]: continue
                             
                             # create output folder
                             if not os.path.exists(os.path.join(pklpath, ans)): os.makedirs(os.path.join(pklpath, ans))
@@ -207,6 +207,64 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
                         print("%s ---> ***FAILED***" % trial)
                         failedfiles.append(trial)
                         #raise
+
+
+            # ###################################
+            # MVC EXTRACTION
+            #
+            # Runs EMG extract similar to dynamic trial, but separate loop block
+            # makes it easier to run MVC trials in isolation.
+            
+            # find MVC trials and run MVC analysis
+            for trial in meta[subj]["trials"][group]:
+
+                #****** TESTING ******
+                #if not (trial == "SKIP_ME"): continue
+                #*********************
+                
+                # Pickle file info
+                task = meta[subj]["trials"][group][trial]["task"]
+                dataset = meta[subj]["trials"][group][trial]["dataset"]
+                pklpath = meta[subj]["trials"][group][trial]["outpath"]
+                pklfile = meta[subj]["trials"][group][trial]["trial"] + "_osimkey.pkl"                
+                
+                # run the analyses
+                if meta[subj]["trials"][group][trial]["ismvc"]:
+
+                    try:
+                        
+                        # load the OsimKey
+                        with open(os.path.join(pklpath, pklfile),"rb") as fid: 
+                            osimkey = pk.load(fid)
+    
+                        # create an OpenSim log folder
+                        logfolder = os.path.join(pklpath, user.triallogfolder)
+                        if not os.path.isdir(logfolder):
+                            os.makedirs(logfolder)
+                        
+                        # copy the model into the trial folder
+                        # modelfile = meta[subj]["trials"][group][trial]["osim"]
+                        # subjrootpathfile = os.path.join(user.rootpath, user.outfolder, task, dataset, subj, modelfile)
+                        # shutil.copy(subjrootpathfile, pklpath)
+                        
+                        # run the required analyses
+                        for ans in analyses0:
+                            
+                            # skip scale
+                            if ans == "scale": continue
+                            
+                            # create output folder
+                            if not os.path.exists(os.path.join(pklpath, ans)): os.makedirs(os.path.join(pklpath, ans))
+                            
+                            # analyses
+                            if ans == "mvc":
+                                run_emg_envelopes(osimkey, user)
+                                
+                    except:
+                        print("%s ---> ***FAILED***" % trial)
+                        failedfiles.append(trial)
+                        raise
+
                             
     return failedfiles
 
