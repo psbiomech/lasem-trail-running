@@ -30,8 +30,8 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL068"
-trial = "STATIC02"
+subj = "TRAIL029"
+trial = "EP01"
 fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle"
 
 # OsimResultsKey
@@ -47,9 +47,9 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL068"
-trial = "STATIC02"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle"
+subj = "TRAIL087"
+trial = "EP01"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_trialkey.pkl")
@@ -103,5 +103,17 @@ jap = an.calculate_joint_angular_power(osimresultskey1, user)
 jaw = an.calculate_joint_angular_work(osimresultskey1, user)
 
 
+# %% LOAD MVC DICT
 
+import pickle as pk
+import os
+
+# file path and name prefix
+subj = "TRAIL029"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
+
+# OsimResultsKey
+pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_MVC.pkl")
+with open(pkfile, "rb") as fid: 
+    mvc0 = pk.load(fid)
 

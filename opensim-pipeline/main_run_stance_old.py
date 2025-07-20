@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Process and run LASEM TRAIL project data through OpenSim (RUN STRIDECYCLE)
+Process and run LASEM TRAIL project data through OpenSim (RUN STANCE)
 
 @author: Prasanna Sritharan
 """
@@ -49,7 +49,7 @@ print("Done.\n")
 # import builddatabase as bd
 
 # print("Building new output database... ", end="")
-# traildb = bd.build_database(user, "run", "run_stridecycle", emgsubcohort=False, tpose="all")
+# traildb = bd.build_database(user, "run", "run_stance", emgsubcohort=False, tpose="all")
 # print("Done.\n")
 
 
@@ -60,7 +60,7 @@ import pickle as pk
 import os
 
 print("Loading existing output database... ", end="")
-dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stridecycle", user.metadatafile)
+dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stance", user.metadatafile)
 with open(dbfilepath, "rb") as fid:
     traildb = pk.load(fid)
 print("Done.\n")
@@ -68,28 +68,24 @@ print("Done.\n")
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-# import c3dextract as c3dex
+import c3dextract as c3dex
 
-# print("Extracting C3D data, creating OpenSim files...\n")
-# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, , get_analog=False)
-# print("\nC3D data extract done.\n")
+print("Extracting C3D data, creating OpenSim files...\n")
+failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2)
+print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
 
 import opensimpipeline as osp
 
+print("Running OpenSim model scaling: SCALE...\n")
+failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
+print("\nOpenSim model scaling (SCALE) completed.\n")
 
-# ***********
-# OPENSIM MODEL SCALING
-
-# print("Running OpenSim model scaling: SCALE...\n")
-# failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
-# print("\nOpenSim model scaling (SCALE) completed.\n")
-
-# print("Running OpenSim analyses: IK, ID...\n")
-# osp.opensim_pipeline(traildb, user, ["ik", "id"])
-# print("\nOpenSim analyses (IK, ID) completed.\n")
+print("Running OpenSim analyses: IK, ID...\n")
+osp.opensim_pipeline(traildb, user, ["ik", "id"])
+print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: BK...\n")
 # osp.opensim_pipeline(traildb, user, ["bk"])
@@ -108,44 +104,31 @@ import opensimpipeline as osp
 # print("\nOpenSim analyses (JR) completed.\n")
 
 
-
-# ***********
-# OTHER ANALYSES
-
-print("Running GRF trim: GRF...\n")
-osp.opensim_pipeline(traildb, user, ["grf"])
-print("\nOpenSim analyses (GRF) completed.\n")
-
-
-
 # %% LOAD AND FORMAT RESULTS
 
 import opensimresults as osr
 
 print("Converting OpenSim results to Pickle...\n")
-osr.opensim_results_batch_process(traildb, ["ik", "id", "emg", "grf"], user, 101)
+osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 101)
 print("\nOpenSim results converted to Pickle.\n")
 
-print("Exporting results to CSV...\n")
-failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "emg", "grf"], 101, normalise=False)
+print("Exporting OpenSim results to CSV...\n")
+failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 101)
 print("CSV export complete.\n")
 
-print("Exporting OpenSim subject descriptives to CSV...\n")
-failedfiles = osr.export_opensim_results_subject_mean(traildb, user, ["ik", "id", "emg", "grf"], 101, normalise=False)
-print("Subject descriptives CSV export complete.\n")
 
 # %% ADDITIONAL ANALYSES
 
-# import analyses_workpower as anwp
+import analyses_workpower as anwp
 
-# print("Running wprk and power analyses...\n")
-# failedanalyses = anwp.analyses_batch_process(traildb, user, ["jap", "jaw"], True, 4, 6)
-# print("Analyses complete.\n")
+print("Running wprk and power analyses...\n")
+failedanalyses = anwp.analyses_batch_process(traildb, user, ["jap", "jaw"], True, 4, 6)
+print("Analyses complete.\n")
 
-# print("Exporting work and power analysis results...\n")
-# anwp.export_joint_angular_power(traildb, user, 101)
-# anwp.export_joint_angular_work(traildb, user)
-# print("Analyses results export complete.\n")
+print("Exporting work and power analysis results...\n")
+anwp.export_joint_angular_power(traildb, user, 101)
+anwp.export_joint_angular_work(traildb, user)
+print("Analyses results export complete.\n")
 
 
 # %% END

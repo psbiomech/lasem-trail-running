@@ -104,6 +104,7 @@ class OsimResultsKey():
         filext["jr"] = "_jr_ReactionLoads.sto"
         filext["bk"] = "_bk_pos_global.sto"     # TBD: add vel and acc
         filext["emg"] = "_emg_envelopes.sto"
+        filext["grf"] = "_trimmed_grf.sto"
         
         # header rows
         # note: may differ from actual number of header rows as pandas skips
@@ -117,6 +118,7 @@ class OsimResultsKey():
         headnum["jr"] = 9
         headnum["bk"] = 13
         headnum["emg"] = 6
+        headnum["grf"] = 6
        
         # get OpenSim data
         for ans in analyses:
@@ -390,6 +392,10 @@ def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 if isstatic: continue
 
+                # ignore MVC trials
+                ismvc = meta[subj]["trials"][group][trial]["ismvc"]
+                if ismvc: continue
+
                 try:
                             
                     # Load the trial OsimKey
@@ -428,8 +434,11 @@ export_opensim_results(meta, user, analyses, nsamp):
     Collate OpenSim results into dataframes and export to text for Rstats.
     Note: nsamp should be the same as that used for OsimResultsKey
     otherwise the trial is skipped.
+        nsamp: number of samples if different from user.nsamp (int)
+        normalise: normalise biomechanical data (bool, default = False)
+        emgnormalise: normalise tp "peak", "mvc", or "none" (default)
 '''
-def export_opensim_results(meta, user, analyses, nsamp):
+def export_opensim_results(meta, user, analyses, nsamp, normalise = False, emgnormalise = "none"):
     
     # empty output list of lists
     # (create the output table as a list of lists, then convert to dataframe
@@ -463,12 +472,23 @@ def export_opensim_results(meta, user, analyses, nsamp):
             print("Group: %s" % group)
             print("%s" % "=" * 30)                      
             
+            # for MVC normalisation for EMG, load the collated MVC data
+            if emgnormalise.casefold() == "mvc":
+                mvcpkl = os.path.join(meta[subj]["outpath"], group, subj + "_MVC.pkl")
+                with open(mvcpkl,"rb") as fid0:
+                    mvcs = pk.load(fid0)            
+            
+            
             # process dynamic trials only
             for trial in meta[subj]["trials"][group]:                
                 
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 if isstatic: continue
+
+                # ignore MVC trials
+                ismvc = meta[subj]["trials"][group][trial]["ismvc"]
+                if ismvc: continue
             
                 # Rectify trial name format for consistency with TRAIL baseline
                 # Current: TRAIL123_FAST08, Required: TRAIL_123_FAST08
@@ -481,7 +501,8 @@ def export_opensim_results(meta, user, analyses, nsamp):
                     pkfile = os.path.join(c3dpath,trial + "_opensim_results.pkl")
                     with open(pkfile,"rb") as fid:
                         osimresultskey = pk.load(fid)
-                        
+                       
+                    
                     # trial info
                     task = osimresultskey.task
                     dataset = osimresultskey.dataset
@@ -543,7 +564,42 @@ def export_opensim_results(meta, user, analyses, nsamp):
                                 
                                 # data for the variable (includes time)
                                 drow = data[:, v]
+
+                                # Determine normalisation coefficient
+                                # (TBD, set to default 1, as we don't have mass
+                                # or height data from TRAIL yet)
+                                normfactor = 1
+                                if normalise:
+                                    if variable.casefold() == "time":
+                                        normfactor = 1
+                                    elif ans == "ik":
+                                        normfactor = 1
+                                    elif ans == "id":
+                                        if variable.casefold().startswith("pelvis_t"):
+                                            normfactor = 1
+                                            #normfactor = 1 / mass * user.gravity
+                                        else:
+                                            normfactor = 1
+                                            #normfactor = 100 / (mass * user.gravity * height)
+                                    elif ans == "bk":
+                                        normfactor = 1
+                                    
+                                    # Normalise if required
+                                    drow = drow  * normfactor
     
+    
+                                # EMG normalisation
+                                if (ans == "emg") and (variable != "time"):
+                                    if emgnormalise.casefold() == "peak":
+                                        drow = drow / np.max(np.abs(drow))
+                                    elif emgnormalise.casefold() == "mvc":
+                                        ftvar = foot + variable
+                                        mvc = np.abs(mvcs["rms"][ftvar.upper()])
+                                        if mvc == -1:    # no MVC data available, just normalise to peak
+                                            drow = drow / np.max(np.abs(drow))
+                                        else:           # normalise to mean MVC
+                                            drow = drow / mvc
+                                                
                                 # create new line of data
                                 csvrow = [subjcorrected, trialcorrected, sex, gtype, task, dataset, condition, data_type, foot, issurgical, avgtrialspeed, cadence, ans, variable] + event_times.tolist() + event_steps.tolist() + drow.tolist()
                                 csvdata.append(csvrow)
@@ -582,8 +638,11 @@ export_opensim_results_subject_mean(meta, user, analyses, nsamp):
     Collate OpenSim results into dataframes and export to text for Rstats.
     Note: nsamp should be the same as that used for OsimResultsKey
     otherwise the trial is skipped.
+        nsamp: number of samples if different from user.nsamp (int)
+        normalise: normalise biomechanical data (bool, default = False)
+        emgnormalise: normalise tp "peak", "mvc", or "none" (default)
 '''
-def export_opensim_results_subject_mean(meta, user, analyses, nsamp, normalise = False):
+def export_opensim_results_subject_mean(meta, user, analyses, nsamp, normalise = False, emgnormalise = "none"):
     
     # empty output list of lists
     # (create the output table as a list of lists, then convert to dataframe
@@ -616,6 +675,12 @@ def export_opensim_results_subject_mean(meta, user, analyses, nsamp, normalise =
             
             print("Group: %s" % group)
             print("%s" % "=" * 30)                      
+
+            # for MVC normalisation for EMG, load the collated MVC data
+            if emgnormalise.casefold() == "mvc":
+                mvcpkl = os.path.join(meta[subj]["outpath"], group, subj + "_MVC.pkl")
+                with open(mvcpkl,"rb") as fid0:
+                    mvcs = pk.load(fid0)  
             
             # process dynamic trials only
             for trial in meta[subj]["trials"][group]:                
@@ -623,6 +688,10 @@ def export_opensim_results_subject_mean(meta, user, analyses, nsamp, normalise =
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 if isstatic: continue
+
+                # ignore MVC trials
+                ismvc = meta[subj]["trials"][group][trial]["ismvc"]
+                if ismvc: continue
             
                 # Rectify trial name format for consistency with TRAIL baseline
                 # Current: TRAIL123_FAST08, Required: TRAIL_123_FAST08
@@ -697,6 +766,42 @@ def export_opensim_results_subject_mean(meta, user, analyses, nsamp, normalise =
                                 
                                 # data for the variable (includes time)
                                 drow = data[:, v]
+   
+                                # Determine normalisation coefficient
+                                # (TBD, set to default 1, as we don't have mass
+                                # or height data from TRAIL yet)
+                                normfactor = 1
+                                if normalise:
+                                    if variable.casefold() == "time":
+                                        normfactor = 1
+                                    elif ans == "ik":
+                                        normfactor = 1
+                                    elif ans == "id":
+                                        if variable.casefold().startswith("pelvis_t"):
+                                            normfactor = 1
+                                            #normfactor = 1 / mass * user.gravity
+                                        else:
+                                            normfactor = 1
+                                            #normfactor = 100 / (mass * user.gravity * height)
+                                    elif ans == "bk":
+                                        normfactor = 1
+                                    
+                                    # Normalise if required
+                                    drow = drow  * normfactor
+    
+    
+                                # EMG normalisation
+                                if (ans == "emg") and (variable != "time"):
+                                    if emgnormalise.casefold() == "peak":
+                                        drow = drow / np.max(np.abs(drow))
+                                    elif emgnormalise.casefold() == "mvc":
+                                        ftvar = foot + variable
+                                        mvc = np.abs(mvcs["max"][ftvar.upper()])
+                                        if mvc == -1:    # no MVC data available, just normalise to peak
+                                            drow = drow / np.max(np.abs(drow))
+                                        else:           # normalise to mean MVC
+                                            drow = drow / mvc
+   
     
                                 # create new line of data
                                 csvrow = [subjcorrected, trialcorrected, sex, gtype, task, dataset, condition, data_type, foot, issurgical, avgtrialspeed, cadence, ans, variable] + event_times.tolist() + event_steps.tolist() + drow.tolist()

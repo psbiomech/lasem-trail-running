@@ -80,6 +80,7 @@ class TRAILSettings_RUN(UserSettings):
         # export data
         self.csvfolder = "csvfolder"
         self.csvfileprefix = "trail_opensim_results_"
+        self.csvdescfileprefix = "trail_opensim_results_subject_descriptives_"
         
         
         # meta data file
@@ -92,6 +93,9 @@ class TRAILSettings_RUN(UserSettings):
         self.staticprefix = "STATIC"
         self.staticused = "Static_01"
         self.staticfpchannel = "Force.Fz3"
+        
+        # MVC prefix
+        self.mvcprefix = "MVC"
         
         # C3D file suffixes for datasets based on task: RUN
         self.trialprefixes = {}
@@ -223,7 +227,9 @@ class TRAILSettings_RUN(UserSettings):
         self.results_flip["cmc"] = []
         self.results_flip["jr"] = []  
         self.results_flip["bk"] = [3, 4, 5, 45, 46, 47, 51, 52, 53, 57, 58, 59, 63, 64, 65, 69, 70, 71, 75, 76, 77, 81, 82, 83, 111, 112, 113, 117, 118, 119, 123, 124, 125, 129, 130, 131, 135]
-                
+        self.results_flip["emg"] = []
+        self.results_flip["grf"] = [9, 12, 16, 17]        
+        
         # foot columns (incl. time): R, L
         self.results_columns = {}
         self.results_columns["ik"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32], 
@@ -237,7 +243,11 @@ class TRAILSettings_RUN(UserSettings):
         self.results_columns["jr"] = []   
         self.results_columns["bk"] = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 79, 80, 81, 82, 83, 84],
                                       [0, 1, 2, 3, 4, 5, 6, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84]]
-        
+        self.results_columns["emg"] = [[0, 1, 2, 3, 4, 5, 6, 7],
+                                       [0, 8, 9, 10, 11, 12, 13, 14]]
+        self.results_columns["grf"] = [[0, 1, 2, 3, 4, 5, 6, 13, 14, 15],
+                                       [0, 7, 8, 9, 10, 11, 12, 16, 17, 18]]
+                
         # headers
         self.results_headers = {}
         self.results_headers["ik"] = ["time", "pelvis_tilt", "pelvis_list", "pelvis_rotation", "pelvis_tx", "pelvis_ty", "pelvis_tz", "hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", "knee_angle_beta", "ankle_angle", "subtalar_angle", "mtp_angle", "lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex", "arm_add", "arm_rot", "elbow_flex", "pro_sup", "wrist_flex", "wrist_dev"]
@@ -247,6 +257,8 @@ class TRAILSettings_RUN(UserSettings):
         self.results_headers["cmc"] = []
         self.results_headers["jr"] = []  
         self.results_headers["bk"] = ["time", "pelvis_X", "pelvis_Y", "pelvis_Z", "pelvis_Ox", "pelvis_Oy", "pelvis_Oz", "femur_X", "femur_Y", "femur_Z", "femur_Ox", "femur_Oy", "femur_Oz", "tibia_X", "tibia_Y", "tibia_Z", "tibia_Ox", "tibia_Oy", "tibia_Oz", "patella_X", "patella_Y", "patella_Z", "patella_Ox", "patella_Oy", "patella_Oz", "talus_X", "talus_Y", "talus_Z", "talus_Ox", "talus_Oy", "talus_Oz", "calcn_X", "calcn_Y", "calcn_Z", "calcn_Ox", "calcn_Oy", "calcn_Oz", "toes_X", "toes_Y", "toes_Z", "toes_Ox", "toes_Oy", "toes_Oz", "torso_X", "torso_Y", "torso_Z", "torso_Ox", "torso_Oy", "torso_Oz"]
+        self.results_headers["emg"] = ["time", "sol", "gaslat", "gasmed", "semiten", "bflh", "vasmed", "vaslat"]
+        self.results_headers["grf"] = ["time", "grf_vx", "grf_vy", "grf_vz", "cop_px", "cop_py", "cop_pz", "grm_mx", "grf_my", "grm_mz"]
 
 
 
@@ -341,15 +353,6 @@ class TRAILSettings_RUN_EMG(UserSettings):
                                    "LBFLH": "Sensor 2.EMG2",
                                    "LVASMED": "Sensor 11.EMG11",
                                    "LVASLAT": "Sensor 12.EMG12"}
-
-        # MVC groupings
-        self.mvcgroupings = {"RIGHTCALF": ["RSOL", "RGASMED", "RGASLAT"],
-                             "RIGHTHAMS": ["RSEMITEN", "RBFLH"],
-                             "RIGHTQUAD": ["RVASMED", "RVASLAT"],
-                             "LEFTCALF": ["LSOL", "LGASMED", "LGASLAT"],
-                             "LEFTHAMS": ["LSEMITEN", "LBFLH"],
-                             "LEFTQUAD": ["LVASMED", "LVASLAT"],}
-
                 
         # EMG subcohort list file
         self.emglistfile = "EMG tracking.xlsx"
@@ -357,7 +360,7 @@ class TRAILSettings_RUN_EMG(UserSettings):
         # EMG data filter  (set cutoff to -1 if not required)
         # Set to -1 if running EMG processing in OpenSim pipeline
         self.emg_filter_butter_order = 4
-        self.emg_filter_cutoff = -1
+        self.emg_filter_cutoff = 10
         
         # Normalise EMG data ("none", "peak", "mvc")
         self.emg_normalise = "none"
@@ -365,8 +368,21 @@ class TRAILSettings_RUN_EMG(UserSettings):
         # EMG use Hilbert transform for envelope
         # Set to False if running EMG processing in OpenSim pipeline
         self.emg_use_hilbert = False
+ 
         
-        
+ 
+        # MVC groupings
+        self.mvcgroupings = {"RIGHTCALF": ["RSOL", "RGASMED", "RGASLAT"],
+                             "RIGHTHAMS": ["RSEMITEN", "RBFLH"],
+                             "RIGHTQUAD": ["RVASMED", "RVASLAT"],
+                             "LEFTCALF": ["LSOL", "LGASMED", "LGASLAT"],
+                             "LEFTHAMS": ["LSEMITEN", "LBFLH"],
+                             "LEFTQUAD": ["LVASMED", "LVASLAT"]}
+    
+        self.mvcsamplewindow = [0.35, 0.65]   # proportion of trial
+        self.mvcnsamp = 10001
+         
+         
         
         # marker data filter (set cutoff to -1 if not required)
         self.marker_filter_butter_order = 4
@@ -456,7 +472,7 @@ class TRAILSettings_RUN_EMG(UserSettings):
         
         # EMG processing parameters
         self.emg_process_envelope = "movingrms"   # moving average
-        self.emg_process_convolve_window = 150   # samples
+        self.emg_process_convolve_window = 200   # samples
         
         
         
@@ -478,7 +494,8 @@ class TRAILSettings_RUN_EMG(UserSettings):
         self.results_flip["cmc"] = []
         self.results_flip["jr"] = []  
         self.results_flip["bk"] = [3, 4, 5, 45, 46, 47, 51, 52, 53, 57, 58, 59, 63, 64, 65, 69, 70, 71, 75, 76, 77, 81, 82, 83, 111, 112, 113, 117, 118, 119, 123, 124, 125, 129, 130, 131, 135]
-        self.results_flip["emg"] = []        
+        self.results_flip["emg"] = []
+        self.results_flip["grf"] = [9, 12, 16, 17]        
         
         # foot columns (incl. time): R, L
         self.results_columns = {}
@@ -495,8 +512,9 @@ class TRAILSettings_RUN_EMG(UserSettings):
                                       [0, 1, 2, 3, 4, 5, 6, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84]]
         self.results_columns["emg"] = [[0, 1, 2, 3, 4, 5, 6, 7],
                                        [0, 8, 9, 10, 11, 12, 13, 14]]
-        
-        
+        self.results_columns["grf"] = [[0, 1, 2, 3, 4, 5, 6, 13, 14, 15],
+                                       [0, 7, 8, 9, 10, 11, 12, 16, 17, 18]]
+                
         # headers
         self.results_headers = {}
         self.results_headers["ik"] = ["time", "pelvis_tilt", "pelvis_list", "pelvis_rotation", "pelvis_tx", "pelvis_ty", "pelvis_tz", "hip_flexion", "hip_adduction", "hip_rotation", "knee_angle", "knee_angle_beta", "ankle_angle", "subtalar_angle", "mtp_angle", "lumbar_extension", "lumbar_bending", "lumbar_rotation", "arm_flex", "arm_add", "arm_rot", "elbow_flex", "pro_sup", "wrist_flex", "wrist_dev"]
@@ -507,13 +525,7 @@ class TRAILSettings_RUN_EMG(UserSettings):
         self.results_headers["jr"] = []  
         self.results_headers["bk"] = ["time", "pelvis_X", "pelvis_Y", "pelvis_Z", "pelvis_Ox", "pelvis_Oy", "pelvis_Oz", "femur_X", "femur_Y", "femur_Z", "femur_Ox", "femur_Oy", "femur_Oz", "tibia_X", "tibia_Y", "tibia_Z", "tibia_Ox", "tibia_Oy", "tibia_Oz", "patella_X", "patella_Y", "patella_Z", "patella_Ox", "patella_Oy", "patella_Oz", "talus_X", "talus_Y", "talus_Z", "talus_Ox", "talus_Oy", "talus_Oz", "calcn_X", "calcn_Y", "calcn_Z", "calcn_Ox", "calcn_Oy", "calcn_Oz", "toes_X", "toes_Y", "toes_Z", "toes_Ox", "toes_Oy", "toes_Oz", "torso_X", "torso_Y", "torso_Z", "torso_Ox", "torso_Oy", "torso_Oz"]
         self.results_headers["emg"] = ["time", "sol", "gaslat", "gasmed", "semiten", "bflh", "vasmed", "vaslat"]
-
-
-
-
-
-
-
+        self.results_headers["grf"] = ["time", "grf_vx", "grf_vy", "grf_vz", "cop_px", "cop_py", "cop_pz", "grm_mx", "grf_my", "grm_mz"]
 
 
 

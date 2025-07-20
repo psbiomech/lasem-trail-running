@@ -197,10 +197,13 @@ for n in condition:
                 u1 = m1 + desc[n][d][a][v][1]["sd"]
                 u2 = m2 + desc[n][d][a][v][2]["sd"]
                 
-                # Lower
+                # Lower (clip lowr bound to y=0 since EMG >= 0)
                 l0 = m0 - desc[n][d][a][v][0]["sd"]
                 l1 = m1 - desc[n][d][a][v][1]["sd"]  
                 l2 = m2 - desc[n][d][a][v][2]["sd"]
+                l0[l0 < 0] = 0
+                l1[l1 < 0] = 0
+                l2[l2 < 0] = 0
                 
                 # Plot
                 ax = fig.add_subplot(spec[0, col])

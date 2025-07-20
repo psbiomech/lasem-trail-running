@@ -9,6 +9,7 @@ Includes EMG processing. All data is written to OpenSim text files.
 
 import opensim
 import scipy.signal as signal
+from scipy.interpolate import interp1d
 import pandas as pd
 import numpy as np
 import pickle as pk
@@ -86,7 +87,7 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                #if not (trial == "SKIP_ME"): continue
+                if not (trial == "SKIP_ME"): continue
                 #*********************                
 
                 # Pickle file info
@@ -202,6 +203,8 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
                                 run_opensim_bk(osimkey, user)
                             elif ans == "emg":
                                 run_emg_envelopes(osimkey, user)
+                            elif ans == "grf":
+                                run_grf_trim(osimkey, user)
                                 
                     except:
                         print("%s ---> ***FAILED***" % trial)
@@ -219,7 +222,7 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                #if not (trial == "SKIP_ME"): continue
+                if not (trial == "SKIP_ME"): continue
                 #*********************
                 
                 # Pickle file info
@@ -254,7 +257,7 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
                             if ans == "scale": continue
                             
                             # create output folder
-                            if not os.path.exists(os.path.join(pklpath, ans)): os.makedirs(os.path.join(pklpath, ans))
+                            if not os.path.exists(os.path.join(pklpath, "emg")): os.makedirs(os.path.join(pklpath, "emg"))
                             
                             # analyses
                             if ans == "mvc":
@@ -263,8 +266,15 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
                     except:
                         print("%s ---> ***FAILED***" % trial)
                         failedfiles.append(trial)
-                        raise
-
+                        #raise
+                
+                    
+                # Collate the MVC data for the subject-group pair   
+                # for f in user.mvcgroupings.keys():
+                    
+                #     # Get the MVC and trim to columns
+                #     with open(os.path.join(pklpath, pklfile),"rb") as fid: 
+                #         osimkey = pk.load(fid)
                             
     return failedfiles
 
@@ -1527,6 +1537,67 @@ def run_opensim_jr(osimkey, user):
         
     return None  
 
+
+
+
+'''
+run_grf_trim(osimkey, user):
+    Convenience function to trim GRF files. It just takes a copy of the GRF .mot
+    file, trims it to the event boundaries and resamples to the video frame rate. 
+    Output printed to a dedicated remote folder.
+'''
+def run_grf_trim(osimkey, user):
+
+    # Trial folder
+    fpath = osimkey.outpath
+    trial = osimkey.trial
+
+    # clear log file
+    open(user.logfile, "w").close()
+
+    print("\nPerforming GRF trimming on trial: %s" % trial)
+    print("------------------------------------------------")
+
+    try:
+        
+        # Load the external forces GRF .mot file
+        print("Getting GRF waveforms from GRF external forces (.mot) file...")
+        grfmot = os.path.join(fpath, trial + "_grf.mot")
+        grf0 = pd.read_csv(grfmot, sep="\t", header=6).to_numpy()
+            
+        # Time window
+        t0 = float(osimkey.events["time"][0]) + user.rra_start_time_offset
+        t1 = float(osimkey.events["time"][-1]) + user.rra_end_time_offset
+        print("Setting the time window: %0.3f sec --> %0.3f sec..." % (t0, t1))
+    
+        # Trim GRF data to time window
+        r00 = np.where(grf0[:, 0] <= t0)[0]
+        if r00.size == 0:
+            r0 = 0
+        else:
+            r0 = r00[-1]
+        r1 = np.where(grf0[:, 0] <= t1)[0][-1]
+        grf1 = grf0[r0:r1 + 1, :]
+        
+        # Resample to video rate
+        print("Resampling to match video frame rate...")
+        vrate = osimkey.markers["rate"]
+        arate = osimkey.forces["rate"]
+        rateratio = vrate / arate
+        nsamp = int(grf1.shape[0] * rateratio)  # truncate rather than round
+        grf2 = resample1d(grf1, nsamp)
+    
+        # Print output
+        print("Writing trimmed GRF waveforms to storage (.sto) file...")
+        write_trimmed_ground_forces_sto_file(grf2, trial, fpath)
+
+    except:
+        print("---> ERROR: GRF trim failed. Skipping GRF trim for %s." % trial)
+    finally:
+        print("------------------------------------------------\n")
+
+
+    return None
     
     
 
@@ -1573,18 +1644,95 @@ def run_emg_envelopes(osimkey, user):
             write_emg_envelopes_sto_file(envelopes, time, osimkey.trial, outpath)
         
     except:
-        raise
+        #raise
         print("---> ERROR: EMG envelopes failed. Skipping EMG envelopes for %s." % osimkey.trial)
     finally:
-        print("------------------------------------------------\n")    
+        print("------------------------------------------------")    
     
     return None
 
 
 
 
+'''
+collate_mvc_data():
+    Collate MVC EMG waveforms into a single dict, calculate envelopes and RMS
+    MVC for normalisation of dynamics trials EMG.
+'''
+def collate_mvc_data(meta, user):
+    
+    # Subject
+    for subj in meta:
+        
+        # skip the study info
+        if subj.casefold() == "study": continue      
 
+        print("%s" % "*" * 30)
+        print("SUBJECT: %s" % subj)
+        print("%s" % "*" * 30)
 
+        # Group
+        for group in meta[subj]["trials"]:
+
+            print("Group: %s" % group)
+            print("%s" % "=" * 30)               
+
+            # Get the relevant data from MVC files and generate envelopes
+            envelopes = {}
+            rmsmvc = {}
+            maxmvc = {}
+            for mvcfile in user.mvcgroupings.keys():  
+            
+                try:    
+            
+                    # Open the CSV file containing the envelope
+                    fname = subj.upper() + "_MVC" + mvcfile
+                    fpath = os.path.join(meta[subj]["trials"][group][fname]["outpath"], user.emgcode, fname + "_emg_envelopes.sto")
+                    mvcfiledata = pd.read_csv(fpath, sep="\t", header=6) 
+                    
+                    # Get the columns for the muscles activated in that MVC trial
+                    coldata = mvcfiledata.loc[:, user.mvcgroupings[mvcfile]]
+                    
+                    # Resample the envelope since envelopes are taken from different
+                    # trials with differing number of samples, get the RMS
+                    for emgname in coldata.columns.to_list():
+                        
+                        # Get the waveform, extract envelope and resample
+                        emg = coldata.loc[:, emgname].to_numpy()
+                        #emgenvraw = extract_timeseries_envelope(emg, user.emg_process_envelope, user.emg_process_convolve_window)
+                        emgenv = resample1d(emg, user.mvcnsamp)
+                        envelopes[emgname] = emgenv
+                        
+                        # Get the rms and max value of the envelope in the analysis window
+                        low = int(user.mvcnsamp * user.mvcsamplewindow[0])
+                        upp = int(user.mvcnsamp * user.mvcsamplewindow[1])
+                        rmsmvc[emgname] = np.sqrt(np.mean(emgenv[low:upp]**2))
+                        maxmvc[emgname] = np.max(emgenv[low:upp])
+                        
+                except:
+                    # If failed to load MVC trial, then for that group of muscles
+                    # just set to -1
+                    for emgname in user.mvcgroupings[mvcfile]:
+                        envelopes[emgname] = np.full((user.mvcnsamp, 1), -1)
+                        rmsmvc[emgname] = -1
+                        maxmvc[emgname] = -1
+                    print("MVC trial: %s ---> Failed, filled with -1" % mvcfile)
+                else:
+                    print("MVC trial: %s" % mvcfile)
+                        
+            # Store in dict
+            mvcs = {}
+            mvcs["envelopes"] = envelopes
+            mvcs["rms"] = rmsmvc
+            mvcs["max"] = maxmvc
+            
+            # Pickle it in the subject-group folder
+            outpkl = os.path.join(meta[subj]["outpath"], group, subj + "_MVC.pkl")
+            with open(outpkl, "wb") as fid:
+                pk.dump(mvcs, fid)
+                    
+                
+                
 
 '''
 write_emg_envelopes_sto_file(envelopes, time, trial, fpath):
@@ -1923,6 +2071,46 @@ def write_ground_forces_mot_file(osimkey):
 
 
 
+
+'''
+write_trimmed_ground_forces_sto_file(grf, trial, trialpath):
+    Convenience function for writing GRF waveforms to storage (.sto) file, assumes
+    right limb then left limb data, similar to write_ground_forces_mot_file().
+    However, the GRF is supplied as a 2D array rather than taken from the OsimKey.
+'''
+def write_trimmed_ground_forces_sto_file(grf, trial, trialpath):
+
+    # Output dataframe info
+    ns = grf.shape[0]
+    nc = 19    
+
+    # Write headers
+    fname = trial + "_trimmed_grf.sto"
+    fpath = os.path.join(trialpath, "grf")
+    if not os.path.exists: os.makedirs(fpath)
+    with open(os.path.join(fpath, fname),"w") as f:
+        f.write("%s\n" % fname)
+        f.write("version=1\n")
+        f.write("nRows=%d\n" % ns)
+        f.write("nColumns=%s\n" % nc)
+        f.write("inDegrees=yes\n")
+        f.write("endheader\n")   
+        
+    # Convert data to dataframe
+    headers = ["time", "right_grf_vx", "right_grf_vy", "right_grf_vz", "right_cop_px", "right_cop_py", "right_cop_pz", "left_grf_vx", "left_grf_vy", "left_grf_vz", "left_cop_px", "left_cop_py", "left_cop_pz", "right_grm_mx", "right_grf_my", "right_grm_mz", "left_grm_mx", "left_grm_my", "left_grm_mz"]
+    data = pd.DataFrame(grf, columns=headers)
+        
+    # write table
+    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=True, index=False, float_format="%20.10f")
+    
+    return data
+
+
+
+
+
+
+
 '''
 write_marker_trajctory_trc_file(osimkey):
     Write .trc file for marker trajectories.
@@ -2153,7 +2341,7 @@ def filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
 extract_timeseries_envelope(data, envelope, window):
     Find the envelopes of a timeseries. Data should be a 1D array.
         envelope: how to compute envelope (default = 'movingrms')
-        window: convoution window for moving average (samples, default = 100)
+        window: convoution window (samples, default = 100)
 '''
 def extract_timeseries_envelope(data, envelope="movingrms", window=100):
     
@@ -2197,6 +2385,48 @@ def extract_timeseries_envelope(data, envelope="movingrms", window=100):
     
     
     
+'''
+resample1d(data, nsamp):
+    Simple resampling by 1-D interpolation (rows = samples, cols = variable).
+    Data can be a 1-D or multiple variables in a 2D array-like object.
+'''
+def resample1d(data, nsamp):
+
+    # Convert list to 0D array
+    if isinstance(data, list):
+        data = np.reshape(np.array([data]).transpose(), [-1, 1])
+
+    # Convert 0D to 1D array
+    if np.ndim(data) == 1:
+        data = np.reshape(data, [-1, 1])
+
+    # data dimensions
+    nx = data.shape[0]
+    ny = data.shape[1]
+
+    # old sample points
+    x = np.linspace(0, nx - 1, nx)
+        
+    # new sample points
+    xnew = np.linspace(0, nx - 1, nsamp)
     
+    # parse columns
+    datanew = np.zeros([nsamp, ny])
+    for col in range(0, ny):
+        
+        # old data points
+        y = data[:, col]
+        
+        # convert to cubic spline function
+        fy = interp1d(x, y, kind = "cubic", fill_value = "extrapolate")
     
+        # new data points
+        ynew = fy(xnew)
+    
+        # store column
+        datanew[:, col] = ynew
+        
+    
+    return datanew   
+   
     
