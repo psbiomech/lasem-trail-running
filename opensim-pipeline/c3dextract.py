@@ -916,28 +916,38 @@ class OpenSimKey():
         emg["data"] = {}
         for c in trialkey.emg["data"].keys():
             
-            emgdata = trialkey.emg["data"][c]
+            emgdata0 = trialkey.emg["data"][c]
             
-            # Detrend, rectify and filter
-            # Note: 20 Hz cut off recommended by DeLuca et al. 2010, but this
-            # doesn't look great on paper
-            emgdata = np.abs(signal.detrend(emgdata))
-            if user.emg_filter_cutoff > -1:
-                emgdata = filter_timeseries(emgdata, emg["rate"], user.emg_filter_butter_order, user.emg_filter_cutoff)
+            # Detrend and rectify            
+            emgdata = np.abs(signal.detrend(emgdata0))
 
-            # Normalise EMG data
-            # if user.emg_normalise.casefold() == "mvc":
-            #     pass
-            # elif user.emg_normalise.casefold() == "peak":
-            #     emgdata = emgdata / np.max(emgdata)
-            # elif user.emg_normalise.casefold() == "none":
-            #     pass
             
+            # Extract EMG envleopes
+            #
+            # Ideally, extract envelopes later using OpenSimPipeline EMG envelope 
+            # functions, i.e., set user.emg_c3d_get_envelope="none" and use one
+            # of the envelope methods later
+            if user.emg_c3d_get_envelope == "none":
+                pass
+                
+            # Extract envelopes using filtering
+            # Recommendation is high-pass first to remove electrode artifacts,
+            # then low pass to obtain smooth envelopes
+            elif user.emg_c3d_get_envelope == "filter":
+                if user.emg_filter_highpass_cutoff > -1:
+                    emgdata = filter_timeseries(emgdata, emg["rate"], user.emg_filter_butter_order, user.emg_highpass_filter_cutoff, btype="highpass")
+                if user.emg_filter_lowpass_cutoff > -1:    
+                    emgdata = filter_timeseries(emgdata, emg["rate"], user.emg_filter_butter_order, user.emg_lowpass_filter_cutoff, btype="lowpass")
+
             # Extract envelope using Hilbert transform
-            # (Scipy has no dedicated envelope function)
-            if user.emg_use_hilbert:
+            # Only appropriate for narrowband signals with a dominant oscillating
+            # component, e.g., carrier wave
+            elif user.emg_c3d_get_envelope == "hilbert":
                 emgdata = np.abs(signal.hilbert(emgdata))
             
+            # Note: EMG data is not resampled at this stage
+            
+            # Store
             emg["data"][c] = emgdata
         
         
@@ -1198,6 +1208,46 @@ def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, 
     
 
 
+'''
+write_emg_sto_file(osimkey):
+    Write .sto file for analog data.
+'''
+def write_emg_sto_file(osimkey):
+
+    # output dataframe info
+    ns = len(osimkey.emg["time"])
+    nc = len(osimkey.emg["data"]) + 1
+
+    # write headers
+    fname = osimkey.trial + "_emg.sto"
+    fpath = osimkey.outpath
+    if not os.path.exists: os.mkdir(fpath)
+    with open(os.path.join(fpath,fname),"w") as f:
+        f.write("%s\n" % fname)
+        f.write("version=1\n")
+        f.write("nRows=%d\n" % ns)
+        f.write("nColumns=%s\n" % nc)
+        f.write("inDegrees=no\n")
+        f.write("endheader\n")
+
+    # build data array
+    datamat = np.zeros([ns, nc])
+    datamat[:,0] = osimkey.emg["time"]
+    for xn, x in enumerate(osimkey.emg["data"].keys()):
+        datamat[:,xn+1] = osimkey.emg["data"][x]
+   
+        
+    # convert to dataframe
+    headers = ["time"] + list(osimkey.emg["data"].keys())
+    data = pd.DataFrame(datamat, columns=headers)
+        
+    # write table
+    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=True, index=False, float_format="%20.10f")
+    
+    return data
+
+
+
 
 
 '''
@@ -1352,20 +1402,21 @@ def filter_and_floor_fp(F, T, cop, vert_col_idx, sample_rate, butter_order, cuto
 
 
 '''
-filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
+filter_timeseries(data_raw, sample_rate, butter_order, cutoff, btype):
     Filter timeseries data. Raw data can be a list, or an array with rows
     representing time steps and columns as variables. Set cutoff < 0 if
     filtering not required.
+        btype:  "lowpass" (default), "highpass"
 ''' 
-def filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
+def filter_timeseries(data_raw, sample_rate, butter_order, cutoff, btype="lowpass"):
     
-    # return if cutoff < 0 (i.e. filtering not required)
+    # Return if both cutoffs < 0 (i.e. filtering not required)
     if cutoff < 0: return data_raw
     
-    # filter design
+    # Filter design
     Wn = sample_rate / 2
     normalised_cutoff = cutoff / Wn
-    b, a = signal.butter(butter_order, normalised_cutoff, "lowpass")
+    b, a = signal.butter(butter_order, normalised_cutoff, btype)
     
     # apply filter
     data_filtered = signal.filtfilt(b, a, data_raw, axis = 0)
@@ -1446,49 +1497,6 @@ def smooth_transitions(F, T, cop, vert_col_idx, threshold, cop_fixed_offset, win
         
     return F, T, cop
     
-
-
-
-
-
-'''
-write_emg_sto_file(osimkey):
-    Write .sto file for analog data.
-'''
-def write_emg_sto_file(osimkey):
-
-    # output dataframe info
-    ns = len(osimkey.emg["time"])
-    nc = len(osimkey.emg["data"]) + 1
-
-    # write headers
-    fname = osimkey.trial + "_emg.sto"
-    fpath = osimkey.outpath
-    if not os.path.exists: os.mkdir(fpath)
-    with open(os.path.join(fpath,fname),"w") as f:
-        f.write("%s\n" % fname)
-        f.write("version=1\n")
-        f.write("nRows=%d\n" % ns)
-        f.write("nColumns=%s\n" % nc)
-        f.write("inDegrees=no\n")
-        f.write("endheader\n")
-
-    # build data array
-    datamat = np.zeros([ns, nc])
-    datamat[:,0] = osimkey.emg["time"]
-    for xn, x in enumerate(osimkey.emg["data"].keys()):
-        datamat[:,xn+1] = osimkey.emg["data"][x]
-   
-        
-    # convert to dataframe
-    headers = ["time"] + list(osimkey.emg["data"].keys())
-    data = pd.DataFrame(datamat, columns=headers)
-        
-    # write table
-    data.to_csv(os.path.join(fpath,fname), mode="a", sep="\t", header=True, index=False, float_format="%20.10f")
-    
-    return data
-
 
 
 

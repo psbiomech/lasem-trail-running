@@ -1635,7 +1635,7 @@ def run_emg_envelopes(osimkey, user):
             envelopes = {}
             for emgname in emgdata.keys():
                 emg = osimkey.emg["data"][emgname]
-                emgenv = extract_timeseries_envelope(emg, user.emg_process_envelope, user.emg_process_convolve_window)
+                emgenv = extract_timeseries_envelope(emg, emg["rate"], user)
                 envelopes[emgname] = emgenv    
             
             # Write to storage file
@@ -1697,17 +1697,18 @@ def collate_mvc_data(meta, user):
                     # trials with differing number of samples, get the RMS
                     for emgname in coldata.columns.to_list():
                         
-                        # Get the waveform, extract envelope and resample
+                        # Get the envelopes
+                        # Note: as EMG is collated from different MVIC trials, the
+                        # number of samples will vary for each waveform
                         emg = coldata.loc[:, emgname].to_numpy()
-                        #emgenvraw = extract_timeseries_envelope(emg, user.emg_process_envelope, user.emg_process_convolve_window)
-                        emgenv = resample1d(emg, user.mvcnsamp)
+                        emgenv = emgenv #resample1d(emg, user.mvcnsamp)
                         envelopes[emgname] = emgenv
                         
                         # Get the rms and max value of the envelope in the analysis window
-                        low = int(user.mvcnsamp * user.mvcsamplewindow[0])
-                        upp = int(user.mvcnsamp * user.mvcsamplewindow[1])
-                        rmsmvc[emgname] = np.sqrt(np.mean(emgenv[low:upp]**2))
-                        maxmvc[emgname] = np.max(emgenv[low:upp])
+                        wlow = int(user.mvcnsamp * user.mvcsamplewindow[0])
+                        wupp = int(user.mvcnsamp * user.mvcsamplewindow[1])
+                        rmsmvc[emgname] = np.sqrt(np.mean(emgenv[wlow:wupp]**2))
+                        maxmvc[emgname] = np.max(emgenv[wlow:wupp])
                         
                 except:
                     # If failed to load MVC trial, then for that group of muscles
@@ -1731,6 +1732,87 @@ def collate_mvc_data(meta, user):
             with open(outpkl, "wb") as fid:
                 pk.dump(mvcs, fid)
                     
+
+
+
+
+
+'''
+extract_timeseries_envelope(data, rate, user):
+    Find the envelopes of a timeseries. Data should be a 1D array. All parameters
+    should be set using UserSettings (this is for convenience, TBD: set parameters
+    with function inputs instead - makes the function more resuable).
+        data: 1D array-like
+        rate: sampling rate (Hz)
+'''
+def extract_timeseries_envelope(data, rate, user):
+
+    # Convert list to 0D array
+    if isinstance(data, list):
+        data = np.reshape(np.array([data]).transpose(), [-1, 1])
+
+    # Convert 0D to 1D array
+    if np.ndim(data) == 1:
+        data = np.reshape(data, [-1, 1])    
+    
+    
+    
+    # Extract envelopes
+    
+    # Butterworth filter
+    if user.emg_get_envelope == "filter":
+
+        # First high-pass first remove electrode artifacts, if required
+        # Recommended: 20 Hz (Gazendam & Hof, GaitPosture 2007)
+        if user.emg_filter_highpass_cutoff > -1:
+            data = filter_timeseries(data, rate, user.emg_filter_butter_order, user.emg_highpass_filter_cutoff, btype="highpass")
+        
+        # Then low-pass to obtain smooth envelope, if required
+        # Recommended: 24 Hz (Gazendam & Hof, GaitPosture 2007)
+        if user.emg_filter_lowpass_cutoff > -1:    
+            data = filter_timeseries(data, rate, user.emg_filter_butter_order, user.emg_lowpass_filter_cutoff, btype="lowpass")
+    
+        env = data
+    
+    # Moving RMS
+    elif user.emg_get_envelope == "movingrms":
+        
+        # Construct kernel for moving RMS
+        window = user.emg_process_convolve_window
+        kernel = np.ones(window)/window
+        
+        # Square data
+        data2 = data**2
+        
+        # Convolve across array (mode: "same" ensures output array length matches
+        # input but this may not always be desirable)
+        env = np.sqrt(signal.convolve(data2, kernel, mode="same"))       
+    
+    # Moving average
+    elif user.emg_get_envelope == "movingavg":
+    
+        # Construct kernel for moving average
+        window = user.emg_process_convolve_window
+        kernel = np.ones(window)/window
+        
+        # Convolve across array (mode: "same" ensures output array length matches
+        # input but this may not always be desirable)
+        env = signal.convolve(data, kernel, mode="same")
+    
+    # Hilbert transform (not recommended for non-cyclic data)
+    elif user.emg_get_envelope == "hilbert":
+        
+        #TBD
+        env = np.abs(signal.hilbert(data))
+        
+    # Construct splines across peaks
+    elif user.emg_get_envelope == "peakspline":
+        
+        #TBD
+        env = data
+        
+
+    return env
                 
                 
 
@@ -2315,76 +2397,30 @@ def prescribe_kinematics(model, ikdata, coord_list, butter_order, cutoff):
          
         
 '''
-filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
+filter_timeseries(data_raw, sample_rate, butter_order, cutoff, btype):
     Filter timeseries data. Raw data can be a list, or an array with rows
-    representing time steps and columns as variables.
-    
-    Duplicates the same function in c3dextract.py.
+    representing time steps and columns as variables. Set cutoff < 0 if
+    filtering not required.
+        btype:  "lowpass" (default), "highpass"
 ''' 
-def filter_timeseries(data_raw, sample_rate, butter_order, cutoff):
-      
-    # filter design
+def filter_timeseries(data_raw, sample_rate, butter_order, cutoff, btype="lowpass"):
+    
+    # Return if both cutoffs < 0 (i.e. filtering not required)
+    if cutoff < 0: return data_raw
+    
+    # Filter design
     Wn = sample_rate / 2
     normalised_cutoff = cutoff / Wn
-    b, a = signal.butter(butter_order, normalised_cutoff, "lowpass")
+    b, a = signal.butter(butter_order, normalised_cutoff, btype)
     
     # apply filter
     data_filtered = signal.filtfilt(b, a, data_raw, axis = 0)
-    
-    return data_filtered      
+
+    return data_filtered     
 
 
 
-
-
-'''
-extract_timeseries_envelope(data, envelope, window):
-    Find the envelopes of a timeseries. Data should be a 1D array.
-        envelope: how to compute envelope (default = 'movingrms')
-        window: convoution window (samples, default = 100)
-'''
-def extract_timeseries_envelope(data, envelope="movingrms", window=100):
-    
-    # Moving RMS
-    if envelope.casefold() == "movingrms":
-        
-        # Construct kernel for moving RMS
-        kernel = np.ones(window)/window
-        
-        # Square data
-        data2 = data**2
-        
-        # Convolve across array (mode: "same" ensures output array length matches
-        # input but this may not always be desirable)
-        env = np.sqrt(signal.convolve(data2, kernel, mode="same"))       
-    
-    # Moving average
-    elif envelope.casefold() == "movingavg":
-    
-        # Construct kernel for moving average
-        kernel = np.ones(window)/window
-        
-        # Convolve across array (mode: "same" ensures output array length matches
-        # input but this may not always be desirable)
-        env = signal.convolve(data, kernel, mode="same")
-    
-    # Hilbert transform (not recommended for non-cyclic data)
-    elif envelope.casefold() == "hilbert":
-        
-        #TBD
-        env = data
-        
-    # Construct splines across peaks
-    elif envelope.casefold() == "peakspline":
-        
-        #TBD
-        env = data
-        
-
-    return env
-    
-    
-    
+      
 '''
 resample1d(data, nsamp):
     Simple resampling by 1-D interpolation (rows = samples, cols = variable).

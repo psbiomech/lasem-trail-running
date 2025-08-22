@@ -46,24 +46,24 @@ print("Done.\n")
 # ***********
 # OPTION 1: Build new database
 
-import builddatabase as bd
+# import builddatabase as bd
 
-print("Building new output database... ", end="")
-traildb = bd.build_database(user, "run", "run_stance", emgsubcohort=False, tpose="all")
-print("Done.\n")
+# print("Building new output database... ", end="")
+# traildb = bd.build_database(user, "run", "run_stance", emgsubcohort=False, tpose="all")
+# print("Done.\n")
 
 
 # ***********
 # OPTION 2: Load existing database
 
-# import pickle as pk
-# import os
+import pickle as pk
+import os
 
-# print("Loading existing output database... ", end="")
-# dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stance", user.metadatafile)
-# with open(dbfilepath, "rb") as fid:
-#     traildb = pk.load(fid)
-# print("Done.\n")
+print("Loading existing output database... ", end="")
+dbfilepath = os.path.join(user.rootpath, user.outfolder, "run", "run_stance", user.metadatafile)
+with open(dbfilepath, "rb") as fid:
+    traildb = pk.load(fid)
+print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
@@ -81,7 +81,7 @@ import opensimpipeline as osp
 
 
 # ***********
-# OPENSIM MODEL SCALING
+# OPENSIM MODELLING
 
 # print("Running OpenSim model scaling: SCALE...\n")
 # failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
@@ -91,9 +91,9 @@ import opensimpipeline as osp
 # osp.opensim_pipeline(traildb, user, ["ik", "id"])
 # print("\nOpenSim analyses (IK, ID) completed.\n")
 
-# print("Running OpenSim analyses: BK...\n")
-# osp.opensim_pipeline(traildb, user, ["bk"])
-# print("\nOpenSim analyses (BK) completed.\n")
+print("Running OpenSim analyses: BK...\n")
+osp.opensim_pipeline(traildb, user, ["bk"])
+print("\nOpenSim analyses (BK) completed.\n")
 
 # print("Running OpenSim analyses: SO...\n")
 # osp.opensim_pipeline(forcedb, user, ["so"])
@@ -112,9 +112,9 @@ import opensimpipeline as osp
 # ***********
 # OTHER ANALYSES
 
-print("Running GRF trim: GRF...\n")
-osp.opensim_pipeline(traildb, user, ["grf"])
-print("\nOpenSim analyses (GRF) completed.\n")
+# print("Running GRF trim: GRF...\n")
+# osp.opensim_pipeline(traildb, user, ["grf"])
+# print("\nOpenSim analyses (GRF) completed.\n")
 
 
 

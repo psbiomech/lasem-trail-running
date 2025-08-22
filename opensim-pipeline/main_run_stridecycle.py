@@ -91,9 +91,9 @@ import opensimpipeline as osp
 # osp.opensim_pipeline(traildb, user, ["ik", "id"])
 # print("\nOpenSim analyses (IK, ID) completed.\n")
 
-# print("Running OpenSim analyses: BK...\n")
-# osp.opensim_pipeline(traildb, user, ["bk"])
-# print("\nOpenSim analyses (BK) completed.\n")
+print("Running OpenSim analyses: BK...\n")
+osp.opensim_pipeline(traildb, user, ["bk"])
+print("\nOpenSim analyses (BK) completed.\n")
 
 # print("Running OpenSim analyses: SO...\n")
 # osp.opensim_pipeline(forcedb, user, ["so"])
@@ -112,9 +112,9 @@ import opensimpipeline as osp
 # ***********
 # OTHER ANALYSES
 
-print("Running GRF trim: GRF...\n")
-osp.opensim_pipeline(traildb, user, ["grf"])
-print("\nOpenSim analyses (GRF) completed.\n")
+# print("Running GRF trim: GRF...\n")
+# osp.opensim_pipeline(traildb, user, ["grf"])
+# print("\nOpenSim analyses (GRF) completed.\n")
 
 
 

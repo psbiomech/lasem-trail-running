@@ -357,18 +357,16 @@ class TRAILSettings_RUN_EMG(UserSettings):
         # EMG subcohort list file
         self.emglistfile = "EMG tracking.xlsx"
         
+        # Method for extracting envelopes during C3Dextract: "none", "filter", "hilbert"
+        # Ideally, set to "none" and extract envelopes during OpenSimPipeline
+        self.emg_c3d_get_envelope = "none"
+        
         # EMG data filter  (set cutoff to -1 if not required)
         # Set to -1 if running EMG processing in OpenSim pipeline
-        self.emg_filter_butter_order = 4
-        self.emg_filter_cutoff = 10
-        
-        # Normalise EMG data ("none", "peak", "mvc")
-        self.emg_normalise = "none"
-        
-        # EMG use Hilbert transform for envelope
-        # Set to False if running EMG processing in OpenSim pipeline
-        self.emg_use_hilbert = False
- 
+        # Only used if emg_c3d_get_envelope is "filter"
+        self.emg_c3d_filter_butter_order = 4
+        self.emg_c3d_lowpass_filter_cutoff = 24
+        self.emg_c3d_highpass_filter_cutoff = 20
         
  
         # MVC groupings
@@ -378,12 +376,7 @@ class TRAILSettings_RUN_EMG(UserSettings):
                              "LEFTCALF": ["LSOL", "LGASMED", "LGASLAT"],
                              "LEFTHAMS": ["LSEMITEN", "LBFLH"],
                              "LEFTQUAD": ["LVASMED", "LVASLAT"]}
-    
-        self.mvcsamplewindow = [0.35, 0.65]   # proportion of trial
-        self.mvcnsamp = 10001
-         
-         
-        
+
         # marker data filter (set cutoff to -1 if not required)
         self.marker_filter_butter_order = 4
         self.marker_filter_cutoff = -1
@@ -398,6 +391,8 @@ class TRAILSettings_RUN_EMG(UserSettings):
                         
         # marker to use for estimating trial speed
         self.avg_trialspeed_marker = "SACR"
+        
+        
         
         
         # ******************************
@@ -470,12 +465,23 @@ class TRAILSettings_RUN_EMG(UserSettings):
         self.bk_use_cmc_results = False
         
         
-        # EMG processing parameters
+        
+        # EMG envelope extraction method
+        self.emg_get_envelope = "filter"
+        
+        # EMG envelopes: filter  (set cutoff to -1 if not required)
+        # Set to -1 if running EMG processing in OpenSim pipeline
+        self.emg_filter_butter_order = 4
+        self.emg_lowpass_filter_cutoff = 24
+        self.emg_highpass_filter_cutoff = 20
+        
+        # EMG envelopes: moving RMS
         self.emg_process_envelope = "movingrms"   # moving average
-        self.emg_process_convolve_window = 200   # samples
-        
-        
-        
+        self.emg_process_convolve_window = 100   # samples
+                
+         # MVC processing parameters  
+        self.mvcsamplewindow = [0.45, 0.65]   # best guess at the time window of MVIC as there are no events in the C3D files
+        self.mvcnsamp = 10001
         
         
         

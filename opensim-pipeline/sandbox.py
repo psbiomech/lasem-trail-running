@@ -81,9 +81,9 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL087"
+subj = "TRAIL029"
 trial = "EP01"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_opensim_results.pkl")
