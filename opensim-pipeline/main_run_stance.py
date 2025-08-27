@@ -77,7 +77,7 @@ print("Done.\n")
 
 # %% RUN OPENSIM PIPELINE
 
-import opensimpipeline as osp
+# import opensimpipeline as osp
 
 
 # ***********
@@ -91,9 +91,9 @@ import opensimpipeline as osp
 # osp.opensim_pipeline(traildb, user, ["ik", "id"])
 # print("\nOpenSim analyses (IK, ID) completed.\n")
 
-print("Running OpenSim analyses: BK...\n")
-osp.opensim_pipeline(traildb, user, ["bk"])
-print("\nOpenSim analyses (BK) completed.\n")
+# print("Running OpenSim analyses: BK...\n")
+# osp.opensim_pipeline(traildb, user, ["bk"])
+# print("\nOpenSim analyses (BK) completed.\n")
 
 # print("Running OpenSim analyses: SO...\n")
 # osp.opensim_pipeline(forcedb, user, ["so"])
@@ -123,11 +123,11 @@ print("\nOpenSim analyses (BK) completed.\n")
 import opensimresults as osr
 
 print("Converting OpenSim results to Pickle...\n")
-osr.opensim_results_batch_process(traildb, ["ik", "id", "emg", "grf"], user, 101)
+osr.opensim_results_batch_process(traildb, ["ik", "id", "bk", "emg", "grf"], user, 101)
 print("\nOpenSim results converted to Pickle.\n")
 
 print("Exporting results to CSV...\n")
-failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "emg", "grf"], 101, normalise=False)
+failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "bk", "emg", "grf"], 101, normalise=False)
 print("CSV export complete.\n")
 
 print("Exporting OpenSim subject descriptives to CSV...\n")
