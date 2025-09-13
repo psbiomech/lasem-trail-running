@@ -476,11 +476,10 @@ class TRAILSettings_RUN_EMG(UserSettings):
         self.emg_highpass_filter_cutoff = 20
         
         # EMG envelopes: moving RMS
-        self.emg_process_envelope = "movingrms"   # moving average
-        self.emg_process_convolve_window = 100   # samples
+        self.emg_process_convolve_window = 50   # samples
                 
          # MVC processing parameters  
-        self.mvcsamplewindow = [0.45, 0.65]   # best guess at the time window of MVIC as there are no events in the C3D files
+        self.mvcsamplewindow = [0.50, 0.60]   # best guess at the time window of MVIC as there are no events in the C3D files
         self.mvcnsamp = 10001
         
         

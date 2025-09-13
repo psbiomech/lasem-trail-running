@@ -32,7 +32,7 @@ import os
 # file path and name prefix
 subj = "TRAIL029"
 trial = "EP01"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stridecycle"
+fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_osimkey.pkl")

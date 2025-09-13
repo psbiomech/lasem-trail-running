@@ -71,7 +71,7 @@ print("Done.\n")
 # import c3dextract as c3dex
 
 # print("Extracting C3D data, creating OpenSim files...\n")
-# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, , get_analog=False)
+# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, get_analog=False, use_existing=False)
 # print("\nC3D data extract done.\n")
 
 

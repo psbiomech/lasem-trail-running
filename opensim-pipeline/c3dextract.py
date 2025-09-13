@@ -928,12 +928,13 @@ class OpenSimKey():
             # functions, i.e., set user.emg_c3d_get_envelope="none" and use one
             # of the envelope methods later
             if user.emg_c3d_get_envelope == "none":
-                pass
+                print("%s: No envelope extraction..." % c)
                 
             # Extract envelopes using filtering
             # Recommendation is high-pass first to remove electrode artifacts,
             # then low pass to obtain smooth envelopes
             elif user.emg_c3d_get_envelope == "filter":
+                print("Extract envelope using band-pass filtering...")
                 if user.emg_filter_highpass_cutoff > -1:
                     emgdata = filter_timeseries(emgdata, emg["rate"], user.emg_filter_butter_order, user.emg_highpass_filter_cutoff, btype="highpass")
                 if user.emg_filter_lowpass_cutoff > -1:    
@@ -943,6 +944,7 @@ class OpenSimKey():
             # Only appropriate for narrowband signals with a dominant oscillating
             # component, e.g., carrier wave
             elif user.emg_c3d_get_envelope == "hilbert":
+                print("Extract envelope using Hilbert transform...")
                 emgdata = np.abs(signal.hilbert(emgdata))
             
             # Note: EMG data is not resampled at this stage
@@ -977,7 +979,7 @@ c3d_batch_process(user, meta, lab, xdir, get_analog, use_existing, usermass, res
                 only one participant, set the tuple elements to be the same,
                 e.g. ("TRAIL004", "TRAIL004")
 '''
-def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing = False, usermass = -1, restart = -1):
+def c3d_batch_process(user, meta, lab, xdir, get_analog=False, use_existing=False, usermass = -1, restart = -1):
 
 
     # extract C3D data for OpenSim
@@ -1143,7 +1145,7 @@ c3d_extract(subj, group trial, c3dfile, c3dpath, lab, user, task, dataset,
     Extract the motion data from the C3D file to arrays, and returns a dict
     containing all the relevant file metadata, force data and marker data.
 '''
-def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing = False, get_analog=False):    
+def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, condition, xdir, mass, model, use_existing=False, get_analog=False):    
  
     # Extract data from C3D file
     if not use_existing:

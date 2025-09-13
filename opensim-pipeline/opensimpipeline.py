@@ -87,7 +87,7 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                if not (trial == "SKIP_ME"): continue
+                #if not (trial == "SKIP_ME"): continue
                 #*********************                
 
                 # Pickle file info
@@ -222,7 +222,7 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                if not (trial == "SKIP_ME"): continue
+                #if not (trial == "SKIP_ME"): continue
                 #*********************
                 
                 # Pickle file info
@@ -1631,16 +1631,17 @@ def run_emg_envelopes(osimkey, user):
             time = osimkey.emg["time"]
         
             # Construct the envelopes from the data
-            print("Calculating envelopes using method: %s..." % user.emg_process_envelope)
+            print("Calculating envelopes using method: %s..." % user.emg_get_envelope)
             envelopes = {}
             for emgname in emgdata.keys():
                 emg = osimkey.emg["data"][emgname]
-                emgenv = extract_timeseries_envelope(emg, emg["rate"], user)
+                emgenv = extract_timeseries_envelope(emg, osimkey.emg["rate"], user)
                 envelopes[emgname] = emgenv    
             
             # Write to storage file
             print("Writing EMG envelopes to STO file...")
             outpath = os.path.join(osimkey.outpath, user.emgcode)
+            if not os.path.exists(outpath): os.makedirs(outpath)
             write_emg_envelopes_sto_file(envelopes, time, osimkey.trial, outpath)
         
     except:
@@ -1701,7 +1702,7 @@ def collate_mvc_data(meta, user):
                         # Note: as EMG is collated from different MVIC trials, the
                         # number of samples will vary for each waveform
                         emg = coldata.loc[:, emgname].to_numpy()
-                        emgenv = emgenv #resample1d(emg, user.mvcnsamp)
+                        emgenv = resample1d(emg, user.mvcnsamp)
                         envelopes[emgname] = emgenv
                         
                         # Get the rms and max value of the envelope in the analysis window
@@ -1718,6 +1719,7 @@ def collate_mvc_data(meta, user):
                         rmsmvc[emgname] = -1
                         maxmvc[emgname] = -1
                     print("MVC trial: %s ---> Failed, filled with -1" % mvcfile)
+                    #raise
                 else:
                     print("MVC trial: %s" % mvcfile)
                         
@@ -1728,10 +1730,15 @@ def collate_mvc_data(meta, user):
             mvcs["max"] = maxmvc
             
             # Pickle it in the subject-group folder
-            outpkl = os.path.join(meta[subj]["outpath"], group, subj + "_MVC.pkl")
-            with open(outpkl, "wb") as fid:
+            outpath = os.path.join(meta[subj]["outpath"], group, subj + "_MVC.pkl")
+            if not os.path.exists(outpath): os.makedirs(outpath)
+            with open(outpath, "wb") as fid:
                 pk.dump(mvcs, fid)
-                    
+                
+            # Write to STO file
+            
+                                
+    return None
 
 
 
@@ -1764,12 +1771,12 @@ def extract_timeseries_envelope(data, rate, user):
 
         # First high-pass first remove electrode artifacts, if required
         # Recommended: 20 Hz (Gazendam & Hof, GaitPosture 2007)
-        if user.emg_filter_highpass_cutoff > -1:
+        if user.emg_highpass_filter_cutoff > -1:
             data = filter_timeseries(data, rate, user.emg_filter_butter_order, user.emg_highpass_filter_cutoff, btype="highpass")
         
         # Then low-pass to obtain smooth envelope, if required
         # Recommended: 24 Hz (Gazendam & Hof, GaitPosture 2007)
-        if user.emg_filter_lowpass_cutoff > -1:    
+        if user.emg_lowpass_filter_cutoff > -1:    
             data = filter_timeseries(data, rate, user.emg_filter_butter_order, user.emg_lowpass_filter_cutoff, btype="lowpass")
     
         env = data
@@ -1841,7 +1848,7 @@ def write_emg_envelopes_sto_file(envelopes, time, trial, fpath):
     datamat = np.zeros([ns, nc])
     datamat[:,0] = time
     for xn, x in enumerate(envelopes.keys()):
-        datamat[:,xn+1] = envelopes[x]
+        datamat[:,xn+1] = np.squeeze(envelopes[x])
    
         
     # convert to dataframe
@@ -2169,7 +2176,7 @@ def write_trimmed_ground_forces_sto_file(grf, trial, trialpath):
     # Write headers
     fname = trial + "_trimmed_grf.sto"
     fpath = os.path.join(trialpath, "grf")
-    if not os.path.exists: os.makedirs(fpath)
+    if not os.path.exists(fpath): os.makedirs(fpath)
     with open(os.path.join(fpath, fname),"w") as f:
         f.write("%s\n" % fname)
         f.write("version=1\n")

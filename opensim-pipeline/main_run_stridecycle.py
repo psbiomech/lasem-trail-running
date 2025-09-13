@@ -68,16 +68,16 @@ print("Done.\n")
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-# import c3dextract as c3dex
+import c3dextract as c3dex
 
-# print("Extracting C3D data, creating OpenSim files...\n")
-# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, , get_analog=False)
-# print("\nC3D data extract done.\n")
+print("Extracting C3D data, creating OpenSim files...\n")
+failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, get_analog=False, use_existing=False)
+print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
 
-# import opensimpipeline as osp
+import opensimpipeline as osp
 
 
 # ***********
@@ -95,9 +95,9 @@ print("Done.\n")
 # osp.opensim_pipeline(traildb, user, ["bk"])
 # print("\nOpenSim analyses (BK) completed.\n")
 
-# print("Running OpenSim analyses: SO...\n")
-# osp.opensim_pipeline(forcedb, user, ["so"])
-# print("\nOpenSim analyses (SO) completed.\n")
+print("Running OpenSim analyses: SO...\n")
+osp.opensim_pipeline(traildb, user, ["so"], restart=("TRAIL001","TRAIL001"))
+print("\nOpenSim analyses (SO) completed.\n")
 
 # print("Running OpenSim analyses: RRA, CMC...\n")
 # osp.opensim_pipeline(forcedb, user, ["rra",  "cmc"])
@@ -112,9 +112,9 @@ print("Done.\n")
 # ***********
 # OTHER ANALYSES
 
-# print("Running GRF trim: GRF...\n")
-# osp.opensim_pipeline(traildb, user, ["grf"])
-# print("\nOpenSim analyses (GRF) completed.\n")
+print("Running GRF trim: GRF...\n")
+osp.opensim_pipeline(traildb, user, ["grf"])
+print("\nOpenSim analyses (GRF) completed.\n")
 
 
 
@@ -123,15 +123,15 @@ print("Done.\n")
 import opensimresults as osr
 
 print("Converting OpenSim results to Pickle...\n")
-osr.opensim_results_batch_process(traildb, ["ik", "id", "bk", "emg", "grf"], user, 101)
+osr.opensim_results_batch_process(traildb, ["ik", "id", "bk", "so", "emg", "grf"], user, 101)
 print("\nOpenSim results converted to Pickle.\n")
 
 print("Exporting results to CSV...\n")
-failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "bk", "emg", "grf"], 101, normalise=False)
+failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "so", "bk", "emg", "grf"], 101, normalise=False)
 print("CSV export complete.\n")
 
 print("Exporting OpenSim subject descriptives to CSV...\n")
-failedfiles = osr.export_opensim_results_subject_mean(traildb, user, ["ik", "id", "emg", "grf"], 101, normalise=False)
+failedfiles = osr.export_opensim_results_subject_mean(traildb, user, ["ik", "id", "so", "emg", "grf"], 101, normalise=False)
 print("Subject descriptives CSV export complete.\n")
 
 # %% ADDITIONAL ANALYSES

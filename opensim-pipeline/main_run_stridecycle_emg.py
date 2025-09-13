@@ -68,11 +68,11 @@ print("Done.\n")
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
 
-# import c3dextract as c3dex
+import c3dextract as c3dex
 
-# print("Extracting C3D data, creating OpenSim files...\n")
-# failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, get_analog=True)
-# print("\nC3D data extract done.\n")
+print("Extracting C3D data, creating OpenSim files...\n")
+failedfiles = c3dex.c3d_batch_process(user, traildb, lasem, 2, get_analog=True, restart="TRAIL143")
+print("\nC3D data extract done.\n")
 
 
 # %% RUN OPENSIM PIPELINE
@@ -115,9 +115,9 @@ import opensimpipeline as osp
 # ***********
 # EMG PROCESSING
 
-# print("Running EMG processing: Envelopes...\n")
-# osp.opensim_pipeline(traildb, user, ["emg"])
-# print("\nEMG processing (Envelopes) completed.\n")
+print("Running EMG processing: Envelopes...\n")
+osp.opensim_pipeline(traildb, user, ["emg"])
+print("\nEMG processing (Envelopes) completed.\n")
 
 print("Running EMG MVC processing: Envelopes...\n")
 osp.opensim_pipeline(traildb, user, ["mvc"])
