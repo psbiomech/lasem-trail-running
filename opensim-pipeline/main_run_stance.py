@@ -95,17 +95,22 @@ print("Done.\n")
 # osp.opensim_pipeline(traildb, user, ["bk"])
 # print("\nOpenSim analyses (BK) completed.\n")
 
+# print("Running OpenSim analyses: PK...\n")
+# osp.opensim_pipeline(traildb, user, ["pk"])
+# print("\nOpenSim analyses (PK) completed.\n")
+
 # print("Running OpenSim analyses: SO...\n")
-# osp.opensim_pipeline(forcedb, user, ["so"])
+# osp.opensim_pipeline(traildb, user, ["so"])
 # print("\nOpenSim analyses (SO) completed.\n")
 
 # print("Running OpenSim analyses: RRA, CMC...\n")
-# osp.opensim_pipeline(forcedb, user, ["rra",  "cmc"])
+# osp.opensim_pipeline(traildb, user, ["rra",  "cmc"])
 # print("\nOpenSim analyses (RRA, CMC) completed.\n")
 
 # print("Running OpenSim analyses: JR...\n")
-# osp.opensim_pipeline(forcedb, user, ["jr"])
+# osp.opensim_pipeline(traildb, user, ["jr"])
 # print("\nOpenSim analyses (JR) completed.\n")
+
 
 
 
@@ -120,32 +125,32 @@ print("Done.\n")
 
 # %% LOAD AND FORMAT RESULTS
 
-import opensimresults as osr
+# import opensimresults as osr
 
-print("Converting OpenSim results to Pickle...\n")
-osr.opensim_results_batch_process(traildb, ["ik", "id", "bk", "emg", "grf"], user, 101)
-print("\nOpenSim results converted to Pickle.\n")
+# print("Converting OpenSim results to Pickle...\n")
+# osr.opensim_results_batch_process(traildb, ["ik", "id", "so", "bk", "emg", "grf"], user, 101)
+# print("\nOpenSim results converted to Pickle.\n")
 
-print("Exporting results to CSV...\n")
-failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "bk", "emg", "grf"], 101, normalise=False)
-print("CSV export complete.\n")
+# print("Exporting results to CSV...\n")
+# failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "so", "bk", "emg", "grf"], 101, normalise=False)
+# print("CSV export complete.\n")
 
-print("Exporting OpenSim subject descriptives to CSV...\n")
-failedfiles = osr.export_opensim_results_subject_mean(traildb, user, ["ik", "id", "emg", "grf"], 101, normalise=False)
-print("Subject descriptives CSV export complete.\n")
+# print("Exporting OpenSim subject descriptives to CSV...\n")
+# failedfiles = osr.export_opensim_results_subject_mean(traildb, user, ["ik", "id", "so", "emg", "grf"], 101, normalise=False)
+# print("Subject descriptives CSV export complete.\n")
 
 # %% ADDITIONAL ANALYSES
 
-# import analyses_workpower as anwp
+import analyses_workpower as anwp
 
-# print("Running wprk and power analyses...\n")
-# failedanalyses = anwp.analyses_batch_process(traildb, user, ["jap", "jaw"], True, 4, 6)
-# print("Analyses complete.\n")
+print("Running wprk and power analyses...\n")
+failedanalyses = anwp.analyses_batch_process(traildb, user, ["jap", "jaw"], True, 4, 6)
+print("Analyses complete.\n")
 
-# print("Exporting work and power analysis results...\n")
-# anwp.export_joint_angular_power(traildb, user, 101)
-# anwp.export_joint_angular_work(traildb, user)
-# print("Analyses results export complete.\n")
+print("Exporting work and power analysis results...\n")
+anwp.export_joint_angular_power(traildb, user, 101)
+anwp.export_joint_angular_work(traildb, user)
+print("Analyses results export complete.\n")
 
 
 # %% END

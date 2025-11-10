@@ -108,7 +108,7 @@ import opensimpipeline as osp
 # print("\nOpenSim analyses (RRA, CMC) completed.\n")
 
 # print("Running OpenSim analyses: JR...\n")
-# osp.opensim_pipeline(ftraildb, user, ["jr"])
+# osp.opensim_pipeline(traildb, user, ["jr"])
 # print("\nOpenSim analyses (JR) completed.\n")
 
 

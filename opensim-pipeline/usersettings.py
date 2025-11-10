@@ -210,6 +210,19 @@ class TRAILSettings_RUN(UserSettings):
         self.bk_output_in_local_frame = False
         self.bk_use_cmc_results = False
         
+        # OpensSim PK parameters, assumes Rajagopal model
+        #   tuple: 
+        self.pk_points = {}
+        self.pk_points["recfem"] = (("recfem", 1, "pelvis"), ("recfem", 2, "patella"))
+        self.pk_points["vaslat140"] = (("vaslat140", 2, "femur"), ("vaslat140", 3, "patella"))
+        self.pk_points["vasint"] = (("vasint", 2, "femur"), ("vasint", 3, "patella"))
+        self.pk_points["vasmed"] = (("vasmed", 2, "femur"), ("vasmed", 3, "patella"))
+        self.pk_points["patlig_recfem"] = (("recfem", 5, "tibia"), ("recfem", 4, "patella"))
+        self.pk_points["patlig_vaslat140"] = (("vaslat140", 5, "tibia"), ("vaslat140", 4, "patella"))
+        self.pk_points["patlig_vasint"] = (("vasint", 5, "tibia"), ("vasint", 4, "patella"))
+        self.pk_points["patlig_vasmed"] = (("vasmed", 5, "tibia"), ("vasmed", 4, "patella"))
+            
+        
         
         
         # ******************************
@@ -577,7 +590,7 @@ class TRAILSettings_HFD(UserSettings):
 
         # export data
         self.csvfolder = "csvfolder"
-        self.csvfileprefix = "trail_opensim_hfd_results_ikid"
+        self.csvfileprefix = "trail_opensim_hfd_results_"
         
         # meta data file
         self.metadatafile = self.project + ".pkl"        
@@ -589,6 +602,9 @@ class TRAILSettings_HFD(UserSettings):
         self.staticprefix = "STATIC"
         self.staticused = "Static_01"
         self.staticfpchannel = "Force.Fz3"
+        
+        # MVC prefix
+        self.mvcprefix = "MVC"        
         
         # C3D file suffixes for datasets based on task: RUN
         self.trialprefixes = {}
