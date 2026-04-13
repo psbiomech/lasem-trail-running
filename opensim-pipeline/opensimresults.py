@@ -39,6 +39,7 @@ class OsimResultsKey():
         self.events = osimkey.events
         self.outpath = osimkey.outpath
         self.nsamp = nsamp
+        self.postopensim = {}
         self.__calc_discrete_spatiotemporal(osimkey, trialkey, user)
         self.__get_results_raw(osimkey, analyses, nsamp)
         self.__get_results_split(osimkey, analyses, user, nsamp)
@@ -341,10 +342,10 @@ class OsimResultsKey():
 
 
 '''
-opensim_results_batch_process(meta, analyses, user, nsamp):
+opensim_results_batch_process(meta, analyses, user, nsamp, windowlist, results):
     Batch process OpenSim results text files to OsimResultsKeys.
 '''
-def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
+def opensim_results_batch_process(meta, analyses, user, nsamp, windowlist = [], restart = -1):
     
     # extract OpenSim data
     osimkey = {}
@@ -385,7 +386,7 @@ def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                #if not (trial == "TRAIL296_EP02"): continue;
+                if not (trial == "TRAIL001_HFD_LEFT02"): continue;
                 #*********************
                 
                 # ignore static trials
@@ -409,8 +410,12 @@ def opensim_results_batch_process(meta, analyses, user, nsamp, restart = -1):
                     with open(pkfile, "rb") as fid:
                         trialkey = pk.load(fid)                    
                         
-                    # get the OpenSim results
-                    osimresultskey = OsimResultsKey(osimkey, trialkey, analyses, user, nsamp)
+                    # Get the OpenSim results
+                    osimresultskey0 = OsimResultsKey(osimkey, trialkey, analyses, user, nsamp)
+                    
+                    # Get any post-OpenSim event windows for later analyses and
+                    # trimmed data export (e.g. braking phase of HFD)
+                    osimresultskey = get_post_opensim_event_window(osimresultskey0, windowlist)
                     
                     # save OsimResultsKey to file
                     with open(os.path.join(c3dpath, trial + "_opensim_results.pkl"), "wb") as f:
@@ -861,6 +866,78 @@ def export_opensim_results_subject_mean(meta, user, analyses, nsamp, normalise =
 
 
 '''
+get_post_opensim_event_window(subj, group, trial, meta, user, window):
+    Find the events for task-specific time windows. These are custom time windows
+    that can only be defined after OpenSim processing, such as the braking phase
+    of hop landing (foot strike to peak knee flexion). Code for each window will
+    need to be customised for the task and window. A dict containing the window
+    name, the events and normalised time steps (% of task) are stored in the
+    OsimResultsKey.
+        windowlist: list of strings representing the window name 
+                    (currently only ["hfd_braking"])
+'''
+def get_post_opensim_event_window(osimresultskey, windowlist = []):
+    
+    # No window strings defined, return OsimResultsKey
+    if not windowlist: return osimresultskey
+    
+    # Process windows
+    postopensim = {}
+    for window in windowlist:
+    
+        # HFD: Braking phase (Foot strike to peak knee flexion)
+        if window.casefold() == "hfd_braking":
+            
+            # Ipsilateral foot (r, l)
+            cond = osimresultskey.condition[5]
+            
+            # Get the foot strike time
+            # Assume index 2 is always foot strike as event order will always 
+            # be [GFO, xFO, xFS, GFS]
+            timeFS = osimresultskey.events["time"][2]
+            
+            # Max knee flexion
+            kaind = osimresultskey.results["split"]["ik"][cond].index("knee_angle")
+            kneeangle = osimresultskey.results["split"]["ik"][cond][:, kaind]
+            timevec = osimresultskey.results["split"]["ik"][cond][:, 0]
+            
+            # Find first sample greater than foot strike time but return one index
+            # previous. This is because sometimes event times in the raw data and
+            # OpenSim outputs don't match due to resampling.
+            indFS = next([i for i, x in enumerate(timevec) if x > timeFS], 1) - 1
+            
+            # Find index of max knee angle
+            maxka = max(kneeangle[indFS:])
+            indMAXKA = kneeangle.index(maxka, indFS)
+            
+            # Get the OpenSim start and end times
+            ostimeFS = timevec[indFS]
+            ostimeMAXKA = timevec[indMAXKA]
+            
+            # Build post-OpenSim event dict
+            postopensim[window] = {"labels": ["FS", "MAXKA"],
+                                   "index":  [indFS, indMAXKA],
+                                   "time":   [ostimeFS, ostimeMAXKA]}
+        
+        # HFD: Stabilisation phase (Peak knee flexion to trial end)
+        elif window.casefold() == "hfd_stabilisation":
+            
+            # TBD
+            pass
+        
+    
+        # Append post-OpenSim event window dict to OsimResultsKey
+        osimresultskey.postopensim = postopensim
+           
+            
+    return osimresultskey
+    
+
+        
+
+
+
+'''
 resample1d(data, nsamp):
     Simple resampling by 1-D interpolation (rows = samples, cols = variable).
     Data can be a 1-D or multiple variables in a 2D array-like object.
@@ -900,3 +977,6 @@ def resample1d(data, nsamp):
         
     
     return datanew
+
+
+

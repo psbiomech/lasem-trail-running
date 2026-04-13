@@ -103,12 +103,12 @@ print("Done.\n")
 import opensimresults as osr
 
 print("Converting OpenSim results to Pickle...\n")
-failedfiles = osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 2000)
+failedfiles = osr.opensim_results_batch_process(traildb, ["ik", "id"], user, windowlist="hfd_braking", resamp=2000)
 print("\nOpenSim results converted to Pickle.\n")
 
-print("Exporting OpenSim results to CSV...\n")
-failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 2000, normalise=False)
-print("CSV export complete.\n")
+# print("Exporting OpenSim results to CSV...\n")
+# failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 2000, normalise=False)
+# print("CSV export complete.\n")
 
 
 # %% ADDITIONAL ANALYSES

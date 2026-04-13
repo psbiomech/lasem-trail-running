@@ -30,9 +30,9 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL029"
-trial = "EP01"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
+subj = "TRAIL001"
+trial = "HFD_LEFT02"
+fpath = r"C:\Users\psrit\Documents\data\TRAIL\outputDatabase\hfd\hfd"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_osimkey.pkl")
@@ -47,9 +47,9 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL087"
-trial = "EP01"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase_emg\run\run_stridecycle"
+subj = "TRAIL001"
+trial = "HFD_LEFT02"
+fpath = r"C:\Users\psrit\Documents\data\TRAIL\outputDatabase\hfd\hfd"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_trialkey.pkl")
@@ -81,9 +81,9 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL029"
-trial = "EP01"
-fpath = r"C:\Users\Owner\Documents\data\TRAIL\outputDatabase\run\run_stance"
+subj = "TRAIL001"
+trial = "HFD_LEFT02"
+fpath = r"C:\Users\psrit\Documents\data\TRAIL\outputDatabase\hfd\hfd"
 
 # OsimResultsKey
 pkfile = os.path.join(fpath, subj, "BASELINE", subj + "_" + trial, subj + "_" + trial + "_opensim_results.pkl")
