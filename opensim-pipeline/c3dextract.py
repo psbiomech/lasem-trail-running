@@ -90,10 +90,18 @@ class TrialKey():
                                 
         else:
             
-            # Event info
-            foot = [f[0].upper() for f in c3dkey.meta["EVENT"]["CONTEXTS"]]
+            # Event info(
+            foot = np.array([f[0].upper() for f in c3dkey.meta["EVENT"]["CONTEXTS"]])
             labels = c3dkey.meta["EVENT"]["LABELS"]
             times = c3dkey.meta["EVENT"]["TIMES"][:, 1]
+            
+            # C3D files do not necessarily have events listed in chronological
+            # order therefore need to be sorted
+            tidxs = np.argsort(times)
+            times = times[tidxs]
+            labels = labels[tidxs]
+            foot = foot[tidxs].tolist()
+            
             
             # New event offset: pyc3dserver doesn't consider the ACTUAL_START_FRAME
             # field when extracting time vectors for FORCE and POINT data. Thus
@@ -104,6 +112,8 @@ class TrialKey():
             # then removed again when calculating relative event times, events0.
             #new_event_offset = ((c3dkey.meta["TRIAL"]["ACTUAL_START_FIELD"][0] - 1) / c3dkey.meta["TRIAL"]["CAMERA_RATE"])
             new_event_offset = 0.0
+
+
             
             # Build events list and time
             #
@@ -114,6 +124,10 @@ class TrialKey():
             # one generic event is provided, create a new event at the start or
             # end of the trial. If no generic events are provided, add events 
             # to the start and end of the trial.
+            #
+            # Note: C3D files can store events out of order, hence the need to
+            # sort by time as performed earlier, however, the code below covers
+            # all scenarios, even if sorting makes some of these scenarios redundant.
             
             # No generic events but hop-for-distance trial
             if (foot[0] != "G") and (foot[-1] != "G") and (task.casefold() == "hfd"):
@@ -124,20 +138,30 @@ class TrialKey():
                 times = np.insert(times, 0, c3dkey.markers["TIME"][0] + new_event_offset)
                 times = np.append(times, c3dkey.markers["TIME"][-1] + new_event_offset)
                 
-            # Two generic events
+            # Two generic events that bookend task
             elif (foot[0] == "G") and (foot[-1] == "G"):
                 labels[0] = "Gen Off"
                 labels[-1] = "Gen Strike"
             
+            # Two generic events at end of HFD trial (assume first G is GFO)
+            elif (foot[-1] == "G") and (foot[-2] == "G") and (task.casefold() == "hfd"):
+                labels[-2] = "Gen Off"
+                labels[-1] = "Gen Strike"
+
+            # Two generic events at start of HFD trial (assume first G is GFO)
+            elif (foot[0] == "G") and (foot[1] == "G") and (task.casefold() == "hfd"):
+                labels[0] = "Gen Off"
+                labels[1] = "Gen Strike"
+            
             # One generic event at start, add new one to end
-            elif foot[0] == "G":            
+            elif (foot[0] == "G") and (foot[-1] != "G"):            
                 labels[0] = "Gen Off"
                 labels = np.append(labels, "Gen Strike")
                 foot.append("G")
                 times = np.append(times, c3dkey.markers["TIME"][-1] + new_event_offset)
                 
             # One generic event at end, add new one to start
-            elif foot[-1] == "G":
+            elif (foot[-1] == "G") and (foot[0] != "G"):
                 labels = np.insert(labels, 0, "Gen Off")
                 labels[-1] = "Gen Strike"
                 foot.insert(0, "G")

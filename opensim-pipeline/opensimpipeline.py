@@ -149,7 +149,7 @@ def opensim_pipeline(meta, user, analyses, restart=-1):
             for trial in meta[subj]["trials"][group]:
 
                 #****** TESTING ******
-                #if not (trial == "SKIP_ME"): continue
+                #if not (trial == "TRAIL012_HFD_LEFT03"): continue
                 #*********************
                 
                 # Pickle file info

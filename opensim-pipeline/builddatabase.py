@@ -89,9 +89,9 @@ def build_database(user, task, dataset, emgsubcohort=False, tpose="all"):
             meta[subj]["subj"] = subj
             meta[subj]["project"] = user.project
             meta[subj]["outpath"] = os.path.join(outpath, subj)
-            meta[subj]["type"] = "NA"
-            meta[subj]["sex"] = "NA"
-            meta[subj]["knee"] = "NA"
+            meta[subj]["type"] = "NA"   # Default as I don't have the info
+            meta[subj]["sex"] = "NA"   # Default as I don't have the info
+            meta[subj]["knee"] = "NA"   # Default as I don't have the info
             if emgsubcohort:
                 meta[subj]["type"] = typelist[n].lower()
                 meta[subj]["sex"] = sexlist[n].lower()

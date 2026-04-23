@@ -386,7 +386,7 @@ def opensim_results_batch_process(meta, analyses, user, nsamp, windowlist = [], 
             for trial in  meta[subj]["trials"][group]:                
 
                 #****** TESTING ******
-                if not (trial == "TRAIL001_HFD_LEFT02"): continue;
+                #if not (trial == "TRAIL012_HFD_LEFT03"): continue;
                 #*********************
                 
                 # ignore static trials
@@ -435,15 +435,16 @@ def opensim_results_batch_process(meta, analyses, user, nsamp, windowlist = [], 
     
 
 '''
-export_opensim_results(meta, user, analyses, nsamp):
+export_opensim_results(meta, user, analyses, nsamp, normalise, emgnormalise, window):
     Collate OpenSim results into dataframes and export to text for Rstats.
     Note: nsamp should be the same as that used for OsimResultsKey
     otherwise the trial is skipped.
         nsamp: number of samples if different from user.nsamp (int)
         normalise: normalise biomechanical data (bool, default = False)
         emgnormalise: normalise tp "peak", "mvc", or "none" (default)
+        window: trim data to post-opensim window
 '''
-def export_opensim_results(meta, user, analyses, nsamp, normalise = False, emgnormalise = "none"):
+def export_opensim_results(meta, user, analyses, nsamp, normalise = False, emgnormalise = "none", window = "full"):
     
     # empty output list of lists
     # (create the output table as a list of lists, then convert to dataframe
@@ -487,6 +488,11 @@ def export_opensim_results(meta, user, analyses, nsamp, normalise = False, emgno
             # process dynamic trials only
             for trial in meta[subj]["trials"][group]:                
                 
+                #****** TESTING ******
+                #if not (trial == "SKIP_ME"): continue;
+                #*********************               
+                
+                
                 # ignore static trials
                 isstatic = meta[subj]["trials"][group][trial]["isstatic"]
                 if isstatic: continue
@@ -525,6 +531,7 @@ def export_opensim_results(meta, user, analyses, nsamp, normalise = False, emgno
                         if data_type.casefold() == "not_used": continue
                         
                         # Check if symptomatic surgical limb or not, or control
+                        # (Currently defaults to -1 as I don't have the info)
                         if gtype=="surgical":
                             if knee=="bilateral":
                                 issurgical = 1
@@ -549,19 +556,47 @@ def export_opensim_results(meta, user, analyses, nsamp, normalise = False, emgno
                             # EMG data)
                             if len(data) == 0: continue
                             
+                            # Trim to window if required, get window info
+                            # (Currently only hfd_braking)
+                            window = window.casefold()
+                            if window == "full":
+                                pass   # Nothing to be done
+                            elif window == "hfd_braking":
+                                wdict = osimresultskey.postopensim[window]
+                                indw = wdict["index"]
+                                wlabels = wdict["labels"]
+                                wtime = wdict["time"]
+                                data = data[indw[0]:indw[1], :]  # Trimmed data slice
+                            
+                        
                             # resample data if necessary
                             if nsamp != osimresultskey.nsamp:
                                 data = resample1d(data, nsamp)
                         
+                       
                             # Get the events
-                            event_times = osimresultskey.results["split"][ans][foot]["event_times"]
-                            event_steps = osimresultskey.results["split"][ans][foot]["event_steps"]
-                        
-                            # Pad events list if required
-                            if dataset == "run_stridecycle":
-                                if len(event_times) < 5:
-                                    event_times = np.concatenate([event_times, [-1]*(5-len(event_times))])
-                                    event_steps = np.concatenate([event_steps, [-1]*(5-len(event_steps))])
+                            # If no window specified, use all required events
+                            if window == "full":
+                                
+                                # Get the events
+                                event_times = osimresultskey.results["split"][ans][foot]["event_times"]
+                                event_steps = osimresultskey.results["split"][ans][foot]["event_steps"]
+                                event_names = osimresultskey.results["split"][ans][foot]["events"]
+                                
+                                # Pad unused event columns if necessary
+                                # E.g. run_stridecycle dataset has mixture of run_stridecycle (5 events) 
+                                # and run_stance (2 events) tasks
+                                if dataset == "run_stridecycle":   
+                                    if len(event_times) < 5:
+                                        event_times = np.concatenate([event_times, [-1]*(5-len(event_times))])
+                                        event_steps = np.concatenate([event_steps, [-1]*(5-len(event_steps))])
+                                        event_names = event_names + (5-len(event_steps))*["NA"]
+                            
+                            # If window is specified, only show first and last events
+                            else:
+                                event_times = np.array(wtime)
+                                event_steps = np.array([0, nsamp])
+                                event_names = wlabels
                         
                         
                             # variable
@@ -606,7 +641,7 @@ def export_opensim_results(meta, user, analyses, nsamp, normalise = False, emgno
                                             drow = drow / mvc
                                                 
                                 # create new line of data
-                                csvrow = [subjcorrected, trialcorrected, sex, gtype, task, dataset, condition, data_type, foot, issurgical, avgtrialspeed, cadence, ans, variable] + event_times.tolist() + event_steps.tolist() + drow.tolist()
+                                csvrow = [subjcorrected, trialcorrected, sex, gtype, task, dataset, window, condition, data_type, foot, issurgical, avgtrialspeed, cadence, ans, variable] + event_names + event_times.tolist() + event_steps.tolist() + drow.tolist()
                                 csvdata.append(csvrow)
                 
                 except:
@@ -616,14 +651,20 @@ def export_opensim_results(meta, user, analyses, nsamp, normalise = False, emgno
                 else:
                     print("Dynamic trial: %s" % trial)
 
-    # create dataframe
+    # Create dataframe
     print("\nCreating dataframe...")
-    headers = ["subject", "trial", "sex", "group", "task", "dataset", "condition", "data_type", "data_leg", "is_surgical", "avg_speed_m/s", "cadence_steps/min", "analysis", "variable"] + ["etime" + str(n) for n in range(0, len(event_times))] + ["esteps" + str(n) for n in range(0, len(event_steps))] + ["t" + str(n) for n in range(1, nsamp + 1)]
+    headers = ["subject", "trial", "sex", "group", "task", "dataset", "window", "condition", "data_type", "data_leg", "is_surgical", "avg_speed_m/s", "cadence_steps/min", "analysis", "variable"] + ["ename" + str(n) for n in range(0, len(event_names))] + ["etime" + str(n) for n in range(0, len(event_times))] + ["esteps" + str(n) for n in range(0, len(event_steps))] + ["t" + str(n) for n in range(1, nsamp + 1)]
     csvdf = pd.DataFrame(csvdata, columns = headers)
+
+    # CSV file suffix
+    if window == "all":
+        csvsuffix = meta["study"]["dataset"]
+    else:
+        csvsuffix = window
 
     # write data to file with headers
     print("\nWriting to CSV text file...")
-    csvfile = user.csvfileprefix + meta["study"]["task"] + "_" + meta["study"]["dataset"] + ".csv"
+    csvfile = user.csvfileprefix + meta["study"]["task"] + "_" + csvsuffix + ".csv"
     fpath = os.path.join(user.rootpath, user.outfolder, meta["study"]["task"], meta["study"]["dataset"], user.csvfolder)
     if not os.path.exists(fpath): os.makedirs(fpath)
     csvdf.to_csv(os.path.join(fpath,csvfile), index = False)
@@ -889,7 +930,7 @@ def get_post_opensim_event_window(osimresultskey, windowlist = []):
         if window.casefold() == "hfd_braking":
             
             # Ipsilateral foot (r, l)
-            cond = osimresultskey.condition[5]
+            cond = osimresultskey.condition[4]
             
             # Get the foot strike time
             # Assume index 2 is always foot strike as event order will always 
@@ -897,18 +938,17 @@ def get_post_opensim_event_window(osimresultskey, windowlist = []):
             timeFS = osimresultskey.events["time"][2]
             
             # Max knee flexion
-            kaind = osimresultskey.results["split"]["ik"][cond].index("knee_angle")
-            kneeangle = osimresultskey.results["split"]["ik"][cond][:, kaind]
-            timevec = osimresultskey.results["split"]["ik"][cond][:, 0]
+            kaind = osimresultskey.results["split"]["ik"][cond]["headers"].index("knee_angle")
+            kneeangle = osimresultskey.results["split"]["ik"][cond]["data"][:, kaind]
+            timevec = osimresultskey.results["split"]["ik"][cond]["data"][:, 0]
             
             # Find first sample greater than foot strike time but return one index
             # previous. This is because sometimes event times in the raw data and
             # OpenSim outputs don't match due to resampling.
-            indFS = next([i for i, x in enumerate(timevec) if x > timeFS], 1) - 1
+            indFS = np.where(timevec > timeFS)[0][0] - 1
             
             # Find index of max knee angle
-            maxka = max(kneeangle[indFS:])
-            indMAXKA = kneeangle.index(maxka, indFS)
+            indMAXKA = np.argmax(kneeangle[indFS:]) + indFS
             
             # Get the OpenSim start and end times
             ostimeFS = timevec[indFS]
