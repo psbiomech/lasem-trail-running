@@ -10,10 +10,6 @@ import os
 import usersettings as us
 
 
-# Tasks
-task = "hfd"
-dataset = "hfd"
-
 # Path roots
 oldroot = r"C:\Users\Owner\Documents\data\TRAIL"  # Lenovo
 rootpath = r"C:\Users\psrit\Documents\data\TRAIL" # MSI
@@ -21,7 +17,9 @@ rootpath = r"C:\Users\psrit\Documents\data\TRAIL" # MSI
 
 # Get user settings
 print("Loading user settings... ", end="")
-user = us.TRAILSettings_HFD()
+task = "run"
+dataset = "run_stridecycle"
+user = us.TRAILSettings_RUN()
 print("Done.\n")
 
 

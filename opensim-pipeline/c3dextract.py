@@ -1187,6 +1187,9 @@ def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, 
         fanalog = {}
         if get_analog:
             fanalog = c3d.get_dict_analogs(itf, frame=True, time=True, excl_forces=True)
+
+        # Close the C3D object
+        c3d.close_c3d(itf)
         
         # Need to adjust time vector because pyc3dserver doesn't consider the
         # ACTUAL_START_FIELD parameter when extracting the time vector
@@ -1207,10 +1210,10 @@ def c3d_extract(subj, group, trial, c3dfile, c3dpath, lab, user, task, dataset, 
             c3dkey = pk.load(fid)
         
     
-    # trial data only from C3D key
+    # Trial data only from C3D key
     trialkey = TrialKey(lab, user, task, dataset, condition, c3dkey, xdir, mass)
     
-    # opensim input data
+    # Opensim input data
     osimkey = OpenSimKey(trialkey, user, c3dpath, model)   
     
     # save key files

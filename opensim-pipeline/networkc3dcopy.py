@@ -14,7 +14,7 @@ import shutil
 
 
 pfolder = r"P:\PROJECT - OPV - TRAIL\TRAIL\Gait Lab and Biodex\Data-Biomech\4a Checked and ready_running and HFD"
-cfolder = r"C:\Users\Owner\Documents\data\TRAIL\inputDatabase"
+cfolder = r"C:\Users\psrit\Documents\data\TRAIL\inputDatabase"
 
 
 # Get list of C3D files
@@ -40,7 +40,7 @@ for fstr in fstrings:
     
     # Get the file name and parse with regex
     if not(os.path.isdir(cfolder)): os.makedirs(cfolder)
-    for f in folderlist:
+    for nf, f in enumerate(folderlist):
         
         # Get the subject and trial code
         fname0 = os.path.splitext(os.path.split(f)[1])

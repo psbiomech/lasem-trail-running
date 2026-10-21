@@ -81,10 +81,10 @@ import pickle as pk
 import os
 
 # file path and name prefix
-subj = "TRAIL001"
+subj = "TRAIL488"
 #trial = "HFD_LEFT02"
 #fpath = r"C:\Users\psrit\Documents\data\TRAIL\outputDatabase\hfd\hfd"
-trial = "EP03"
+trial = "FAST08"
 fpath = r"C:\Users\psrit\Documents\data\TRAIL\outputDatabase\run\run_stridecycle"
 
 

@@ -9,6 +9,7 @@ import os
 import pandas as pd
 import numpy as np
 import pickle as pk
+import scipy.signal as signal
 from scipy.interpolate import interp1d
 
 
@@ -316,10 +317,23 @@ class OsimResultsKey():
                     r0 = r00[-1]
                 r1 = np.where(data0[:, 0] <= t1)[0][-1]
                 data1 = data0[r0:r1 + 1, :]
+
+                # IK is unfiltered by default, if filtered IK is required for
+                # export, filter it before resampling. E.g., if OpenSim IDTool
+                # is set to filter IK at 15 Hz, then you may wish to export the
+                # filtered IK rather than the default unfiltered IK.
+                if (ans=="ik") and user.export_filtered_ik:
+                    sample_rate = 1 / (data1[1, 0] - data1[0, 0])
+                    data2 = filter_timeseries(data1, sample_rate, user.coordinates_filter_butter_order, user.coordinates_filter_cutoff)
+                else:
+                    data2 = data1    # deep copy not required
+                    
                 
-                # resample data, currently uses simple 1D interpolation but
-                # need to find a package that emulates Matlab's resample()
-                data = resample1d(data1, nsamp)
+                # resample data, currently uses simple 1D interpolation
+                # Note: data must be appropriately filtered to avoid artifacts,
+                # or use scipy.signal.resample_poly() but this also introduces
+                # end artifacts. Best alternative is Matlab's resample.
+                data = resample1d(data2, nsamp)
                             
                 # store in dict
                 results[ans][foot]["data"] = data
@@ -568,6 +582,7 @@ def export_opensim_results(meta, user, analyses, nsamp, normalise = False, emgno
                                 wtime = wdict["time"]
                                 data = data[indw[0]:indw[1], :]  # Trimmed data slice
                             
+                            
                         
                             # resample data if necessary
                             if nsamp != osimresultskey.nsamp:
@@ -590,7 +605,7 @@ def export_opensim_results(meta, user, analyses, nsamp, normalise = False, emgno
                                     if len(event_times) < 5:
                                         event_times = np.concatenate([event_times, [-1]*(5-len(event_times))])
                                         event_steps = np.concatenate([event_steps, [-1]*(5-len(event_steps))])
-                                        event_names = event_names + (5-len(event_steps))*["NA"]
+                                        event_names = event_names + (5-len(event_names))*["NA"]
                             
                             # If window is specified, only show first and last events
                             else:
@@ -657,7 +672,7 @@ def export_opensim_results(meta, user, analyses, nsamp, normalise = False, emgno
     csvdf = pd.DataFrame(csvdata, columns = headers)
 
     # CSV file suffix
-    if window == "all":
+    if window == "full":
         csvsuffix = meta["study"]["dataset"]
     else:
         csvsuffix = window
@@ -973,6 +988,30 @@ def get_post_opensim_event_window(osimresultskey, windowlist = []):
     return osimresultskey
     
 
+
+
+'''
+filter_timeseries(data_raw, sample_rate, butter_order, cutoff, btype):
+    Filter timeseries data. Raw data can be a list, or an array with rows
+    representing time steps and columns as variables. Set cutoff < 0 if
+    filtering not required.
+        btype:  "lowpass" (default), "highpass"
+''' 
+def filter_timeseries(data_raw, sample_rate, butter_order, cutoff, btype="lowpass"):
+    
+    # Return if both cutoffs < 0 (i.e. filtering not required)
+    if cutoff < 0: return data_raw
+    
+    # Filter design
+    Wn = sample_rate / 2
+    normalised_cutoff = cutoff / Wn
+    b, a = signal.butter(butter_order, normalised_cutoff, btype)
+    
+    # apply filter
+    data_filtered = signal.filtfilt(b, a, data_raw, axis = 0)
+
+    return data_filtered     
+
         
 
 
@@ -981,6 +1020,14 @@ def get_post_opensim_event_window(osimresultskey, windowlist = []):
 resample1d(data, nsamp):
     Simple resampling by 1-D interpolation (rows = samples, cols = variable).
     Data can be a 1-D or multiple variables in a 2D array-like object.
+
+    IMPORTANT: this does not apply a half-band low-pass filter to appropriately
+    filter the data prior to simple resampling by interpolation. Ensure data is 
+    filtered prior to using this function to avoid spikes and other artifacts.
+    
+    Note: Matlab resample() is the best for resampling biomechanical waveforms.
+    SciPy resample_poly() does a reasonable job, but produces end artifacts and
+    may deviate from the original waveform near the ends.
 '''
 def resample1d(data, nsamp):
 

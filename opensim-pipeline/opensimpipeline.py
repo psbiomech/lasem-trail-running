@@ -534,12 +534,12 @@ def run_opensim_ik(osimkey, user):
 
 
 '''
-run_opensim_id(osimkey, user):
+run_opensim_id(osimkey, user, extforces):
     Set up and run the Tool using the API. A generic XML setup file is
     initially loaded, and then modified using the API. The Tool is then run
     via the API. Results are printed to text files in the remote folder.
 '''
-def run_opensim_id(osimkey, user):
+def run_opensim_id(osimkey, user, newextfrc=True):
     
     # trial folder, model and trial
     fpath = osimkey.outpath
@@ -576,7 +576,7 @@ def run_opensim_id(osimkey, user):
     # set input directory and coordinates data file
     print("Setting coordinates data file...")
     tool.setCoordinatesFileName(os.path.join(fpath, user.ikcode, trial + "_ik.mot"))
-    tool.setLowpassCutoffFrequency(6.0)
+    tool.setLowpassCutoffFrequency(user.coordinates_filter_cutoff)
     
     # set output directories and generalised forces storage file (note:
     # InverseDynamicsTool XML parser does not seem to like full paths
@@ -597,7 +597,7 @@ def run_opensim_id(osimkey, user):
     # a one-off analysis needs to be run in future.)
     print("Creating external loads XML file...")
     extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
-    if not os.path.isfile(extloadsfile):
+    if newextfrc or (not os.path.isfile(extloadsfile)):
         extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.additionalfilesfolder, user.refexternalloads), True)       
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
@@ -619,6 +619,7 @@ def run_opensim_id(osimkey, user):
         tool.run()
         print("Done.")
     except:
+        #raise
         print("---> ERROR: ID failed. Skipping ID for %s." % trial)
     finally:
         shutil.copyfile(user.logfile, os.path.join(fpath, user.triallogfolder, "out_ID.log")) 
@@ -941,7 +942,7 @@ run_opensim_so(osimkey, user):
     initially loaded, and then modified using the API. The Tool is then run
     via the API. Results are printed to text files in the remote folder.
 '''
-def run_opensim_so(osimkey, user):
+def run_opensim_so(osimkey, user, newextfrc=True):
     
     # trial folder, model and trial
     fpath = osimkey.outpath
@@ -977,7 +978,7 @@ def run_opensim_so(osimkey, user):
     # set coordinates data file
     print("Setting coordinates data file...")
     tool.setCoordinatesFileName(os.path.join(fpath, user.ikcode, trial + "_ik.mot"))
-    tool.setLowpassCutoffFrequency(6.0)
+    tool.setLowpassCutoffFrequency(user.coordinates_filter_cutoff)
     
     # set output directory
     print("Setting output file name...")
@@ -995,7 +996,7 @@ def run_opensim_so(osimkey, user):
     # a one-off analysis needs to be run in future.)
     print("Creating external loads XML file...")
     extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
-    if not os.path.isfile(extloadsfile):
+    if newextfrc or (not os.path.isfile(extloadsfile)):
         extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.additionalfilesfolder, user.refexternalloads), True)       
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
@@ -1095,7 +1096,7 @@ run_opensim_rra(osimkey, user):
     initially loaded, and then modified using the API. The Tool is then run
     via the API. Results are printed to text files in the remote folder.
 '''
-def run_opensim_rra(osimkey, user):
+def run_opensim_rra(osimkey, user, newextfrc=True):
 
     # trial folder, model and trial
     fpath = osimkey.outpath
@@ -1128,7 +1129,7 @@ def run_opensim_rra(osimkey, user):
 
     # set desired kinematics file name and filter frequency
     tool.setDesiredKinematicsFileName(os.path.join(fpath, user.ikcode, trial + "_ik.mot"))
-    tool.setLowpassCutoffFrequency(user.kinematics_filter_cutoff)
+    tool.setLowpassCutoffFrequency(user.coordinates_filter_cutoff)
     
     # create an external loads object from template, set it up, and
     # print to destination folder (This is not the best way to do this,
@@ -1140,7 +1141,7 @@ def run_opensim_rra(osimkey, user):
     # a one-off analysis needs to be run in future.)
     print("Creating external loads XML file...")
     extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
-    if not os.path.isfile(extloadsfile):
+    if newextfrc or (not os.path.isfile(extloadsfile)):
         extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.additionalfilesfolder, user.refexternalloads), True)       
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
@@ -1246,7 +1247,7 @@ def run_opensim_rra(osimkey, user):
                 coord_list = user.prescribe_coord_list
                 model0 = opensim.Model(rramodelfile)   
                 ikdata = pd.read_csv(os.path.join(fpath, user.ikcode, trial + "_ik.mot"), sep = "\t", header = 8)
-                model1 = prescribe_kinematics(model0, ikdata, coord_list, user.kinematics_filter_butter_order, user.kinematics_filter_cutoff)
+                model1 = prescribe_kinematics(model0, ikdata, coord_list, user.coordinates_filter_butter_order, user.coordinates_filter_cutoff)
                 rramodelfile = rramodelfile.rstrip(".osim") + "_PrescribedUpper.osim"
                 model1.printToXML(rramodelfile)
 
@@ -1301,7 +1302,7 @@ run_opensim_cmc(osimkey, user):
     initially loaded, and then modified using the API. The Tool is then run
     via the API. Results are printed to text files in the remote folder.
 '''
-def run_opensim_cmc(osimkey, user):
+def run_opensim_cmc(osimkey, user, newextfrc=True):
 
     # trial folder, model and trial
     fpath = osimkey.outpath
@@ -1339,7 +1340,7 @@ def run_opensim_cmc(osimkey, user):
     # a one-off analysis needs to be run in future.)
     print("Creating external loads XML file...")
     extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
-    if not os.path.isfile(extloadsfile):
+    if newextfrc or (not os.path.isfile(extloadsfile)):
         extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.additionalfilesfolder, user.refexternalloads), True)       
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
@@ -1468,7 +1469,7 @@ def run_opensim_cmc(osimkey, user):
         filtfreq = -1
     else:
         kinfile = os.path.join(fpath, user.ikcode, trial + "_ik.mot")    
-        filtfreq = user.kinematics_filter_cutoff
+        filtfreq = user.coordinates_filter_cutoff
     tool.setDesiredKinematicsFileName(kinfile)
     tool.setLowpassCutoffFrequency(filtfreq)
 
@@ -1507,7 +1508,7 @@ run_opensim_jr(osimkey, user):
     initially loaded, and then modified using the API. The Tool is then run
     via the API. Results are printed to text files in the remote folder.
 '''
-def run_opensim_jr(osimkey, user):
+def run_opensim_jr(osimkey, user, newextfrc=True):
     
     # trial folder, model and trial
     fpath = osimkey.outpath
@@ -1552,7 +1553,7 @@ def run_opensim_jr(osimkey, user):
     # a one-off analysis needs to be run in future.)
     print("Creating external loads XML file...")
     extloadsfile = os.path.join(fpath, trial + "_ExternalLoads.xml")
-    if not os.path.isfile(extloadsfile):
+    if newextfrc or (not os.path.isfile(extloadsfile)):
         extloads = opensim.ExternalLoads(os.path.join(refsetuppath, user.additionalfilesfolder, user.refexternalloads), True)       
         extloads.setDataFileName(os.path.join(fpath, trial + "_grf.mot"))
         extloads.printToXML(extloadsfile)  
@@ -2587,7 +2588,15 @@ def filter_timeseries(data_raw, sample_rate, butter_order, cutoff, btype="lowpas
 '''
 resample1d(data, nsamp):
     Simple resampling by 1-D interpolation (rows = samples, cols = variable).
-    Data can be a 1-D or multiple variables in a 2D array-like object.
+    Data can be a 1-D or multiple variables in a 2D array-like object. 
+    
+    IMPORTANT: this does not apply a half-band low-pass filter to appropriately
+    filter the data prior to simple resampling by interpolation. Ensure data is 
+    filtered prior to using this function to avoid spikes and other artifacts.
+    
+    Note: Matlab resample() is the best for resampling biomechanical waveforms.
+    SciPy resample_poly() does a reasonable job, but produces end artifacts and
+    may deviate from the original waveform near the ends.  
 '''
 def resample1d(data, nsamp):
 

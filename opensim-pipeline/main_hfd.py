@@ -45,23 +45,23 @@ print("Done.\n")
 
 # OPTION 1: Build new database
 
-# import builddatabase as bd
+import builddatabase as bd
 
-# print("Building new output database... ", end="")
-# traildb = bd.build_database(user, "hfd", "hfd", emgsubcohort=False, tpose="all")
-# print("Done.\n")
+print("Building new output database... ", end="")
+traildb = bd.build_database(user, "hfd", "hfd", emgsubcohort=False, tpose="all")
+print("Done.\n")
 
 
 # OPTION 2: Load existing database
 
-import pickle as pk
-import os
+# import pickle as pk
+# import os
 
-print("Loading existing output database... ", end="")
-dbfilepath = os.path.join(user.rootpath, user.outfolder, "hfd", "hfd", user.metadatafile)
-with open(dbfilepath, "rb") as fid:
-    traildb = pk.load(fid)
-print("Done.\n")
+# print("Loading existing output database... ", end="")
+# dbfilepath = os.path.join(user.rootpath, user.outfolder, "hfd", "hfd", user.metadatafile)
+# with open(dbfilepath, "rb") as fid:
+#     traildb = pk.load(fid)
+# print("Done.\n")
 
 
 # %% EXTRACT C3D AND CREATE OPENSIM DATA FILES
@@ -102,9 +102,9 @@ print("Done.\n")
 
 import opensimresults as osr
 
-# print("Converting OpenSim results to Pickle...\n")
-# osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 2000, windowlist=["hfd_braking"])
-# print("\nOpenSim results converted to Pickle.\n")
+print("Converting OpenSim results to Pickle...\n")
+osr.opensim_results_batch_process(traildb, ["ik", "id"], user, 2000, windowlist=["hfd_braking"])
+print("\nOpenSim results converted to Pickle.\n")
 
 print("Exporting OpenSim results to CSV...\n")
 failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id"], 101, normalise=False, window="hfd_braking")

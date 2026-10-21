@@ -185,8 +185,8 @@ class TRAILSettings_RUN(UserSettings):
         #self.lom_lmt_scalefactor["all"] = 1.1
         
         # OpenSim IK parameters
-        self.kinematics_filter_butter_order = 4
-        self.kinematics_filter_cutoff = 6
+        self.coordinates_filter_butter_order = 4
+        self.coordinates_filter_cutoff = 15
         
         # OpenSim RRA parameters
         self.update_mass = True
@@ -277,15 +277,17 @@ class TRAILSettings_RUN(UserSettings):
         self.results_headers["emg"] = ["time", "sol", "gaslat", "gasmed", "semiten", "bflh", "vasmed", "vaslat"]
         self.results_headers["grf"] = ["time", "grf_vx", "grf_vy", "grf_vz", "cop_px", "cop_py", "cop_pz", "grm_mx", "grf_my", "grm_mz"]
 
-
+        # export filtered IK (-1: no filtering)
+        self.export_filtered_ik = True
+        
+        
 
         # ******************************
         # ADDITIONAL ANALYSES
         
         # outfile file prefixes
-        self.csvfileprefix_analyses_jap = "trail_analyses_results_jap"
-        self.csvfileprefix_analyses_jaw = "trail_analyses_results_jaw"
-
+        self.csvfileprefix_analyses_jap = "trail_analyses_results_japwr"
+        self.csvfileprefix_analyses_jaw = "trail_analyses_results_jawrk"
 
 
 
@@ -456,8 +458,8 @@ class TRAILSettings_RUN_EMG(UserSettings):
         #self.lom_lmt_scalefactor["all"] = 1.1
         
         # OpenSim IK parameters
-        self.kinematics_filter_butter_order = 4
-        self.kinematics_filter_cutoff = 6
+        self.coordinates_filter_butter_order = 4
+        self.coordinates_filter_cutoff = 15
         
         # OpenSim RRA parameters
         self.update_mass = True
@@ -553,15 +555,16 @@ class TRAILSettings_RUN_EMG(UserSettings):
         self.results_headers["emg"] = ["time", "sol", "gaslat", "gasmed", "semiten", "bflh", "vasmed", "vaslat"]
         self.results_headers["grf"] = ["time", "grf_vx", "grf_vy", "grf_vz", "cop_px", "cop_py", "cop_pz", "grm_mx", "grf_my", "grm_mz"]
 
-
+        # export filtered IK (-1: no filtering)
+        self.export_filtered_ik = True
 
 
         # ******************************
         # ADDITIONAL ANALYSES
         
         # outfile file prefixes
-        self.csvfileprefix_analyses_jap = "trail_analyses_results_jap"
-        self.csvfileprefix_analyses_jaw = "trail_analyses_results_jaw"
+        self.csvfileprefix_analyses_jap = "trail_analyses_results_japwr"
+        self.csvfileprefix_analyses_jaw = "trail_analyses_results_jawrk"
 
 
 
@@ -693,8 +696,8 @@ class TRAILSettings_HFD(UserSettings):
         #self.lom_lmt_scalefactor["all"] = 1.1
         
         # OpenSim IK parameters
-        self.kinematics_filter_butter_order = 4
-        self.kinematics_filter_cutoff = 6
+        self.coordinates_filter_butter_order = 4
+        self.coordinates_filter_cutoff = 15
         
         # OpenSim RRA parameters
         self.update_mass = True
@@ -753,4 +756,5 @@ class TRAILSettings_HFD(UserSettings):
         self.results_headers["cmc"] = []
         self.results_headers["jr"] = []           
         
-        
+        # export filtered IK (-1: no filtering)
+        self.export_filtered_ik = True        
