@@ -77,7 +77,7 @@ print("Done.\n")
 
 # %% RUN OPENSIM PIPELINE
 
-import opensimpipeline as osp
+# import opensimpipeline as osp
 
 
 # ***********
@@ -87,9 +87,9 @@ import opensimpipeline as osp
 # failedstatic = osp.opensim_pipeline(traildb, user, ["scale"])
 # print("\nOpenSim model scaling (SCALE) completed.\n")
 
-print("Running OpenSim analyses: IK, ID...\n")
-osp.opensim_pipeline(traildb, user, ["ik", "id"])
-print("\nOpenSim analyses (IK, ID) completed.\n")
+# print("Running OpenSim analyses: IK, ID...\n")
+# osp.opensim_pipeline(traildb, user, ["ik", "id"])
+# print("\nOpenSim analyses (IK, ID) completed.\n")
 
 # print("Running OpenSim analyses: BK...\n")
 # osp.opensim_pipeline(traildb, user, ["bk"])
@@ -117,9 +117,9 @@ print("\nOpenSim analyses (IK, ID) completed.\n")
 # ***********
 # OTHER ANALYSES
 
-print("Running GRF trim: GRF...\n")
-osp.opensim_pipeline(traildb, user, ["grf"])
-print("\nOpenSim analyses (GRF) completed.\n")
+# print("Running GRF trim: GRF...\n")
+# osp.opensim_pipeline(traildb, user, ["grf"])
+# print("\nOpenSim analyses (GRF) completed.\n")
 
 
 
@@ -128,15 +128,15 @@ print("\nOpenSim analyses (GRF) completed.\n")
 import opensimresults as osr
 
 print("Converting OpenSim results to Pickle...\n")
-osr.opensim_results_batch_process(traildb, ["ik", "id", "grf"], user, 101)
+osr.opensim_results_batch_process(traildb, ["ik", "id", "grf", "bk"], user, 101)
 print("\nOpenSim results converted to Pickle.\n")
 
 print("Exporting results to CSV...\n")
-failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "grf"], 101, normalise=False)
+failedfiles = osr.export_opensim_results(traildb, user, ["ik", "id", "grf", "bk"], 101, normalise=False)
 print("CSV export complete.\n")
 
 print("Exporting OpenSim subject descriptives to CSV...\n")
-failedfiles = osr.export_opensim_results_subject_mean(traildb, user, ["ik", "id", "grf"], 101, normalise=False)
+failedfiles = osr.export_opensim_results_subject_mean(traildb, user, ["ik", "id", "grf", "bk"], 101, normalise=False)
 print("Subject descriptives CSV export complete.\n")
 
 # %% ADDITIONAL ANALYSES

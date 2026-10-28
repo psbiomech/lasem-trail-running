@@ -750,7 +750,7 @@ def run_opensim_bk(osimkey, user):
         filtfreq = -1    
     else:            
         kinfile = os.path.join(fpath, user.ikcode, trial + "_ik.mot")
-        filtfreq = 6.0
+        filtfreq = user.coordinates_filter_cutoff
     tool.setCoordinatesFileName(kinfile)
     tool.setLowpassCutoffFrequency(filtfreq)
     
